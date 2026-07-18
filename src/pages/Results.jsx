@@ -1,5 +1,6 @@
 import Reveal from '../components/Reveal'
 import CTA from '../components/CTA'
+import MaskLines from '../components/MaskLines'
 import { testimonials } from '../data'
 
 export default function Results() {
@@ -10,7 +11,7 @@ export default function Results() {
       <section className="phero">
         <div className="container">
           <div className="label"><span className="idx">(→)</span> &nbsp;Results</div>
-          <h1 className="h1 mt-3 balance">The work speaks. So do the people who’ve done it.</h1>
+          <h1 className="h1 mt-3 balance"><MaskLines>The work speaks. So do the people who’ve done it.</MaskLines></h1>
           <p className="lead">Presidents, HR directors, deans, and VPs across associations, government, and commercial ventures — in their own words.</p>
         </div>
       </section>
@@ -23,14 +24,14 @@ export default function Results() {
           </Reveal>
         </div>
         <div className="container">
-          <div className="qgrid c3 mt-4">
+          <Reveal className="qgrid c3 mt-4" stagger={0.07}>
             {rest.map(t => (
-              <Reveal className="q" as="div" key={t.who}>
+              <div className="q" key={t.who}>
                 <blockquote>{t.q}</blockquote>
                 <div className="attr"><b>{t.who}</b><span>{t.role}</span></div>
-              </Reveal>
+              </div>
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 

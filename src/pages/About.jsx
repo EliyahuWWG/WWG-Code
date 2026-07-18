@@ -1,5 +1,7 @@
 import Reveal from '../components/Reveal'
 import CTA from '../components/CTA'
+import MaskLines from '../components/MaskLines'
+import Marquee from '../components/Marquee'
 import { orgsFull } from '../data'
 
 const education = [
@@ -28,7 +30,7 @@ export default function About() {
       <section className="phero">
         <div className="container">
           <div className="label"><span className="idx">(→)</span> &nbsp;About</div>
-          <h1 className="h1 mt-3">Dr. Eliyahu Lotzar, <span className="serif-it">Ed.D., MSW</span></h1>
+          <h1 className="h1 mt-3"><MaskLines>Dr. Eliyahu Lotzar, <span className="serif-it">Ed.D., MSW</span></MaskLines></h1>
           <p className="lead">Founder &amp; Principal Consultant of Reframed Reality — an organizational-development consultancy based in the Washington, DC area, with international reach. Business owner, clinical therapist, and academic.</p>
         </div>
       </section>
@@ -107,8 +109,9 @@ export default function About() {
             <div className="label"><span className="idx">(05)</span><br />Organizations served</div>
             <Reveal><h2 className="h2 maxw-60">45+ commercial, association &amp; government clients.</h2></Reveal>
           </div>
-          <Reveal className="trust-row mt-4" style={{ gap: '10px 26px' }}>
-            {orgsFull.map(o => <span key={o}>{o}</span>)}
+          <Reveal className="mt-4">
+            <Marquee items={orgsFull.slice(0, Math.ceil(orgsFull.length / 2))} speed={6} />
+            <Marquee items={orgsFull.slice(Math.ceil(orgsFull.length / 2))} speed={6} reverse className="mt-2" />
           </Reveal>
         </div>
       </section>

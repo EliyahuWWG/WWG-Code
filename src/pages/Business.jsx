@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import Reveal from '../components/Reveal'
 import CTA from '../components/CTA'
 import Arrow from '../components/Arrow'
+import MaskLines from '../components/MaskLines'
 import { openCalendly } from '../components/useCalendly'
 import { businessServices, challenges } from '../data'
 
@@ -11,7 +12,7 @@ export default function Business() {
       <section className="phero">
         <div className="container">
           <div className="label"><span className="idx">Track 01</span> &nbsp;For organizations</div>
-          <h1 className="h1 mt-3 balance">Entropy happens on its own. Sustained success takes courage, wisdom, and focus.</h1>
+          <h1 className="h1 mt-3 balance"><MaskLines>Entropy happens on its own. Sustained success takes courage, wisdom, and focus.</MaskLines></h1>
           <p className="lead">For owners, executives, and national associations. Whether you’re guarding against the risks of sudden growth or breaking through a stubborn plateau, we work at three levels — organization, team, and individual — to make success a little easier and a lot more durable.</p>
           <div className="row mt-3">
             <Link to="/book-a-call" onClick={openCalendly} className="btn btn-onink">Book a discovery call <Arrow /></Link>
@@ -53,15 +54,15 @@ export default function Business() {
             <div className="label"><span className="idx">(02)</span><br />What we actually do</div>
             <Reveal><h2 className="h2 maxw-46">The full toolkit</h2></Reveal>
           </div>
-          <div className="ilist mt-4">
+          <Reveal className="ilist mt-4" stagger={0.07}>
             {businessServices.map(s => (
-              <Reveal className="irow" as="div" key={s.n}>
+              <div className="irow" key={s.n}>
                 <div className="n">{s.n}</div>
                 <h3>{s.title}</h3>
                 <p>{s.body}</p>
-              </Reveal>
+              </div>
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -74,14 +75,14 @@ export default function Business() {
               <p className="mt-2 muted maxw-60">Every engagement begins with careful situational assessment — the aim isn’t only to fix today’s problem but to prevent tomorrow’s and position you to seize opportunity.</p>
             </Reveal>
           </div>
-          <div className="ilist mt-4">
+          <Reveal className="ilist mt-4" stagger={0.07}>
             {challenges.map(c => (
-              <Reveal className="irow" as="div" key={c.n} style={{ gridTemplateColumns: '64px 1fr' }}>
+              <div className="irow" key={c.n} style={{ gridTemplateColumns: '64px 1fr' }}>
                 <div className="n">{c.n}</div>
                 <div><h3 style={{ fontSize: '1.4rem' }}>{c.t}</h3><p className="mt-1">{c.d}</p></div>
-              </Reveal>
+              </div>
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 

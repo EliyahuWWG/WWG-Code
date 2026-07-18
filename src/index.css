@@ -230,9 +230,47 @@ em, .serif-it { }
 .footer .fbot { border-top: 1px solid var(--line-dk); margin-top: 48px; padding-top: 24px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; font-family: var(--f-mono); font-size: .68rem; letter-spacing: .06em; color: rgba(243,238,226,.45); text-transform: uppercase; }
 
 /* ---------- Reveal ---------- */
-.reveal { opacity: 0; transform: translateY(16px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity .8s var(--ease), transform .8s var(--ease); will-change: transform, opacity; }
 .reveal.in { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce){ .reveal { opacity:1; transform:none; transition:none; } html.smooth{scroll-behavior:auto;} }
+@media (prefers-reduced-motion: reduce){ .reveal { opacity:1; transform:none; transition:none; will-change:auto; } html.smooth{scroll-behavior:auto;} }
+
+/* ---------- Motion & loading (Phase A) ---------- */
+
+/* route transitions — keyed wrapper re-mounts on navigation */
+.route-fade { animation: route-in .26s var(--ease) both; }
+@keyframes route-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* scroll progress bar */
+.scroll-progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; background: var(--clay);
+  transform: scaleX(0); transform-origin: 0 50%; z-index: 120; pointer-events: none; }
+
+/* headline mask reveal — words clipped per visual line, sliding up */
+.mask-lines .mask-w { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: .12em; margin-bottom: -.12em; }
+.mask-lines .mask-wi { display: inline-block; transform: translateY(115%); transition: transform .7s var(--ease); }
+.mask-lines.in .mask-wi { transform: none; }
+
+/* reveal group — staggered direct children (grids, index lists) */
+.reveal-group > * { opacity: 0; transform: translateY(16px); transition: opacity .8s var(--ease), transform .8s var(--ease); will-change: transform, opacity; }
+.reveal-group.in > * { opacity: 1; transform: none; }
+
+/* org marquee — duplicated track, slow loop, pauses on hover */
+.mq { overflow: hidden; }
+.mq-inner { display: flex; width: max-content; animation: mq-scroll var(--mq-dur, 40s) linear infinite; }
+.mq-inner.rev { animation-direction: reverse; }
+.mq:hover .mq-inner { animation-play-state: paused; }
+.mq-track { display: flex; flex-wrap: nowrap; gap: 0 28px; padding-right: 28px; }
+.mq-track span { font-family: var(--f-disp); font-weight: 400; font-size: clamp(1rem,1.5vw,1.25rem); color: var(--ink); opacity: .8; white-space: nowrap; }
+.mq-track span::before { content: "—"; color: var(--clay); margin-right: 12px; opacity: .6; }
+@keyframes mq-scroll { to { transform: translateX(-50%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .route-fade { animation: none; }
+  .reveal-group > * { opacity: 1; transform: none; transition: none; will-change: auto; }
+  .mask-lines .mask-wi { transform: none; transition: none; }
+  .mq-inner { animation: none; width: auto; flex-wrap: wrap; }
+  .mq-track { flex-wrap: wrap; gap: 6px 28px; }
+  .mq-track[aria-hidden] { display: none; }
+}
 
 /* utilities */
 .mt-1{margin-top:14px}.mt-2{margin-top:26px}.mt-3{margin-top:44px}.mt-4{margin-top:64px}

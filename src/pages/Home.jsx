@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom'
 import Reveal from '../components/Reveal'
 import CTA from '../components/CTA'
 import Arrow from '../components/Arrow'
+import MaskLines from '../components/MaskLines'
+import Marquee from '../components/Marquee'
 import { openCalendly } from '../components/useCalendly'
 import { orgs, testimonials } from '../data'
 
@@ -16,7 +18,7 @@ export default function Home() {
         <div className="container">
           <div className="label"><span className="idx">(01)</span> &nbsp;Organizational development &amp; executive coaching — Washington, DC</div>
           <div className="hero-top mt-3">
-            <h1 className="display balance">Your leaders don’t plateau for lack of effort. They plateau for lack of <span className="serif-it">perspective.</span></h1>
+            <h1 className="display balance"><MaskLines>Your leaders don’t plateau for lack of effort. They plateau for lack of <span className="serif-it">perspective.</span></MaskLines></h1>
             <div className="hero-side">
               <p>I’m Dr. Eliyahu Lotzar — an organizational therapist who helps CEOs, executives, and teams break through the challenges that quietly cap their growth.</p>
               <div className="mt-2">
@@ -25,15 +27,15 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="hero-meta">
+          <Reveal className="hero-meta" stagger={0.07}>
             <div><div className="k">Doctorate</div><div className="v">Ed.D., Exec. Leadership</div></div>
             <div><div className="k">Clinical</div><div className="v">MSW · Therapist</div></div>
             <div><div className="k">Certified</div><div className="v">Adizes · DiSC · Arbinger</div></div>
             <div><div className="k">Author</div><div className="v">Working With God</div></div>
-          </div>
+          </Reveal>
 
           {/* DUAL DOORS */}
-          <div className="doors">
+          <Reveal className="doors" stagger={0.12}>
             <Link to="/business" className="door">
               <div className="dnum">Track 01 — For organizations</div>
               <h3>Business &amp; Leadership</h3>
@@ -48,7 +50,7 @@ export default function Home() {
               <div className="dmeta">Modal Leadership · Coaching · Roundtable · The book</div>
               <span className="go">Discern divine direction <Arrow /></span>
             </Link>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -56,7 +58,7 @@ export default function Home() {
       <div className="trust">
         <div className="container">
           <div className="lbl">Trusted by leaders at commercial ventures, national associations &amp; government</div>
-          <div className="trust-row">{orgs.map(o => <span key={o}>{o}</span>)}</div>
+          <Marquee items={orgs} />
         </div>
       </div>
 
@@ -136,14 +138,14 @@ export default function Home() {
               <div className="attr">— <b>{feature.who}</b>, {feature.role}</div>
             </Reveal>
           </div>
-          <div className="qgrid c2 mt-4">
+          <Reveal className="qgrid c2 mt-4" stagger={0.1}>
             {twoQuotes.map(t => (
-              <Reveal className="q" as="div" key={t.who}>
+              <div className="q" key={t.who}>
                 <blockquote>{t.q}</blockquote>
                 <div className="attr"><b>{t.who}</b><span>{t.role}</span></div>
-              </Reveal>
+              </div>
             ))}
-          </div>
+          </Reveal>
           <div className="mt-3"><Link to="/results" className="tlink">Read all client results &amp; recommendations <Arrow /></Link></div>
         </div>
       </section>

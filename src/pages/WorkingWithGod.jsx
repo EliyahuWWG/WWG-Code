@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import Reveal from '../components/Reveal'
 import CTA from '../components/CTA'
 import Arrow from '../components/Arrow'
+import MaskLines from '../components/MaskLines'
 import { openCalendly } from '../components/useCalendly'
 import { WWG } from '../data'
 
@@ -17,7 +18,7 @@ export default function WorkingWithGod() {
       <section className="phero">
         <div className="container">
           <div className="label"><span className="idx">Track 02</span> &nbsp;For faith-driven leaders</div>
-          <h1 className="h1 mt-3 balance">Discern divine direction for your leadership.</h1>
+          <h1 className="h1 mt-3 balance"><MaskLines>Discern divine direction for your leadership.</MaskLines></h1>
           <p className="lead">Ever wish you’d consulted God before a hard hiring choice, a risky partnership, or a big commitment? Working With God is a book, a method, a workshop, and a peer group that takes the spiritual dryness out of work — and turns it into the purposeful adventure of a lifetime.</p>
           <div className="row mt-3">
             <Link to="/book-a-call" onClick={openCalendly} className="btn btn-onink">Book a discovery call <Arrow /></Link>
@@ -57,13 +58,13 @@ export default function WorkingWithGod() {
             <Reveal><h2 className="h2 maxw-60">A whole practice for leading with God.</h2>
               <p className="mt-2 muted maxw-60">Wherever you are on the comfort-with-God spectrum — exploring the idea, or walking closely for decades.</p></Reveal>
           </div>
-          <div className="ilist mt-4">
+          <Reveal className="ilist mt-4" stagger={0.07}>
             {offerings.map(([n, t, d]) => (
-              <Reveal className="irow" as="div" key={n}>
+              <div className="irow" key={n}>
                 <div className="n">{n}</div><h3>{t}</h3><p>{d}</p>
-              </Reveal>
+              </div>
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import Reveal from '../components/Reveal'
+import MaskLines from '../components/MaskLines'
 import { CALENDLY, EMAIL, LINKEDIN, WWG } from '../data'
 
 const steps = [
@@ -42,7 +43,7 @@ export default function BookCall() {
       <section className="phero" style={{ paddingBottom: 'clamp(40px,5vw,64px)' }}>
         <div className="container">
           <div className="label"><span className="idx">(→)</span> &nbsp;Let’s talk</div>
-          <h1 className="h1 mt-3 balance">One honest conversation can reframe the whole picture.</h1>
+          <h1 className="h1 mt-3 balance"><MaskLines>One honest conversation can reframe the whole picture.</MaskLines></h1>
           <p className="lead">No pitch, no pressure — just a focused conversation about the challenge in front of you and whether Reframed Reality is the right partner to help. Pick a time below.</p>
         </div>
       </section>
