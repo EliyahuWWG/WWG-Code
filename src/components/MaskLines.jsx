@@ -19,16 +19,13 @@ export default function MaskLines({ children, stagger = 0.06, duration = 0.7 }) 
 
     // Wrap every word (and atomic inline elements like <span class="serif-it">)
     // in an overflow-hidden mask + inner slide span.
-    const wrap = (node) => {
-      const frag = document.createDocumentFragment()
+    const makeMask = () => {
       const w = document.createElement('span')
       w.className = 'mask-w'
       const i = document.createElement('span')
       i.className = 'mask-wi'
-      i.appendChild(node)
       w.appendChild(i)
-      frag.appendChild(w)
-      return frag
+      return { w, i }
     }
     Array.from(el.childNodes).forEach((node) => {
       if (node.nodeType === Node.TEXT_NODE) {
@@ -36,12 +33,21 @@ export default function MaskLines({ children, stagger = 0.06, duration = 0.7 }) 
         const frag = document.createDocumentFragment()
         parts.forEach((p) => {
           if (!p) return
-          if (/^\s+$/.test(p)) frag.appendChild(document.createTextNode(' '))
-          else frag.appendChild(wrap(document.createTextNode(p)))
+          if (/^\s+$/.test(p)) {
+            frag.appendChild(document.createTextNode(' '))
+          } else {
+            const { w, i } = makeMask()
+            i.appendChild(document.createTextNode(p))
+            frag.appendChild(w)
+          }
         })
         el.replaceChild(frag, node)
       } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName !== 'BR') {
-        el.replaceChild(wrap(node), node)
+        // Swap the wrapper into the node's place first, then move the node
+        // inside it — moving first would detach it and break replaceChild.
+        const { w, i } = makeMask()
+        el.replaceChild(w, node)
+        i.appendChild(node)
       }
     })
 
