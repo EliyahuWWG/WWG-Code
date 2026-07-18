@@ -1,7 +1,9 @@
-import { useEffect, useRef } from 'react'
-import { Outlet, useLocation } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
+import { Link, Outlet, useLocation } from 'react-router-dom'
 import Nav from './components/Nav'
 import Footer from './components/Footer'
+import Arrow from './components/Arrow'
+import { openCalendly, warmCalendly } from './components/useCalendly'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -33,6 +35,27 @@ function ScrollProgress() {
   return <div className="scroll-progress" ref={ref} aria-hidden="true" />
 }
 
+// Slim bottom booking bar on small screens; hidden on the booking page
+// itself, and only slides in once the visitor has scrolled past the hero.
+function StickyCTA() {
+  const { pathname } = useLocation()
+  const [show, setShow] = useState(false)
+  useEffect(() => {
+    const onScroll = () => setShow(window.scrollY > 560)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+  if (pathname === '/book-a-call') return null
+  return (
+    <div className={`sticky-cta ${show ? 'show' : ''}`}>
+      <Link to="/book-a-call" onClick={openCalendly} onPointerEnter={warmCalendly} onFocus={warmCalendly} className="btn btn-onink">
+        Book a discovery call <Arrow />
+      </Link>
+    </div>
+  )
+}
+
 function Layout() {
   const { pathname } = useLocation()
   useEffect(() => { document.documentElement.classList.add('smooth') }, [])
@@ -49,6 +72,7 @@ function Layout() {
         </div>
       </main>
       <Footer />
+      <StickyCTA />
     </>
   )
 }
@@ -66,7 +90,7 @@ export const routes = [
       { path: 'about', lazy: () => import('./pages/About') },
       { path: 'results', lazy: () => import('./pages/Results') },
       { path: 'book-a-call', lazy: () => import('./pages/BookCall') },
-      { path: '*', lazy: () => import('./pages/Home') },
+      { path: '*', lazy: () => import('./pages/NotFound') },
     ],
   },
 ]

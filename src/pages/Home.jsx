@@ -5,9 +5,10 @@ import Arrow from '../components/Arrow'
 import MaskLines from '../components/MaskLines'
 import Marquee from '../components/Marquee'
 import Seo from '../components/Seo'
+import FAQ from '../components/FAQ'
 import { openCalendly, warmCalendly } from '../components/useCalendly'
-import { professionalServiceSchema, personSchema } from '../seo/schema'
-import { orgs, testimonials } from '../data'
+import { professionalServiceSchema, personSchema, faqSchema } from '../seo/schema'
+import { orgs, testimonials, faqs } from '../data'
 
 export default function Home() {
   const feature = testimonials.find(t => t.feature)
@@ -19,7 +20,7 @@ export default function Home() {
         title="Executive Coaching & Organizational Development in Washington, DC | Reframed Reality"
         description="Dr. Eliyahu Lotzar helps CEOs, executives, and teams in the DC metro break through growth plateaus — organizational health assessment, leadership team alignment, executive coaching, and the faith-based Working With God track."
         path="/"
-        schema={[professionalServiceSchema(), personSchema()]}
+        schema={[professionalServiceSchema(), personSchema(), faqSchema(faqs)]}
       />
       {/* HERO */}
       <section className="hero">
@@ -182,6 +183,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* FAQ — answers come from data.js; FAQPage schema reads the same array */}
+      <FAQ label="(06)" />
 
       <CTA />
     </>

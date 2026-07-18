@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import Reveal from '../components/Reveal'
 import MaskLines from '../components/MaskLines'
 import Seo from '../components/Seo'
-import { warmCalendly } from '../components/useCalendly'
+import { warmCalendly, trackBookCall } from '../components/useCalendly'
 import { breadcrumbSchema } from '../seo/schema'
 import { CALENDLY, EMAIL, LINKEDIN, WWG } from '../data'
 
@@ -52,7 +52,7 @@ export default function BookCall() {
                   <div className="cal-fallback">
                     <div>
                       <p className="muted" style={{ marginBottom: 16 }}>Loading Eliyahu’s calendar…</p>
-                      <a className="btn btn-solid" href={CALENDLY} target="_blank" rel="noopener">Open the booking page</a>
+                      <a className="btn btn-solid" href={CALENDLY} target="_blank" rel="noopener" onClick={() => trackBookCall('bookcall-fallback')}>Open the booking page</a>
                     </div>
                   </div>
                 </div>

@@ -6,6 +6,10 @@
     <!-- Per-route <title> and meta are injected at build time (vite-react-ssg + Seo.jsx). -->
     <!-- Fonts are self-hosted via @fontsource (imported in src/index.css). -->
     <!-- Calendly assets load on demand — see src/components/useCalendly.js. -->
+    <!-- Plausible: privacy-friendly, cookieless analytics (no consent banner needed).
+         Custom event `book_call_click` fires from src/components/useCalendly.js. -->
+    <script defer data-domain="reframedreality.com" src="https://plausible.io/js/script.js"></script>
+    <script>window.plausible = window.plausible || function(){ (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
     <style>
       /* First-load curtain — self-contained so it paints before the app CSS/JS. */
       #curtain { display: none; }

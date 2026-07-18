@@ -40,6 +40,35 @@ export const businessServices = [
   { n: "06", title: "Executive & Management Coaching", body: "A truth-telling sounding board for CEOs, entrepreneurs, and managers at three levels — owner/executive, seasoned manager, first-time manager — drawing on PAEI, DiSC, custom 360s, Arbinger, and 25+ leadership tools." },
 ];
 
+// Single source of truth for the visible FAQ accordion AND the FAQPage
+// JSON-LD schema (src/seo/schema.js) — edit here and both stay in sync.
+export const faqs = [
+  {
+    q: "What does a typical engagement look like?",
+    a: "Every engagement starts with a discovery call and a careful situational assessment. From there it might be a one-day leadership retreat, a several-month organizational-health engagement, or ongoing executive coaching. Before we begin you'll know the scope, the outcomes we're aiming for, and how we'll know it's working.",
+  },
+  {
+    q: "Do you work remotely or on-site?",
+    a: "Both. Reframed Reality is based in Reston, Virginia, and works on-site across the Washington, DC metro. Coaching and facilitation also run worldwide over video — retreats and DiSC trainings are usually in person, most everything else works either way.",
+  },
+  {
+    q: "How long until we see results?",
+    a: "Some shifts happen in the first conversation — a reframe that changes how you see the problem. Deeper change, like organizational health or leadership-team alignment, typically shows within a quarter. Either way the aim is durable capability inside your organization, never dependency on a consultant.",
+  },
+  {
+    q: "Do I have to be religious to work with you?",
+    a: "No. The practice has two distinct tracks. Business & Leadership engagements are rigorous, evidence-based organizational development — faith doesn't enter unless you bring it. Working With God exists separately, for leaders who want God in the room for real decisions. You choose the door.",
+  },
+  {
+    q: "Who do you typically work with?",
+    a: "CEOs, business owners, and senior managers of commercial ventures; executives of national associations in the DC area; government and higher-education leaders; and faith-driven leaders. Over 45 organizations served — from Fairfax County and NOAA Fisheries to the U.S. Soccer Foundation.",
+  },
+  {
+    q: "How do we start?",
+    a: "Book a free 30-minute discovery call. You bring the challenge, we reframe it together, and you leave with a useful next step — whether or not we end up working together.",
+  },
+];
+
 export const challenges = [
   { n: "01", t: "The risk of sudden growth", d: "Scaling faster than your structure and people can support." },
   { n: "02", t: "The “something’s missing” plateau", d: "Strong performance that has stopped climbing." },

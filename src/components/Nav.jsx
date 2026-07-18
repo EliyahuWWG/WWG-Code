@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { NavLink, Link } from 'react-router-dom'
-import { openCalendly, warmCalendly } from './useCalendly'
+import { openCalendly, warmCalendly, trackBookCall } from './useCalendly'
 
 const links = [
   { to: '/business', label: 'Business' },
@@ -79,7 +79,7 @@ export default function Nav() {
               {l.label}<span className="n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
             </Link>
           ))}
-          <Link to="/book-a-call" onClick={() => setOpen(false)}>
+          <Link to="/book-a-call" onClick={() => { setOpen(false); trackBookCall('mobile-menu') }}>
             Book a call<span className="n" aria-hidden="true">05</span>
           </Link>
         </nav>

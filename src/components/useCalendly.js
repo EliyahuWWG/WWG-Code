@@ -24,10 +24,19 @@ export function warmCalendly() {
   return loading
 }
 
+// Conversion event — every booking CTA funnels through here (Plausible).
+export function trackBookCall(source) {
+  if (typeof window === 'undefined' || typeof window.plausible !== 'function') return
+  window.plausible('book_call_click', {
+    props: { source: source || (window.location && window.location.pathname) || '' },
+  })
+}
+
 // Opens the Calendly popup if the widget is ready; otherwise starts loading it
 // and lets the <a href> fall through to /book-a-call (inline calendar there).
 export function openCalendly(e) {
   if (typeof window === 'undefined') return
+  trackBookCall()
   if (window.Calendly && window.Calendly.initPopupWidget) {
     if (e) e.preventDefault()
     window.Calendly.initPopupWidget({ url: CALENDLY })

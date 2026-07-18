@@ -298,6 +298,42 @@ html.js .reveal-group.in > * { opacity: 1; transform: none; }
   .mq-track[aria-hidden] { display: none; }
 }
 
+/* ---------- FAQ accordion ---------- */
+.faq { border-top: 1px solid var(--line); }
+.faq-item { border-bottom: 1px solid var(--line); }
+.faq-h { margin: 0; font-size: inherit; }
+.faq-q { display: grid; grid-template-columns: 48px 1fr auto; align-items: baseline; gap: 16px; width: 100%;
+  text-align: left; padding: clamp(20px, 2.6vw, 28px) 0; }
+.faq-q .n { font-family: var(--f-mono); font-size: .8rem; color: var(--clay-ink); }
+.faq-q .qt { font-family: var(--f-disp); font-weight: 500; font-size: clamp(1.15rem, 1.9vw, 1.5rem); letter-spacing: -.01em; transition: color .25s var(--ease); }
+.faq-q:hover .qt { color: var(--clay-ink); }
+.faq-x { position: relative; width: 14px; height: 14px; align-self: center; }
+.faq-x::before, .faq-x::after { content: ""; position: absolute; inset: 50% auto auto 0; width: 14px; height: 1.5px; background: var(--clay-ink); transition: transform .3s var(--ease); }
+.faq-x::after { transform: rotate(90deg); }
+.faq-item.open .faq-x::after { transform: rotate(0deg); }
+.faq-a { display: grid; grid-template-rows: 0fr; visibility: hidden;
+  transition: grid-template-rows .4s var(--ease), visibility 0s linear .4s; }
+.faq-item.open .faq-a { grid-template-rows: 1fr; visibility: visible; transition: grid-template-rows .4s var(--ease); }
+.faq-a > div { overflow: hidden; }
+.faq-a p { color: var(--muted); max-width: 62ch; padding: 0 24px clamp(22px, 2.6vw, 30px) 64px; }
+@media (max-width: 719px){ .faq-q { grid-template-columns: 36px 1fr auto; } .faq-a p { padding-left: 0; } }
+
+/* ---------- Mobile sticky CTA ---------- */
+.sticky-cta { position: fixed; left: 0; right: 0; bottom: 0; z-index: 70; display: none;
+  background: var(--ink); border-top: 1px solid var(--line-dk);
+  padding: 10px var(--pad) calc(10px + env(safe-area-inset-bottom, 0px));
+  transform: translateY(100%); transition: transform .35s var(--ease); }
+.sticky-cta.show { transform: none; }
+.sticky-cta .btn { width: 100%; justify-content: center; }
+@media (max-width: 719px){
+  .sticky-cta { display: block; }
+  .footer { padding-bottom: 96px; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .faq-a, .faq-item.open .faq-a, .faq-x::before, .faq-x::after, .sticky-cta { transition: none; }
+}
+
 /* utilities */
 .mt-1{margin-top:14px}.mt-2{margin-top:26px}.mt-3{margin-top:44px}.mt-4{margin-top:64px}
 .stack-tight{display:flex;flex-direction:column;gap:10px}
