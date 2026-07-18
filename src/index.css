@@ -4,6 +4,17 @@
    Type: Fraunces (display) · Inter (text) · JetBrains Mono (labels)
    ===================================================================== */
 
+/* Self-hosted fonts (latin subsets, font-display: swap).
+   Fraunces ships as a variable font with the opsz axis — keep it: the
+   optical sizing is what gives the display type its editorial look. */
+@import '@fontsource-variable/fraunces/opsz.css';
+@import '@fontsource-variable/fraunces/opsz-italic.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+
 :root {
   --ink:      #16211c;   /* near-black green — primary text & dark blocks */
   --forest:   #1f4535;
@@ -21,7 +32,7 @@
   --pad: clamp(20px, 5vw, 72px);
   --ease: cubic-bezier(.2,.6,.2,1);
 
-  --f-disp: "Fraunces", Georgia, serif;
+  --f-disp: "Fraunces Variable", Georgia, serif;
   --f-text: "Inter", system-ui, sans-serif;
   --f-mono: "JetBrains Mono", ui-monospace, monospace;
 }

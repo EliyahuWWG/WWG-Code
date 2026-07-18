@@ -5,7 +5,7 @@ import Arrow from '../components/Arrow'
 import MaskLines from '../components/MaskLines'
 import Marquee from '../components/Marquee'
 import Seo from '../components/Seo'
-import { openCalendly } from '../components/useCalendly'
+import { openCalendly, warmCalendly } from '../components/useCalendly'
 import { professionalServiceSchema, personSchema } from '../seo/schema'
 import { orgs, testimonials } from '../data'
 
@@ -30,7 +30,7 @@ export default function Home() {
             <div className="hero-side">
               <p>I’m Dr. Eliyahu Lotzar — an organizational therapist who helps CEOs, executives, and teams break through the challenges that quietly cap their growth.</p>
               <div className="mt-2">
-                <Link to="/book-a-call" onClick={openCalendly} className="btn btn-onink">Book a discovery call <Arrow /></Link>
+                <Link to="/book-a-call" onClick={openCalendly} onPointerEnter={warmCalendly} onFocus={warmCalendly} className="btn btn-onink">Book a discovery call <Arrow /></Link>
               </div>
             </div>
           </div>
@@ -168,7 +168,7 @@ export default function Home() {
               <p className="mt-2 muted maxw-60">Not a book about being “holier” at the office. It introduces <span className="serif-it">Modal Leadership</span>: ten operating modes that help you analyze, pray, discern, decide, and implement — turning complex hurdles into clear paths forward. Available in print, Kindle, and Audible.</p>
               <div className="row mt-3">
                 <Link to="/working-with-god" className="btn btn-solid">Learn the method <Arrow /></Link>
-                <Link to="/book-a-call" onClick={openCalendly} className="tlink">Talk to Eliyahu</Link>
+                <Link to="/book-a-call" onClick={openCalendly} onPointerEnter={warmCalendly} onFocus={warmCalendly} className="tlink">Talk to Eliyahu</Link>
               </div>
             </Reveal>
             <Reveal delay={0.05} style={{ display: 'flex', justifyContent: 'center' }}>

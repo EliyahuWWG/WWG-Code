@@ -4,7 +4,7 @@ import CTA from '../components/CTA'
 import Arrow from '../components/Arrow'
 import MaskLines from '../components/MaskLines'
 import Seo from '../components/Seo'
-import { openCalendly } from '../components/useCalendly'
+import { openCalendly, warmCalendly } from '../components/useCalendly'
 import { bookSchema, breadcrumbSchema } from '../seo/schema'
 import { WWG } from '../data'
 
@@ -30,7 +30,7 @@ export default function WorkingWithGod() {
           <h1 className="h1 mt-3 balance"><MaskLines>Discern divine direction for your leadership.</MaskLines></h1>
           <p className="lead">Ever wish you’d consulted God before a hard hiring choice, a risky partnership, or a big commitment? Working With God is a book, a method, a workshop, and a peer group that takes the spiritual dryness out of work — and turns it into the purposeful adventure of a lifetime.</p>
           <div className="row mt-3">
-            <Link to="/book-a-call" onClick={openCalendly} className="btn btn-onink">Book a discovery call <Arrow /></Link>
+            <Link to="/book-a-call" onClick={openCalendly} onPointerEnter={warmCalendly} onFocus={warmCalendly} className="btn btn-onink">Book a discovery call <Arrow /></Link>
             <a href={WWG} target="_blank" rel="noopener" className="tlink lt">Visit workingwithgod.live</a>
           </div>
         </div>

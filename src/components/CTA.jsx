@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { openCalendly } from './useCalendly'
+import { openCalendly, warmCalendly } from './useCalendly'
 import Arrow from './Arrow'
 import Reveal from './Reveal'
 
@@ -19,7 +19,7 @@ export default function CTA({
           <div>
             <p>{text}</p>
             <div className="mt-2">
-              <Link to="/book-a-call" onClick={openCalendly} className="btn btn-onink btn-lg">
+              <Link to="/book-a-call" onClick={openCalendly} onPointerEnter={warmCalendly} onFocus={warmCalendly} className="btn btn-onink btn-lg">
                 Book a discovery call <Arrow />
               </Link>
             </div>

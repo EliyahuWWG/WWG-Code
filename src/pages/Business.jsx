@@ -4,7 +4,7 @@ import CTA from '../components/CTA'
 import Arrow from '../components/Arrow'
 import MaskLines from '../components/MaskLines'
 import Seo from '../components/Seo'
-import { openCalendly } from '../components/useCalendly'
+import { openCalendly, warmCalendly } from '../components/useCalendly'
 import { breadcrumbSchema } from '../seo/schema'
 import { businessServices, challenges } from '../data'
 
@@ -23,7 +23,7 @@ export default function Business() {
           <h1 className="h1 mt-3 balance"><MaskLines>Entropy happens on its own. Sustained success takes courage, wisdom, and focus.</MaskLines></h1>
           <p className="lead">For owners, executives, and national associations. Whether you’re guarding against the risks of sudden growth or breaking through a stubborn plateau, we work at three levels — organization, team, and individual — to make success a little easier and a lot more durable.</p>
           <div className="row mt-3">
-            <Link to="/book-a-call" onClick={openCalendly} className="btn btn-onink">Book a discovery call <Arrow /></Link>
+            <Link to="/book-a-call" onClick={openCalendly} onPointerEnter={warmCalendly} onFocus={warmCalendly} className="btn btn-onink">Book a discovery call <Arrow /></Link>
             <Link to="/results" className="tlink lt">See the results</Link>
           </div>
         </div>

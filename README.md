@@ -29,6 +29,14 @@ Then point `reframedreality.com` DNS at the host once he approves.
 3. **Confirm the Calendly URL.** Set in one place — `src/data.js` (`CALENDLY`). Currently
    `https://calendly.com/eliyahu-lotzar-reframedreality` (from his LinkedIn). Change there if needed.
 
+### Image rules (keeps Core Web Vitals green)
+When adding any real `<img>` (headshot, book cover, future photos):
+- Always set explicit `width` and `height` attributes (prevents layout shift).
+- Use `loading="lazy"` for anything below the fold; the Home hero portrait can stay eager.
+- Always write a descriptive `alt` (e.g. `alt="Dr. Eliyahu Lotzar"`); decorative images get `alt=""`.
+- Prefer WebP/AVIF with a JPEG fallback (`<picture>`), sized close to the largest display size
+  (portrait renders ≤ 640px wide — don't ship a 4000px original).
+
 ## Where things live
 - `src/data.js` — all copy that changes often: testimonials, orgs, services, contact links.
 - `src/index.css` — the whole design system (colors, type, components) via CSS variables at the top.

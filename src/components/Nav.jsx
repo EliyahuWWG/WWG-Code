@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { NavLink, Link } from 'react-router-dom'
-import { openCalendly } from './useCalendly'
+import { openCalendly, warmCalendly } from './useCalendly'
 
 const links = [
   { to: '/business', label: 'Business' },
@@ -33,7 +33,7 @@ export default function Nav() {
             ))}
           </nav>
           <div className="nav-right">
-            <Link to="/book-a-call" onClick={openCalendly}
+            <Link to="/book-a-call" onClick={openCalendly} onPointerEnter={warmCalendly} onFocus={warmCalendly}
               className={`btn ${solid ? 'btn-solid' : 'btn-line-lt'}`}>Book a call</Link>
             <button className="nav-burger" aria-label="Open menu" onClick={() => setOpen(true)}>
               <span /><span /><span />

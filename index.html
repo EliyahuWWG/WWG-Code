@@ -4,10 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Per-route <title> and meta are injected at build time (vite-react-ssg + Seo.jsx). -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
+    <!-- Fonts are self-hosted via @fontsource (imported in src/index.css). -->
+    <!-- Calendly assets load on demand — see src/components/useCalendly.js. -->
     <style>
       /* First-load curtain — self-contained so it paints before the app CSS/JS. */
       #curtain { display: none; }
@@ -18,7 +16,7 @@
         animation: curtain-lift .55s cubic-bezier(.2,.6,.2,1) .85s both;
       }
       html.curtain-on #curtain .c-mark {
-        font-family: "Fraunces", Georgia, serif; font-weight: 500;
+        font-family: "Fraunces Variable", Georgia, serif; font-weight: 500;
         font-size: 1.4rem; letter-spacing: -.02em; color: #f3eee2; margin: 0;
         display: flex; align-items: center; gap: .5em;
         animation: curtain-mark .45s cubic-bezier(.2,.6,.2,1) .1s both;

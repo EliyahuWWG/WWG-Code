@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import Reveal from '../components/Reveal'
 import MaskLines from '../components/MaskLines'
 import Seo from '../components/Seo'
+import { warmCalendly } from '../components/useCalendly'
 import { breadcrumbSchema } from '../seo/schema'
 import { CALENDLY, EMAIL, LINKEDIN, WWG } from '../data'
 
@@ -11,25 +12,11 @@ const steps = [
   ['03', 'You leave with a next step', 'Whether or not we work together, you’ll walk away with something useful.'],
 ]
 
-function loadCalendly() {
-  return new Promise((resolve) => {
-    if (window.Calendly) return resolve()
-    const existing = document.querySelector('script[data-calendly]')
-    if (existing) { existing.addEventListener('load', () => resolve()); return }
-    const s = document.createElement('script')
-    s.src = 'https://assets.calendly.com/assets/external/widget.js'
-    s.async = true
-    s.setAttribute('data-calendly', '1')
-    s.addEventListener('load', () => resolve())
-    document.body.appendChild(s)
-  })
-}
-
 export default function BookCall() {
   const ref = useRef(null)
   useEffect(() => {
     let alive = true
-    loadCalendly().then(() => {
+    warmCalendly().then(() => {
       if (!alive || !ref.current || !window.Calendly) return
       ref.current.innerHTML = ''
       window.Calendly.initInlineWidget({

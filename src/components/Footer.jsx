@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { EMAIL, LINKEDIN, WWG } from '../data'
-import { openCalendly } from './useCalendly'
+import { openCalendly, warmCalendly } from './useCalendly'
 
 export default function Footer() {
   return (
@@ -20,7 +20,7 @@ export default function Footer() {
           </div>
           <div>
             <h4>Get in touch</h4>
-            <Link className="fl" to="/book-a-call" onClick={openCalendly}>Book a discovery call</Link>
+            <Link className="fl" to="/book-a-call" onClick={openCalendly} onPointerEnter={warmCalendly} onFocus={warmCalendly}>Book a discovery call</Link>
             <a className="fl" href={`mailto:${EMAIL}`}>{EMAIL}</a>
             <a className="fl" href={LINKEDIN} target="_blank" rel="noopener">LinkedIn</a>
             <a className="fl" href={WWG} target="_blank" rel="noopener">workingwithgod.live</a>
