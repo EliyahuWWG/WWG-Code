@@ -38,10 +38,11 @@ function Layout() {
   useEffect(() => { document.documentElement.classList.add('smooth') }, [])
   return (
     <>
+      <a className="skip-link" href="#main">Skip to content</a>
       <ScrollToTop />
       <ScrollProgress />
       <Nav />
-      <main>
+      <main id="main" tabIndex={-1}>
         {/* Keyed wrapper re-mounts on navigation → short fade + rise. */}
         <div className="route-fade" key={pathname}>
           <Outlet />
