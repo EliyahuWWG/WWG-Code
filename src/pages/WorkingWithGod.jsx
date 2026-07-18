@@ -3,7 +3,9 @@ import Reveal from '../components/Reveal'
 import CTA from '../components/CTA'
 import Arrow from '../components/Arrow'
 import MaskLines from '../components/MaskLines'
+import Seo from '../components/Seo'
 import { openCalendly } from '../components/useCalendly'
+import { bookSchema, breadcrumbSchema } from '../seo/schema'
 import { WWG } from '../data'
 
 const offerings = [
@@ -15,6 +17,13 @@ const offerings = [
 export default function WorkingWithGod() {
   return (
     <>
+      <Seo
+        title="Working With God — Faith-Based Leadership Coaching | Dr. Eliyahu Lotzar"
+        description="Faith-based executive coaching for Christian leaders: the book Working With God, the Modal Leadership method, webinars, and a monthly executive roundtable — discern divine direction in real business decisions."
+        path="/working-with-god"
+        type="book"
+        schema={[bookSchema(), breadcrumbSchema([{ name: 'Working With God', path: '/working-with-god' }])]}
+      />
       <section className="phero">
         <div className="container">
           <div className="label"><span className="idx">Track 02</span> &nbsp;For faith-driven leaders</div>
@@ -82,3 +91,6 @@ export default function WorkingWithGod() {
     </>
   )
 }
+
+// react-router lazy() route entry
+export const Component = WorkingWithGod

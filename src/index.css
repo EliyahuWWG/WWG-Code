@@ -230,9 +230,10 @@ em, .serif-it { }
 .footer .fbot { border-top: 1px solid var(--line-dk); margin-top: 48px; padding-top: 24px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; font-family: var(--f-mono); font-size: .68rem; letter-spacing: .06em; color: rgba(243,238,226,.45); text-transform: uppercase; }
 
 /* ---------- Reveal ---------- */
-.reveal { opacity: 0; transform: translateY(16px); transition: opacity .8s var(--ease), transform .8s var(--ease); will-change: transform, opacity; }
-.reveal.in { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce){ .reveal { opacity:1; transform:none; transition:none; will-change:auto; } html.smooth{scroll-behavior:auto;} }
+/* Hidden state gated on html.js so prerendered HTML is visible without JS. */
+html.js .reveal { opacity: 0; transform: translateY(16px); transition: opacity .8s var(--ease), transform .8s var(--ease); will-change: transform, opacity; }
+html.js .reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce){ html.js .reveal { opacity:1; transform:none; transition:none; will-change:auto; } html.smooth{scroll-behavior:auto;} }
 
 /* ---------- Motion & loading (Phase A) ---------- */
 
@@ -250,8 +251,8 @@ em, .serif-it { }
 .mask-lines.in .mask-wi { transform: none; }
 
 /* reveal group — staggered direct children (grids, index lists) */
-.reveal-group > * { opacity: 0; transform: translateY(16px); transition: opacity .8s var(--ease), transform .8s var(--ease); will-change: transform, opacity; }
-.reveal-group.in > * { opacity: 1; transform: none; }
+html.js .reveal-group > * { opacity: 0; transform: translateY(16px); transition: opacity .8s var(--ease), transform .8s var(--ease); will-change: transform, opacity; }
+html.js .reveal-group.in > * { opacity: 1; transform: none; }
 
 /* org marquee — duplicated track, slow loop, pauses on hover */
 .mq { overflow: hidden; }
@@ -265,7 +266,7 @@ em, .serif-it { }
 
 @media (prefers-reduced-motion: reduce) {
   .route-fade { animation: none; }
-  .reveal-group > * { opacity: 1; transform: none; transition: none; will-change: auto; }
+  html.js .reveal-group > * { opacity: 1; transform: none; transition: none; will-change: auto; }
   .mask-lines .mask-wi { transform: none; transition: none; }
   .mq-inner { animation: none; width: auto; flex-wrap: wrap; }
   .mq-track { flex-wrap: wrap; gap: 6px 28px; }

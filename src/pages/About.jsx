@@ -2,6 +2,8 @@ import Reveal from '../components/Reveal'
 import CTA from '../components/CTA'
 import MaskLines from '../components/MaskLines'
 import Marquee from '../components/Marquee'
+import Seo from '../components/Seo'
+import { personSchema, breadcrumbSchema } from '../seo/schema'
 import { orgsFull } from '../data'
 
 const education = [
@@ -27,6 +29,13 @@ const pubs = [
 export default function About() {
   return (
     <>
+      <Seo
+        title="About Dr. Eliyahu Lotzar, Ed.D., MSW — Organizational Therapist"
+        description="Executive coach and organizational development consultant in Reston, VA. Doctorate in executive leadership, clinical MSW, Adizes & Everything DiSC certified — 45+ commercial, association, and government clients."
+        path="/about"
+        type="profile"
+        schema={[personSchema(), breadcrumbSchema([{ name: 'About', path: '/about' }])]}
+      />
       <section className="phero">
         <div className="container">
           <div className="label"><span className="idx">(→)</span> &nbsp;About</div>
@@ -120,3 +129,6 @@ export default function About() {
     </>
   )
 }
+
+// react-router lazy() route entry
+export const Component = About

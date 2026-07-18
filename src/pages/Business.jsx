@@ -3,12 +3,20 @@ import Reveal from '../components/Reveal'
 import CTA from '../components/CTA'
 import Arrow from '../components/Arrow'
 import MaskLines from '../components/MaskLines'
+import Seo from '../components/Seo'
 import { openCalendly } from '../components/useCalendly'
+import { breadcrumbSchema } from '../seo/schema'
 import { businessServices, challenges } from '../data'
 
 export default function Business() {
   return (
     <>
+      <Seo
+        title="Organizational Health, Team Alignment & Executive Coaching | Reframed Reality"
+        description="Organizational development consulting for commercial ventures and national associations: organizational health assessment, growth & change management, strategic planning, senior leadership team alignment, DiSC training, and executive coaching."
+        path="/business"
+        schema={[breadcrumbSchema([{ name: 'Business & Leadership', path: '/business' }])]}
+      />
       <section className="phero">
         <div className="container">
           <div className="label"><span className="idx">Track 01</span> &nbsp;For organizations</div>
@@ -90,3 +98,6 @@ export default function Business() {
     </>
   )
 }
+
+// react-router lazy() route entry
+export const Component = Business

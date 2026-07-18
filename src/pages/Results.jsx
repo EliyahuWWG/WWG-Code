@@ -1,6 +1,8 @@
 import Reveal from '../components/Reveal'
 import CTA from '../components/CTA'
 import MaskLines from '../components/MaskLines'
+import Seo from '../components/Seo'
+import { breadcrumbSchema } from '../seo/schema'
 import { testimonials } from '../data'
 
 export default function Results() {
@@ -8,6 +10,12 @@ export default function Results() {
   const rest = testimonials.filter(t => !t.feature)
   return (
     <>
+      <Seo
+        title="Client Results & Testimonials | Reframed Reality"
+        description="What presidents, HR directors, deans, and VPs say about working with Dr. Eliyahu Lotzar — executive coaching, retreats, DiSC training, and organizational development across associations, government, and business."
+        path="/results"
+        schema={[breadcrumbSchema([{ name: 'Results', path: '/results' }])]}
+      />
       <section className="phero">
         <div className="container">
           <div className="label"><span className="idx">(→)</span> &nbsp;Results</div>
@@ -39,3 +47,6 @@ export default function Results() {
     </>
   )
 }
+
+// react-router lazy() route entry
+export const Component = Results

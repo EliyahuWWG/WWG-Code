@@ -4,7 +4,9 @@ import CTA from '../components/CTA'
 import Arrow from '../components/Arrow'
 import MaskLines from '../components/MaskLines'
 import Marquee from '../components/Marquee'
+import Seo from '../components/Seo'
 import { openCalendly } from '../components/useCalendly'
+import { professionalServiceSchema, personSchema } from '../seo/schema'
 import { orgs, testimonials } from '../data'
 
 export default function Home() {
@@ -13,6 +15,12 @@ export default function Home() {
 
   return (
     <>
+      <Seo
+        title="Executive Coaching & Organizational Development in Washington, DC | Reframed Reality"
+        description="Dr. Eliyahu Lotzar helps CEOs, executives, and teams in the DC metro break through growth plateaus — organizational health assessment, leadership team alignment, executive coaching, and the faith-based Working With God track."
+        path="/"
+        schema={[professionalServiceSchema(), personSchema()]}
+      />
       {/* HERO */}
       <section className="hero">
         <div className="container">
@@ -179,3 +187,6 @@ export default function Home() {
     </>
   )
 }
+
+// react-router lazy() route entry
+export const Component = Home

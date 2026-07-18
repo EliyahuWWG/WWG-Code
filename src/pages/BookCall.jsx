@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react'
 import Reveal from '../components/Reveal'
 import MaskLines from '../components/MaskLines'
+import Seo from '../components/Seo'
+import { breadcrumbSchema } from '../seo/schema'
 import { CALENDLY, EMAIL, LINKEDIN, WWG } from '../data'
 
 const steps = [
@@ -40,6 +42,12 @@ export default function BookCall() {
 
   return (
     <>
+      <Seo
+        title="Book a Discovery Call | Reframed Reality"
+        description="Schedule a free 30-minute discovery call with Dr. Eliyahu Lotzar — a focused, no-pressure conversation about the leadership or organizational challenge in front of you."
+        path="/book-a-call"
+        schema={[breadcrumbSchema([{ name: 'Book a call', path: '/book-a-call' }])]}
+      />
       <section className="phero" style={{ paddingBottom: 'clamp(40px,5vw,64px)' }}>
         <div className="container">
           <div className="label"><span className="idx">(→)</span> &nbsp;Let’s talk</div>
@@ -90,3 +98,6 @@ export default function BookCall() {
     </>
   )
 }
+
+// react-router lazy() route entry
+export const Component = BookCall

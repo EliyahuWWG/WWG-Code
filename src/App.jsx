@@ -1,13 +1,7 @@
 import { useEffect, useRef } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import Nav from './components/Nav'
 import Footer from './components/Footer'
-import Home from './pages/Home'
-import Business from './pages/Business'
-import WorkingWithGod from './pages/WorkingWithGod'
-import About from './pages/About'
-import Results from './pages/Results'
-import BookCall from './pages/BookCall'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -39,7 +33,7 @@ function ScrollProgress() {
   return <div className="scroll-progress" ref={ref} aria-hidden="true" />
 }
 
-export default function App() {
+function Layout() {
   const { pathname } = useLocation()
   useEffect(() => { document.documentElement.classList.add('smooth') }, [])
   return (
@@ -50,18 +44,28 @@ export default function App() {
       <main>
         {/* Keyed wrapper re-mounts on navigation → short fade + rise. */}
         <div className="route-fade" key={pathname}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/business" element={<Business />} />
-            <Route path="/working-with-god" element={<WorkingWithGod />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/results" element={<Results />} />
-            <Route path="/book-a-call" element={<BookCall />} />
-            <Route path="*" element={<Home />} />
-          </Routes>
+          <Outlet />
         </div>
       </main>
       <Footer />
     </>
   )
 }
+
+// Route records consumed by ViteReactSSG (build-time prerender + client router).
+// Pages are lazy so each route ships as its own chunk.
+export const routes = [
+  {
+    path: '/',
+    element: <Layout />,
+    children: [
+      { index: true, lazy: () => import('./pages/Home') },
+      { path: 'business', lazy: () => import('./pages/Business') },
+      { path: 'working-with-god', lazy: () => import('./pages/WorkingWithGod') },
+      { path: 'about', lazy: () => import('./pages/About') },
+      { path: 'results', lazy: () => import('./pages/Results') },
+      { path: 'book-a-call', lazy: () => import('./pages/BookCall') },
+      { path: '*', lazy: () => import('./pages/Home') },
+    ],
+  },
+]
