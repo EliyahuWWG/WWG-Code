@@ -24,8 +24,8 @@ Then point `reframedreality.com` DNS at the host once he approves.
 1. **Headshot.** Drop `eliyahu.jpg` into `/public`, then in `src/pages/Home.jsx` and
    `src/pages/About.jsx` replace the `<div className="ph">…</div>` inside `.portrait` with
    `<img src="/eliyahu.jpg" alt="Dr. Eliyahu Lotzar" />`.
-2. **Book cover.** Drop `book-cover.jpg` into `/public` and swap the `.book` block in
-   `Home.jsx` + `WorkingWithGod.jsx` for `<img src="/book-cover.jpg" alt="Working With God" />`.
+2. **Book cover.** ✅ Done — the real cover is at `/public/working-with-god.jpg` (311×466),
+   shown via `.book-cover` in `Home.jsx` + `WorkingWithGod.jsx` with explicit width/height.
 3. **Confirm the Calendly URL.** Set in one place — `src/data.js` (`CALENDLY`). Currently
    `https://calendly.com/eliyahu-lotzar-reframedreality` (from his LinkedIn). Change there if needed.
 

@@ -2,6 +2,27 @@ import { CALENDLY } from '../data'
 
 let loading = null
 
+// Forward campaign attribution into Calendly so bookings can be traced back to
+// the page/campaign that produced them. Maps ?utm_* to Calendly's utm_ params
+// (Calendly surfaces these in the event record and any connected CRM).
+export function calendlyUrl(base = CALENDLY) {
+  if (typeof window === 'undefined') return base
+  try {
+    const src = new URLSearchParams(window.location.search)
+    const url = new URL(base)
+    for (const k of ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content']) {
+      const v = src.get(k)
+      if (v) url.searchParams.set(k, v)
+    }
+    if (!url.searchParams.has('utm_source') && document.referrer) {
+      try { url.searchParams.set('utm_source', new URL(document.referrer).hostname) } catch { /* ignore */ }
+    }
+    return url.toString()
+  } catch {
+    return base
+  }
+}
+
 // Injects Calendly's widget.js + widget.css once, on demand. Wired to
 // pointerenter/focus on booking CTAs so the widget is usually ready by the
 // time the visitor clicks — nothing Calendly loads on first paint.
@@ -39,7 +60,7 @@ export function openCalendly(e) {
   trackBookCall()
   if (window.Calendly && window.Calendly.initPopupWidget) {
     if (e) e.preventDefault()
-    window.Calendly.initPopupWidget({ url: CALENDLY })
+    window.Calendly.initPopupWidget({ url: calendlyUrl() })
   } else {
     warmCalendly()
   }

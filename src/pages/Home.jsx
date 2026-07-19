@@ -6,12 +6,16 @@ import MaskLines from '../components/MaskLines'
 import Marquee from '../components/Marquee'
 import Seo from '../components/Seo'
 import FAQ from '../components/FAQ'
+import Stats from '../components/Stats'
+import QuoteRotator from '../components/QuoteRotator'
+import Tilt from '../components/Tilt'
 import { openCalendly, warmCalendly } from '../components/useCalendly'
 import { professionalServiceSchema, personSchema, faqSchema } from '../seo/schema'
 import { orgs, testimonials, faqs } from '../data'
 
 export default function Home() {
   const feature = testimonials.find(t => t.feature)
+  const rotatorQuotes = [feature, ...testimonials.filter(t => !t.feature).slice(0, 3)]
   const twoQuotes = testimonials.filter(t => !t.feature).slice(0, 2)
 
   return (
@@ -100,6 +104,8 @@ export default function Home() {
               <div className="mt-3"><Link to="/about" className="tlink">More about Eliyahu &amp; the RR approach <Arrow /></Link></div>
             </Reveal>
           </div>
+
+          <Reveal className="mt-4"><Stats /></Reveal>
         </div>
       </section>
 
@@ -142,12 +148,9 @@ export default function Home() {
         <div className="container">
           <div className="sec-head">
             <div className="label"><span className="idx">(04)</span><br />The work speaks</div>
-            <Reveal className="pullquote" style={{ borderTop: 0, paddingTop: 0 }}>
-              <blockquote>“{feature.q}”</blockquote>
-              <div className="attr">— <b>{feature.who}</b>, {feature.role}</div>
-            </Reveal>
+            <Reveal><QuoteRotator quotes={rotatorQuotes} /></Reveal>
           </div>
-          <Reveal className="qgrid c2 mt-4" stagger={0.1}>
+          <Reveal className="qgrid c2 draw mt-4" stagger={0.1}>
             {twoQuotes.map(t => (
               <div className="q" key={t.who}>
                 <blockquote>{t.q}</blockquote>
@@ -173,12 +176,12 @@ export default function Home() {
               </div>
             </Reveal>
             <Reveal delay={0.05} style={{ display: 'flex', justifyContent: 'center' }}>
-              {/* REPLACE with <img src="/book-cover.jpg" alt="Working With God" /> */}
-              <div className="book">
-                <div className="k">Dr. Eliyahu Lotzar</div>
-                <div><div className="t">Working<br />With <b>God</b></div><div className="sub">The Ten Modes of Elevated Leadership</div></div>
-                <div className="k">Print · Kindle · Audible</div>
-              </div>
+              <Tilt>
+                <div className="book-cover">
+                  <img src="/working-with-god.jpg" width="311" height="466" loading="lazy"
+                    alt="Working With God: The Ten Modes of Elevated Leadership, by Dr. Eliyahu Lotzar" />
+                </div>
+              </Tilt>
             </Reveal>
           </div>
         </div>

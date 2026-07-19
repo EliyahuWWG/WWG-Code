@@ -2,9 +2,9 @@ import { useEffect, useRef } from 'react'
 import Reveal from '../components/Reveal'
 import MaskLines from '../components/MaskLines'
 import Seo from '../components/Seo'
-import { warmCalendly, trackBookCall } from '../components/useCalendly'
+import { warmCalendly, trackBookCall, calendlyUrl } from '../components/useCalendly'
 import { breadcrumbSchema } from '../seo/schema'
-import { CALENDLY, EMAIL, LINKEDIN, WWG } from '../data'
+import { CALENDLY, EMAIL, LINKEDIN, WWG, testimonials } from '../data'
 
 const steps = [
   ['01', 'You bring the challenge', 'Growth, people, strategy, a stuck team, a hard decision — whatever’s on your plate.'],
@@ -14,13 +14,17 @@ const steps = [
 
 export default function BookCall() {
   const ref = useRef(null)
+  const proof = testimonials.find(t => t.feature)
   useEffect(() => {
     let alive = true
     warmCalendly().then(() => {
       if (!alive || !ref.current || !window.Calendly) return
       ref.current.innerHTML = ''
+      const url = new URL(calendlyUrl())
+      url.searchParams.set('hide_gdpr_banner', '1')
+      url.searchParams.set('primary_color', 'b3623c')
       window.Calendly.initInlineWidget({
-        url: `${CALENDLY}?hide_gdpr_banner=1&primary_color=b3623c`,
+        url: url.toString(),
         parentElement: ref.current,
       })
     })
@@ -58,6 +62,12 @@ export default function BookCall() {
                 </div>
               </div>
               <p className="muted mt-1" style={{ fontSize: '.86rem' }}>Prefer email? Write to <a className="tlink" style={{ display: 'inline' }} href={`mailto:${EMAIL}`}>{EMAIL}</a></p>
+              {proof && (
+                <figure className="microproof mt-2">
+                  <blockquote>“{proof.q}”</blockquote>
+                  <figcaption><b>{proof.who}</b> · {proof.role}</figcaption>
+                </figure>
+              )}
             </Reveal>
 
             <Reveal delay={0.05}>

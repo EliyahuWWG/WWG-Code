@@ -3,6 +3,7 @@ import Reveal from '../components/Reveal'
 import CTA from '../components/CTA'
 import Arrow from '../components/Arrow'
 import MaskLines from '../components/MaskLines'
+import Tilt from '../components/Tilt'
 import Seo from '../components/Seo'
 import { openCalendly, warmCalendly } from '../components/useCalendly'
 import { bookSchema, breadcrumbSchema } from '../seo/schema'
@@ -42,11 +43,12 @@ export default function WorkingWithGod() {
           <div className="grid two" style={{ alignItems: 'center' }}>
             <Reveal style={{ display: 'flex', justifyContent: 'center' }}>
               {/* REPLACE with <img src="/book-cover.jpg" alt="Working With God" /> */}
-              <div className="book">
-                <div className="k">Dr. Eliyahu Lotzar</div>
-                <div><div className="t">Working<br />With <b>God</b></div><div className="sub">The Ten Modes of Elevated Leadership</div></div>
-                <div className="k">Print · Kindle · Audible</div>
-              </div>
+              <Tilt max={5}>
+                <div className="book-cover">
+                  <img src="/working-with-god.jpg" width="311" height="466"
+                    alt="Working With God: The Ten Modes of Elevated Leadership, by Dr. Eliyahu Lotzar" />
+                </div>
+              </Tilt>
             </Reveal>
             <Reveal delay={0.05}>
               <div className="label"><span className="idx">(01)</span> &nbsp;The book</div>
@@ -67,7 +69,7 @@ export default function WorkingWithGod() {
             <Reveal><h2 className="h2 maxw-60">A whole practice for leading with God.</h2>
               <p className="mt-2 muted maxw-60">Wherever you are on the comfort-with-God spectrum — exploring the idea, or walking closely for decades.</p></Reveal>
           </div>
-          <Reveal className="ilist mt-4" stagger={0.07}>
+          <Reveal className="ilist draw mt-4" stagger={0.07}>
             {offerings.map(([n, t, d]) => (
               <div className="irow" key={n}>
                 <div className="n">{n}</div><h3>{t}</h3><p>{d}</p>

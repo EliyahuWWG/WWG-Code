@@ -62,7 +62,7 @@ export default function Business() {
             <div className="label"><span className="idx">(02)</span><br />What we actually do</div>
             <Reveal><h2 className="h2 maxw-46">The full toolkit</h2></Reveal>
           </div>
-          <Reveal className="ilist mt-4" stagger={0.07}>
+          <Reveal className="ilist draw mt-4" stagger={0.07}>
             {businessServices.map(s => (
               <div className="irow" key={s.n}>
                 <div className="n">{s.n}</div>
@@ -83,7 +83,7 @@ export default function Business() {
               <p className="mt-2 muted maxw-60">Every engagement begins with careful situational assessment — the aim isn’t only to fix today’s problem but to prevent tomorrow’s and position you to seize opportunity.</p>
             </Reveal>
           </div>
-          <Reveal className="ilist mt-4" stagger={0.07}>
+          <Reveal className="ilist draw mt-4" stagger={0.07}>
             {challenges.map(c => (
               <div className="irow" key={c.n} style={{ gridTemplateColumns: '64px 1fr' }}>
                 <div className="n">{c.n}</div>

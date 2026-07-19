@@ -32,7 +32,7 @@ export default function Results() {
           </Reveal>
         </div>
         <div className="container">
-          <Reveal className="qgrid c3 mt-4" stagger={0.07}>
+          <Reveal className="qgrid c3 draw mt-4" stagger={0.07}>
             {rest.map(t => (
               <div className="q" key={t.who}>
                 <blockquote>{t.q}</blockquote>
