@@ -9,11 +9,21 @@ export default function Reveal({ children, as: Tag = 'div', className = '', dela
   useEffect(() => {
     const el = ref.current
     if (!el) return
+
+    // Anything already in (or above) the viewport on mount reveals immediately —
+    // covers deep links, refreshes mid-page, and fast scrolls before observe().
+    const vh = window.innerHeight || document.documentElement.clientHeight
+    if (el.getBoundingClientRect().top < vh * 0.92) { setSeen(true); return }
+
+    // Safety net: if IntersectionObserver is unsupported or never fires, reveal
+    // anyway so content is never stuck invisible.
+    if (typeof IntersectionObserver === 'undefined') { setSeen(true); return }
+    const fallback = setTimeout(() => setSeen(true), 2500)
     const io = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) { setSeen(true); io.unobserve(el) }
-    }, { threshold: 0.12 })
+      if (e.isIntersecting) { clearTimeout(fallback); setSeen(true); io.unobserve(el) }
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' })
     io.observe(el)
-    return () => io.disconnect()
+    return () => { clearTimeout(fallback); io.disconnect() }
   }, [])
 
   // will-change only while animating: clear it once the transition settles.

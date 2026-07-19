@@ -60,7 +60,7 @@ export default function Business() {
         <div className="container">
           <div className="sec-head">
             <div className="label"><span className="idx">(02)</span><br />What we actually do</div>
-            <Reveal><h2 className="h2 maxw-46">The full toolkit</h2></Reveal>
+            <Reveal><h2 className="h2 smallcaps maxw-46">The full toolkit</h2></Reveal>
           </div>
           <Reveal className="ilist draw mt-4" stagger={0.07}>
             {businessServices.map(s => (
