@@ -1,13 +1,13 @@
 {
-  "name": "Reframed Reality",
-  "short_name": "Reframed Reality",
-  "description": "Executive coaching & organizational development — Washington, DC.",
+  "name": "Working With God",
+  "short_name": "Working With God",
+  "description": "Faith-based leadership coaching, a two-day Master’s Class, and free community events — bringing God into real business decisions.",
   "icons": [
     { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
   ],
-  "theme_color": "#16211c",
-  "background_color": "#16211c",
+  "theme_color": "#050d6e",
+  "background_color": "#02061f",
   "display": "browser",
   "start_url": "/"
 }

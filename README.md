@@ -1,50 +1,51 @@
-# Reframed Reality — React site
+# Working With God — React site
 
-An editorial, conversion-focused site for Dr. Eliyahu Lotzar / Reframed Reality.
-Built with **Vite + React + React Router**. Dual-door structure (Business / Working With God);
-every CTA drives to his Calendly.
+Faith-based leadership site for **Dr. Eliyahu Lotzar** — the *Working With God* practice,
+built on the **Ten Modes of Elevated Leadership**. Vite + React + React Router, statically
+prerendered. Navy + gold editorial design; every path funnels to a call, a free event, or the book.
 
 ## Run it
 ```bash
 npm install
 npm run dev        # local dev at http://localhost:5173
-npm run build      # outputs static site to /dist
+npm run build      # static prerender → /dist (vite-react-ssg)
 npm run preview    # preview the production build
 ```
 
-## Deploy (all free)
-The build in `/dist` is plain static files.
-- **Netlify:** drag the `dist` folder onto https://app.netlify.com/drop. `public/_redirects` (SPA fallback) is already included.
-- **Vercel:** `vercel` from the project root — framework preset **Vite**. `vercel.json` handles SPA routing.
-- **GitHub Pages / any static host:** serve `dist`; ensure unknown routes fall back to `index.html`.
+## Routes
+Home · `/services` · `/events` · `/roundtable` · `/the-book` · `/about` · `/contact` · 404.
+Each route is prerendered to real HTML with its own `<title>`, meta, and JSON-LD.
 
-Then point `reframedreality.com` DNS at the host once he approves.
+## Deploy
+`/dist` is static files.
+- **Netlify** (recommended — forms work with zero backend): drag `dist` to app.netlify.com/drop,
+  or connect the repo. `public/_redirects` handles SPA fallback; the three forms are pre-registered
+  via static copies in `index.html`.
+- **Other hosts:** serve `dist`; set `VITE_FORM_ENDPOINT` (Formspree/Web3Forms) so forms reach an inbox.
 
-## Before final launch — 3 quick swaps
-1. **Headshot.** Drop `eliyahu.jpg` into `/public`, then in `src/pages/Home.jsx` and
-   `src/pages/About.jsx` replace the `<div className="ph">…</div>` inside `.portrait` with
+## Forms
+Contact, Roundtable registration, and the daily-quote signup are real, validated forms
+(`src/components/forms/`). They POST to Netlify Forms by default, or to `VITE_FORM_ENDPOINT` if set.
+Each has inline validation, a loading state, a success state, and an error state with a mailto fallback.
+
+## Before launch — client to-dos (also marked `TODO(client)` in code)
+1. **Headshot** → `/public/eliyahu.jpg`, then swap the `.ph` block in `About.jsx` for
    `<img src="/eliyahu.jpg" alt="Dr. Eliyahu Lotzar" />`.
-2. **Book cover.** ✅ Done — the real cover is at `/public/working-with-god.jpg` (311×466),
-   shown via `.book-cover` in `Home.jsx` + `WorkingWithGod.jsx` with explicit width/height.
-3. **Confirm the Calendly URL.** Set in one place — `src/data.js` (`CALENDLY`). Currently
-   `https://calendly.com/eliyahu-lotzar-reframedreality` (from his LinkedIn). Change there if needed.
-
-### Image rules (keeps Core Web Vitals green)
-When adding any real `<img>` (headshot, book cover, future photos):
-- Always set explicit `width` and `height` attributes (prevents layout shift).
-- Use `loading="lazy"` for anything below the fold; the Home hero portrait can stay eager.
-- Always write a descriptive `alt` (e.g. `alt="Dr. Eliyahu Lotzar"`); decorative images get `alt=""`.
-- Prefer WebP/AVIF with a JPEG fallback (`<picture>`), sized close to the largest display size
-  (portrait renders ≤ 640px wide — don't ship a 4000px original).
+2. **Book cover** → `/public/book-cover.jpg`, swap the `.book` block in `Home.jsx` + `TheBook.jsx`.
+3. **Form delivery inbox** — confirm Netlify or set `VITE_FORM_ENDPOINT`.
+4. **Next Roundtable date** — set `NEXT_ROUNDTABLE` in `src/data.js` (update monthly).
+5. **Calendly** — confirm `CALENDLY` in `src/data.js`; consider a WWG-specific event type.
+6. **Domain** — canonicals/sitemap assume `https://workingwithgod.live`.
 
 ## Where things live
-- `src/data.js` — all copy that changes often: testimonials, orgs, services, contact links.
-- `src/index.css` — the whole design system (colors, type, components) via CSS variables at the top.
-- `src/components/` — Nav, Footer, CTA, Reveal (scroll animation), Arrow, Calendly helper.
-- `src/pages/` — Home, Business, WorkingWithGod, About, Results, BookCall.
+- `src/data.js` — all real copy: constants, pillars, offerings, testimonials, endorsements, events, FAQ.
+- `src/index.css` — the design system (navy/gold tokens at the top).
+- `src/seo/schema.js` — JSON-LD builders (Person, ProfessionalService, Book, Event, Breadcrumb, FAQ).
+- `src/components/` — Nav, Footer, CTA, Reveal, MaskLines, Ridge, VideoFacade, forms/…
+- `src/pages/` — Home, Services, Events, Roundtable, TheBook, About, Contact, NotFound.
 
 ## Design notes
-- Type: Fraunces (display) · Inter (text) · JetBrains Mono (labels) — Google Fonts, already linked.
-- Palette: ink-green / warm bone / one clay accent. Hairline rules instead of drop shadows.
-- Fully responsive; mobile menu included. Respects `prefers-reduced-motion`.
-- Copy is drawn from his live site + LinkedIn — review for accuracy before launch.
+- Navy `#050d6e` + gold `#c9a227` + warm bone. Gold is an accent only (rules, numerals, marks) — never a fill.
+- Type: Fraunces (display) · Inter (body) · JetBrains Mono (labels) — self-hosted via @fontsource.
+- Mountain-ridge motif (perspective) draws itself on the hero. Everything respects `prefers-reduced-motion`.
+- Copy is his own, verbatim where possible. Review for accuracy before launch.
