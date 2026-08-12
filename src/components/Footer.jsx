@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { EMAIL, LINKEDIN, WWG } from '../data'
+import { CALENDLY, EMAIL, LINKEDIN, MEETUP, SERVICE_AREA } from '../data'
 import { openCalendly, warmCalendly } from './useCalendly'
 
 export default function Footer() {
@@ -8,27 +8,28 @@ export default function Footer() {
       <div className="container">
         <div className="grid-f">
           <div>
-            <Link to="/" className="wordmark"><span className="dot" />Reframed Reality</Link>
-            <p className="fdesc">Organizational development, executive coaching, and faith-based leadership for the people who lead. Based in the Washington, DC area — serving clients nationally and internationally.</p>
+            <Link to="/" className="wordmark"><span className="dot" aria-hidden="true" />Working With God</Link>
+            <p className="fdesc">Lead as the “Chief’s Executive Officer” — working with God, not just for Him. Faith-based leadership coaching, a two-day Master’s Class, and free community events. {SERVICE_AREA}.</p>
           </div>
           <div>
             <h4>Explore</h4>
-            <Link className="fl" to="/business">For Business</Link>
-            <Link className="fl" to="/working-with-god">Working With God</Link>
+            <Link className="fl" to="/services">Services</Link>
+            <Link className="fl" to="/events">Events</Link>
+            <Link className="fl" to="/the-book">The Book</Link>
             <Link className="fl" to="/about">About Eliyahu</Link>
-            <Link className="fl" to="/results">Results</Link>
+            <Link className="fl" to="/contact">Contact</Link>
           </div>
           <div>
             <h4>Get in touch</h4>
-            <Link className="fl" to="/book-a-call" onClick={openCalendly} onPointerEnter={warmCalendly} onFocus={warmCalendly}>Book a discovery call</Link>
+            <a className="fl" href={CALENDLY} target="_blank" rel="noopener" onClick={openCalendly} onPointerEnter={warmCalendly} onFocus={warmCalendly}>Book a call</a>
             <a className="fl" href={`mailto:${EMAIL}`}>{EMAIL}</a>
+            <a className="fl" href={MEETUP} target="_blank" rel="noopener">Join on Meetup</a>
             <a className="fl" href={LINKEDIN} target="_blank" rel="noopener">LinkedIn</a>
-            <a className="fl" href={WWG} target="_blank" rel="noopener">workingwithgod.live</a>
           </div>
         </div>
         <div className="fbot">
-          <span>© {new Date().getFullYear()} Reframed Reality, LLC</span>
-          <span>Reston, Virginia · Washington, DC Metro</span>
+          <span>© {new Date().getFullYear()} Working With God · Dr. Eliyahu Lotzar</span>
+          <span>{SERVICE_AREA}</span>
         </div>
       </div>
     </footer>

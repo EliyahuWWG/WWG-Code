@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 import { NavLink, Link } from 'react-router-dom'
+import { CALENDLY } from '../data'
 import { openCalendly, warmCalendly, trackBookCall } from './useCalendly'
 
 const links = [
-  { to: '/business', label: 'Business' },
-  { to: '/working-with-god', label: 'Working With God' },
+  { to: '/services', label: 'Services' },
+  { to: '/events', label: 'Events' },
+  { to: '/the-book', label: 'The Book' },
   { to: '/about', label: 'About' },
-  { to: '/results', label: 'Results' },
+  { to: '/contact', label: 'Contact' },
 ]
 
 export default function Nav() {
@@ -48,19 +50,18 @@ export default function Nav() {
 
   return (
     <>
-      <header className={`nav ${solid ? 'solid' : ''}`}>
+      <header className={`nav dark ${solid ? 'solid' : ''}`}>
         <div className="container nav-in">
-          <Link to="/" className="brand" aria-label="Reframed Reality — home">
-            <img src="/logo.jpg" alt="Reframed Reality" width="800" height="400" />
-          </Link>
+          <Link to="/" className="wordmark"><span className="dot" aria-hidden="true" />Working With God</Link>
           <nav className="nav-links" aria-label="Primary">
             {links.map(l => (
               <NavLink key={l.to} to={l.to} className={({ isActive }) => isActive ? 'active' : ''}>{l.label}</NavLink>
             ))}
           </nav>
           <div className="nav-right">
-            <Link to="/book-a-call" onClick={openCalendly} onPointerEnter={warmCalendly} onFocus={warmCalendly}
-              className="btn btn-onink">Book a call</Link>
+            <a href={CALENDLY} target="_blank" rel="noopener" onClick={openCalendly}
+              onPointerEnter={warmCalendly} onFocus={warmCalendly}
+              className={`btn ${solid ? 'btn-solid' : 'btn-line-lt'}`}>Book a call</a>
             <button ref={burgerRef} className="nav-burger" aria-label="Open menu" aria-expanded={open}
               aria-controls="site-menu" onClick={() => setOpen(true)}>
               <span /><span /><span />
@@ -72,9 +73,7 @@ export default function Nav() {
       <div id="site-menu" ref={menuRef} className={`menu ${open ? 'open' : ''}`} role="dialog" aria-modal="true"
         aria-label="Site menu" aria-hidden={!open}>
         <div className="menu-top">
-          <Link to="/" className="brand" onClick={() => setOpen(false)} aria-label="Reframed Reality — home">
-            <img src="/logo.jpg" alt="Reframed Reality" width="800" height="400" />
-          </Link>
+          <Link to="/" className="wordmark" style={{ color: 'var(--bone)' }} onClick={() => setOpen(false)}><span className="dot" aria-hidden="true" />Working With God</Link>
           <button className="menu-x" aria-label="Close menu" onClick={() => setOpen(false)}>✕</button>
         </div>
         <nav className="menu-links" aria-label="Mobile">
@@ -83,9 +82,9 @@ export default function Nav() {
               {l.label}<span className="n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
             </Link>
           ))}
-          <Link to="/book-a-call" onClick={() => { setOpen(false); trackBookCall('mobile-menu') }}>
-            Book a call<span className="n" aria-hidden="true">05</span>
-          </Link>
+          <a href={CALENDLY} target="_blank" rel="noopener" onClick={() => { setOpen(false); trackBookCall('mobile-menu') }}>
+            Book a call<span className="n" aria-hidden="true">06</span>
+          </a>
         </nav>
       </div>
     </>

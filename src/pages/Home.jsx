@@ -3,192 +3,179 @@ import Reveal from '../components/Reveal'
 import CTA from '../components/CTA'
 import Arrow from '../components/Arrow'
 import MaskLines from '../components/MaskLines'
-import Marquee from '../components/Marquee'
-import Seo from '../components/Seo'
+import Ridge from '../components/Ridge'
+import VideoFacade from '../components/VideoFacade'
+import BookCallLink from '../components/BookCallLink'
 import FAQ from '../components/FAQ'
-import Stats from '../components/Stats'
-import QuoteRotator from '../components/QuoteRotator'
-import Tilt from '../components/Tilt'
-import { openCalendly, warmCalendly } from '../components/useCalendly'
-import { professionalServiceSchema, personSchema, faqSchema } from '../seo/schema'
-import { orgs, testimonials, faqs } from '../data'
+import QuoteSignup from '../components/forms/QuoteSignup'
+import Seo from '../components/Seo'
+import { organizationSchema, personSchema, faqSchema } from '../seo/schema'
+import { pillars, offerings, testimonials, faqs, MEETUP } from '../data'
 
 export default function Home() {
-  const feature = testimonials.find(t => t.feature)
-  const rotatorQuotes = [feature, ...testimonials.filter(t => !t.feature).slice(0, 3)]
-  const twoQuotes = testimonials.filter(t => !t.feature).slice(0, 2)
+  const feature = testimonials.find(t => t.feature) || testimonials[0]
+  const rest = testimonials.filter(t => t !== feature).slice(0, 3)
 
   return (
     <>
       <Seo
-        title="Executive Coaching & Organizational Development in Washington, DC | Reframed Reality"
-        description="Dr. Eliyahu Lotzar helps CEOs, executives, and teams in the DC metro break through growth plateaus — organizational health assessment, leadership team alignment, executive coaching, and the faith-based Working With God track."
+        title="Working With God — Faith-Based Leadership Coaching | Dr. Eliyahu Lotzar"
+        description="Bring God into real business decisions — strategy, hiring, budgets, timing. Working With God is faith-based executive coaching, a two-day Master’s Class, and a free monthly Roundtable, built on the Ten Modes of Elevated Leadership."
         path="/"
-        schema={[professionalServiceSchema(), personSchema(), faqSchema(faqs)]}
+        schema={[organizationSchema(), personSchema(), faqSchema(faqs)]}
       />
+
       {/* HERO */}
       <section className="hero">
+        <Ridge />
         <div className="container">
-          <div className="label"><span className="idx">(01)</span> &nbsp;Organizational development &amp; executive coaching — Washington, DC</div>
+          <div className="eyebrow">When it’s time to be the leader HE needs you to be.</div>
           <div className="hero-top mt-3">
-            <h1 className="display balance"><MaskLines>Your leaders don’t plateau for lack of effort. They plateau for lack of <span className="serif-it">perspective.</span></MaskLines></h1>
+            <div>
+              <h1 className="display"><MaskLines>Working With God</MaskLines></h1>
+              <p className="hero-sub">The Ten Modes of Elevated Leadership</p>
+            </div>
             <div className="hero-side">
-              <p>I’m Dr. Eliyahu Lotzar — an organizational therapist who helps CEOs, executives, and teams break through the challenges that quietly cap their growth.</p>
-              <div className="mt-2">
-                <Link to="/book-a-call" onClick={openCalendly} onPointerEnter={warmCalendly} onFocus={warmCalendly} className="btn btn-onink">Book a discovery call <Arrow /></Link>
+              <p>Leaders don’t plateau for lack of effort. They plateau for lack of <span className="serif-it">perspective.</span> Working With God gives you the biggest and best perspective possible.</p>
+              <div className="row mt-3">
+                <BookCallLink className="btn btn-onink">Book a call</BookCallLink>
+                <Link to="/roundtable" className="tlink lt">Join the next Roundtable — free</Link>
               </div>
             </div>
           </div>
-
-          <Reveal className="hero-meta" stagger={0.07}>
-            <div><div className="k">Doctorate</div><div className="v">Ed.D., Exec. Leadership</div></div>
-            <div><div className="k">Clinical</div><div className="v">MSW · Therapist</div></div>
-            <div><div className="k">Certified</div><div className="v">Adizes · DiSC · Arbinger</div></div>
-            <div><div className="k">Author</div><div className="v">Working With God</div></div>
-          </Reveal>
-
-          {/* DUAL DOORS */}
-          <Reveal className="doors" stagger={0.12}>
-            <Link to="/business" className="door">
-              <div className="dnum">Track 01 — For organizations</div>
-              <h3>Business &amp; Leadership</h3>
-              <p>Organizational health, executive &amp; team coaching, and strategic planning for commercial ventures and national associations ready to grow — and sustain it.</p>
-              <div className="dmeta">Org health · Exec coaching · Strategy · Teams &amp; DiSC</div>
-              <span className="go">Explore business services <Arrow /></span>
-            </Link>
-            <Link to="/working-with-god" className="door">
-              <div className="dnum">Track 02 — For faith-driven leaders</div>
-              <h3>Working With God</h3>
-              <p>A book, a method, and a peer group for leaders who want to bring God into the real work of leadership — strategy, people, timing, and the hard decisions.</p>
-              <div className="dmeta">Modal Leadership · Coaching · Roundtable · The book</div>
-              <span className="go">Discern divine direction <Arrow /></span>
-            </Link>
-          </Reveal>
         </div>
       </section>
 
-      {/* TRUST */}
-      <div className="trust">
+      {/* VIDEO */}
+      <section className="section-sm">
         <div className="container">
-          <div className="lbl">Trusted by leaders at commercial ventures, national associations &amp; government</div>
-          <Marquee items={orgs} />
-        </div>
-      </div>
-
-      {/* THE PRACTITIONER */}
-      <section className="section">
-        <div className="container">
-          <div className="sec-head">
-            <div className="label"><span className="idx">(02)</span><br />The practitioner</div>
-            <Reveal><h2 className="h2 maxw-60">Part strategist, part therapist — all in service of your growth.</h2></Reveal>
-          </div>
-
-          <div className="grid two mt-4" style={{ alignItems: 'start' }}>
-            <Reveal className="portrait">
-              {/* REPLACE .ph with <img src="/eliyahu.jpg" alt="Dr. Eliyahu Lotzar" /> */}
-              <div className="ph">
-                <div><div className="mono">EL</div><small>Add headshot → /public/eliyahu.jpg</small></div>
-              </div>
-              <div className="cap"><b>Dr. Eliyahu Lotzar, Ed.D., MSW</b><span>Founder &amp; Principal Consultant</span></div>
-            </Reveal>
-            <Reveal delay={0.05}>
-              <p className="lead">Most consultants hand you a report and leave. With a doctorate in executive leadership and years as a clinical therapist, I do something different: I get inside the real dynamics — the competing values, the unspoken conflicts, the people challenges — and stay until change takes root.</p>
-              <p className="mt-2 muted">My dissertation on soft skills and organizational culture has been accessed in 130+ countries. But the work that matters is closer to home: helping a CEO make a hard call, aligning a leadership team, turning a high-producer into a real people-leader.</p>
-              <div className="tags mt-3">
-                <span className="tag">Competing Values Framework</span>
-                <span className="tag">Adizes Methodology</span>
-                <span className="tag">Everything DiSC®</span>
-                <span className="tag">Arbinger</span>
-                <span className="tag">5-Factor Org Health</span>
-              </div>
-              <div className="mt-3"><Link to="/about" className="tlink">More about Eliyahu &amp; the RR approach <Arrow /></Link></div>
-            </Reveal>
-          </div>
-
-          <Reveal className="mt-4"><Stats /></Reveal>
+          <Reveal style={{ maxWidth: 880, margin: '0 auto' }}><VideoFacade /></Reveal>
         </div>
       </section>
 
-      {/* TWO TRACKS */}
+      {/* FOUR PILLARS */}
       <section className="section on-bone">
         <div className="container">
           <div className="sec-head">
-            <div className="label"><span className="idx">(03)</span><br />Two ways to work</div>
-            <Reveal><h2 className="h2 maxw-60">Choose the door that fits where you lead from.</h2></Reveal>
+            <div className="label"><span className="idx">(01)</span><br />Why work with God</div>
+            <Reveal><h2 className="h2 maxw-60">Not asking God to bless your plans. Asking what He wants to do through your leadership.</h2></Reveal>
           </div>
-          <div className="grid two mt-4">
-            <Reveal style={{ borderTop: '1px solid var(--line)', paddingTop: 32 }}>
-              <div className="label">Track 01</div>
-              <h3 className="h3 mt-1">Business &amp; Leadership</h3>
-              <p className="mt-1 muted">For owners, executives, and association leaders — change at three levels:</p>
-              <div className="stack-tight mt-2">
-                <div><b>Organization</b> — health assessment, growth &amp; change, strategic + action planning</div>
-                <div><b>Team</b> — senior-team alignment, new-manager training, high-performing teams, DiSC</div>
-                <div><b>Individual</b> — executive &amp; management coaching, a truth-telling sounding board</div>
+          <Reveal className="ilist mt-4 draw" stagger={0.08}>
+            {pillars.map(p => (
+              <div className="irow" key={p.n}>
+                <div className="n">{p.n}</div>
+                <h3>{p.t}</h3>
+                <p dangerouslySetInnerHTML={{ __html: p.body }} />
               </div>
-              <div className="mt-3"><Link to="/business" className="btn btn-line">Explore business services <Arrow /></Link></div>
+            ))}
+          </Reveal>
+        </div>
+      </section>
+
+      {/* WHAT IS WWG */}
+      <section className="section">
+        <div className="container">
+          <div className="grid two" style={{ alignItems: 'start' }}>
+            <Reveal>
+              <div className="label"><span className="idx">(02)</span> &nbsp;The idea</div>
+              <h2 className="h2 mt-2 maxw-60">What is Working With God?</h2>
             </Reveal>
-            <Reveal delay={0.05} style={{ borderTop: '1px solid var(--clay)', paddingTop: 32 }}>
-              <div className="label" style={{ color: 'var(--clay-ink)' }}>Track 02</div>
-              <h3 className="h3 mt-1">Working With God</h3>
-              <p className="mt-1 muted">For faith-driven leaders who want more than faith-at-work language — a grounded way to bring God into real decisions:</p>
-              <div className="stack-tight mt-2">
-                <div><b>The book</b> — <span className="serif-it">Working With God: The Ten Modes of Elevated Leadership</span></div>
-                <div><b>The method</b> — Modal Leadership, to discern divine direction in real decisions</div>
-                <div><b>The community</b> — faith-based coaching, webinars &amp; a monthly roundtable</div>
-              </div>
-              <div className="mt-3"><Link to="/working-with-god" className="btn btn-line">Discover Working With God <Arrow /></Link></div>
+            <Reveal delay={0.05}>
+              <p className="lead">Working With God (WWG) is a vehicle for leaders to discern divine direction. It is a set of professional services and free events.</p>
+              <p className="mt-2 muted maxw-60">It’s based on the <span className="serif-it">Ten Modes of Elevated Leadership</span> method from Dr. Lotzar’s book — a practical way to bring God into strategy, hiring, budgets, and timing.</p>
+              <div className="mt-3"><Link to="/the-book" className="tlink">Read about the method <Arrow /></Link></div>
             </Reveal>
           </div>
         </div>
       </section>
 
-      {/* RESULTS */}
+      {/* WAYS TO ENGAGE */}
+      <section className="section on-bone">
+        <div className="container">
+          <div className="sec-head">
+            <div className="label"><span className="idx">(03)</span><br />Ways to engage</div>
+            <Reveal><h2 className="h2 maxw-60">Four ways to start — two of them free.</h2></Reveal>
+          </div>
+          <Reveal className="ilist mt-4 draw" stagger={0.08}>
+            {offerings.map(o => (
+              <div className="irow" key={o.n}>
+                <div className="n">{o.n}</div>
+                <h3>{o.title} {o.tag && <span className="pill">{o.tag}</span>}</h3>
+                <div>
+                  <p>{o.body}</p>
+                  {o.external
+                    ? <a className="go" href={o.href} target="_blank" rel="noopener">{o.cta} <Arrow /></a>
+                    : <Link className="go" to={o.href}>{o.cta} <Arrow /></Link>}
+                </div>
+              </div>
+            ))}
+          </Reveal>
+        </div>
+      </section>
+
+      {/* PROOF */}
       <section className="section">
         <div className="container">
           <div className="sec-head">
-            <div className="label"><span className="idx">(04)</span><br />The work speaks</div>
-            <Reveal><QuoteRotator quotes={rotatorQuotes} /></Reveal>
+            <div className="label"><span className="idx">(04)</span><br />What people say</div>
+            <Reveal className="pullquote" style={{ borderTop: 0, paddingTop: 0 }}>
+              <blockquote>“{feature.q}”</blockquote>
+              <div className="attr">— <b>{feature.who}</b>, {feature.role}</div>
+            </Reveal>
           </div>
-          <Reveal className="qgrid c2 draw mt-4" stagger={0.1}>
-            {twoQuotes.map(t => (
+          <Reveal className="qgrid c3 mt-4 draw" stagger={0.08}>
+            {rest.map(t => (
               <div className="q" key={t.who}>
                 <blockquote>{t.q}</blockquote>
                 <div className="attr"><b>{t.who}</b><span>{t.role}</span></div>
               </div>
             ))}
           </Reveal>
-          <div className="mt-3"><Link to="/results" className="tlink">Read all client results &amp; recommendations <Arrow /></Link></div>
         </div>
       </section>
 
-      {/* BOOK */}
+      {/* BOOK TEASER */}
       <section className="section on-bone">
         <div className="container">
           <div className="grid two" style={{ alignItems: 'center' }}>
             <Reveal>
               <div className="label"><span className="idx">(05)</span> &nbsp;The book</div>
-              <h2 className="h2 mt-2 maxw-60">A real-time dialogue with the Creator — about spreadsheets, budgets, teams, and timing.</h2>
-              <p className="mt-2 muted maxw-60">Not a book about being “holier” at the office. It introduces <span className="serif-it">Modal Leadership</span>: ten operating modes that help you analyze, pray, discern, decide, and implement — turning complex hurdles into clear paths forward. Available in print, Kindle, and Audible.</p>
+              <h2 className="h2 mt-2 maxw-60">God is ready to work with you.</h2>
+              <p className="mt-2 muted maxw-60">Working With God is more than just a book — it’s a practical way to partner with God right in the middle of your toughest work challenges. It introduces <span className="serif-it">Modal Leadership</span> and the Ten Modes of Elevated Leadership.</p>
               <div className="row mt-3">
-                <Link to="/working-with-god" className="btn btn-solid">Learn the method <Arrow /></Link>
-                <Link to="/book-a-call" onClick={openCalendly} onPointerEnter={warmCalendly} onFocus={warmCalendly} className="tlink">Talk to Eliyahu</Link>
+                <Link to="/the-book" className="btn btn-solid">About the book <Arrow /></Link>
+                <BookCallLink className="tlink" arrow={false}>Talk to Eliyahu</BookCallLink>
               </div>
             </Reveal>
             <Reveal delay={0.05} style={{ display: 'flex', justifyContent: 'center' }}>
-              <Tilt>
-                <div className="book-cover">
-                  <img src="/working-with-god.jpg" width="311" height="466" loading="lazy"
-                    alt="Working With God: The Ten Modes of Elevated Leadership, by Dr. Eliyahu Lotzar" />
-                </div>
-              </Tilt>
+              {/* TODO(client): replace with real cover → /public/book-cover.jpg (alt="Working With God") */}
+              <div className="book">
+                <div className="k">Dr. Eliyahu Lotzar</div>
+                <div><div className="t">Working<br />With <b>God</b></div><div className="sub">The Ten Modes of Elevated Leadership</div></div>
+                <div className="k">Print · Kindle · Audible</div>
+              </div>
             </Reveal>
           </div>
         </div>
       </section>
 
-      {/* FAQ — answers come from data.js; FAQPage schema reads the same array */}
-      <FAQ label="(06)" />
+      {/* DAILY QUOTE SIGNUP */}
+      <section className="section">
+        <div className="container">
+          <div className="grid two" style={{ alignItems: 'start' }}>
+            <Reveal>
+              <div className="label"><span className="idx">(06)</span> &nbsp;Daily quote</div>
+              <h2 className="h2 mt-2 maxw-60">A short word for the workday.</h2>
+              <p className="mt-2 muted maxw-60">Get a <span className="serif-it">short</span> inspirational quote each workday morning, and occasional news about new events.</p>
+              <p className="mt-2 muted" style={{ fontSize: '.9rem' }}>No selling of your data. Unsubscribe anytime.</p>
+            </Reveal>
+            <Reveal delay={0.05}><QuoteSignup /></Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <FAQ label="(07)" />
 
       <CTA />
     </>

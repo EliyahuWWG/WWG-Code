@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link, Outlet, useLocation } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import Nav from './components/Nav'
 import Footer from './components/Footer'
 import Arrow from './components/Arrow'
+import { CALENDLY } from './data'
 import { openCalendly, warmCalendly } from './components/useCalendly'
 
 function ScrollToTop() {
@@ -11,7 +12,7 @@ function ScrollToTop() {
   return null
 }
 
-// Thin clay progress bar along the top of the viewport.
+// Thin gold progress bar along the top of the viewport.
 function ScrollProgress() {
   const ref = useRef(null)
   useEffect(() => {
@@ -35,8 +36,8 @@ function ScrollProgress() {
   return <div className="scroll-progress" ref={ref} aria-hidden="true" />
 }
 
-// Slim bottom booking bar on small screens; hidden on the booking page
-// itself, and only slides in once the visitor has scrolled past the hero.
+// Slim bottom booking bar on small screens; hidden on the contact page,
+// and only slides in once the visitor has scrolled past the hero.
 function StickyCTA() {
   const { pathname } = useLocation()
   const [show, setShow] = useState(false)
@@ -46,19 +47,20 @@ function StickyCTA() {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
-  if (pathname === '/book-a-call') return null
+  if (pathname === '/contact') return null
   return (
     <div className={`sticky-cta ${show ? 'show' : ''}`}>
-      <Link to="/book-a-call" onClick={openCalendly} onPointerEnter={warmCalendly} onFocus={warmCalendly} className="btn btn-onink">
-        Book a discovery call <Arrow />
-      </Link>
+      <a href={CALENDLY} target="_blank" rel="noopener" onClick={openCalendly}
+        onPointerEnter={warmCalendly} onFocus={warmCalendly} className="btn btn-onink">
+        Book a call <Arrow />
+      </a>
     </div>
   )
 }
 
 function Layout() {
-  const { pathname } = useLocation()
   useEffect(() => { document.documentElement.classList.add('smooth') }, [])
+  const { pathname } = useLocation()
   return (
     <>
       <a className="skip-link" href="#main">Skip to content</a>
@@ -85,11 +87,12 @@ export const routes = [
     element: <Layout />,
     children: [
       { index: true, lazy: () => import('./pages/Home') },
-      { path: 'business', lazy: () => import('./pages/Business') },
-      { path: 'working-with-god', lazy: () => import('./pages/WorkingWithGod') },
+      { path: 'services', lazy: () => import('./pages/Services') },
+      { path: 'events', lazy: () => import('./pages/Events') },
+      { path: 'roundtable', lazy: () => import('./pages/Roundtable') },
+      { path: 'the-book', lazy: () => import('./pages/TheBook') },
       { path: 'about', lazy: () => import('./pages/About') },
-      { path: 'results', lazy: () => import('./pages/Results') },
-      { path: 'book-a-call', lazy: () => import('./pages/BookCall') },
+      { path: 'contact', lazy: () => import('./pages/Contact') },
       { path: '*', lazy: () => import('./pages/NotFound') },
     ],
   },

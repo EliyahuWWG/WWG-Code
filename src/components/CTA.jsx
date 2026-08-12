@@ -1,12 +1,12 @@
-import { Link } from 'react-router-dom'
+import { CALENDLY } from '../data'
 import { openCalendly, warmCalendly } from './useCalendly'
 import Arrow from './Arrow'
 import Reveal from './Reveal'
 
 export default function CTA({
-  label = '(→) Let’s talk',
-  title = 'One honest conversation can reframe the whole picture.',
-  text = 'No pitch, no pressure — a focused conversation about the challenge in front of you and whether Reframed Reality is the right partner to help.',
+  label = '(→) Start the conversation',
+  title = 'God is ready to work with you.',
+  text = 'Bring the real decision in front of you — strategy, a hire, a budget, the timing of a risk. A focused call to see how the Working With God method applies to it.',
 }) {
   return (
     <section className="cta">
@@ -19,9 +19,10 @@ export default function CTA({
           <div>
             <p>{text}</p>
             <div className="mt-2">
-              <Link to="/book-a-call" onClick={openCalendly} onPointerEnter={warmCalendly} onFocus={warmCalendly} className="btn btn-onink btn-lg">
-                Book a discovery call <Arrow />
-              </Link>
+              <a href={CALENDLY} target="_blank" rel="noopener" onClick={openCalendly}
+                onPointerEnter={warmCalendly} onFocus={warmCalendly} className="btn btn-onink btn-lg">
+                Book a call <Arrow />
+              </a>
             </div>
           </div>
         </Reveal>
