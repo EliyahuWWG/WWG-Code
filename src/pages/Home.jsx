@@ -30,10 +30,10 @@ export default function Home() {
         <Ridge />
         <div className="container">
           <div className="eyebrow">When it’s time to be the leader HE needs you to be.</div>
+          <p className="hero-sub">The Ten Modes of Elevated Leadership</p>
           <div className="hero-top mt-3">
             <div>
               <h1 className="display"><MaskLines>Working With God</MaskLines></h1>
-              <p className="hero-sub">The Ten Modes of Elevated Leadership</p>
             </div>
             <div className="hero-side">
               <p>Leaders don’t plateau for lack of effort. They plateau for lack of <span className="serif-it">perspective.</span> Working With God gives you the biggest and best perspective possible.</p>

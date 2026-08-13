@@ -190,13 +190,13 @@ em, .serif-it { }
 
 /* ---------- Hero ---------- */
 /* The one permitted gradient: subtle vertical navy-950 → navy-900. */
-.hero { background: linear-gradient(180deg, var(--navy-950), var(--navy-900)); color: var(--bone); padding: clamp(140px, 20vh, 220px) 0 0; position: relative; overflow: hidden; }
+.hero { background: linear-gradient(180deg, var(--navy-950), var(--navy-900)); color: var(--bone); padding: clamp(112px, 14vh, 156px) 0 clamp(28px, 5vh, 56px); position: relative; overflow: hidden; }
 .hero-top { display: grid; gap: 28px; grid-template-columns: 1fr; }
-@media (min-width: 900px){ .hero-top { grid-template-columns: 1.35fr .65fr; align-items: end; } }
+@media (min-width: 900px){ .hero-top { grid-template-columns: 1.35fr .65fr; align-items: start; } }
 .hero .display { color: var(--bone); max-width: 16ch; }
 .hero .display .serif-it { color: var(--gold-400); }
-.hero-sub { font-family: var(--f-disp); font-style: italic; font-weight: 300; font-size: clamp(1.3rem,2.4vw,1.9rem); color: var(--gold-400); margin-top: 10px; letter-spacing: -.01em; }
-.hero-side { align-self: end; padding-bottom: 8px; }
+.hero-sub { font-family: var(--f-disp); font-style: italic; font-weight: 300; font-size: clamp(1.3rem,2.4vw,1.9rem); color: var(--gold-400); margin-top: 14px; letter-spacing: -.01em; }
+.hero-side { align-self: start; padding-top: 6px; }
 .hero-side p { color: rgba(247,244,236,.82); font-size: clamp(1.05rem,1.4vw,1.22rem); line-height: 1.5; }
 .hero-side .serif-it { color: var(--gold-400); font-style: italic; }
 .hero-meta { display: flex; flex-wrap: wrap; gap: 8px 0; margin-top: clamp(40px,6vw,72px); border-top: 1px solid var(--line-dk); }
