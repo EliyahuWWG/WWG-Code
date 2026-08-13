@@ -13,13 +13,15 @@ const links = [
 ]
 
 export default function Nav() {
-  const [solid, setSolid] = useState(false)
+  const [min, setMin] = useState(false)
   const [open, setOpen] = useState(false)
   const menuRef = useRef(null)
   const burgerRef = useRef(null)
 
+  // Full pill over the hero; once scrolled down it minimizes to just the
+  // wordmark + Book a call, and expands back to full near the top.
   useEffect(() => {
-    const onScroll = () => setSolid(window.scrollY > 40)
+    const onScroll = () => setMin(window.scrollY > 100)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
@@ -51,7 +53,7 @@ export default function Nav() {
 
   return (
     <>
-      <header className={`nav dark ${solid ? 'solid' : ''}`}>
+      <header className={`nav dark ${min ? 'min' : ''}`}>
         <div className="container nav-in">
           <Link to="/" className="wordmark"><span className="dot" aria-hidden="true" />Working With God</Link>
           <nav className="nav-links" aria-label="Primary">
@@ -62,7 +64,7 @@ export default function Nav() {
           <div className="nav-right">
             <a href={CALENDLY} target="_blank" rel="noopener" onClick={openCalendly}
               onPointerEnter={warmCalendly} onFocus={warmCalendly}
-              className={`btn ${solid ? 'btn-solid' : 'btn-line-lt'}`}>Book a call</a>
+              className="btn btn-onink">Book a call</a>
             <button ref={burgerRef} className="nav-burger" aria-label="Open menu" aria-expanded={open}
               aria-controls="site-menu" onClick={() => setOpen(true)}>
               <span /><span /><span />

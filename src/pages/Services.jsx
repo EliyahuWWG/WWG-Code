@@ -30,7 +30,7 @@ export default function Services() {
       <section className="section">
         <div className="container">
           <div className="sec-head">
-            <div className="label">Executive coaching · 1:1</div>
+            <div className="label"><span className="sec-num">01</span><br />Executive coaching · 1:1</div>
             <Reveal><h2 className="h2 maxw-60">Skilled coaching, prayer, and the Ten Modes, applied to your challenge.</h2>
               <p className="mt-2 muted maxw-60">For leaders whose business is <span className="serif-it">coasting along, plateaued</span>and for those at a transition point who feel stagnant or underutilized, or overwhelmed and anxious.</p></Reveal>
           </div>
@@ -52,7 +52,7 @@ export default function Services() {
       <section className="section on-bone">
         <div className="container">
           <div className="sec-head">
-            <div className="label">The Master’s Class · 2-day workshop</div>
+            <div className="label"><span className="sec-num">02</span><br />The Master’s Class · 2-day workshop</div>
             <Reveal><h2 className="h2 maxw-60">Two days on your most complex operational matters.</h2>
               <p className="mt-2 muted maxw-60">An experiential deep-dive into the Ten Modes and <span className="serif-it">Modal Agility</span>. Dr. Lotzar has led leadership workshops since 1989.</p></Reveal>
           </div>
@@ -75,7 +75,7 @@ export default function Services() {
         <div className="container">
           <div className="grid two" style={{ alignItems: 'start' }}>
             <Reveal>
-              <div className="label">Inspirational speaking</div>
+              <div className="label"><span className="sec-num">03</span><br />Inspirational speaking</div>
               <h2 className="h2 mt-2 maxw-60">A picture of what can be.</h2>
             </Reveal>
             <Reveal delay={0.05}>

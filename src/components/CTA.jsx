@@ -10,11 +10,9 @@ export default function CTA({
     <section className="cta">
       <div className="container">
         <Reveal className="inner">
-          <div>
-            <div className="label"><span className="idx">{label}</span></div>
-            <h2 className="h2 mt-2">{title}</h2>
-          </div>
-          <div>
+          <div className="label"><span className="idx">{label}</span></div>
+          <h2 className="h2 cta-title">{title}</h2>
+          <div className="cta-body">
             <p>{text}</p>
             <div className="mt-2">
               <a href={CALENDLY} target="_blank" rel="noopener" onClick={openCalendly}
