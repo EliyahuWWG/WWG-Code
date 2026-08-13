@@ -6,6 +6,7 @@ import MaskLines from '../components/MaskLines'
 import Ridge from '../components/Ridge'
 import VideoFacade from '../components/VideoFacade'
 import BookCallLink from '../components/BookCallLink'
+import Tilt from '../components/Tilt'
 import FAQ from '../components/FAQ'
 import QuoteSignup from '../components/forms/QuoteSignup'
 import Seo from '../components/Seo'
@@ -19,8 +20,8 @@ export default function Home() {
   return (
     <>
       <Seo
-        title="Working With God — Faith-Based Leadership Coaching | Dr. Eliyahu Lotzar"
-        description="Bring God into real business decisions — strategy, hiring, budgets, timing. Working With God is faith-based executive coaching, a two-day Master’s Class, and a free monthly Roundtable, built on the Ten Modes of Elevated Leadership."
+        title="Working With God, Faith-Based Leadership Coaching | Dr. Eliyahu Lotzar"
+        description="Bring God into real business decisions, strategy, hiring, budgets, timing. Working With God is faith-based executive coaching, a two-day Master’s Class, and a free monthly Roundtable, built on the Ten Modes of Elevated Leadership."
         path="/"
         schema={[organizationSchema(), personSchema(), faqSchema(faqs)]}
       />
@@ -87,7 +88,7 @@ export default function Home() {
             </Reveal>
             <Reveal delay={0.05}>
               <p className="lead">Working With God (WWG) is a vehicle for leaders to discern divine direction. It is a set of professional services and free events.</p>
-              <p className="mt-2 muted maxw-60">It’s based on the <span className="serif-it">Ten Modes of Elevated Leadership</span> method from Dr. Lotzar’s book — a practical way to bring God into strategy, hiring, budgets, and timing.</p>
+              <p className="mt-2 muted maxw-60">It’s based on the <span className="serif-it">Ten Modes of Elevated Leadership</span> method from Dr. Lotzar’s book, a practical way to bring God into strategy, hiring, budgets, and timing.</p>
               <div className="mt-3"><Link to="/the-book" className="tlink">Read about the method <Arrow /></Link></div>
             </Reveal>
           </div>
@@ -99,7 +100,8 @@ export default function Home() {
         <div className="container">
           <div className="sec-head">
             <div className="label"><span className="idx">(03)</span><br />Ways to engage</div>
-            <Reveal><h2 className="h2 maxw-60">Four ways to start — two of them free.</h2></Reveal>
+            <Reveal><h2 className="h2 maxw-60">Bring God into your next decision.</h2>
+              <p className="mt-2 muted maxw-60">Four ways to begin. Two of them are free.</p></Reveal>
           </div>
           <Reveal className="ilist mt-4 draw" stagger={0.08}>
             {offerings.map(o => (
@@ -125,7 +127,7 @@ export default function Home() {
             <div className="label"><span className="idx">(04)</span><br />What people say</div>
             <Reveal className="pullquote" style={{ borderTop: 0, paddingTop: 0 }}>
               <blockquote>“{feature.q}”</blockquote>
-              <div className="attr">— <b>{feature.who}</b>, {feature.role}</div>
+              <div className="attr"><b>{feature.who}</b>, {feature.role}</div>
             </Reveal>
           </div>
           <Reveal className="qgrid c3 mt-4 draw" stagger={0.08}>
@@ -146,19 +148,19 @@ export default function Home() {
             <Reveal>
               <div className="label"><span className="idx">(05)</span> &nbsp;The book</div>
               <h2 className="h2 mt-2 maxw-60">God is ready to work with you.</h2>
-              <p className="mt-2 muted maxw-60">Working With God is more than just a book — it’s a practical way to partner with God right in the middle of your toughest work challenges. It introduces <span className="serif-it">Modal Leadership</span> and the Ten Modes of Elevated Leadership.</p>
+              <p className="mt-2 muted maxw-60">Working With God is more than just a book, it’s a practical way to partner with God right in the middle of your toughest work challenges. It introduces <span className="serif-it">Modal Leadership</span> and the Ten Modes of Elevated Leadership.</p>
               <div className="row mt-3">
                 <Link to="/the-book" className="btn btn-solid">About the book <Arrow /></Link>
                 <BookCallLink className="tlink" arrow={false}>Talk to Eliyahu</BookCallLink>
               </div>
             </Reveal>
             <Reveal delay={0.05} style={{ display: 'flex', justifyContent: 'center' }}>
-              {/* TODO(client): replace with real cover → /public/book-cover.jpg (alt="Working With God") */}
-              <div className="book">
-                <div className="k">Dr. Eliyahu Lotzar</div>
-                <div><div className="t">Working<br />With <b>God</b></div><div className="sub">The Ten Modes of Elevated Leadership</div></div>
-                <div className="k">Print · Kindle · Audible</div>
-              </div>
+              <Tilt max={9}>
+                <div className="book-cover">
+                  <img src="/book-cover.jpg" width="760" height="1140"
+                    alt="Working With God: The Ten Modes of Elevated Leadership, by Dr. Eliyahu Lotzar" />
+                </div>
+              </Tilt>
             </Reveal>
           </div>
         </div>

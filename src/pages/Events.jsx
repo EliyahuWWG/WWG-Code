@@ -11,7 +11,7 @@ export default function Events() {
   return (
     <>
       <Seo
-        title="Events — The Roundtable & Monthly Webinar | Working With God"
+        title="Events, The Roundtable & Monthly Webinar | Working With God"
         description="Free community events for Christian business leaders: the in-person Working With God Roundtable on the 3rd Wednesday each month near Chantilly, VA, and a monthly online webinar introducing the method."
         path="/events"
         schema={[breadcrumbSchema([{ name: 'Events', path: '/events' }]), roundtableEventSchema()]}
@@ -40,7 +40,7 @@ export default function Events() {
             <Reveal className="stack-tight">
               <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>When</b><br /><span className="muted">{ROUNDTABLE_TIME}</span></div>
               <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>Where</b><br /><span className="muted">Private room at Starbucks · {ROUNDTABLE_ADDRESS}</span></div>
-              {/* TODO(client): update monthly — the specific next date */}
+              {/* TODO(client): update monthly, the specific next date */}
               <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>Next meeting</b><br /><span className="muted">3rd Wednesday, monthly{NEXT_ROUNDTABLE !== 'TBD' ? ` · ${NEXT_ROUNDTABLE}` : ''}</span></div>
               <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>Sponsor</b><br /><span className="muted">MBH Settlement Group (Rich Nguyen, Esq.)</span></div>
             </Reveal>
@@ -64,7 +64,7 @@ export default function Events() {
               <h2 className="h2 mt-2 maxw-60">Monthly Webinar</h2>
             </Reveal>
             <Reveal delay={0.05}>
-              <p className="lead">A 60-minute interactive introduction to the Working With God method — see how the Ten Modes of Elevated Leadership apply to the business challenges you’re facing today.</p>
+              <p className="lead">A 60-minute interactive introduction to the Working With God method, see how the Ten Modes of Elevated Leadership apply to the business challenges you’re facing today.</p>
               <div className="mt-3"><a href={MEETUP} target="_blank" rel="noopener" className="btn btn-line">Register on Meetup <Arrow /></a></div>
             </Reveal>
           </div>
@@ -93,8 +93,8 @@ export default function Events() {
       <section className="section on-bone">
         <div className="container">
           <Reveal className="pullquote">
-            <blockquote>“I found the Working With God roundtable event so valuable — truly enlightening; it was a foundational conversation.”</blockquote>
-            <div className="attr">— <b>Sylvia Palmer</b>, Chief Impact Officer, Amplify</div>
+            <blockquote>“I found the Working With God roundtable event so valuable, truly enlightening; it was a foundational conversation.”</blockquote>
+            <div className="attr"><b>Sylvia Palmer</b>, Chief Impact Officer, Amplify</div>
           </Reveal>
         </div>
       </section>

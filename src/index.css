@@ -1,11 +1,11 @@
 /* =====================================================================
-   REFRAMED REALITY — editorial design system
+   REFRAMED REALITY - editorial design system
    Restrained: ink-green + bone + one clay accent. Hairlines, not shadows.
    Type: Fraunces (display) · Inter (text) · JetBrains Mono (labels)
    ===================================================================== */
 
 /* Self-hosted fonts (latin subsets, font-display: swap).
-   Fraunces ships as a variable font with the opsz axis — keep it: the
+   Fraunces ships as a variable font with the opsz axis - keep it: the
    optical sizing is what gives the display type its editorial look. */
 @import '@fontsource-variable/fraunces/opsz.css';
 @import '@fontsource-variable/fraunces/opsz-italic.css';
@@ -17,31 +17,31 @@
 
 :root {
   /* =========================================================
-     WORKING WITH GOD — navy + gold + bone.
+     WORKING WITH GOD - navy + gold + bone.
      Navy is the brand spine (#050d6e, pulled from workingwithgod.live);
      gold is the single accent (book-cover gold) used ONLY as small marks,
-     rules, numerals, and active states — never as a fill.
+     rules, numerals, and active states - never as a fill.
      ========================================================= */
 
-  /* Navy — brand spine */
-  --navy-950: #02061f;   /* deepest — large dark fills, footer, hero base */
-  --navy-900: #050d6e;   /* BRAND EXACT — primary navy, buttons, headings on light */
+  /* Navy - brand spine */
+  --navy-950: #02061f;   /* deepest - large dark fills, footer, hero base */
+  --navy-900: #050d6e;   /* BRAND EXACT - primary navy, buttons, headings on light */
   --navy-800: #0a1585;
   --navy-700: #16249c;   /* hover states */
   --navy-100: #e6e9f7;
   --navy-050: #f0f2fb;
 
-  /* Gold — the single accent */
-  --gold-600: #7e6017;   /* gold text on LIGHT bg — AA (5.35:1 on bone) */
-  --gold-500: #c9a227;   /* primary accent — rules, marks, the dot */
-  --gold-400: #dcbb55;   /* gold text on DARK bg — AA (8.75:1 on navy) */
+  /* Gold - the single accent */
+  --gold-600: #7e6017;   /* gold text on LIGHT bg - AA (5.35:1 on bone) */
+  --gold-500: #c9a227;   /* primary accent - rules, marks, the dot */
+  --gold-400: #dcbb55;   /* gold text on DARK bg - AA (8.75:1 on navy) */
   --gold-100: #f3e7c4;
 
   /* Neutrals */
-  --bone:     #f7f4ec;   /* warm paper — alternating sections */
+  --bone:     #f7f4ec;   /* warm paper - alternating sections */
   --paper:    #fdfcf8;   /* page background */
   --ink:      #14162e;   /* body text */
-  --muted:    #5c6079;   /* secondary text */
+  --muted:    #464a60;   /* secondary text - darkened for older-reader contrast (~7:1) */
   --line:     #ddd8ca;   /* hairline on light */
   --line-dk:  rgba(247,244,236,.16); /* hairline on dark */
 
@@ -71,8 +71,8 @@ body {
   font-family: var(--f-text);
   background: var(--paper);
   color: var(--ink);
-  font-size: 18.5px;          /* larger base for a 40+ executive audience */
-  line-height: 1.68;
+  font-size: 19.5px;          /* larger base for an older executive audience */
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
@@ -92,22 +92,23 @@ main:focus { outline: none; }
   padding: 10px 18px; border-radius: 4px; font-weight: 500; transform: translateY(-250%); transition: transform .2s var(--ease); }
 .skip-link:focus { transform: none; }
 
-/* ---------- Type ---------- */
-h1,h2,h3,h4 { font-family: var(--f-disp); font-weight: 400; line-height: 1.04; letter-spacing: -.01em; color: var(--forest); }
+/* ---------- Type ----------
+   Headings run bold for readability with an older audience. */
+h1,h2,h3,h4 { font-family: var(--f-disp); font-weight: 500; line-height: 1.06; letter-spacing: -.01em; color: var(--forest); }
 .hero h1, .phero h1, .cta h2, .on-ink h2, .on-ink h3, .footer h1, .footer h2 { color: var(--bone); }
-.display { font-size: clamp(2.7rem, 6.6vw, 6rem); font-weight: 300; line-height: .98; letter-spacing: -.03em; }
-.h1 { font-size: clamp(2.3rem, 4.6vw, 3.8rem); font-weight: 300; letter-spacing: -.02em; }
-.h2 { font-size: clamp(2rem, 3.6vw, 3.1rem); font-weight: 400; }
-.h3 { font-size: clamp(1.35rem, 2vw, 1.8rem); font-weight: 500; }
+.display { font-size: clamp(2.7rem, 6.6vw, 6rem); font-weight: 500; line-height: .98; letter-spacing: -.03em; }
+.h1 { font-size: clamp(2.3rem, 4.6vw, 3.8rem); font-weight: 600; letter-spacing: -.02em; }
+.h2 { font-size: clamp(2rem, 3.6vw, 3.1rem); font-weight: 600; }
+.h3 { font-size: clamp(1.35rem, 2vw, 1.8rem); font-weight: 600; }
 .serif-it { font-family: var(--f-disp); font-style: italic; font-weight: 400; }
 em, .serif-it { }
 
 /* small-caps display treatment, echoing the live site's section headings.
-   Apply to short, punchy section headers — not long hero sentences. */
+   Apply to short, punchy section headers - not long hero sentences. */
 .smallcaps { font-variant-caps: small-caps; text-transform: lowercase; letter-spacing: .01em; font-weight: 400; }
 .smallcaps::first-letter { text-transform: uppercase; }
 
-/* Simpler, more legible section labels — plain text, not mono index codes. */
+/* Simpler, more legible section labels - plain text, not mono index codes. */
 .label { font-family: var(--f-mono); font-size: .75rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--clay-ink); }
 .label .idx { color: var(--clay-ink); }
 /* label contrast on dark blocks */
@@ -179,7 +180,7 @@ em, .serif-it { }
 .nav-burger span { height: 1.5px; background: currentColor; display: block; transition: transform .3s var(--ease), opacity .3s; }
 @media (min-width: 940px){ .nav-links { display: flex; } .nav-burger { display: none; } }
 
-/* mobile menu — visibility keeps closed-menu links out of the tab order */
+/* mobile menu - visibility keeps closed-menu links out of the tab order */
 .menu { position: fixed; inset: 0; z-index: 90; background: var(--forest); color: var(--bone); transform: translateY(-101%); visibility: hidden; transition: transform .5s var(--ease), visibility 0s linear .5s; display: flex; flex-direction: column; padding: 24px var(--pad); }
 .menu.open { transform: none; visibility: visible; transition: transform .5s var(--ease); }
 .menu-top { display: flex; justify-content: space-between; align-items: center; }
@@ -230,13 +231,13 @@ em, .serif-it { }
 
 /* ---------- Marquee / trust ---------- */
 .trust { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 26px 0; overflow: hidden; }
-/* marquee edge fades — org names dissolve at the container edges */
+/* marquee edge fades - org names dissolve at the container edges */
 .mq { -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
 .trust .lbl { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
 .trust-row { display: flex; flex-wrap: wrap; gap: 6px 28px; }
 .trust-row span { font-family: var(--f-disp); font-weight: 400; font-size: clamp(1rem,1.5vw,1.25rem); color: var(--ink); opacity: .8; }
-.trust-row span::before { content: "—"; color: var(--clay); margin-right: 12px; opacity: .6; }
+.trust-row span::before { content: "·"; color: var(--clay); margin-right: 12px; opacity: .6; }
 
 /* ---------- Index list (services / process) ----------
    Simplified for readability: a large clay index, a serif heading, then the
@@ -246,8 +247,8 @@ em, .serif-it { }
 .irow { display: grid; grid-template-columns: 1fr; gap: 10px; padding: clamp(30px,3.4vw,48px) 0; border-bottom: 1px solid var(--line); align-items: start; }
 @media (min-width: 780px){ .irow { grid-template-columns: 88px 1fr; gap: 8px 36px; } }
 .irow .n { font-family: var(--f-disp); font-weight: 300; font-size: clamp(1.6rem,2.4vw,2.2rem); color: var(--clay-ink); line-height: 1; grid-row: span 2; }
-.irow h3 { font-family: var(--f-disp); font-weight: 500; font-size: clamp(1.45rem,2.2vw,1.95rem); color: var(--forest); }
-.irow p { color: var(--muted); font-size: 1.06rem; line-height: 1.6; max-width: 62ch; }
+.irow h3 { font-family: var(--f-disp); font-weight: 600; font-size: clamp(1.45rem,2.2vw,1.95rem); color: var(--forest); }
+.irow p { color: var(--muted); font-size: 1.12rem; line-height: 1.62; max-width: 62ch; }
 @media (min-width: 780px){ .irow p { grid-column: 2; } }
 .irow p b { color: var(--ink); font-weight: 600; }
 
@@ -280,10 +281,10 @@ em, .serif-it { }
 @media (min-width: 1040px){ .qgrid.c3 .q:nth-child(3n){ border-right: 0; } .qgrid.c3 .q { padding-left: clamp(24px,2vw,30px); } .qgrid.c3 .q:first-child{padding-left:0;} }
 
 /* ---------- Book ---------- */
-/* real cover — 2:3, hairline frame instead of a shadow, matches the design */
-.book-cover { width: 100%; max-width: 320px; aspect-ratio: 311/466; border: 1px solid var(--line); background: var(--bone-2); }
-.book-cover img { width: 100%; height: 100%; object-fit: cover; }
-.on-ink .book-cover, .cta .book-cover { border-color: var(--line-dk); }
+/* real cover - 2:3, hairline frame instead of a shadow, matches the design */
+.book-cover { width: 100%; max-width: 310px; aspect-ratio: 2/3; border-radius: 5px; overflow: hidden;
+  box-shadow: 0 34px 55px -20px rgba(2,6,31,.6), 0 12px 22px -12px rgba(2,6,31,.45); }
+.book-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 /* Placeholder book cover: navy field with a gold "GOD", echoing the real cover. */
 .book { aspect-ratio: 311/466; background: linear-gradient(165deg, var(--navy-800), var(--navy-950)); color: var(--bone); padding: 30px; display: flex; flex-direction: column; justify-content: space-between; max-width: 320px; border: 1px solid var(--line-dk); }
@@ -327,7 +328,7 @@ html.js .reveal.in { opacity: 1; transform: none; }
 
 /* ---------- Motion & loading (Phase A) ---------- */
 
-/* route transitions — keyed wrapper re-mounts on navigation */
+/* route transitions - keyed wrapper re-mounts on navigation */
 .route-fade { animation: route-in .26s var(--ease) both; }
 @keyframes route-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
@@ -335,16 +336,16 @@ html.js .reveal.in { opacity: 1; transform: none; }
 .scroll-progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; background: var(--clay);
   transform: scaleX(0); transform-origin: 0 50%; z-index: 120; pointer-events: none; }
 
-/* headline mask reveal — words clipped per visual line, sliding up */
+/* headline mask reveal - words clipped per visual line, sliding up */
 .mask-lines .mask-w { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: .12em; margin-bottom: -.12em; }
 .mask-lines .mask-wi { display: inline-block; transform: translateY(115%); transition: transform .7s var(--ease); }
 .mask-lines.in .mask-wi { transform: none; }
 
-/* reveal group — staggered direct children (grids, index lists) */
+/* reveal group - staggered direct children (grids, index lists) */
 html.js .reveal-group > * { opacity: 0; transform: translateY(16px); transition: opacity .8s var(--ease), transform .8s var(--ease); will-change: transform, opacity; }
 html.js .reveal-group.in > * { opacity: 1; transform: none; }
 
-/* drawing hairline — a row's top border scales in from the left as it reveals.
+/* drawing hairline - a row's top border scales in from the left as it reveals.
    Add .draw to a reveal/-group whose children carry a hairline top border
    (.ilist, .qgrid). The static border is swapped for an animated ::before so
    there's no double line; no-JS keeps the real border. */
@@ -391,14 +392,14 @@ html.js .reveal-group.draw.in::after { transform: scaleX(1); }
 .microproof figcaption { font-family: var(--f-mono); font-size: .68rem; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin-top: 10px; }
 .microproof figcaption b { color: var(--ink); font-weight: 500; }
 
-/* org marquee — duplicated track, slow loop, pauses on hover */
+/* org marquee - duplicated track, slow loop, pauses on hover */
 .mq { overflow: hidden; }
 .mq-inner { display: flex; width: max-content; animation: mq-scroll var(--mq-dur, 40s) linear infinite; }
 .mq-inner.rev { animation-direction: reverse; }
 .mq:hover .mq-inner { animation-play-state: paused; }
 .mq-track { display: flex; flex-wrap: nowrap; gap: 0 28px; padding-right: 28px; }
 .mq-track span { font-family: var(--f-disp); font-weight: 400; font-size: clamp(1rem,1.5vw,1.25rem); color: var(--ink); opacity: .8; white-space: nowrap; }
-.mq-track span::before { content: "—"; color: var(--clay); margin-right: 12px; opacity: .6; }
+.mq-track span::before { content: "·"; color: var(--clay); margin-right: 12px; opacity: .6; }
 @keyframes mq-scroll { to { transform: translateX(-50%); } }
 
 @media (prefers-reduced-motion: reduce) {

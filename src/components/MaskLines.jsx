@@ -44,7 +44,7 @@ export default function MaskLines({ children, stagger = 0.06, duration = 0.7 }) 
         el.replaceChild(frag, node)
       } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName !== 'BR') {
         // Swap the wrapper into the node's place first, then move the node
-        // inside it — moving first would detach it and break replaceChild.
+        // inside it, moving first would detach it and break replaceChild.
         const { w, i } = makeMask()
         el.replaceChild(w, node)
         i.appendChild(node)

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 // Auto-rotating pullquote. All quotes ship in the DOM stacked in one grid
-// cell (container sizes to the tallest — no layout shift on rotation).
+// cell (container sizes to the tallest, no layout shift on rotation).
 // Pauses on hover/focus; never auto-advances under prefers-reduced-motion.
 export default function QuoteRotator({ quotes, interval = 7000 }) {
   const [idx, setIdx] = useState(0)
@@ -31,7 +31,7 @@ export default function QuoteRotator({ quotes, interval = 7000 }) {
         {quotes.map((q, i) => (
           <div className={`qrot-item ${i === idx ? 'on' : ''}`} key={q.who} aria-hidden={i !== idx || undefined}>
             <blockquote>“{q.q}”</blockquote>
-            <div className="attr">— <b>{q.who}</b>, {q.role}</div>
+            <div className="attr"><b>{q.who}</b>, {q.role}</div>
           </div>
         ))}
       </div>

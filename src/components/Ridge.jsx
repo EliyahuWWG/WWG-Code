@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-// The hero's mountain / line-chart scene (perspective — the brand's core idea).
+// The hero's mountain / line-chart scene (perspective, the brand's core idea).
 // Two translucent mountain layers at the base, a gold and a blue "line chart"
 // that draw themselves on load and sit in the lower third so they integrate
 // with the content, plus glowing gold/blue nodes at the peaks. Static under
@@ -15,13 +15,7 @@ const GOLD = '0,506 210,586 430,636 620,560 730,440 840,548 1020,636 1210,600 14
 const BLUE = '0,612 230,664 450,700 640,632 780,560 900,662 1090,636 1260,516 1370,410 1440,300'
 
 const NODES = [
-  { x: 210, y: 586, c: 'gold', r: 5 },
-  { x: 730, y: 440, c: 'gold', r: 6 },
-  { x: 1210, y: 600, c: 'gold', r: 5 },
-  { x: 780, y: 560, c: 'blue', r: 4 },
-  { x: 1090, y: 636, c: 'blue', r: 5 },
-  { x: 1260, y: 516, c: 'blue', r: 5 },
-  { x: 1440, y: 300, c: 'cyan', r: 7 },
+  { x: 210, y: 586, c: 'gold', r: 5 }, { x: 730, y: 440, c: 'gold', r: 6 }, { x: 1210, y: 600, c: 'gold', r: 5 }, { x: 780, y: 560, c: 'blue', r: 4 }, { x: 1090, y: 636, c: 'blue', r: 5 }, { x: 1260, y: 516, c: 'blue', r: 5 }, { x: 1440, y: 300, c: 'cyan', r: 7 },
 ]
 
 export default function Ridge() {

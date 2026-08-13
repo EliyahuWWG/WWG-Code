@@ -12,8 +12,8 @@ export default function Services() {
   return (
     <>
       <Seo
-        title="Ways to Engage — Coaching, Master’s Class & Speaking | Working With God"
-        description="Three ways to work with Dr. Eliyahu Lotzar: one-to-one executive coaching, the two-day Master’s Class on the Ten Modes of Elevated Leadership, and inspirational speaking — bringing God into real leadership decisions."
+        title="Ways to Engage, Coaching, Master’s Class & Speaking | Working With God"
+        description="Three ways to work with Dr. Eliyahu Lotzar: one-to-one executive coaching, the two-day Master’s Class on the Ten Modes of Elevated Leadership, and inspirational speaking, bringing God into real leadership decisions."
         path="/services"
         schema={[breadcrumbSchema([{ name: 'Services', path: '/services' }])]}
       />
@@ -31,8 +31,8 @@ export default function Services() {
         <div className="container">
           <div className="sec-head">
             <div className="label"><span className="idx">(01)</span><br />Executive coaching · 1:1</div>
-            <Reveal><h2 className="h2 maxw-60">Skilled coaching, prayer, and the Ten Modes — applied to your challenge.</h2>
-              <p className="mt-2 muted maxw-60">For leaders whose business is <span className="serif-it">coasting along, plateaued</span> — and for those at a transition point who feel stagnant or underutilized, or overwhelmed and anxious.</p></Reveal>
+            <Reveal><h2 className="h2 maxw-60">Skilled coaching, prayer, and the Ten Modes, applied to your challenge.</h2>
+              <p className="mt-2 muted maxw-60">For leaders whose business is <span className="serif-it">coasting along, plateaued</span>and for those at a transition point who feel stagnant or underutilized, or overwhelmed and anxious.</p></Reveal>
           </div>
           <Reveal className="ilist mt-4 draw" stagger={0.08}>
             {coachingPoints.map((p, i) => (

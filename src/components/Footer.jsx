@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="grid-f">
           <div>
             <Link to="/" className="wordmark"><span className="dot" aria-hidden="true" />Working With God</Link>
-            <p className="fdesc">Lead as the “Chief’s Executive Officer” — working with God, not just for Him. Faith-based leadership coaching, a two-day Master’s Class, and free community events. {SERVICE_AREA}.</p>
+            <p className="fdesc">Lead as the “Chief’s Executive Officer”, working with God, not just for Him. Faith-based leadership coaching, a two-day Master’s Class, and free community events. {SERVICE_AREA}.</p>
           </div>
           <div>
             <h4>Explore</h4>

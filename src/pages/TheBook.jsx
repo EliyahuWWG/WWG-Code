@@ -2,6 +2,7 @@ import Reveal from '../components/Reveal'
 import CTA from '../components/CTA'
 import Arrow from '../components/Arrow'
 import MaskLines from '../components/MaskLines'
+import Tilt from '../components/Tilt'
 import Seo from '../components/Seo'
 import { bookSchema, breadcrumbSchema } from '../seo/schema'
 import { endorsements, AMAZON } from '../data'
@@ -10,7 +11,7 @@ export default function TheBook() {
   return (
     <>
       <Seo
-        title="The Book — Working With God: The Ten Modes of Elevated Leadership"
+        title="The Book, Working With God: The Ten Modes of Elevated Leadership"
         description="Working With God is a practical way to partner with God in your toughest work challenges. It introduces Modal Leadership and the Ten Modes of Elevated Leadership. Available in print, Kindle, and Audible."
         path="/the-book"
         type="book"
@@ -23,18 +24,18 @@ export default function TheBook() {
             <div>
               <div className="eyebrow">The book</div>
               <h1 className="h1 mt-3 balance"><MaskLines>God is ready to work with you.</MaskLines></h1>
-              <p className="lead">Working With God is more than just a book — it’s a practical way to partner with God right in the middle of your toughest work challenges.</p>
+              <p className="lead">Working With God is more than just a book, it’s a practical way to partner with God right in the middle of your toughest work challenges.</p>
               <div className="row mt-3">
                 <a href={AMAZON} target="_blank" rel="noopener" className="btn btn-onink">PURCHASE in Print, Kindle, or Audible <Arrow /></a>
               </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              {/* TODO(client): replace with real cover → /public/book-cover.jpg (alt="Working With God") */}
-              <div className="book">
-                <div className="k">Dr. Eliyahu Lotzar</div>
-                <div><div className="t">Working<br />With <b>God</b></div><div className="sub">The Ten Modes of Elevated Leadership</div></div>
-                <div className="k">Print · Kindle · Audible</div>
-              </div>
+              <Tilt max={9}>
+                <div className="book-cover">
+                  <img src="/book-cover.jpg" width="760" height="1140"
+                    alt="Working With God: The Ten Modes of Elevated Leadership, by Dr. Eliyahu Lotzar" />
+                </div>
+              </Tilt>
             </div>
           </div>
         </div>
@@ -50,7 +51,7 @@ export default function TheBook() {
             </Reveal>
             <Reveal delay={0.05}>
               <p className="lead">A framework for dialoguing with God about business challenges. You identify the operational <span className="serif-it">mode</span> you’re in, then build the agility to shift to the mode each situation actually needs.</p>
-              <p className="mt-2 muted maxw-60">It’s not about being holier at the office. It’s about strategy, hiring, budgets, and timing — the real decisions leaders make every week.</p>
+              <p className="mt-2 muted maxw-60">It’s not about being holier at the office. It’s about strategy, hiring, budgets, and timing, the real decisions leaders make every week.</p>
             </Reveal>
           </div>
         </div>
@@ -66,7 +67,7 @@ export default function TheBook() {
           <div className="grid two mt-4">
             <Reveal style={{ borderTop: '1px solid var(--line)', paddingTop: 28 }}>
               <div className="label">The first six</div>
-              <p className="mt-2 lead" style={{ maxWidth: '38ch' }}>Address the “knowns” of daily operations — the decisions and patterns you already recognize.</p>
+              <p className="mt-2 lead" style={{ maxWidth: '38ch' }}>Address the “knowns” of daily operations, the decisions and patterns you already recognize.</p>
             </Reveal>
             <Reveal delay={0.05} style={{ borderTop: '1px solid var(--gold-500)', paddingTop: 28 }}>
               <div className="label" style={{ color: 'var(--gold-600)' }}>The last four</div>

@@ -10,8 +10,7 @@ export default function Reveal({ children, as: Tag = 'div', className = '', dela
     const el = ref.current
     if (!el) return
 
-    // Anything already in (or above) the viewport on mount reveals immediately —
-    // covers deep links, refreshes mid-page, and fast scrolls before observe().
+    // Anything already in (or above) the viewport on mount reveals immediately, // covers deep links, refreshes mid-page, and fast scrolls before observe().
     const vh = window.innerHeight || document.documentElement.clientHeight
     if (el.getBoundingClientRect().top < vh * 0.92) { setSeen(true); return }
 

@@ -1,10 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 
-// Honest numbers only — each already appears in the site copy.
+// Honest numbers only, each already appears in the site copy.
 const STATS = [
-  { to: 45, suffix: '+', label: 'Organizations served' },
-  { to: 130, suffix: '+', label: 'Countries reached by his research' },
-  { to: 25, suffix: '+', label: 'Leadership tools in the kit' },
+  { to: 45, suffix: '+', label: 'Organizations served' }, { to: 130, suffix: '+', label: 'Countries reached by his research' }, { to: 25, suffix: '+', label: 'Leadership tools in the kit' },
 ]
 
 // Static HTML ships the final values (SEO / no-JS); the count-up only runs

@@ -11,7 +11,7 @@ export default function Contact() {
     <>
       <Seo
         title="Contact | Working With God"
-        description="Get in touch with Dr. Eliyahu Lotzar about coaching, the Master’s Class, speaking, or the Roundtable — or book a call directly. In-person in NOVA / Metro DC, and online worldwide."
+        description="Get in touch with Dr. Eliyahu Lotzar about coaching, the Master’s Class, speaking, or the Roundtable, or book a call directly. In-person in NOVA / Metro DC, and online worldwide."
         path="/contact"
         schema={[breadcrumbSchema([{ name: 'Contact', path: '/contact' }])]}
       />

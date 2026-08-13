@@ -25,7 +25,7 @@ export function calendlyUrl(base = CALENDLY) {
 
 // Injects Calendly's widget.js + widget.css once, on demand. Wired to
 // pointerenter/focus on booking CTAs so the widget is usually ready by the
-// time the visitor clicks — nothing Calendly loads on first paint.
+// time the visitor clicks, nothing Calendly loads on first paint.
 export function warmCalendly() {
   if (typeof window === 'undefined') return Promise.resolve()
   if (window.Calendly) return Promise.resolve()
@@ -45,12 +45,11 @@ export function warmCalendly() {
   return loading
 }
 
-// Conversion event — every booking CTA funnels through here (Plausible).
+// Conversion event, every booking CTA funnels through here (Plausible).
 export function trackBookCall(source) {
   if (typeof window === 'undefined' || typeof window.plausible !== 'function') return
   window.plausible('book_call_click', {
-    props: { source: source || (window.location && window.location.pathname) || '' },
-  })
+    props: { source: source || (window.location && window.location.pathname) || '' }, })
 }
 
 // Opens the Calendly popup if the widget is ready; otherwise starts loading it

@@ -4,9 +4,7 @@ import Arrow from './Arrow'
 import Reveal from './Reveal'
 
 export default function CTA({
-  label = '(→) Start the conversation',
-  title = 'God is ready to work with you.',
-  text = 'Bring the real decision in front of you — strategy, a hire, a budget, the timing of a risk. A focused call to see how the Working With God method applies to it.',
+  label = '(→) Start the conversation', title = 'God is ready to work with you.', text = 'Bring the real decision in front of you, strategy, a hire, a budget, the timing of a risk. A focused call to see how the Working With God method applies to it.',
 }) {
   return (
     <section className="cta">
