@@ -225,17 +225,21 @@ em, .serif-it { }
    page reveals on the first scroll. Content is vertically centered between the
    nav-clearing top padding and the ridge at the bottom.
    The one permitted gradient: subtle vertical navy-950 → navy-900. */
-.hero { background:
-    radial-gradient(90% 58% at 50% 34%, rgba(22,36,156,.5), rgba(22,36,156,0) 62%),
-    linear-gradient(180deg, var(--navy-950) 0%, var(--navy-900) 60%, #0a166f 100%);
+.hero { background: linear-gradient(180deg, #030826 0%, #050d6e 55%, #071486 100%);
   color: var(--bone);
   min-height: 100vh; min-height: 100svh;
   display: flex; flex-direction: column; justify-content: flex-start;
   padding: clamp(150px, 20vh, 236px) 0 0;
   position: relative; overflow: hidden; }
-/* a soft radial glow adds depth behind the content (the starfield adds texture) */
-.hero::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-  background: radial-gradient(70% 55% at 30% 30%, rgba(30,48,170,.35), rgba(30,48,170,0) 60%); }
+/* soft drifting aurora blobs behind the content */
+.aurora { position: absolute; z-index: 0; pointer-events: none; border-radius: 50%; filter: blur(72px); opacity: .5; will-change: transform; }
+.aurora-1 { width: 62vw; height: 62vw; left: -8vw; top: -20vh; background: radial-gradient(circle, rgba(46,86,224,.72), rgba(46,86,224,0) 62%); animation: aurora-a 22s ease-in-out infinite alternate; }
+.aurora-2 { width: 56vw; height: 56vw; right: -12vw; top: 6vh; background: radial-gradient(circle, rgba(22,44,168,.66), rgba(22,44,168,0) 62%); animation: aurora-b 28s ease-in-out infinite alternate; }
+.aurora-3 { width: 46vw; height: 46vw; left: 30vw; bottom: -22vh; background: radial-gradient(circle, rgba(74,112,238,.42), rgba(74,112,238,0) 60%); animation: aurora-c 32s ease-in-out infinite alternate; }
+@keyframes aurora-a { from { transform: translate(0,0) scale(1); } to { transform: translate(10vw, 9vh) scale(1.18); } }
+@keyframes aurora-b { from { transform: translate(0,0) scale(1); } to { transform: translate(-9vw, 6vh) scale(1.12); } }
+@keyframes aurora-c { from { transform: translate(0,0) scale(1); } to { transform: translate(6vw, -8vh) scale(1.16); } }
+@media (prefers-reduced-motion: reduce){ .aurora { animation: none !important; } }
 .hero-top { display: grid; gap: 28px; grid-template-columns: 1fr; }
 .hero-top > * { min-width: 0; }  /* prevent long lines (eyebrow) from blowing out the grid */
 @media (min-width: 900px){ .hero-top { grid-template-columns: 1.2fr .8fr; align-items: start; column-gap: clamp(40px,5vw,88px); } }

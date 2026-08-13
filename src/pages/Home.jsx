@@ -3,7 +3,6 @@ import Reveal from '../components/Reveal'
 import CTA from '../components/CTA'
 import Arrow from '../components/Arrow'
 import MaskLines from '../components/MaskLines'
-import Ridge from '../components/Ridge'
 import VideoFacade from '../components/VideoFacade'
 import BookCallLink from '../components/BookCallLink'
 import Tilt from '../components/Tilt'
@@ -29,8 +28,10 @@ export default function Home() {
       />
 
       {/* HERO */}
-      <section className="hero">
-        <Ridge />
+      <section className="hero hero-aurora">
+        <span className="aurora aurora-1" aria-hidden="true" />
+        <span className="aurora aurora-2" aria-hidden="true" />
+        <span className="aurora aurora-3" aria-hidden="true" />
         <div className="container">
           <div className="eyebrow">When it’s time to be the leader HE needs you to be.</div>
           <p className="hero-sub">The Ten Modes of Elevated Leadership</p>
