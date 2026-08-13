@@ -29,7 +29,7 @@ export default function Events() {
       <section className="section">
         <div className="container">
           <div className="sec-head">
-            <div className="label"><span className="idx">(01)</span><br />In person · free</div>
+            <div className="label"><span className="idx">01</span><br />In person · free</div>
             <Reveal>
               <h2 className="h2 maxw-60">The Working With God Roundtable</h2>
               <p className="mt-2 muted maxw-60">Two hours that combine leadership practice, scripture, and prayer. Facilitated by Dr. Eliyahu Lotzar. Refreshments provided.</p>
@@ -60,7 +60,7 @@ export default function Events() {
         <div className="container">
           <div className="grid two" style={{ alignItems: 'start' }}>
             <Reveal>
-              <div className="label"><span className="idx">(02)</span> &nbsp;Online · free</div>
+              <div className="label"><span className="idx">02</span> &nbsp;Online · free</div>
               <h2 className="h2 mt-2 maxw-60">Monthly Webinar</h2>
             </Reveal>
             <Reveal delay={0.05}>
@@ -75,7 +75,7 @@ export default function Events() {
       <section className="section">
         <div className="container">
           <div className="sec-head">
-            <div className="label"><span className="idx">(03)</span><br />Recently</div>
+            <div className="label"><span className="idx">03</span><br />Recently</div>
             <Reveal><h2 className="h2 maxw-60">Where Eliyahu has been.</h2></Reveal>
           </div>
           <Reveal className="ilist mt-4 draw" stagger={0.08}>

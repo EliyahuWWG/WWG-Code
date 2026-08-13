@@ -28,12 +28,12 @@ export default function Contact() {
         <div className="container">
           <div className="grid two" style={{ alignItems: 'start' }}>
             <Reveal>
-              <div className="label"><span className="idx">(01)</span> &nbsp;Send a message</div>
+              <div className="label"><span className="idx">01</span> &nbsp;Send a message</div>
               <div className="mt-3"><ContactForm /></div>
             </Reveal>
 
             <Reveal delay={0.05}>
-              <div className="label"><span className="idx">(02)</span> &nbsp;Other ways to reach him</div>
+              <div className="label"><span className="idx">02</span> &nbsp;Other ways to reach him</div>
               <div className="stack-tight mt-3">
                 <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}>
                   <b>Email</b><br />

@@ -97,9 +97,9 @@ main:focus { outline: none; }
 h1,h2,h3,h4 { font-family: var(--f-disp); font-weight: 500; line-height: 1.06; letter-spacing: -.01em; color: var(--forest); }
 .hero h1, .phero h1, .cta h2, .on-ink h2, .on-ink h3, .footer h1, .footer h2 { color: var(--bone); }
 .display { font-size: clamp(2.7rem, 6.6vw, 6rem); font-weight: 500; line-height: .98; letter-spacing: -.03em; }
-.h1 { font-size: clamp(2.3rem, 4.6vw, 3.8rem); font-weight: 600; letter-spacing: -.02em; }
-.h2 { font-size: clamp(2rem, 3.6vw, 3.1rem); font-weight: 600; }
-.h3 { font-size: clamp(1.35rem, 2vw, 1.8rem); font-weight: 600; }
+.h1 { font-size: clamp(2.3rem, 4.6vw, 3.8rem); font-weight: 600; letter-spacing: -.022em; }
+.h2 { font-size: clamp(2rem, 3.6vw, 3.1rem); font-weight: 600; letter-spacing: -.02em; }
+.h3 { font-size: clamp(1.35rem, 2vw, 1.8rem); font-weight: 600; letter-spacing: -.015em; }
 .serif-it { font-family: var(--f-disp); font-style: italic; font-weight: 400; }
 em, .serif-it { }
 
@@ -108,12 +108,13 @@ em, .serif-it { }
 .smallcaps { font-variant-caps: small-caps; text-transform: lowercase; letter-spacing: .01em; font-weight: 400; }
 .smallcaps::first-letter { text-transform: uppercase; }
 
-/* Simpler, more legible section labels - plain text, not mono index codes. */
-.label { font-family: var(--f-mono); font-size: .75rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--clay-ink); }
-.label .idx { color: var(--clay-ink); }
-/* label contrast on dark blocks */
-.hero .label, .phero .label, .cta .label, .on-ink .label { color: var(--clay-lt); }
-.hero .label .idx, .phero .label .idx, .cta .label .idx, .on-ink .label .idx { color: var(--clay-lt); }
+/* Section labels: calm muted mono name + an elegant gold serif numeral accent
+   (the numeral carries the eye without shouting). */
+.label { font-family: var(--f-mono); font-size: .72rem; font-weight: 500; letter-spacing: .17em; text-transform: uppercase; color: var(--muted); line-height: 1.55; }
+.label .idx { font-family: var(--f-disp); font-style: italic; font-weight: 500; font-size: 1.25rem; line-height: 1; letter-spacing: 0; color: var(--gold-600); text-transform: none; }
+/* label treatment on dark blocks */
+.hero .label, .phero .label, .cta .label, .on-ink .label { color: rgba(247,244,236,.72); }
+.hero .label .idx, .phero .label .idx, .cta .label .idx, .on-ink .label .idx { color: var(--gold-400); }
 .lead { font-size: clamp(1.15rem, 1.6vw, 1.4rem); line-height: 1.55; color: var(--ink); font-weight: 400; }
 .muted { color: var(--muted); }
 .balance { text-wrap: balance; }

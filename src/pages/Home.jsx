@@ -63,7 +63,7 @@ export default function Home() {
       <section className="section on-bone">
         <div className="container">
           <div className="sec-head">
-            <div className="label"><span className="idx">(01)</span><br />Why work with God</div>
+            <div className="label"><span className="idx">01</span><br />Why work with God</div>
             <Reveal><h2 className="h2 maxw-60">Not asking God to bless your plans. Asking what He wants to do through your leadership.</h2></Reveal>
           </div>
           <Reveal className="ilist mt-4 draw" stagger={0.08}>
@@ -83,7 +83,7 @@ export default function Home() {
         <div className="container">
           <div className="grid two" style={{ alignItems: 'start' }}>
             <Reveal>
-              <div className="label"><span className="idx">(02)</span> &nbsp;The idea</div>
+              <div className="label"><span className="idx">02</span> &nbsp;The idea</div>
               <h2 className="h2 mt-2 maxw-60">What is Working With God?</h2>
             </Reveal>
             <Reveal delay={0.05}>
@@ -99,7 +99,7 @@ export default function Home() {
       <section className="section on-bone">
         <div className="container">
           <div className="sec-head">
-            <div className="label"><span className="idx">(03)</span><br />Ways to engage</div>
+            <div className="label"><span className="idx">03</span><br />Ways to engage</div>
             <Reveal><h2 className="h2 maxw-60">Bring God into your next decision.</h2>
               <p className="mt-2 muted maxw-60">Four ways to begin. Two of them are free.</p></Reveal>
           </div>
@@ -124,7 +124,7 @@ export default function Home() {
       <section className="section">
         <div className="container">
           <div className="sec-head">
-            <div className="label"><span className="idx">(04)</span><br />What people say</div>
+            <div className="label"><span className="idx">04</span><br />What people say</div>
             <Reveal className="pullquote" style={{ borderTop: 0, paddingTop: 0 }}>
               <blockquote>“{feature.q}”</blockquote>
               <div className="attr"><b>{feature.who}</b>, {feature.role}</div>
@@ -146,7 +146,7 @@ export default function Home() {
         <div className="container">
           <div className="grid two" style={{ alignItems: 'center' }}>
             <Reveal>
-              <div className="label"><span className="idx">(05)</span> &nbsp;The book</div>
+              <div className="label"><span className="idx">05</span> &nbsp;The book</div>
               <h2 className="h2 mt-2 maxw-60">God is ready to work with you.</h2>
               <p className="mt-2 muted maxw-60">Working With God is more than just a book, it’s a practical way to partner with God right in the middle of your toughest work challenges. It introduces <span className="serif-it">Modal Leadership</span> and the Ten Modes of Elevated Leadership.</p>
               <div className="row mt-3">
@@ -171,7 +171,7 @@ export default function Home() {
         <div className="container">
           <div className="grid two" style={{ alignItems: 'start' }}>
             <Reveal>
-              <div className="label"><span className="idx">(06)</span> &nbsp;Daily quote</div>
+              <div className="label"><span className="idx">06</span> &nbsp;Daily quote</div>
               <h2 className="h2 mt-2 maxw-60">A short word for the workday.</h2>
               <p className="mt-2 muted maxw-60">Get a <span className="serif-it">short</span> inspirational quote each workday morning, and occasional news about new events.</p>
               <p className="mt-2 muted" style={{ fontSize: '.9rem' }}>No selling of your data. Unsubscribe anytime.</p>
