@@ -33,13 +33,12 @@ export default function Home() {
           <p className="hero-sub">The Ten Modes of Elevated Leadership</p>
           <div className="hero-top mt-3">
             <div>
-              <h1 className="display"><MaskLines>Working With God</MaskLines></h1>
+              <h1 className="display"><MaskLines>Working<br />With God</MaskLines></h1>
             </div>
             <div className="hero-side">
               <p>Leaders don’t plateau for lack of effort. They plateau for lack of <span className="serif-it">perspective.</span> Working With God gives you the biggest and best perspective possible.</p>
-              <div className="row mt-3">
-                <BookCallLink className="btn btn-onink">Book a call</BookCallLink>
-                <Link to="/roundtable" className="tlink lt">Join the next Roundtable — free</Link>
+              <div className="mt-3">
+                <BookCallLink className="btn btn-onink btn-lg">Book a call</BookCallLink>
               </div>
             </div>
           </div>
@@ -49,7 +48,13 @@ export default function Home() {
       {/* VIDEO */}
       <section className="section-sm">
         <div className="container">
-          <Reveal style={{ maxWidth: 880, margin: '0 auto' }}><VideoFacade /></Reveal>
+          <Reveal style={{ maxWidth: 880, margin: '0 auto' }}>
+            <VideoFacade />
+            <figcaption className="video-cap">
+              <b>Dr. Eliyahu Lotzar</b>
+              <span>Ed.D., MSW · Author of Working With God</span>
+            </figcaption>
+          </Reveal>
         </div>
       </section>
 

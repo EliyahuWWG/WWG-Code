@@ -6,6 +6,7 @@ import { openCalendly, warmCalendly, trackBookCall } from './useCalendly'
 const links = [
   { to: '/services', label: 'Services' },
   { to: '/events', label: 'Events' },
+  { to: '/roundtable', label: 'Roundtable' },
   { to: '/the-book', label: 'The Book' },
   { to: '/about', label: 'About' },
   { to: '/contact', label: 'Contact' },
@@ -83,7 +84,7 @@ export default function Nav() {
             </Link>
           ))}
           <a href={CALENDLY} target="_blank" rel="noopener" onClick={() => { setOpen(false); trackBookCall('mobile-menu') }}>
-            Book a call<span className="n" aria-hidden="true">06</span>
+            Book a call<span className="n" aria-hidden="true">{String(links.length + 1).padStart(2, '0')}</span>
           </a>
         </nav>
       </div>

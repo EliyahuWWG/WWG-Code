@@ -193,17 +193,33 @@ em, .serif-it { }
    page reveals on the first scroll. Content is vertically centered between the
    nav-clearing top padding and the ridge at the bottom.
    The one permitted gradient: subtle vertical navy-950 → navy-900. */
-.hero { background: linear-gradient(180deg, var(--navy-950), var(--navy-900)); color: var(--bone);
+.hero { background:
+    radial-gradient(90% 58% at 50% 34%, rgba(22,36,156,.5), rgba(22,36,156,0) 62%),
+    linear-gradient(180deg, var(--navy-950) 0%, var(--navy-900) 60%, #0a166f 100%);
+  color: var(--bone);
   min-height: 100vh; min-height: 100svh;
-  display: flex; flex-direction: column; justify-content: center;
-  padding: clamp(104px, 13vh, 150px) 0 clamp(96px, 15vh, 168px);
+  display: flex; flex-direction: column; justify-content: flex-start;
+  padding: clamp(150px, 20vh, 236px) 0 0;
   position: relative; overflow: hidden; }
+/* gold dot-grid filling the empty navy, densest top-right, fading across */
+.hero::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background-image: radial-gradient(rgba(220,187,85,.26) 1.2px, transparent 1.2px);
+  background-size: 26px 26px;
+  -webkit-mask-image: radial-gradient(115% 115% at 92% 4%, #000 0%, transparent 72%);
+  mask-image: radial-gradient(115% 115% at 92% 4%, #000 0%, transparent 72%);
+  opacity: .8; }
 .hero-top { display: grid; gap: 28px; grid-template-columns: 1fr; }
-@media (min-width: 900px){ .hero-top { grid-template-columns: 1.35fr .65fr; align-items: start; } }
-.hero .display { color: var(--bone); max-width: 15ch; font-weight: 600; letter-spacing: -.04em; line-height: .94; }
+.hero-top > * { min-width: 0; }  /* prevent long lines (eyebrow) from blowing out the grid */
+@media (min-width: 900px){ .hero-top { grid-template-columns: 1.2fr .8fr; align-items: start; column-gap: clamp(40px,5vw,88px); } }
+@media (max-width: 560px){ .eyebrow { font-size: .66rem; letter-spacing: .1em; } }
+.hero .display { color: var(--bone); max-width: 16ch; font-weight: 700; font-size: clamp(3.1rem, 8vw, 7rem); letter-spacing: -.025em; line-height: .9; }
 .hero .display .serif-it { color: var(--gold-400); }
-.hero-sub { font-family: var(--f-disp); font-style: italic; font-weight: 400; font-size: clamp(1.35rem,2.4vw,1.95rem); color: var(--gold-400); margin-top: 14px; letter-spacing: -.01em; }
-.hero-side { align-self: start; padding-top: 6px; }
+.hero-sub { font-family: var(--f-disp); font-style: italic; font-weight: 400; font-size: clamp(1.35rem,2.4vw,1.9rem); color: var(--gold-400); margin-top: 14px; letter-spacing: -.01em; }
+/* heading (left) and description (right) top-aligned at the same level */
+.hero-side { align-self: start; padding-top: .12em; }
+.hero-side p { max-width: 42ch; }
+.hero-side .btn { min-width: 190px; justify-content: center; }
+.hero-rt { margin-top: 22px; }
 .hero-side p { color: rgba(247,244,236,.82); font-size: clamp(1.05rem,1.4vw,1.22rem); line-height: 1.5; }
 .hero-side .serif-it { color: var(--gold-400); font-style: italic; }
 .hero-meta { display: flex; flex-wrap: wrap; gap: 8px 0; margin-top: clamp(40px,6vw,72px); border-top: 1px solid var(--line-dk); }
@@ -430,20 +446,27 @@ html.js .reveal-group.draw.in::after { transform: scaleX(1); }
   .faq-a, .faq-item.open .faq-a, .faq-x::before, .faq-x::after, .sticky-cta { transition: none; }
 }
 
-/* ---------- Hero ridge (signature draw-on mountain line) ---------- */
-.ridge { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: clamp(160px, 26vh, 300px);
-  pointer-events: none; z-index: 0; }
-.hero .container { position: relative; z-index: 1; }
-.ridge path { stroke-linejoin: round; stroke-linecap: round; }
-.ridge-back { stroke: var(--navy-700); stroke-width: 2; opacity: .5; }
-.ridge-front { stroke: var(--gold-500); stroke-width: 2; opacity: .5; }
-/* draw-on: dash the whole path, then reveal by collapsing the offset */
-.ridge.draw .ridge-back, .ridge.draw .ridge-front {
-  stroke-dasharray: 4000; stroke-dashoffset: 4000; animation: ridge-draw 1.5s var(--ease) forwards; }
-.ridge.draw .ridge-front { animation-delay: .18s; }
+/* ---------- Hero mountain scene ---------- */
+.ridge { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+.hero .container { position: relative; z-index: 2; }
+.rg-mtn-back { fill: url(#rg-mtn); }
+.rg-mtn-front { fill: #050d6e; opacity: .55; }
+.rg-line { stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
+.rg-gold { stroke: var(--gold-500); opacity: 1; }
+.rg-blue { stroke: #5a86e0; opacity: .95; }
+.rg-fill-gold { fill: var(--gold-400); }
+.rg-fill-blue { fill: #6c9bec; }
+.rg-fill-cyan { fill: #85d4ff; }
+/* draw-on: dash the whole line, then reveal by collapsing the offset; nodes pop after */
+.ridge.draw .rg-line { stroke-dasharray: 5000; stroke-dashoffset: 5000; animation: ridge-draw 1.8s var(--ease) forwards; }
+.ridge.draw .rg-blue { animation-delay: .25s; }
 @keyframes ridge-draw { to { stroke-dashoffset: 0; } }
+.ridge .rg-node { opacity: 0; transform-box: fill-box; transform-origin: center; }
+.ridge.draw .rg-node { animation: rg-pop .5s var(--ease) forwards; }
+@keyframes rg-pop { from { opacity: 0; transform: scale(.3); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce){
-  .ridge.draw .ridge-back, .ridge.draw .ridge-front { stroke-dasharray: none; stroke-dashoffset: 0; animation: none; }
+  .ridge.draw .rg-line { stroke-dasharray: none; stroke-dashoffset: 0; animation: none; }
+  .ridge .rg-node { opacity: 1; animation: none; }
 }
 
 /* ---------- Tag / eyebrow chips ---------- */
@@ -461,7 +484,11 @@ html.js .reveal-group.draw.in::after { transform: scaleX(1); }
 .irow .go:hover { gap: .85em; color: var(--gold-600); border-color: var(--gold-500); }
 
 /* ---------- Video facade ---------- */
-.video { position: relative; width: 100%; aspect-ratio: 16/9; border: 1px solid var(--line-dk); overflow: hidden; background: var(--navy-950); }
+.video-cap { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 4px 18px; justify-content: space-between; align-items: baseline; }
+.video-cap b { font-family: var(--f-disp); font-weight: 600; font-size: 1.35rem; color: var(--navy-900); letter-spacing: -.01em; }
+.video-cap span { font-family: var(--f-text); font-weight: 500; font-size: 1.02rem; color: var(--ink); letter-spacing: 0; text-transform: none; }
+.video { position: relative; width: 100%; aspect-ratio: 16/9; border-radius: 16px; overflow: hidden; background: var(--navy-950);
+  box-shadow: 0 34px 60px -22px rgba(5,13,110,.5), 0 14px 30px -16px rgba(2,6,31,.45); }
 .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .video-facade { display: grid; place-items: center; background-size: cover; background-position: center; cursor: pointer; padding: 0; }
 .video-facade::after { content: ""; position: absolute; inset: 0; background: rgba(2,6,31,.32); transition: background .3s var(--ease); }
