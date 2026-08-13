@@ -27,7 +27,7 @@ export default function Roundtable() {
         <div className="container">
           <div className="grid two" style={{ alignItems: 'start' }}>
             <Reveal>
-              <div className="label"><span className="idx">01</span> &nbsp;The details</div>
+              <div className="label">The details</div>
               <div className="stack-tight mt-3">
                 <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>When</b><br /><span className="muted">{ROUNDTABLE_TIME}</span></div>
                 <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>Where</b><br /><span className="muted">Private room at Starbucks · {ROUNDTABLE_ADDRESS}</span></div>
@@ -39,7 +39,7 @@ export default function Roundtable() {
             </Reveal>
 
             <Reveal delay={0.05}>
-              <div className="label"><span className="idx">02</span> &nbsp;Register</div>
+              <div className="label">Register</div>
               <h2 className="h2 mt-2" style={{ marginBottom: 24 }}>Save your seat.</h2>
               <RoundtableForm />
             </Reveal>

@@ -42,7 +42,7 @@ export default function About() {
               <div className="cap"><b>Dr. Eliyahu Lotzar, Ed.D., MSW</b><span>Executive coach · facilitator · author</span></div>
             </Reveal>
             <Reveal delay={0.05}>
-              <div className="label"><span className="idx">01</span> &nbsp;The story</div>
+              <div className="label">The story</div>
               <h2 className="h2 mt-2 maxw-60">It started at eight years old.</h2>
               <p className="mt-2 lead">It all started when Eliyahu was eight years old. In a moment of revelation (that he’s happy to share), the Ancient of Days infused him with a unique, out-of-the-box knack for noticing the deep details of how people relate to themselves, each other, and to Him. That encounter set him on a lifelong quest to help us live and lead from the largest perspective.</p>
               <p className="mt-2 muted maxw-60">Today he brings that calling to leaders through the Working With God method, social work, corporate life, small-business ownership, and academia all folded into one practical way of leading with God.</p>
@@ -55,7 +55,7 @@ export default function About() {
       <section className="section on-bone">
         <div className="container">
           <div className="sec-head">
-            <div className="label"><span className="idx">02</span><br />Background</div>
+            <div className="label">Background</div>
             <Reveal><h2 className="h2 maxw-60">A therapist, business owner, and academic, in one leadership practice.</h2>
               <p className="mt-2 muted maxw-60">His doctoral research on organizational culture has been sought after in many countries. His work as a former therapist and small-business owner grounds the coaching in the real world.</p></Reveal>
           </div>
@@ -77,7 +77,7 @@ export default function About() {
       <section className="section">
         <div className="container">
           <div className="sec-head">
-            <div className="label"><span className="idx">03</span><br />What people say about Eliyahu</div>
+            <div className="label">What people say about Eliyahu</div>
             <Reveal><h2 className="h2 maxw-60">Leaders who’ve worked with him.</h2></Reveal>
           </div>
           <Reveal className="qgrid c3 mt-4 draw" stagger={0.08}>
@@ -95,7 +95,7 @@ export default function About() {
       <section className="section on-bone">
         <div className="container">
           <div className="sec-head">
-            <div className="label"><span className="idx">04</span><br />A sample of organizations served by Dr. Lotzar</div>
+            <div className="label">A sample of organizations served by Dr. Lotzar</div>
             <Reveal><h2 className="h2 maxw-60">Where the work has landed.</h2></Reveal>
           </div>
           <Reveal className="mt-4">

@@ -46,7 +46,7 @@ export default function TheBook() {
         <div className="container">
           <div className="grid two" style={{ alignItems: 'start' }}>
             <Reveal>
-              <div className="label"><span className="idx">01</span> &nbsp;The method</div>
+              <div className="label">The method</div>
               <h2 className="h2 mt-2 maxw-60">Introducing “Modal Leadership.”</h2>
             </Reveal>
             <Reveal delay={0.05}>
@@ -61,7 +61,7 @@ export default function TheBook() {
       <section className="section on-bone">
         <div className="container">
           <div className="sec-head">
-            <div className="label"><span className="idx">02</span><br />The Ten Modes</div>
+            <div className="label">The Ten Modes</div>
             <Reveal><h2 className="h2 maxw-60">Six for the known. Four for the unknown.</h2></Reveal>
           </div>
           <div className="grid two mt-4">
@@ -83,7 +83,7 @@ export default function TheBook() {
         <div className="container">
           <div className="grid two" style={{ alignItems: 'start' }}>
             <Reveal>
-              <div className="label"><span className="idx">03</span> &nbsp;Why this book is different</div>
+              <div className="label">Why this book is different</div>
               <h2 className="h2 mt-2 maxw-60">Real stories, real tools, real next steps.</h2>
             </Reveal>
             <Reveal delay={0.05}>
@@ -98,7 +98,7 @@ export default function TheBook() {
       <section className="section on-bone">
         <div className="container">
           <div className="sec-head">
-            <div className="label"><span className="idx">04</span><br />What people say</div>
+            <div className="label">What people say</div>
             <Reveal><h2 className="h2 maxw-60">Endorsements.</h2></Reveal>
           </div>
           <Reveal className="qgrid c2 mt-4 draw" stagger={0.08}>
