@@ -189,8 +189,15 @@ em, .serif-it { }
 .menu-links a .n { font-family: var(--f-mono); font-size: .7rem; color: var(--clay-lt); letter-spacing: .1em; }
 
 /* ---------- Hero ---------- */
-/* The one permitted gradient: subtle vertical navy-950 → navy-900. */
-.hero { background: linear-gradient(180deg, var(--navy-950), var(--navy-900)); color: var(--bone); padding: clamp(112px, 14vh, 156px) 0 clamp(28px, 5vh, 56px); position: relative; overflow: hidden; }
+/* Full-viewport hero: the navy field fills the screen on load; the rest of the
+   page reveals on the first scroll. Content is vertically centered between the
+   nav-clearing top padding and the ridge at the bottom.
+   The one permitted gradient: subtle vertical navy-950 → navy-900. */
+.hero { background: linear-gradient(180deg, var(--navy-950), var(--navy-900)); color: var(--bone);
+  min-height: 100vh; min-height: 100svh;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: clamp(104px, 13vh, 150px) 0 clamp(96px, 15vh, 168px);
+  position: relative; overflow: hidden; }
 .hero-top { display: grid; gap: 28px; grid-template-columns: 1fr; }
 @media (min-width: 900px){ .hero-top { grid-template-columns: 1.35fr .65fr; align-items: start; } }
 .hero .display { color: var(--bone); max-width: 16ch; }
