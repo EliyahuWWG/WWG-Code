@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="grid-f">
           <div>
             <Link to="/" className="footer-brand" aria-label="Working With God — home">
-              <img src="/wwg-logo.jpg" alt="Working With God" width="334" height="334" />
+              <img src="/wwg-logo.jpg" alt="Working With God" width="300" height="300" loading="lazy" decoding="async" />
             </Link>
             <p className="fdesc">Lead as the CHIEF’S Executive Officer, working with God, not just for Him. Faith-based leadership coaching, a two-day Master’s Class, and free community events. {SERVICE_AREA}.</p>
           </div>

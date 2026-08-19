@@ -29,7 +29,6 @@ export default function Events() {
       <section className="section">
         <div className="container">
           <div className="sec-head">
-            <div className="label">In person · free</div>
             <Reveal>
               <h2 className="h2 maxw-60">The Working With God Roundtable</h2>
               <p className="mt-2 muted maxw-60">Two hours that combine leadership practice, scripture, and prayer. Facilitated by Dr. Eliyahu Lotzar. Refreshments provided.</p>
@@ -66,7 +65,6 @@ export default function Events() {
       <section className="section on-bone">
         <div className="container">
           <div className="sec-head">
-            <div className="label">Online · free</div>
             <Reveal>
               <h2 className="h2 maxw-60">The Monthly Webinar</h2>
               <p className="mt-2 muted maxw-60">A 60-minute interactive introduction to the Working With God method — for leaders anywhere, no travel required.</p>
@@ -88,7 +86,6 @@ export default function Events() {
       <section className="section">
         <div className="container">
           <div className="sec-head">
-            <div className="label">Past events</div>
             <Reveal><h2 className="h2 maxw-60">Recent gatherings and appearances.</h2>
               <p className="mt-2 muted maxw-60">A sense of the rooms Eliyahu has been in lately: roundtables, author panels, and national stages.</p></Reveal>
           </div>

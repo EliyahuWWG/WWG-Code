@@ -52,13 +52,19 @@ export default function MaskLines({ children, stagger = 0.06, duration = 0.7 }) 
     })
 
     // Group words into visual lines by vertical position, stagger per line.
+    // READ pass first, then WRITE pass. Interleaving them made every offsetTop
+    // force a fresh style+layout: 13 forced reflows on the home H1 alone, all
+    // inside the hydration commit, before first paint.
     const words = Array.from(el.querySelectorAll('.mask-w'))
+    const offsets = words.map((w) => w.offsetTop)          // reads only
     const tops = []
-    words.forEach((w) => {
-      const top = w.offsetTop
+    const lineOf = offsets.map((top) => {
       let line = tops.findIndex((t) => Math.abs(t - top) < 8)
       if (line === -1) { tops.push(top); line = tops.length - 1 }
-      w.firstChild.style.transitionDelay = `${line * stagger}s`
+      return line
+    })
+    words.forEach((w, i) => {                              // writes only
+      w.firstChild.style.transitionDelay = `${lineOf[i] * stagger}s`
       w.firstChild.style.transitionDuration = `${duration}s`
     })
 

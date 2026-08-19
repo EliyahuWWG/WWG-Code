@@ -5,18 +5,13 @@ import Arrow from '../components/Arrow'
 import MaskLines from '../components/MaskLines'
 import VideoFacade from '../components/VideoFacade'
 import BookCallLink from '../components/BookCallLink'
-import Tilt from '../components/Tilt'
-import TestimonialCarousel from '../components/TestimonialCarousel'
 import FAQ from '../components/FAQ'
-import QuoteSignup from '../components/forms/QuoteSignup'
 import Seo from '../components/Seo'
 import { organizationSchema, personSchema, faqSchema } from '../seo/schema'
-import { pillars, offerings, testimonials, testimonialsArchive, endorsements, faqs } from '../data'
+import { pillars, offerings, testimonials, faqs } from '../data'
 
 export default function Home() {
   const feature = testimonials.find(t => t.feature) || testimonials[0]
-  // Real quotes only: coaching testimonials + book endorsements + archive.
-  const carouselQuotes = [...testimonials.filter(t => t !== feature), ...endorsements, ...testimonialsArchive]
 
   return (
     <>
@@ -63,10 +58,41 @@ export default function Home() {
         </div>
       </section>
 
-      {/* VIDEO */}
-      <section className="section-sm">
+      {/* PROOF
+          One quote, straight after the hero. The carousel moved off the home
+          page: it was three competing things to read in the same screen. */}
+      <section className="section on-bone" id="testimonials" style={{ scrollMarginTop: 110 }}>
         <div className="container">
-          <Reveal style={{ maxWidth: 880, margin: '0 auto' }}>
+          <Reveal className="pullquote" style={{ borderTop: 0, paddingTop: 0 }}>
+            <blockquote>“{feature.q}”</blockquote>
+            <div className="attr"><b>{feature.who}</b>, {feature.role}</div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* MEET ELIYAHU — the video folded in, so it is no longer a section of
+          its own competing for attention. */}
+      <section className="section">
+        <div className="container">
+          <div className="person-grid">
+            <Reveal className="portrait">
+              <picture>
+                <source srcSet="/eliyahu.webp" type="image/webp" />
+                <img src="/eliyahu.jpg" alt="Dr. Eliyahu Lotzar" width="920" height="1227"
+                  loading="lazy" decoding="async" />
+              </picture>
+              <div className="cap"><b>Dr. Eliyahu Lotzar, Ed.D., MSW</b><span>Executive coach · facilitator · author</span></div>
+            </Reveal>
+            <Reveal delay={0.05}>
+              {/* TODO(client): he is rewriting this line. Superlative removed for now. */}
+              <h2 className="h2 maxw-60">Bringing a bigger perspective into the room.</h2>
+              <p className="mt-2 lead">Eliyahu has been coaching, counseling, and facilitating leadership groups for over 30 years, and working specifically with CEOs and owners for the past seven. He is a clinical therapist by training, a former business owner, and a scholar of what makes organizations healthy.</p>
+              <p className="mt-2 muted maxw-60">Working With God is where all of that meets faith: a practical way to hear what God wants to do through your leadership, right in the middle of real strategy, hiring, and timing.</p>
+              <div className="mt-3"><Link to="/about" className="tlink">Read his story <Arrow /></Link></div>
+            </Reveal>
+          </div>
+
+          <Reveal className="mt-5" style={{ maxWidth: 880, margin: '0 auto' }}>
             <VideoFacade />
             <figcaption className="video-cap">
               <b>Dr. Eliyahu Lotzar</b>
@@ -76,48 +102,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PROOF */}
-      <section className="section on-bone" id="testimonials" style={{ scrollMarginTop: 110 }}>
-        <div className="container">
-          <div className="sec-head">
-            <div className="label">What people say</div>
-            <Reveal className="pullquote" style={{ borderTop: 0, paddingTop: 0 }}>
-              <blockquote>“{feature.q}”</blockquote>
-              <div className="attr"><b>{feature.who}</b>, {feature.role}</div>
-            </Reveal>
-          </div>
-        </div>
-        <Reveal className="mt-4">
-          <TestimonialCarousel items={carouselQuotes} />
-        </Reveal>
-      </section>
-
-      {/* MEET ELIYAHU */}
-      <section className="section">
-        <div className="container">
-          <div className="person-grid">
-            <Reveal className="portrait">
-              <img src="/eliyahu.jpg" alt="Dr. Eliyahu Lotzar" width="1200" height="1600" loading="lazy" />
-              <div className="cap"><b>Dr. Eliyahu Lotzar, Ed.D., MSW</b><span>Executive coach · facilitator · author</span></div>
-            </Reveal>
-            <Reveal delay={0.05}>
-              <div className="label">Meet Eliyahu</div>
-              {/* TODO(client): he is rewriting this line. Superlative removed for now. */}
-              <h2 className="h2 mt-2 maxw-60">Bringing a bigger perspective into the room.</h2>
-              <p className="mt-2 lead">Eliyahu has been coaching, counseling, and facilitating leadership groups for over 30 years, and working specifically with CEOs and owners for the past seven. He is a clinical therapist by training, a former business owner, and a scholar of what makes organizations healthy.</p>
-              <p className="mt-2 muted maxw-60">Working With God is where all of that meets faith: a practical way to hear what God wants to do through your leadership, right in the middle of real strategy, hiring, and timing.</p>
-              <div className="mt-3"><Link to="/about" className="tlink">Read his story <Arrow /></Link></div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* FOUR PILLARS */}
+      {/* THE ARGUMENT */}
       <section className="section on-bone">
         <div className="container">
           <div className="sec-head">
-            <div className="label">Why work with God</div>
-            <Reveal><h2 className="h2 maxw-60">Not asking God to bless your plans. Asking what He wants to do through your leadership.</h2></Reveal>
+            <Reveal><h2 className="h2">Not asking God to bless your plans. Asking what He wants to do through your leadership.</h2></Reveal>
           </div>
           <Reveal className="ilist mt-4 draw" stagger={0.08}>
             {pillars.map(p => (
@@ -131,13 +120,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* WAYS TO ENGAGE */}
-      <section className="section on-bone">
+      {/* WAYS TO ENGAGE — the offer ladder. Every rung ends at a conversation. */}
+      <section className="section">
         <div className="container">
           <div className="sec-head">
-            <div className="label">Ways to engage</div>
-            <Reveal><h2 className="h2 maxw-60">Bring God into your next decision.</h2>
-              <p className="mt-2 muted maxw-60">Four ways to begin. Two of them are free.</p></Reveal>
+            <Reveal><h2 className="h2">Bring God into your next decision.</h2>
+              <p className="mt-2 muted">Four ways to begin. Two of them are free.</p></Reveal>
           </div>
           <Reveal className="ilist mt-4 draw" stagger={0.08}>
             {offerings.map(o => (
@@ -153,46 +141,9 @@ export default function Home() {
               </div>
             ))}
           </Reveal>
-        </div>
-      </section>
-
-      {/* BOOK TEASER */}
-      <section className="section on-bone">
-        <div className="container">
-          <div className="grid two" style={{ alignItems: 'center' }}>
-            <Reveal>
-              <div className="label">The book</div>
-              <h2 className="h2 mt-2 maxw-60">God is ready to work with you.</h2>
-              <p className="mt-2 muted maxw-60">Working With God is more than just a book, it’s a practical way to partner with God right in the middle of your toughest work challenges. It introduces <span className="serif-it">Modal Leadership</span> and the Ten Modes of Elevated Leadership.</p>
-              <div className="row mt-3">
-                <Link to="/the-book" className="btn btn-solid">About the book <Arrow /></Link>
-                <BookCallLink className="tlink" arrow={false}>Talk to Eliyahu</BookCallLink>
-              </div>
-            </Reveal>
-            <Reveal delay={0.05} style={{ display: 'flex', justifyContent: 'center' }}>
-              <Tilt max={9}>
-                <div className="book-cover">
-                  <img src="/book-cover.jpg" width="760" height="1140"
-                    alt="Working With God: The Ten Modes of Elevated Leadership, by Dr. Eliyahu Lotzar" />
-                </div>
-              </Tilt>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* DAILY QUOTE SIGNUP */}
-      <section className="section">
-        <div className="container">
-          <div className="grid two" style={{ alignItems: 'start' }}>
-            <Reveal>
-              <div className="label">Daily quote</div>
-              <h2 className="h2 mt-2 maxw-60">A short word for the workday.</h2>
-              <p className="mt-2 muted maxw-60">Get a <span className="serif-it">short</span> inspirational quote each workday morning, and occasional news about new events.</p>
-              <p className="mt-2 muted" style={{ fontSize: '.9rem' }}>No selling of your data. Unsubscribe anytime.</p>
-            </Reveal>
-            <Reveal delay={0.05}><QuoteSignup /></Reveal>
-          </div>
+          <Reveal className="mt-4">
+            <p className="muted maxw-60">There is also the book, <Link to="/the-book" className="tlink">Working With God: The Ten Modes of Elevated Leadership</Link>, if you would rather start on your own.</p>
+          </Reveal>
         </div>
       </section>
 

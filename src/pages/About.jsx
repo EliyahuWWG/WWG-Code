@@ -37,11 +37,13 @@ export default function About() {
         <div className="container">
           <div className="person-grid">
             <Reveal className="portrait">
-              <img src="/eliyahu.jpg" alt="Dr. Eliyahu Lotzar" width="1200" height="1600" loading="lazy" />
+              <picture>
+                <source srcSet="/eliyahu.webp" type="image/webp" />
+                <img src="/eliyahu.jpg" alt="Dr. Eliyahu Lotzar" width="920" height="1227" loading="lazy" decoding="async" />
+              </picture>
               <div className="cap"><b>Dr. Eliyahu Lotzar, Ed.D., MSW</b><span>Executive coach · facilitator · author</span></div>
             </Reveal>
             <Reveal delay={0.05}>
-              <div className="label">The story</div>
               <h2 className="h2 mt-2 maxw-60">It started at eight years old.</h2>
               <p className="mt-2 lead">It all started when Eliyahu was eight years old. In a moment of revelation (that he’s happy to share), the Ancient of Days infused him with a unique, out-of-the-box knack for noticing the deep details of how people relate to themselves, each other, and to Him. That encounter set him on a lifelong quest to help us live and lead from a bigger perspective.</p>
               <p className="mt-2 muted maxw-60">That quest took him through clinical social work, corporate life, small-business ownership, and years of academic research. Each chapter added a lens: the therapist who reads the room, the owner who has signed the front of a paycheck, the scholar who studies what actually makes an organization healthy.</p>
@@ -55,7 +57,6 @@ export default function About() {
       <section className="section on-bone">
         <div className="container">
           <div className="sec-head">
-            <div className="label">Background &amp; credentials</div>
             <Reveal><h2 className="h2 maxw-60">A therapist, business owner, and academic — in one leadership practice.</h2>
               <p className="mt-2 muted maxw-60">His doctoral research on organizational culture has been sought after in many countries. Years as a clinical therapist and small-business owner keep the coaching grounded in the real world, not the seminar room.</p></Reveal>
           </div>
@@ -77,7 +78,6 @@ export default function About() {
       <section className="section">
         <div className="container">
           <div className="sec-head">
-            <div className="label">What people say about Eliyahu</div>
             <Reveal><h2 className="h2 maxw-60">Leaders who’ve worked with him as a coach, trainer, or high-level consultant.</h2></Reveal>
           </div>
           <Reveal className="qgrid c3 mt-4 draw" stagger={0.08}>
@@ -95,7 +95,6 @@ export default function About() {
       <section className="section on-bone">
         <div className="container">
           <div className="sec-head">
-            <div className="label">Organizations he has served</div>
             <Reveal><h2 className="h2 maxw-60">Trusted across business, government, and the nonprofit world.</h2></Reveal>
           </div>
           <Reveal className="mt-4">

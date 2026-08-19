@@ -60,7 +60,7 @@ export default function Nav() {
     <>
       <header className={`nav dark ${min ? 'min' : ''}`}>
         <div className="container nav-in">
-          <Link to="/" className="brand" aria-label="Working With God — home"><img className="brand-mark" src="/wwg-mark-t.png" alt="Working With God" width="144" height="78" /></Link>
+          <Link to="/" className="brand" aria-label="Working With God — home"><img className="brand-mark" src="/wwg-mark-t.png" alt="Working With God" width="115" height="96" /></Link>
           <nav className="nav-links" aria-label="Primary">
             {links.map(l => (
               l.to.includes('#')
@@ -83,7 +83,7 @@ export default function Nav() {
       <div id="site-menu" ref={menuRef} className={`menu ${open ? 'open' : ''}`} role="dialog" aria-modal="true"
         aria-label="Site menu" aria-hidden={!open}>
         <div className="menu-top">
-          <Link to="/" className="brand" onClick={() => setOpen(false)} aria-label="Working With God — home"><img className="brand-mark" src="/wwg-mark-t.png" alt="Working With God" width="144" height="78" /></Link>
+          <Link to="/" className="brand" onClick={() => setOpen(false)} aria-label="Working With God — home"><img className="brand-mark" src="/wwg-mark-t.png" alt="Working With God" width="115" height="96" /></Link>
           <button className="menu-x" aria-label="Close menu" onClick={() => setOpen(false)}>✕</button>
         </div>
         <nav className="menu-links" aria-label="Mobile">

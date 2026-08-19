@@ -32,8 +32,12 @@ export default function TheBook() {
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Tilt max={9}>
                 <div className="book-cover">
-                  <img src="/book-cover.jpg" width="760" height="1140"
-                    alt="Working With God: The Ten Modes of Elevated Leadership, by Dr. Eliyahu Lotzar" />
+                  {/* LCP element on this page, so deliberately NOT lazy. */}
+                  <picture>
+                    <source srcSet="/book-cover.webp" type="image/webp" />
+                    <img src="/book-cover.jpg" width="620" height="930" fetchPriority="high" decoding="async"
+                      alt="Working With God: The Ten Modes of Elevated Leadership, by Dr. Eliyahu Lotzar" />
+                  </picture>
                 </div>
               </Tilt>
             </div>
@@ -46,7 +50,6 @@ export default function TheBook() {
         <div className="container">
           <div className="grid two" style={{ alignItems: 'start' }}>
             <Reveal>
-              <div className="label">The method</div>
               <h2 className="h2 mt-2 maxw-60">Introducing “Modal Leadership.”</h2>
             </Reveal>
             <Reveal delay={0.05}>
@@ -61,7 +64,6 @@ export default function TheBook() {
       <section className="section on-bone">
         <div className="container">
           <div className="sec-head">
-            <div className="label">The Ten Modes</div>
             <Reveal><h2 className="h2 maxw-60">Six for the known. Four for the unknown.</h2></Reveal>
           </div>
           <div className="grid two mt-4">
@@ -83,7 +85,6 @@ export default function TheBook() {
         <div className="container">
           <div className="grid two" style={{ alignItems: 'start' }}>
             <Reveal>
-              <div className="label">Why this book is different</div>
               <h2 className="h2 mt-2 maxw-60">Real stories, real tools, real next steps.</h2>
             </Reveal>
             <Reveal delay={0.05}>
@@ -107,7 +108,6 @@ export default function TheBook() {
       <section className="section on-bone">
         <div className="container">
           <div className="sec-head">
-            <div className="label">What people say</div>
             <Reveal><h2 className="h2 maxw-60">Endorsements.</h2></Reveal>
           </div>
           <Reveal className="qgrid c2 mt-4 draw" stagger={0.08}>

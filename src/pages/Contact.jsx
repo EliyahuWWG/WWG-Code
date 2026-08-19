@@ -3,6 +3,7 @@ import MaskLines from '../components/MaskLines'
 import Seo from '../components/Seo'
 import BookCallLink from '../components/BookCallLink'
 import ContactForm from '../components/forms/ContactForm'
+import QuoteSignup from '../components/forms/QuoteSignup'
 import { breadcrumbSchema } from '../seo/schema'
 import { EMAIL, LINKEDIN, SERVICE_AREA } from '../data'
 
@@ -52,6 +53,20 @@ export default function Contact() {
                 <div className="mt-2"><BookCallLink className="btn btn-solid">Book a call</BookCallLink></div>
               </div>
             </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Daily quote signup, relocated from the home page. */}
+      <section className="section on-bone">
+        <div className="container">
+          <div className="grid two" style={{ alignItems: 'start' }}>
+            <Reveal>
+              <h2 className="h2">A short word for the workday.</h2>
+              <p className="mt-2 muted maxw-60">Get a short inspirational quote each workday morning, and occasional news about new events.</p>
+              <p className="mt-2 muted" style={{ fontSize: '.9rem' }}>No selling of your data. Unsubscribe anytime.</p>
+            </Reveal>
+            <Reveal delay={0.05}><QuoteSignup /></Reveal>
           </div>
         </div>
       </section>

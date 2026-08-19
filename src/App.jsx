@@ -33,19 +33,27 @@ function ScrollProgress() {
   const ref = useRef(null)
   useEffect(() => {
     let raf = 0
+    // scrollHeight forces a full-document layout. Reading it inside the scroll
+    // handler did that on every frame; cache it and refresh only when the
+    // document can actually have changed height.
+    let max = 0
+    const measure = () => { max = document.documentElement.scrollHeight - window.innerHeight }
     const update = () => {
       raf = 0
-      const max = document.documentElement.scrollHeight - window.innerHeight
       const p = max > 0 ? Math.min(window.scrollY / max, 1) : 0
       if (ref.current) ref.current.style.transform = `scaleX(${p})`
     }
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(update) }
-    update()
+    const onResize = () => { measure(); onScroll() }
+    measure(); update()
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(onResize) : null
+    ro?.observe(document.documentElement)
     window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll, { passive: true })
+    window.addEventListener('resize', onResize, { passive: true })
     return () => {
+      ro?.disconnect()
       window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
+      window.removeEventListener('resize', onResize)
       if (raf) cancelAnimationFrame(raf)
     }
   }, [])

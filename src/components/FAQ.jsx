@@ -11,7 +11,6 @@ export default function FAQ() {
     <section className="section">
       <div className="container">
         <div className="sec-head">
-          <div className="label">Questions, answered</div>
           <Reveal><h2 className="h2 maxw-60">The things people ask before they book.</h2></Reveal>
         </div>
         <Reveal className="faq mt-4">

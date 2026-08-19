@@ -4,14 +4,50 @@
    Type: Fraunces (display) · Inter (text + labels)
    ===================================================================== */
 
-/* Self-hosted fonts (latin subsets, font-display: swap).
-   Fraunces ships as a variable font with the opsz axis - keep it: the
-   optical sizing is what gives the display type its editorial look. */
-@import '@fontsource-variable/fraunces/opsz.css';
-@import '@fontsource-variable/fraunces/opsz-italic.css';
-@import '@fontsource/inter/400.css';
-@import '@fontsource/inter/500.css';
-@import '@fontsource/inter/600.css';
+/* Inter: latin subset only. */
+@import '@fontsource/inter/latin-400.css';
+@import '@fontsource/inter/latin-500.css';
+@import '@fontsource/inter/latin-600.css';
+
+/* Fonts. Fraunces is hand-declared from /public/fonts so the URL is stable and
+   preloadable (the @fontsource path carries a build hash). The opsz axis is
+   kept - the optical sizing is what makes the display type editorial.
+
+   The italic face is SUBSET to the ten glyphs of the one word that uses it
+   ("perspective." in the hero): 81,520 B -> 5,572 B, and the accent survives.
+   Regenerate with:
+     pyftsubset <src>.woff2 --text="perspective." --flavor=woff2 \
+       --layout-features='' --output-file=public/fonts/fraunces-italic-subset.woff2 */
+@font-face {
+  font-family: 'Fraunces Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/fonts/fraunces-opsz-latin.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,
+                 U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,
+                 U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: 'Fraunces Variable';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/fonts/fraunces-italic-subset.woff2') format('woff2-variations');
+}
+
+/* Metric-matched stand-in so the swap does not reflow the hero H1 (the LCP
+   element). Values measured from Fraunces: upm 2000, hhea ascent 1956 /
+   descent -510; size-adjust from avg lowercase advance vs Georgia. */
+@font-face {
+  font-family: 'Fraunces Fallback';
+  src: local('Georgia'), local('Times New Roman');
+  size-adjust: 113%;
+  ascent-override: 97.8%;
+  descent-override: 25.5%;
+  line-gap-override: 0%;
+}
+
 
 :root {
   /* =========================================================
@@ -57,7 +93,7 @@
   --pad: clamp(20px, 5vw, 72px);
   --ease: cubic-bezier(.2,.6,.2,1);
 
-  --f-disp: "Fraunces Variable", Georgia, serif;
+  --f-disp: "Fraunces Variable", "Fraunces Fallback", Georgia, serif;
   --f-text: "Inter", system-ui, sans-serif;
   /* Labels were JetBrains Mono. Client feedback 19 Aug: "too computer",
      "distracting", and too small to read comfortably. Labels now ride the
@@ -105,6 +141,10 @@ h1,h2,h3,h4 { font-family: var(--f-disp); font-weight: 500; line-height: 1.06; l
 /* Inline emphasis in running text. Was Fraunces italic, which read as a
    different font dropped into Inter. Now simply bold, same face. */
 .serif-it { font-weight: 600; font-style: normal; color: inherit; }
+/* Raw <em> comes in through dangerouslySetInnerHTML from data.js (the pillar
+   copy). Same rule as .serif-it: he asked for bold, not italic, anywhere in
+   running text. */
+p em, li em, .irow em, .lead em, blockquote em { font-style: normal; font-weight: 600; }
 /* Display-type emphasis (hero H1 only). Fraunces italic INSIDE Fraunces is
    consistent - this is the accent word he liked on the reference hero. */
 .hi-it { font-family: var(--f-disp); font-style: italic; font-weight: 400; }
@@ -150,9 +190,14 @@ em, .serif-it { }
 }
 
 /* section header (label rail) */
-.sec-head { display: grid; gap: 14px; align-items: start; }
+/* Section heads are a single stacked column. This used to be a 2-column grid
+   with a small label parked in the left column; the client found that small
+   left-hand text distracting and hard to read, so the labels are gone and the
+   heading simply leads. */
+.sec-head { display: block; }
 .sec-head > * { min-width: 0; }
-@media (min-width: 860px){ .sec-head { grid-template-columns: minmax(140px,210px) 1fr; gap: 30px; } }
+.sec-head > h2, .sec-head > .reveal > h2 { max-width: 22ch; }
+.sec-head > *:last-child { max-width: 62ch; }
 /* HEAD numbering — large serif numeral (distinct font from the mono sub-numbers) */
 .sec-num { display: inline-block; font-family: var(--f-disp); font-weight: 500; font-size: clamp(1.9rem, 2.8vw, 2.6rem); line-height: .85; letter-spacing: -.02em; color: var(--gold-600); margin-bottom: 6px; }
 .on-ink .sec-num, .cta .sec-num { color: var(--gold-400); }
@@ -206,7 +251,8 @@ em, .serif-it { }
 .nav-right { display: flex; align-items: center; gap: 18px; }
 /* nav CTA: smaller, fully rounded pill so it sits neatly inside the bar */
 .nav-right .btn { padding: .58rem 1.25rem; border-radius: 999px; font-size: .9rem; }
-.nav-burger { display: inline-flex; flex-direction: column; gap: 5px; width: 30px; height: 30px; justify-content: center; }
+.nav-burger { display: inline-flex; flex-direction: column; gap: 5px; width: 44px; height: 44px; align-items: center; justify-content: center; margin-right: -7px; }
+.nav-burger span { width: 22px; }
 .nav-burger span { height: 1.5px; background: currentColor; display: block; transition: transform .3s var(--ease), opacity .3s; }
 @media (min-width: 940px){ .nav-links { display: flex; } .nav-burger { display: none; } }
 /* mobile: tighten the floating pill; booking lives in the drawer + sticky bar */
@@ -225,7 +271,7 @@ em, .serif-it { }
 .menu { position: fixed; inset: 0; z-index: 90; background: var(--forest); color: var(--bone); transform: translateY(-101%); visibility: hidden; transition: transform .5s var(--ease), visibility 0s linear .5s; display: flex; flex-direction: column; padding: 24px var(--pad); }
 .menu.open { transform: none; visibility: visible; transition: transform .5s var(--ease); }
 .menu-top { display: flex; justify-content: space-between; align-items: center; }
-.menu-x { font-size: 1.6rem; line-height: 1; }
+.menu-x { font-size: 1.6rem; line-height: 1; min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
 .menu-links { margin-top: auto; margin-bottom: auto; display: flex; flex-direction: column; }
 .menu-links a { font-family: var(--f-disp); font-weight: 300; font-size: clamp(2rem, 9vw, 3rem); padding: 14px 0; border-bottom: 1px solid var(--line-dk); display: flex; justify-content: space-between; align-items: baseline; }
 .menu-links a .n { font-family: var(--f-mono); font-size: .81rem; color: var(--clay-lt); letter-spacing: .1em; }
@@ -242,7 +288,7 @@ em, .serif-it { }
   padding: clamp(128px, 16vh, 188px) 0 clamp(72px, 10vh, 128px);
   position: relative; overflow: hidden; }
 /* soft drifting aurora blobs behind the content */
-.aurora { position: absolute; z-index: 0; pointer-events: none; border-radius: 50%; filter: blur(72px); opacity: .5; will-change: transform; }
+.aurora { position: absolute; z-index: 0; pointer-events: none; border-radius: 50%; filter: blur(72px); opacity: .5; }
 .aurora-1 { width: 62vw; height: 62vw; left: -8vw; top: -20vh; background: radial-gradient(circle, rgba(46,86,224,.72), rgba(46,86,224,0) 62%); animation: aurora-a 22s ease-in-out infinite alternate; }
 .aurora-2 { width: 56vw; height: 56vw; right: -12vw; top: 6vh; background: radial-gradient(circle, rgba(22,44,168,.66), rgba(22,44,168,0) 62%); animation: aurora-b 28s ease-in-out infinite alternate; }
 .aurora-3 { width: 46vw; height: 46vw; left: 30vw; bottom: -22vh; background: radial-gradient(circle, rgba(74,112,238,.42), rgba(74,112,238,0) 60%); animation: aurora-c 32s ease-in-out infinite alternate; }
@@ -250,6 +296,23 @@ em, .serif-it { }
 @keyframes aurora-b { from { transform: translate(0,0) scale(1); } to { transform: translate(-9vw, 6vh) scale(1.12); } }
 @keyframes aurora-c { from { transform: translate(0,0) scale(1); } to { transform: translate(6vw, -8vh) scale(1.16); } }
 @media (prefers-reduced-motion: reduce){ .aurora { animation: none !important; } }
+
+/* Mobile: three blur(72px) blobs are ~11M device px of Gaussian blur at DPR 3,
+   animated forever. Because they never stop, they also re-dirty the
+   backdrop-filter source under the fixed nav on every frame, so the GPU never
+   idles even when the user does. Freeze them and shrink the blur; the
+   gradient still reads as an aurora. */
+@media (max-width: 719px) {
+  .aurora   { animation: none !important; filter: blur(44px); opacity: .42; }
+  .aurora-1 { width: 78vw; height: 78vw; }
+  .aurora-2 { width: 70vw; height: 70vw; }
+  .aurora-3 { display: none; }
+  .sticky-cta { background: #02061f; -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+
+/* saturate() roughly doubles the per-frame cost of the nav's backdrop pass,
+   for an effect nobody can see over a flat navy field. */
+.nav-in { -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
 .hero-top { display: grid; gap: 28px; grid-template-columns: 1fr; }
 .hero-top > * { min-width: 0; }  /* keep long headline lines from blowing out the grid */
 @media (min-width: 900px){ .hero-top { grid-template-columns: 1.2fr .8fr; align-items: start; column-gap: clamp(40px,5vw,88px); } }
@@ -387,7 +450,7 @@ em, .serif-it { }
 
 /* ---------- Reveal ---------- */
 /* Hidden state gated on html.js so prerendered HTML is visible without JS. */
-html.js .reveal { opacity: 0; transform: translateY(16px); transition: opacity .8s var(--ease), transform .8s var(--ease); will-change: transform, opacity; }
+html.js .reveal { opacity: 0; transform: translateY(16px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
 html.js .reveal.in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce){ html.js .reveal { opacity:1; transform:none; transition:none; will-change:auto; } html.smooth{scroll-behavior:auto;} }
 
@@ -407,7 +470,7 @@ html.js .reveal.in { opacity: 1; transform: none; }
 .mask-lines.in .mask-wi { transform: none; }
 
 /* reveal group - staggered direct children (grids, index lists) */
-html.js .reveal-group > * { opacity: 0; transform: translateY(16px); transition: opacity .8s var(--ease), transform .8s var(--ease); will-change: transform, opacity; }
+html.js .reveal-group > * { opacity: 0; transform: translateY(16px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
 html.js .reveal-group.in > * { opacity: 1; transform: none; }
 
 /* drawing hairline - a row's top border scales in from the left as it reveals.
