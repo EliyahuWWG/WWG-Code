@@ -50,7 +50,7 @@ const dropWoff1 = {
 // Markdown posts are compiled to HTML at BUILD time, so `marked` never reaches
 // the browser bundle. Each .md becomes a module exporting its front matter
 // plus the rendered html.
-const markdown = {
+export const markdownPlugin = {
   name: 'markdown-posts',
   enforce: 'pre',
   transform(code, id) {
@@ -67,7 +67,7 @@ const markdown = {
 }
 
 export default defineConfig({
-  plugins: [markdown, react(), previewDirIndex, dropWoff1],
+  plugins: [markdownPlugin, react(), previewDirIndex, dropWoff1],
   base: '/',
   build: {
     modulePreload: {
