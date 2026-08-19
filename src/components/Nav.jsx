@@ -9,6 +9,7 @@ const links = [
   { to: '/roundtable', label: 'Roundtable' },
   { to: '/the-book', label: 'The Book' },
   { to: '/about', label: 'About' },
+  { to: '/#testimonials', label: 'Testimonials' },
   { to: '/contact', label: 'Contact' },
 ]
 
@@ -55,10 +56,12 @@ export default function Nav() {
     <>
       <header className={`nav dark ${min ? 'min' : ''}`}>
         <div className="container nav-in">
-          <Link to="/" className="wordmark"><span className="dot" aria-hidden="true" />Working With God</Link>
+          <Link to="/" className="brand" aria-label="Working With God — home"><img className="brand-mark" src="/wwg-mark-t.png" alt="Working With God" width="144" height="78" /></Link>
           <nav className="nav-links" aria-label="Primary">
             {links.map(l => (
-              <NavLink key={l.to} to={l.to} className={({ isActive }) => isActive ? 'active' : ''}>{l.label}</NavLink>
+              l.to.includes('#')
+                ? <Link key={l.to} to={l.to}>{l.label}</Link>
+                : <NavLink key={l.to} to={l.to} className={({ isActive }) => isActive ? 'active' : ''}>{l.label}</NavLink>
             ))}
           </nav>
           <div className="nav-right">
@@ -76,7 +79,7 @@ export default function Nav() {
       <div id="site-menu" ref={menuRef} className={`menu ${open ? 'open' : ''}`} role="dialog" aria-modal="true"
         aria-label="Site menu" aria-hidden={!open}>
         <div className="menu-top">
-          <Link to="/" className="wordmark" style={{ color: 'var(--bone)' }} onClick={() => setOpen(false)}><span className="dot" aria-hidden="true" />Working With God</Link>
+          <Link to="/" className="brand" onClick={() => setOpen(false)} aria-label="Working With God — home"><img className="brand-mark" src="/wwg-mark-t.png" alt="Working With God" width="144" height="78" /></Link>
           <button className="menu-x" aria-label="Close menu" onClick={() => setOpen(false)}>✕</button>
         </div>
         <nav className="menu-links" aria-label="Mobile">

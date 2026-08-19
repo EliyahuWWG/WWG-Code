@@ -7,8 +7,24 @@ import { CALENDLY } from './data'
 import { openCalendly, warmCalendly } from './components/useCalendly'
 
 function ScrollToTop() {
-  const { pathname } = useLocation()
-  useEffect(() => { window.scrollTo(0, 0) }, [pathname])
+  const { pathname, hash } = useLocation()
+  useEffect(() => {
+    if (hash) {
+      // Scroll to the #anchor once it exists (handles lazy-loaded routes):
+      // retry across frames for up to ~1.2s before giving up.
+      const id = hash.slice(1)
+      let tries = 0
+      let raf = 0
+      const go = () => {
+        const el = document.getElementById(id)
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        else if (tries++ < 72) raf = requestAnimationFrame(go)
+      }
+      raf = requestAnimationFrame(go)
+      return () => cancelAnimationFrame(raf)
+    }
+    window.scrollTo(0, 0)
+  }, [pathname, hash])
   return null
 }
 

@@ -1,9 +1,17 @@
 import Reveal from '../components/Reveal'
 import MaskLines from '../components/MaskLines'
+import Arrow from '../components/Arrow'
 import Seo from '../components/Seo'
 import RoundtableForm from '../components/forms/RoundtableForm'
 import { breadcrumbSchema, roundtableEventSchema } from '../seo/schema'
-import { ROUNDTABLE_ADDRESS, ROUNDTABLE_TIME, NEXT_ROUNDTABLE } from '../data'
+import { roundtableTopics, ROUNDTABLE_ADDRESS, ROUNDTABLE_TIME, NEXT_ROUNDTABLE } from '../data'
+
+const flow = [
+  { t: 'Gather', d: 'Coffee and introductions. A room of leaders who actually run things — owners, CEOs, senior managers.' },
+  { t: 'A topic worth the hour', d: 'One leadership challenge each month — agility, hiring, kingdom economics, sales — opened up honestly around the table.' },
+  { t: 'Scripture & prayer, applied', d: 'Not a devotional. We bring God into the real decision in front of you and ask what He wants to do through it.' },
+  { t: 'Leave with a next step', d: 'You walk out with a clearer head on something specific, plus a few leaders who’ll check in on how it went.' },
+]
 
 export default function Roundtable() {
   return (
@@ -15,32 +23,85 @@ export default function Roundtable() {
         schema={[breadcrumbSchema([{ name: 'Events', path: '/events' }, { name: 'Roundtable', path: '/roundtable' }]), roundtableEventSchema()]}
       />
 
-      <section className="phero" style={{ paddingBottom: 'clamp(40px,5vw,64px)' }}>
+      <section className="phero">
         <div className="container">
           <div className="eyebrow">Roundtable · free</div>
-          <h1 className="h1 mt-3 balance"><MaskLines>Register for the WWG Roundtable’s next meeting</MaskLines></h1>
-          <p className="lead">Two hours of in-person community, leadership practice, scripture, and prayer, no fee, refreshments provided.</p>
+          <h1 className="h1 mt-3 balance"><MaskLines>A monthly table for leaders who want God in the room.</MaskLines></h1>
+          <p className="lead">Two hours of in-person community, leadership practice, scripture, and prayer — near Chantilly, Virginia. No fee. Refreshments provided.</p>
+          <div className="row mt-3">
+            <a href="#register" className="btn btn-onink btn-lg">Save your seat <Arrow /></a>
+            <span className="phero-note">{ROUNDTABLE_TIME}</span>
+          </div>
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: 'clamp(40px,5vw,64px)' }}>
+      {/* WHAT IT IS */}
+      <section className="section">
         <div className="container">
-          <div className="grid two" style={{ alignItems: 'start' }}>
+          <div className="sec-head">
+            <div className="label">What it is</div>
             <Reveal>
-              <div className="label"><span className="sec-num">01</span><br />The details</div>
-              <div className="stack-tight mt-3">
+              <h2 className="h2 maxw-60">A real table, not a webinar and not a sermon.</h2>
+              <p className="mt-2 muted maxw-60">Most faith-and-work events are a talk you watch. This is a conversation you’re in — a small circle of leaders working through the actual decisions on their desks, with God invited into each one.</p>
+            </Reveal>
+          </div>
+          <Reveal className="mt-4">
+            <ul className="ticks ticks-2">
+              <li>For owners, CEOs, and senior leaders of faith in Northern Virginia</li>
+              <li>Confidential — what’s said at the table stays at the table</li>
+              <li>Practical — aimed at strategy, people, money, and timing</li>
+              <li>Free, with refreshments, on the 3rd Wednesday each month</li>
+            </ul>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* A TYPICAL MORNING */}
+      <section className="section on-bone">
+        <div className="container">
+          <div className="sec-head">
+            <div className="label">A typical morning</div>
+            <Reveal><h2 className="h2 maxw-60">How the two hours actually go.</h2></Reveal>
+          </div>
+          <Reveal className="ilist mt-4 draw" stagger={0.08}>
+            {flow.map((s, i) => (
+              <div className="irow" key={s.t}>
+                <div className="n">{String(i + 1).padStart(2, '0')}</div>
+                <h3>{s.t}</h3>
+                <p>{s.d}</p>
+              </div>
+            ))}
+          </Reveal>
+          <div className="mt-4">
+            <div className="label">Topics have included</div>
+            <div className="tags mt-2">
+              {roundtableTopics.map(t => <span className="tag" key={t}>{t}</span>)}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* REGISTER */}
+      <section className="section" id="register" style={{ scrollMarginTop: 96 }}>
+        <div className="container">
+          <div className="sec-head">
+            <div className="label">Register</div>
+            <Reveal><h2 className="h2 maxw-60">Save your seat at the next Roundtable.</h2></Reveal>
+          </div>
+          <div className="grid two mt-4" style={{ alignItems: 'start' }}>
+            <Reveal>
+              <div className="stack-tight">
                 <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>When</b><br /><span className="muted">{ROUNDTABLE_TIME}</span></div>
                 <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>Where</b><br /><span className="muted">Private room at Starbucks · {ROUNDTABLE_ADDRESS}</span></div>
                 <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>Cost</b><br /><span className="muted">No fee. Refreshments provided.</span></div>
                 {/* TODO(client): update monthly, the specific next date */}
                 <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>Next meeting</b><br /><span className="muted">3rd Wednesday, monthly{NEXT_ROUNDTABLE !== 'TBD' ? ` · ${NEXT_ROUNDTABLE}` : ''}</span></div>
+                <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>Sponsor</b><br /><span className="muted">MBH Settlement Group (Rich Nguyen, Esq.)</span></div>
               </div>
               <p className="mt-3 muted maxw-46">You’ll get an email confirmation with meeting details and a calendar invite, usually within 24 hours.</p>
             </Reveal>
 
             <Reveal delay={0.05}>
-              <div className="label"><span className="sec-num">02</span><br />Register</div>
-              <h2 className="h2 mt-2" style={{ marginBottom: 24 }}>Save your seat.</h2>
               <RoundtableForm />
             </Reveal>
           </div>

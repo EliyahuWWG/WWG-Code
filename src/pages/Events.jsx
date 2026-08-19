@@ -29,7 +29,7 @@ export default function Events() {
       <section className="section">
         <div className="container">
           <div className="sec-head">
-            <div className="label"><span className="sec-num">01</span><br />In person · free</div>
+            <div className="label">In person · free</div>
             <Reveal>
               <h2 className="h2 maxw-60">The Working With God Roundtable</h2>
               <p className="mt-2 muted maxw-60">Two hours that combine leadership practice, scripture, and prayer. Facilitated by Dr. Eliyahu Lotzar. Refreshments provided.</p>
@@ -45,7 +45,14 @@ export default function Events() {
               <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>Sponsor</b><br /><span className="muted">MBH Settlement Group (Rich Nguyen, Esq.)</span></div>
             </Reveal>
             <Reveal delay={0.05}>
-              <div className="label">Topics have included</div>
+              <div className="label">What happens in the room</div>
+              <ul className="ticks mt-2">
+                <li>A real table conversation among leaders — not a lecture or a sales pitch</li>
+                <li>One leadership topic each month, worked through together</li>
+                <li>Scripture and prayer applied to the decision in front of you</li>
+                <li>Honest peer accountability with other Northern Virginia leaders</li>
+              </ul>
+              <div className="label mt-3">Topics have included</div>
               <div className="tags mt-2">
                 {roundtableTopics.map(t => <span className="tag" key={t}>{t}</span>)}
               </div>
@@ -58,16 +65,22 @@ export default function Events() {
       {/* WEBINAR */}
       <section className="section on-bone">
         <div className="container">
-          <div className="grid two" style={{ alignItems: 'start' }}>
+          <div className="sec-head">
+            <div className="label">Online · free</div>
             <Reveal>
-              <div className="label"><span className="sec-num">02</span><br />Online · free</div>
-              <h2 className="h2 mt-2 maxw-60">Monthly Webinar</h2>
-            </Reveal>
-            <Reveal delay={0.05}>
-              <p className="lead">A 60-minute interactive introduction to the Working With God method, see how the Ten Modes of Elevated Leadership apply to the business challenges you’re facing today.</p>
-              <div className="mt-3"><a href={MEETUP} target="_blank" rel="noopener" className="btn btn-line">Register on Meetup <Arrow /></a></div>
+              <h2 className="h2 maxw-60">The Monthly Webinar</h2>
+              <p className="mt-2 muted maxw-60">A 60-minute interactive introduction to the Working With God method — for leaders anywhere, no travel required.</p>
             </Reveal>
           </div>
+          <Reveal className="mt-4">
+            <ul className="ticks ticks-2">
+              <li>What the “Ten Modes of Elevated Leadership” are, in plain terms</li>
+              <li>How to tell which mode the decision in front of you actually needs</li>
+              <li>A worked example on a real business challenge — strategy, a hire, timing</li>
+              <li>Live Q&amp;A with Eliyahu</li>
+            </ul>
+            <div className="mt-4"><a href={MEETUP} target="_blank" rel="noopener" className="btn btn-line">Register on Meetup <Arrow /></a></div>
+          </Reveal>
         </div>
       </section>
 
@@ -75,8 +88,9 @@ export default function Events() {
       <section className="section">
         <div className="container">
           <div className="sec-head">
-            <div className="label"><span className="sec-num">03</span><br />Recently</div>
-            <Reveal><h2 className="h2 maxw-60">Where Eliyahu has been.</h2></Reveal>
+            <div className="label">Past events</div>
+            <Reveal><h2 className="h2 maxw-60">Recent gatherings and appearances.</h2>
+              <p className="mt-2 muted maxw-60">A sense of the rooms Eliyahu has been in lately — roundtables, author panels, and national stages.</p></Reveal>
           </div>
           <Reveal className="ilist mt-4 draw" stagger={0.08}>
             {pastEvents.map(e => (
