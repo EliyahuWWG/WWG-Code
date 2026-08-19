@@ -1,31 +1,26 @@
 import { useEffect, useRef } from 'react'
 
 /**
- * Scroll parallax for a framed image: the frame stays put, the picture drifts
- * inside it. The image is rendered oversized so there is real material to
- * move without ever exposing an edge.
+ * Subtle hover parallax for a framed image. The frame stays put; the picture
+ * drifts a few pixels against the cursor and settles back when the pointer
+ * leaves. Scroll position is deliberately not involved: a scroll-driven
+ * version moved the image whenever the page moved, which read as drift rather
+ * than as a response to the visitor.
  *
- * Cost control, since this runs on scroll:
- *   - transform only, so no layout and no paint, just a compositor shift
- *   - the scroll listener is passive and coalesced into one rAF per frame
- *   - an IntersectionObserver detaches the listener entirely while the frame
- *     is off screen, so scrolling the rest of the page costs nothing
- *   - off under prefers-reduced-motion and on coarse pointers, where the
- *     effect reads as jitter rather than depth
+ * Cost: one rAF while the pointer is actually inside the frame, and nothing
+ * at all otherwise. transform only, so no layout and no paint.
+ *
+ * Skipped entirely for reduced-motion, coarse pointers (where there is no
+ * hover to respond to) and narrow viewports.
  */
-export default function ParallaxImage({
-  children,
-  className = '',
-  amount = 0.10,          // fraction of frame height travelled across the viewport
-  ...rest
-}) {
+export default function ParallaxImage({ children, className = '', strength = 14, ...rest }) {
   const frameRef = useRef(null)
 
   useEffect(() => {
     const frame = frameRef.current
     if (!frame || typeof window === 'undefined') return
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    if (!window.matchMedia('(min-width: 768px)').matches) return
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
 
     const inner = frame.querySelector('img')
     if (!inner) return
@@ -33,49 +28,48 @@ export default function ParallaxImage({
     frame.classList.add('is-parallax')
 
     let raf = 0
-    let attached = false
+    let tx = 0, ty = 0        // target
+    let cx = 0, cy = 0        // current
+    let scale = 1, targetScale = 1
+    let running = false
 
-    const update = () => {
-      raf = 0
+    const render = () => {
+      // Ease toward the target, and stop the loop once we are close enough
+      // that another frame would not change a pixel.
+      cx += (tx - cx) * 0.12
+      cy += (ty - cy) * 0.12
+      scale += (targetScale - scale) * 0.12
+      inner.style.transform = `translate3d(${cx.toFixed(2)}px, ${cy.toFixed(2)}px, 0) scale(${scale.toFixed(4)})`
+      const settled = Math.abs(tx - cx) < 0.05 && Math.abs(ty - cy) < 0.05 && Math.abs(targetScale - scale) < 0.0005
+      if (settled) { running = false; raf = 0; return }
+      raf = requestAnimationFrame(render)
+    }
+    const start = () => { if (!running) { running = true; raf = requestAnimationFrame(render) } }
+
+    const onMove = (e) => {
       const r = frame.getBoundingClientRect()
-      const vh = window.innerHeight || 1
-      // -1 when the frame is just below the fold, +1 when just above it.
-      const progress = ((r.top + r.height / 2) / (vh + r.height)) * 2 - 1
-      const shift = -progress * r.height * amount
-      inner.style.transform = `translate3d(0, ${shift.toFixed(2)}px, 0) scale(${1 + amount * 2})`
+      // -1..1 from the centre of the frame.
+      const nx = ((e.clientX - r.left) / r.width) * 2 - 1
+      const ny = ((e.clientY - r.top) / r.height) * 2 - 1
+      // Move against the cursor: the picture feels like it sits behind glass.
+      tx = -nx * strength
+      ty = -ny * strength
+      targetScale = 1.06
+      start()
     }
+    const onLeave = () => { tx = 0; ty = 0; targetScale = 1; start() }
 
-    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update) }
-
-    const attach = () => {
-      if (attached) return
-      attached = true
-      window.addEventListener('scroll', onScroll, { passive: true })
-      window.addEventListener('resize', onScroll, { passive: true })
-      update()
-    }
-    const detach = () => {
-      if (!attached) return
-      attached = false
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
-      if (raf) { cancelAnimationFrame(raf); raf = 0 }
-    }
-
-    const io = new IntersectionObserver(([e]) => (e.isIntersecting ? attach() : detach()), { rootMargin: '120px' })
-    io.observe(frame)
+    frame.addEventListener('pointermove', onMove)
+    frame.addEventListener('pointerleave', onLeave)
 
     return () => {
-      io.disconnect()
-      detach()
+      frame.removeEventListener('pointermove', onMove)
+      frame.removeEventListener('pointerleave', onLeave)
+      if (raf) cancelAnimationFrame(raf)
       frame.classList.remove('is-parallax')
       inner.style.transform = ''
     }
-  }, [amount])
+  }, [strength])
 
-  return (
-    <div ref={frameRef} className={className} {...rest}>
-      {children}
-    </div>
-  )
+  return <div ref={frameRef} className={className} {...rest}>{children}</div>
 }

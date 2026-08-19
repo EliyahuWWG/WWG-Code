@@ -681,13 +681,15 @@ html.js .reveal-group.draw.in::after { transform: scaleX(1); }
 .video-feature .video-feature-head p { color: rgba(247,244,236,.78); font-size: clamp(1.05rem,1.4vw,1.2rem); max-width: 48ch; }
 
 /* Wider than the text column, and it keeps its own breathing room. */
-.video-stage { max-width: 1120px; margin-inline: auto; }
+/* Same measure as the rest of the page. It was 1120px, wider than the
+   content column, which is why it did not sit right. */
+.video-stage { max-width: none; }
 .video-feature .video {
   border-radius: 18px;
   box-shadow: 0 30px 90px -30px rgba(0,0,0,.75), 0 0 0 1px rgba(220,187,85,.22);
 }
 /* Bigger target and a warmer play affordance than the in-column version. */
-.video-feature .video-play { width: 96px; height: 96px; }
+.video-feature .video-play { width: 84px; height: 84px; }
 .video-feature .video-facade::after { background: rgba(2,6,31,.24); }
 .video-feature .video-facade:hover::after { background: rgba(2,6,31,.08); }
 .video-feature .video-facade:hover .video-play { transform: scale(1.08); }
@@ -931,8 +933,9 @@ html.js .reveal-group.draw.in::after { transform: scaleX(1); }
    fine pointer and no reduced-motion preference, so the static case is
    unchanged and there is no layout shift either way.
    ------------------------------------------------------------------ */
-.is-parallax img { will-change: transform; }
-/* The frame already sets overflow:hidden; this just guarantees the image has
-   room to move without revealing an edge at the extremes of travel. */
+/* Hover parallax. The image is scaled slightly at rest so there is material
+   to move without ever exposing an edge at the extremes of travel; the frame
+   already clips. */
 .is-parallax { transform: translateZ(0); }
+.is-parallax img { will-change: transform; transform: scale(1.06); }
 @media (prefers-reduced-motion: reduce) { .is-parallax img { transform: none !important; will-change: auto; } }
