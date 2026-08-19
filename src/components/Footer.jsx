@@ -11,7 +11,7 @@ export default function Footer() {
             <Link to="/" className="footer-brand" aria-label="Working With God — home">
               <img src="/wwg-logo.jpg" alt="Working With God" width="334" height="334" />
             </Link>
-            <p className="fdesc">Lead as the “Chief’s Executive Officer”, working with God, not just for Him. Faith-based leadership coaching, a two-day Master’s Class, and free community events. {SERVICE_AREA}.</p>
+            <p className="fdesc">Lead as the CHIEF’S Executive Officer, working with God, not just for Him. Faith-based leadership coaching, a two-day Master’s Class, and free community events. {SERVICE_AREA}.</p>
           </div>
           <div>
             <h4>Explore</h4>

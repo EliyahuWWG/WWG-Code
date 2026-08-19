@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite-react-ssg build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "postbuild": "node scripts/postbuild.mjs"
   },
   "dependencies": {
     "@fontsource-variable/fraunces": "^5.2.9",

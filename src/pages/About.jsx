@@ -18,7 +18,7 @@ export default function About() {
     <>
       <Seo
         title="About Dr. Eliyahu Lotzar, A Teacher of the Word in Business"
-        description="Dr. Eliyahu Lotzar is an executive coach, group facilitator, and author who helps Christian leaders work with God, not just for Him, as the “Chief’s Executive Officer.” Ed.D., MSW, Adizes & DiSC certified."
+        description="Dr. Eliyahu Lotzar is an executive coach, group facilitator, and author who helps Christian leaders work with God, not just for Him, as the CHIEF’S Executive Officer. Ed.D., MSW, Adizes & DiSC certified."
         path="/about"
         type="profile"
         schema={[personSchema(), breadcrumbSchema([{ name: 'About', path: '/about' }])]}
@@ -28,7 +28,7 @@ export default function About() {
         <div className="container">
           <div className="eyebrow">About</div>
           <h1 className="h1 mt-3 balance"><MaskLines>Dr. Eliyahu Lotzar: A Teacher of the Word in Business</MaskLines></h1>
-          <p className="lead">Executive coach, group facilitator, and leadership consultant, helping leaders step into their calling as the <span className="serif-it">Chief’s Executive Officer</span>, working with God, not just for Him.</p>
+          <p className="lead">Executive coach, group facilitator, and leadership consultant, helping leaders step into their calling as the CHIEF’S Executive Officer, working with God, not just for Him.</p>
         </div>
       </section>
 
@@ -43,9 +43,9 @@ export default function About() {
             <Reveal delay={0.05}>
               <div className="label">The story</div>
               <h2 className="h2 mt-2 maxw-60">It started at eight years old.</h2>
-              <p className="mt-2 lead">It all started when Eliyahu was eight years old. In a moment of revelation (that he’s happy to share), the Ancient of Days infused him with a unique, out-of-the-box knack for noticing the deep details of how people relate to themselves, each other, and to Him. That encounter set him on a lifelong quest to help us live and lead from the largest perspective.</p>
+              <p className="mt-2 lead">It all started when Eliyahu was eight years old. In a moment of revelation (that he’s happy to share), the Ancient of Days infused him with a unique, out-of-the-box knack for noticing the deep details of how people relate to themselves, each other, and to Him. That encounter set him on a lifelong quest to help us live and lead from a bigger perspective.</p>
               <p className="mt-2 muted maxw-60">That quest took him through clinical social work, corporate life, small-business ownership, and years of academic research. Each chapter added a lens: the therapist who reads the room, the owner who has signed the front of a paycheck, the scholar who studies what actually makes an organization healthy.</p>
-              <p className="mt-2 muted maxw-60">Today those lenses come together in one practical way of leading — with God, not just for Him. He coaches CEOs and owners, facilitates leadership groups, and teaches the Ten Modes of Elevated Leadership so faith and the daily work of running something finally speak the same language.</p>
+              <p className="mt-2 muted maxw-60">Today those lenses come together in one practical way of leading, with God, not just for Him. He coaches CEOs and owners, facilitates leadership groups, and teaches the Ten Modes of Elevated Leadership so faith and the daily work of running something finally speak the same language.</p>
             </Reveal>
           </div>
         </div>
@@ -78,7 +78,7 @@ export default function About() {
         <div className="container">
           <div className="sec-head">
             <div className="label">What people say about Eliyahu</div>
-            <Reveal><h2 className="h2 maxw-60">Leaders who’ve worked with him.</h2></Reveal>
+            <Reveal><h2 className="h2 maxw-60">Leaders who’ve worked with him as a coach, trainer, or high-level consultant.</h2></Reveal>
           </div>
           <Reveal className="qgrid c3 mt-4 draw" stagger={0.08}>
             {says.map(t => (

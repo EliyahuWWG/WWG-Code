@@ -90,7 +90,7 @@ export default function Events() {
           <div className="sec-head">
             <div className="label">Past events</div>
             <Reveal><h2 className="h2 maxw-60">Recent gatherings and appearances.</h2>
-              <p className="mt-2 muted maxw-60">A sense of the rooms Eliyahu has been in lately — roundtables, author panels, and national stages.</p></Reveal>
+              <p className="mt-2 muted maxw-60">A sense of the rooms Eliyahu has been in lately: roundtables, author panels, and national stages.</p></Reveal>
           </div>
           <Reveal className="ilist mt-4 draw" stagger={0.08}>
             {pastEvents.map(e => (

@@ -1,1 +1,12 @@
-/*    /index.html   200
+# Netlify. Every real route is prerendered to its own index.html by
+# vite-react-ssg, so this file only handles what is NOT a real route.
+#
+# Unknown URLs are handled by dist/404.html (see scripts/postbuild.mjs),
+# which Netlify serves automatically with a real 404 status. No catch-all
+# rule here: a `/* /index.html 200` would make Google index every typo.
+
+# Legacy paths from the old site, so nothing that was linked or indexed 404s.
+/roundtable-reg     /roundtable      301
+/about-eliyahu      /about           301
+/book               /the-book        301
+/testimonials       /               301

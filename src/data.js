@@ -27,7 +27,7 @@ export const pillars = [
     body: "Leaders don’t plateau for lack of effort. They plateau for lack of <em>perspective.</em> Working With God gives you the biggest and best perspective possible.", }, {
     n: "02", t: "Divine Direction", body: "You can move beyond just asking God to bless your plans. Take the next step to hear what He actually wants to do through your leadership today.", }, {
     n: "03", t: "Strategic Intimacy", body: "You <em>can</em> integrate faith, finance, strategy, and operations. Working With God helps you find the connection with God that speaks directly into your business plans and budget allocations, your spreadsheets and spiritual aspirations.", }, {
-    n: "04", t: "A New Leadership Identity", body: "When you lead as the “Chief’s Executive Officer,” you trade burnout for grounded, divine confidence.", },
+    n: "04", t: "A New Leadership Identity", body: "When you lead as the CHIEF’S Executive Officer, you trade burnout for grounded, divine confidence.", },
 ];
 
 // ---------- Ways to engage (Home), VERBATIM ----------

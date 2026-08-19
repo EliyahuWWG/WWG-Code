@@ -109,6 +109,8 @@ export const routes = [
       { path: 'the-book', lazy: () => import('./pages/TheBook') },
       { path: 'about', lazy: () => import('./pages/About') },
       { path: 'contact', lazy: () => import('./pages/Contact') },
+      // Prerendered so Netlify has a real 404.html to serve (see scripts/postbuild.mjs).
+      { path: '404', lazy: () => import('./pages/NotFound') },
       { path: '*', lazy: () => import('./pages/NotFound') },
     ],
   },

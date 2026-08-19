@@ -27,24 +27,38 @@ export default function Home() {
         schema={[organizationSchema(), personSchema(), faqSchema(faqs)]}
       />
 
-      {/* HERO */}
+      {/* HERO
+          Sequenced per client feedback 19 Aug: the visitor’s problem first,
+          then who he speaks to, then the solution. The brand lockup moves to
+          the right and the Ten Modes subtitle sits beneath it. The competing
+          eyebrow ("When it’s time to be the leader HE needs you to be") is gone. */}
       <section className="hero hero-aurora">
         <span className="aurora aurora-1" aria-hidden="true" />
         <span className="aurora aurora-2" aria-hidden="true" />
         <span className="aurora aurora-3" aria-hidden="true" />
         <div className="container">
-          <div className="eyebrow">When it’s time to be the leader HE needs you to be.</div>
-          <p className="hero-sub">The Ten Modes of Elevated Leadership</p>
-          <div className="hero-top mt-3">
+          <div className="hero-top">
             <div>
-              <h1 className="display"><MaskLines>Working<br />With God</MaskLines></h1>
-            </div>
-            <div className="hero-side">
-              <p>Leaders don’t plateau for lack of effort. They plateau for lack of <span className="serif-it">perspective.</span> Working With God gives you the biggest and best perspective possible.</p>
+              <h1 className="display">
+                <MaskLines>Leaders don’t plateau for lack of effort. They plateau for lack of <em className="hi-it">perspective.</em></MaskLines>
+              </h1>
               <div className="mt-3">
                 <BookCallLink className="btn btn-onink btn-lg">Book a call</BookCallLink>
               </div>
             </div>
+            <div className="hero-side">
+              <p className="hero-mark">Working With God</p>
+              <p className="hero-sub">The Ten Modes of Elevated Leadership</p>
+              <p className="mt-3">Working With God gives you the biggest and best perspective possible. A practical way to hear what God wants to do through your leadership, right in the middle of real strategy, hiring, and timing.</p>
+            </div>
+          </div>
+
+          {/* Credentials, as on the reference hero he asked us to return to. */}
+          <div className="hero-meta">
+            <div><div className="k">Doctorate</div><div className="v">Ed.D., Executive Leadership</div></div>
+            <div><div className="k">Clinical</div><div className="v">MSW, Therapist</div></div>
+            <div><div className="k">Certified</div><div className="v">Adizes · DiSC · Arbinger</div></div>
+            <div><div className="k">Author</div><div className="v">Working With God</div></div>
           </div>
         </div>
       </section>
@@ -62,6 +76,22 @@ export default function Home() {
         </div>
       </section>
 
+      {/* PROOF */}
+      <section className="section on-bone" id="testimonials" style={{ scrollMarginTop: 110 }}>
+        <div className="container">
+          <div className="sec-head">
+            <div className="label">What people say</div>
+            <Reveal className="pullquote" style={{ borderTop: 0, paddingTop: 0 }}>
+              <blockquote>“{feature.q}”</blockquote>
+              <div className="attr"><b>{feature.who}</b>, {feature.role}</div>
+            </Reveal>
+          </div>
+        </div>
+        <Reveal className="mt-4">
+          <TestimonialCarousel items={carouselQuotes} />
+        </Reveal>
+      </section>
+
       {/* MEET ELIYAHU */}
       <section className="section">
         <div className="container">
@@ -72,8 +102,9 @@ export default function Home() {
             </Reveal>
             <Reveal delay={0.05}>
               <div className="label">Meet Eliyahu</div>
-              <h2 className="h2 mt-2 maxw-60">The largest perspective, brought into the room.</h2>
-              <p className="mt-2 lead">For over 30 years Eliyahu has coached CEOs and owners and facilitated leadership groups — as a clinical therapist by training, a former business owner, and a scholar of what makes organizations healthy.</p>
+              {/* TODO(client): he is rewriting this line. Superlative removed for now. */}
+              <h2 className="h2 mt-2 maxw-60">Bringing a bigger perspective into the room.</h2>
+              <p className="mt-2 lead">Eliyahu has been coaching, counseling, and facilitating leadership groups for over 30 years, and working specifically with CEOs and owners for the past seven. He is a clinical therapist by training, a former business owner, and a scholar of what makes organizations healthy.</p>
               <p className="mt-2 muted maxw-60">Working With God is where all of that meets faith: a practical way to hear what God wants to do through your leadership, right in the middle of real strategy, hiring, and timing.</p>
               <div className="mt-3"><Link to="/about" className="tlink">Read his story <Arrow /></Link></div>
             </Reveal>
@@ -100,23 +131,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* WHAT IS WWG */}
-      <section className="section">
-        <div className="container">
-          <div className="grid two" style={{ alignItems: 'start' }}>
-            <Reveal>
-              <div className="label">The idea</div>
-              <h2 className="h2 mt-2 maxw-60">What is Working With God?</h2>
-            </Reveal>
-            <Reveal delay={0.05}>
-              <p className="lead">Working With God (WWG) is a vehicle for leaders to discern divine direction. It is a set of professional services and free events.</p>
-              <p className="mt-2 muted maxw-60">It’s based on the <span className="serif-it">Ten Modes of Elevated Leadership</span> method from Dr. Lotzar’s book, a practical way to bring God into strategy, hiring, budgets, and timing.</p>
-              <div className="mt-3"><Link to="/the-book" className="tlink">Read about the method <Arrow /></Link></div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
       {/* WAYS TO ENGAGE */}
       <section className="section on-bone">
         <div className="container">
@@ -140,22 +154,6 @@ export default function Home() {
             ))}
           </Reveal>
         </div>
-      </section>
-
-      {/* PROOF */}
-      <section className="section" id="testimonials" style={{ scrollMarginTop: 110 }}>
-        <div className="container">
-          <div className="sec-head">
-            <div className="label">What people say</div>
-            <Reveal className="pullquote" style={{ borderTop: 0, paddingTop: 0 }}>
-              <blockquote>“{feature.q}”</blockquote>
-              <div className="attr"><b>{feature.who}</b>, {feature.role}</div>
-            </Reveal>
-          </div>
-        </div>
-        <Reveal className="mt-4">
-          <TestimonialCarousel items={carouselQuotes} />
-        </Reveal>
       </section>
 
       {/* BOOK TEASER */}

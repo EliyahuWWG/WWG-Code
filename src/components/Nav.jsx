@@ -3,14 +3,18 @@ import { NavLink, Link } from 'react-router-dom'
 import { CALENDLY } from '../data'
 import { openCalendly, warmCalendly, trackBookCall } from './useCalendly'
 
+// Four tabs, per client feedback 19 Aug ("in the first one you had four tabs
+// and I like that it's simpler").
+//   - Roundtable folded into Events: "the roundtable is just an event".
+//   - Testimonials moved onto the home page instead of a nav item.
+//   - Contact is served by the Book a call button and the footer.
+// The /roundtable, /contact and /#testimonials routes all still resolve, so
+// nothing that was ever linked or indexed 404s.
 const links = [
   { to: '/services', label: 'Services' },
   { to: '/events', label: 'Events' },
-  { to: '/roundtable', label: 'Roundtable' },
   { to: '/the-book', label: 'The Book' },
   { to: '/about', label: 'About' },
-  { to: '/#testimonials', label: 'Testimonials' },
-  { to: '/contact', label: 'Contact' },
 ]
 
 export default function Nav() {
