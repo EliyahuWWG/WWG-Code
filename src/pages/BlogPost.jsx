@@ -32,34 +32,50 @@ export default function BlogPost() {
           breadcrumbSchema([{ name: 'Writing', path: '/blog' }, { name: post.title, path: `/blog/${post.slug}` }]),
           articleSchema(post),
         ]}
+        article={{ published: post.date, modified: post.updated, tags: post.tags }}
       />
 
-      <section className="phero phero-post">
-        <div className="container">
-          <Link className="backlink" to="/blog">Writing</Link>
-          <h1 className="h1 mt-3 balance">{post.title}</h1>
-          <p className="postmeta postmeta-hero">
-            <time dateTime={post.date}>{formatDate(post.date)}</time>
-            <span aria-hidden="true"> · </span>
-            <span>{post.readingMinutes} min read</span>
-            <span aria-hidden="true"> · </span>
-            <span>Dr. Eliyahu Lotzar</span>
-          </p>
-        </div>
-      </section>
+      {/* One <article> wrapping header + body, so a crawler can see where the
+          piece starts and ends rather than inferring it from a div soup. */}
+      <article>
+        <header className="phero phero-post">
+          <div className="container">
+            {/* Visible breadcrumb. BreadcrumbList JSON-LD already existed, but
+                Google prefers the markup and the rendering to agree. */}
+            <nav aria-label="Breadcrumb" className="crumbs">
+              <ol>
+                <li><Link to="/">Home</Link></li>
+                <li><Link to="/blog">Writing</Link></li>
+                <li aria-current="page">{post.title}</li>
+              </ol>
+            </nav>
+            <h1 className="h1 mt-3 balance">{post.title}</h1>
+            <p className="postmeta postmeta-hero">
+              <span>By <a rel="author" href="/about">Dr. Eliyahu Lotzar</a>, Ed.D., MSW</span>
+              <span aria-hidden="true"> · </span>
+              <span>Published <time dateTime={post.date}>{formatDate(post.date)}</time></span>
+              <span aria-hidden="true"> · </span>
+              <span>{post.readingMinutes} min read</span>
+            </p>
+          </div>
+        </header>
 
-      <section className="section">
-        <div className="container">
-          {/* Compiled from markdown at build time (vite.config.js markdown-posts). */}
-          <article className="prose" dangerouslySetInnerHTML={{ __html: post.html }} />
+        <div className="section">
+          <div className="container">
+            {/* Compiled from markdown at build time (vite.config.js markdown-posts). */}
+            <div className="prose" dangerouslySetInnerHTML={{ __html: post.html }} />
 
-          {post.tags?.length > 0 && (
-            <ul className="tagrow mt-4" aria-label="Topics">
-              {post.tags.map(t => <li key={t} className="tag">{t}</li>)}
-            </ul>
-          )}
+            {post.tags?.length > 0 && (
+              <footer className="mt-4">
+                <h2 className="vh">Topics</h2>
+                <ul className="tagrow">
+                  {post.tags.map(t => <li key={t} className="tag">{t}</li>)}
+                </ul>
+              </footer>
+            )}
+          </div>
         </div>
-      </section>
+      </article>
 
       {others.length > 0 && (
         <section className="section on-bone">

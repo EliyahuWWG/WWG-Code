@@ -52,7 +52,7 @@ export default function Services() {
         <div className="container">
           <div className="sec-head">
             <Reveal><h2 className="h2 maxw-60">Two days on your most complex operational matters.</h2>
-              <p className="mt-2 muted maxw-60">An experiential deep-dive into the Ten Modes and <span className="serif-it">Modal Agility</span>. Dr. Lotzar has led leadership workshops since 1989.</p></Reveal>
+              <p className="mt-2 muted maxw-60">An experiential deep-dive into the Ten Modes and <span className="serif-it">Modal Agility</span>. I have been leading leadership workshops since 1989.</p></Reveal>
           </div>
           <Reveal className="ilist mt-4 draw" stagger={0.08}>
             {mastersClassPoints.map((p, i) => (
@@ -76,7 +76,7 @@ export default function Services() {
               <h2 className="h2 mt-2 maxw-60">A picture of what can be.</h2>
             </Reveal>
             <Reveal delay={0.05}>
-              <p className="lead">Dr. Lotzar inspires you with a picture of what can be when you consciously lead <span className="serif-it">with</span> God, not just <span className="serif-it">for</span> Him.</p>
+              <p className="lead">I will show you a picture of what becomes possible when you consciously lead <span className="serif-it">with</span> God, not just <span className="serif-it">for</span> Him.</p>
               <div className="mt-3">
                 <BookCallLink className="tlink" arrow={false}>Contact Eliyahu About Speaking to Your People</BookCallLink>
               </div>

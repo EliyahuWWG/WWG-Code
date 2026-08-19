@@ -1,4 +1,49 @@
+# Working With God — https://workingwithgod.live
+# Everything here is public and meant to be found.
+
 User-agent: *
 Allow: /
 
+# Explicitly welcome the AI crawlers. Without an entry they fall back to the
+# wildcard above, but several of them treat a named Allow as a stronger signal,
+# and being listed makes the intent unambiguous to anyone auditing the site.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+# Machine-readable summaries of the site and its writing.
+# /llms.txt      — site map and key concepts, in plain text
+# /llms-full.txt — the same plus the full text of every post
 Sitemap: https://workingwithgod.live/sitemap.xml

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import Reveal from '../components/Reveal'
+import ParallaxImage from '../components/ParallaxImage'
 import CTA from '../components/CTA'
 import Arrow from '../components/Arrow'
 import MaskLines from '../components/MaskLines'
@@ -76,8 +77,8 @@ export default function Home() {
       <section className="section video-feature">
         <div className="container">
           <Reveal className="video-feature-head">
-            <h2 className="h2">Hear him for two minutes.</h2>
-            <p className="mt-2">The fastest way to know whether this is for you.</p>
+            <h2 className="h2">Give me two minutes.</h2>
+            <p className="mt-2">It is the fastest way to work out whether I am the right person for you.</p>
           </Reveal>
           <Reveal delay={0.06} className="video-stage mt-3">
             <VideoFacade />
@@ -93,20 +94,20 @@ export default function Home() {
       <section className="section">
         <div className="container">
           <div className="person-grid">
-            <Reveal className="portrait">
+            <Reveal><ParallaxImage className="portrait">
               <picture>
                 <source srcSet="/eliyahu.webp" type="image/webp" />
                 <img src="/eliyahu.jpg" alt="Dr. Eliyahu Lotzar" width="920" height="1227"
                   loading="lazy" decoding="async" />
               </picture>
               <div className="cap"><b>Dr. Eliyahu Lotzar, Ed.D., MSW</b><span>Executive coach · facilitator · author</span></div>
-            </Reveal>
+            </ParallaxImage></Reveal>
             <Reveal delay={0.05}>
               {/* TODO(client): he is rewriting this line. Superlative removed for now. */}
-              <h2 className="h2 maxw-60">Bringing a bigger perspective into the room.</h2>
-              <p className="mt-2 lead">Eliyahu has been coaching, counseling, and facilitating leadership groups for over 30 years, and working specifically with CEOs and owners for the past seven. He is a clinical therapist by training, a former business owner, and a scholar of what makes organizations healthy.</p>
-              <p className="mt-2 muted maxw-60">Working With God is where all of that meets faith: a practical way to hear what God wants to do through your leadership, right in the middle of real strategy, hiring, and timing.</p>
-              <div className="mt-3"><Link to="/about" className="tlink">Read his story <Arrow /></Link></div>
+              <h2 className="h2 maxw-60">I bring a bigger perspective into the room.</h2>
+              <p className="mt-2 lead">I have been coaching, counseling, and facilitating leadership groups for over 30 years, and working specifically with CEOs and owners for the past seven. I am a clinical therapist by training, a former business owner, and a scholar of what actually makes organizations healthy.</p>
+              <p className="mt-2 muted maxw-60">Working With God is where all of that meets faith. It is a practical way for you to hear what God wants to do through your leadership, right in the middle of real strategy, hiring, and timing.</p>
+              <div className="mt-3"><Link to="/about" className="tlink">Read my story <Arrow /></Link></div>
             </Reveal>
           </div>
         </div>
@@ -152,7 +153,7 @@ export default function Home() {
             ))}
           </Reveal>
           <Reveal className="mt-4">
-            <p className="muted maxw-60">There is also the book, <Link to="/the-book" className="tlink">Working With God: The Ten Modes of Elevated Leadership</Link>, and some <Link to="/blog" className="tlink">writing</Link>, if you would rather start on your own.</p>
+            <p className="muted maxw-60">There is also my book, <Link to="/the-book" className="tlink">Working With God: The Ten Modes of Elevated Leadership</Link>, and some <Link to="/blog" className="tlink">writing</Link>, if you would rather start on your own.</p>
           </Reveal>
         </div>
       </section>

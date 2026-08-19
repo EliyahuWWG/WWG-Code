@@ -14,7 +14,7 @@ export default function Footer() {
             <p className="fdesc">Lead as the CHIEF’S Executive Officer, working with God, not just for Him. Faith-based leadership coaching, a two-day Master’s Class, and free community events. {SERVICE_AREA}.</p>
           </div>
           <div>
-            <h4>Explore</h4>
+            <h2 className="fh">Explore</h2>
             <Link className="fl" to="/services">Services</Link>
             <Link className="fl" to="/events">Events</Link>
             <Link className="fl" to="/the-book">The Book</Link>
@@ -23,7 +23,7 @@ export default function Footer() {
             <Link className="fl" to="/contact">Contact</Link>
           </div>
           <div>
-            <h4>Get in touch</h4>
+            <h2 className="fh">Get in touch</h2>
             <a className="fl" href={CALENDLY} target="_blank" rel="noopener" onClick={openCalendly} onPointerEnter={warmCalendly} onFocus={warmCalendly}>Book a call</a>
             <a className="fl" href={`mailto:${EMAIL}`}>{EMAIL}</a>
             <a className="fl" href={MEETUP} target="_blank" rel="noopener">Join on Meetup</a>

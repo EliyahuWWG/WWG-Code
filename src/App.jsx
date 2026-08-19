@@ -23,7 +23,12 @@ function ScrollToTop() {
       raf = requestAnimationFrame(go)
       return () => cancelAnimationFrame(raf)
     }
-    window.scrollTo(0, 0)
+    // `html.smooth { scroll-behavior: smooth }` is set globally for in-page
+    // anchors. Without an explicit instant here, every route change ANIMATED a
+    // scroll back to the top while the new page was fading in: two competing
+    // motions, and on a long page the scroll was still travelling after the
+    // fade had finished. That was the jank.
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   }, [pathname, hash])
   return null
 }
@@ -92,7 +97,9 @@ function Layout() {
       <ScrollProgress />
       <Nav />
       <main id="main" tabIndex={-1}>
-        {/* Keyed wrapper re-mounts on navigation → short fade + rise. */}
+        {/* Keyed wrapper re-mounts on navigation. Browsers with the View
+            Transitions API cross-fade the whole document instead (see
+            index.css @view-transition); this is the fallback for the rest. */}
         <div className="route-fade" key={pathname}>
           <Outlet />
         </div>

@@ -131,3 +131,34 @@ ${meta.map(p => `- [${p.title}](${SITE}/blog/${p.slug}/): ${p.description}`).joi
 - Email: Eliyahu@WorkingWithGod.live
 `)
 console.log('[postbuild] llms.txt')
+
+/* ---------------- 5. llms-full.txt ----------------
+   The same map as llms.txt, plus the full plain text of every post. An LLM
+   crawler that fetches one file then has the whole corpus, correctly
+   attributed, without executing JavaScript or following 12 links. Convention
+   from llmstxt.org. */
+const stripTags = html => html
+  .replace(/<script[\s\S]*?<\/script>/g, '')
+  .replace(/<style[\s\S]*?<\/style>/g, '')
+  .replace(/<\/(p|h[1-6]|li|blockquote)>/g, '\n\n')
+  .replace(/<li[^>]*>/g, '- ')
+  .replace(/<[^>]+>/g, '')
+  .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+  .replace(/&#39;|&rsquo;/g, "'").replace(/&quot;|&ldquo;|&rdquo;/g, '"')
+  .replace(/&nbsp;/g, ' ')
+  .replace(/\n{3,}/g, '\n\n')
+  .trim()
+
+const fullBodies = meta.map(p => {
+  const file = join(dist, 'blog', p.slug, 'index.html')
+  if (!existsSync(file)) return null
+  const html = readFileSync(file, 'utf8')
+  const m = /<div class="prose"[^>]*>([\s\S]*?)<\/div>/.exec(html)
+  if (!m) return null
+  return `## ${p.title}\n\nURL: ${SITE}/blog/${p.slug}/\nPublished: ${p.date}\nAuthor: Dr. Eliyahu Lotzar, Ed.D., MSW\n\n${stripTags(m[1])}\n`
+}).filter(Boolean)
+
+writeFileSync(join(dist, 'llms-full.txt'),
+  readFileSync(join(dist, 'llms.txt'), 'utf8') +
+  `\n\n---\n\n# Full text of all posts\n\n` + fullBodies.join('\n---\n\n'))
+console.log(`[postbuild] llms-full.txt (${fullBodies.length} posts inlined)`)

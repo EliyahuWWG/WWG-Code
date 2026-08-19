@@ -33,10 +33,10 @@ export const pillars = [
 // ---------- Ways to engage (Home), VERBATIM ----------
 export const offerings = [
   {
-    n: "01", title: "Introductory Webinar", tag: "Free", body: "Join Eliyahu for a 60-minute primer on the Working With God method. You’ll see how the “Ten Modes of Elevated Leadership” apply directly to the business challenges you’re facing today.", cta: "Register", href: MEETUP, external: true, }, {
-    n: "02", title: "The WWG Roundtable", tag: "Free", body: "If you’re in Northern VA, come to our 3rd Wednesday monthly meetup. It’s two hours of in-person community where you’ll deepen your practice of inviting God into your daily work.", cta: "Register", href: "/roundtable", external: false, }, {
-    n: "03", title: "Executive Coaching", tag: "", body: "Ready to take the next step into greater leadership? Eliyahu blends skilled executive coaching with prayerful application of the Ten Modes to help you overcome your leadership challenges.", cta: "Contact Eliyahu", href: CALENDLY, external: true, calendly: true, }, {
-    n: "04", title: "“Master’s Class” Two-Day Immersion", tag: "", body: "You’ll experience an eye-opening and invigorating deep-dive into the Ten Modes of Elevated Leadership to gain Godly perspective on your most complex operational matters.", cta: "Find out more", href: CALENDLY, external: true, calendly: true, },
+    n: "01", title: "Introductory Webinar", tag: "Free", body: "Join me for a 60-minute primer on the Working With God method. You will see how the Ten Modes of Elevated Leadership apply directly to the business challenges you are facing today.", cta: "Register", href: MEETUP, external: true, }, {
+    n: "02", title: "The WWG Roundtable", tag: "Free", body: "If you are in Northern Virginia, come to our third Wednesday meetup. It is two hours together, in person, deepening the practice of inviting God into your daily work.", cta: "Register", href: "/roundtable", external: false, }, {
+    n: "03", title: "Executive Coaching", tag: "", body: "Ready to take the next step into greater leadership? I blend skilled executive coaching with prayerful application of the Ten Modes to help you work through the challenges in front of you.", cta: "Contact Eliyahu", href: CALENDLY, external: true, calendly: true, }, {
+    n: "04", title: "“Master’s Class” Two-Day Immersion", tag: "", body: "We will spend two days deep in the Ten Modes of Elevated Leadership, so you come away with Godly perspective on your most complex operational matters.", cta: "Find out more", href: CALENDLY, external: true, calendly: true, },
 ];
 
 // ---------- Roundtable topics (Events), VERBATIM ----------

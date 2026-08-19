@@ -444,7 +444,6 @@ em, .serif-it { }
 .footer-brand { display: inline-block; }
 .footer-brand img { width: 128px; height: auto; border-radius: 12px; display: block; }
 .footer .fdesc { color: rgba(243,238,226,.55); max-width: 34ch; margin-top: 18px; font-size: .95rem; }
-.footer h4 { font-family: var(--f-mono); font-weight: 500; font-size: .81rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(243,238,226,.65); margin-bottom: 18px; }
 .footer a.fl { display: block; padding: 6px 0; color: rgba(243,238,226,.8); transition: color .25s; }
 .footer a.fl:hover { color: var(--clay); }
 .footer .fbot { border-top: 1px solid var(--line-dk); margin-top: 48px; padding-top: 24px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; font-family: var(--f-mono); font-size: .8rem; letter-spacing: .06em; color: rgba(243,238,226,.6); text-transform: uppercase; }
@@ -457,9 +456,26 @@ html.js .reveal.in { opacity: 1; transform: none; }
 
 /* ---------- Motion & loading (Phase A) ---------- */
 
-/* route transitions - keyed wrapper re-mounts on navigation */
-.route-fade { animation: route-in .26s var(--ease) both; }
-@keyframes route-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+/* Route transitions.
+   The translateY was removed: combined with the scroll reset it read as two
+   separate movements. A plain opacity fade, slightly longer, settles better
+   and costs only a compositor pass. */
+.route-fade { animation: route-in .32s var(--ease) both; }
+@keyframes route-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* Browsers with the View Transitions API get a real cross-fade between the
+   old and new document instead of a re-mount. Progressive enhancement: this
+   whole block is ignored where it is unsupported, and the .route-fade
+   animation above stays as the fallback. */
+@view-transition { navigation: auto; }
+::view-transition-old(root),
+::view-transition-new(root) { animation-duration: .28s; animation-timing-function: cubic-bezier(.2,.6,.2,1); }
+/* The nav is fixed and identical across routes, so hold it still rather than
+   cross-fading it with the page underneath. */
+.nav { view-transition-name: site-nav; }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+}
 
 /* scroll progress bar */
 .scroll-progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; background: var(--clay);
@@ -801,3 +817,113 @@ html.js .reveal-group.draw.in::after { transform: scaleX(1); }
   filter: blur(10px); z-index: -1; pointer-events: none;
 }
 @media (max-width: 767px) { .book3d { max-width: 300px; } }
+
+/* Footer column labels. These were <h4> under an <h2>, which is a heading-level
+   jump; they are <h2 class="fh"> now and keep the identical look. */
+.footer .fh { font-family: var(--f-label); font-weight: 500; font-size: .81rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(243,238,226,.65); margin-bottom: 18px; }
+
+/* Visually hidden, still read by screen readers and parsed by crawlers.
+   Used for headings that would be redundant on screen but keep the document
+   outline complete. */
+.vh { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* Breadcrumb */
+.crumbs ol { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0;
+  font-family: var(--f-label); font-size: .9rem; color: rgba(247,244,236,.62); }
+.crumbs li + li::before { content: "/"; margin-right: 8px; color: rgba(247,244,236,.34); }
+.crumbs a { color: var(--gold-400); }
+.crumbs a:hover { color: var(--bone); }
+.crumbs [aria-current="page"] { color: rgba(247,244,236,.8); max-width: 46ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ==================================================================
+   HOVER SYSTEM
+   Restrained on purpose. Two moves only, applied consistently:
+     1. Rows get a warm wash and a small nudge. Text is never scaled,
+        which always reads cheap at these sizes.
+     2. Media gets a real but small zoom inside a clipped frame.
+   Everything animates transform/opacity/colour only, so nothing here
+   costs a layout or paint pass, and all of it is off under
+   prefers-reduced-motion.
+   ================================================================== */
+@media (hover: hover) and (pointer: fine) {
+
+  /* ---- 1. List rows -------------------------------------------- */
+  .irow {
+    position: relative;
+    transition: transform .45s var(--ease);
+  }
+  /* The wash bleeds past the row's own box to the container gutter, so it
+     reads as a full-width band rather than a boxed card. */
+  .irow::before {
+    content: "";
+    position: absolute;
+    inset: 0 calc(var(--pad) * -0.5);
+    background: var(--gold-500);
+    opacity: 0;
+    transition: opacity .4s var(--ease);
+    pointer-events: none;
+    z-index: -1;
+  }
+  .irow:hover::before { opacity: .05; }
+  /* `html.js .reveal-group > *` sets a transform for the scroll-reveal and
+     out-specifies a bare `.irow:hover`, so the nudge never applied. Match its
+     weight rather than reaching for !important. */
+  html.js .reveal-group > .irow:hover,
+  .ilist > .irow:hover { transform: translateX(5px); }
+  .irow .n, .irow h3, .postrow .posttitle a { transition: color .35s var(--ease); }
+  .irow:hover .n { color: var(--gold-500); }
+  .irow:hover h3, .postrow:hover .posttitle a { color: var(--navy-700); }
+  .on-ink .irow:hover h3 { color: var(--gold-400); }
+
+  /* ---- 2. Media zoom ------------------------------------------- */
+  /* The frame clips; the image scales inside it. */
+  .portrait, .video, .book-cover, .tcard-img { overflow: hidden; }
+  .portrait img,
+  .video-facade,
+  .book-cover img {
+    transition: transform .7s var(--ease);
+    will-change: auto;
+  }
+  .portrait:hover img,
+  .book-cover:hover img { transform: scale(1.035); }
+  .video-facade:hover { transform: scale(1.02); }
+
+  /* The video already dims its overlay on hover; keep the play button as the
+     only thing that moves quickly. */
+  .video-play { transition: transform .35s var(--ease), background .35s var(--ease); }
+
+  /* ---- 3. Quiet link affordances -------------------------------- */
+  .tlink, .go { transition: color .3s var(--ease), gap .3s var(--ease); }
+  .fl { transition: color .3s var(--ease), opacity .3s var(--ease); }
+  .fl:hover { color: var(--gold-400); }
+
+  /* Buttons: a lift small enough to feel physical rather than animated. */
+  .btn { transition: transform .3s var(--ease), background .3s var(--ease), color .3s var(--ease), box-shadow .3s var(--ease); }
+  .btn:hover { transform: translateY(-2px); }
+  .btn:active { transform: translateY(0); }
+
+  /* Nav links already have a gold underline sweep; just match the timing. */
+  .nav-links a { transition: opacity .25s var(--ease), color .25s var(--ease); }
+}
+
+/* Nothing above survives a reduced-motion preference. */
+@media (prefers-reduced-motion: reduce) {
+  .irow, .irow::before, .portrait img, .video-facade, .book-cover img, .btn,
+  .video-play, .tlink, .go, .fl, .nav-links a { transition: none !important; }
+  .irow:hover { transform: none; }
+  .portrait:hover img, .book-cover:hover img, .video-facade:hover { transform: none; }
+  .btn:hover { transform: none; }
+}
+
+/* ------------------------------------------------------------------
+   PARALLAX FRAME
+   The frame clips and holds its aspect ratio; the image is scaled up
+   and translated inside it on scroll. Only applied once JS confirms a
+   fine pointer and no reduced-motion preference, so the static case is
+   unchanged and there is no layout shift either way.
+   ------------------------------------------------------------------ */
+.is-parallax img { will-change: transform; }
+/* The frame already sets overflow:hidden; this just guarantees the image has
+   room to move without revealing an edge at the extremes of travel. */
+.is-parallax { transform: translateZ(0); }
+@media (prefers-reduced-motion: reduce) { .is-parallax img { transform: none !important; will-change: auto; } }
