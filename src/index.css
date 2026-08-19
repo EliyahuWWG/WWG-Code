@@ -224,22 +224,23 @@ em, .serif-it { }
 .tlink.lt:hover { color: var(--clay); border-color: var(--clay); }
 
 /* ---------- Nav (rounded floating glass pill; logo mark only) ---------- */
-.nav { position: fixed; inset: 0 0 auto 0; z-index: 80; color: var(--bone); padding: 16px 0;
+.nav { position: fixed; inset: 0 0 auto 0; z-index: 80; color: var(--bone); padding: 12px 0;
   animation: nav-drop .7s var(--ease) both; }
 @keyframes nav-drop { from { opacity: 0; transform: translateY(-18px); } to { opacity: 1; transform: none; } }
-/* one consistent floating glass pill; a subtle, smooth scroll response only. */
+/* One consistent compact glass pill. It used to start tall over the hero and
+   shrink on scroll; the client preferred the scrolled size, so that is now the
+   only state. Only the background deepens slightly once you leave the top. */
 .nav-in { display: flex; align-items: center; justify-content: space-between; gap: 24px;
-  background: rgba(2,6,31,.55); -webkit-backdrop-filter: blur(14px) saturate(150%); backdrop-filter: blur(14px) saturate(150%);
-  border: 1px solid rgba(247,244,236,.14); border-radius: 999px; padding: 10px 16px 10px 22px;
-  box-shadow: 0 18px 38px -22px rgba(0,0,0,.55);
-  transition: padding .4s var(--ease), background .4s var(--ease), box-shadow .4s var(--ease); }
-.nav.min .nav-in { padding-top: 7px; padding-bottom: 7px; background: rgba(2,6,31,.8); box-shadow: 0 16px 34px -20px rgba(0,0,0,.7); }
+  background: rgba(2,6,31,.62); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  border: 1px solid rgba(247,244,236,.14); border-radius: 999px; padding: 7px 14px 7px 20px;
+  box-shadow: 0 16px 34px -20px rgba(0,0,0,.6);
+  transition: background .4s var(--ease), box-shadow .4s var(--ease); }
+.nav.min .nav-in { background: rgba(2,6,31,.84); box-shadow: 0 16px 34px -20px rgba(0,0,0,.72); }
 @media (prefers-reduced-motion: reduce){ .nav-in { transition: none; } .nav { animation: none; } }
 
 /* brand: logo mark only (gold chevron), no text */
 .brand { display: inline-flex; align-items: center; flex: none; }
-.brand .brand-mark { height: 40px; width: auto; display: block; transition: height .4s var(--ease); }
-.nav.min .brand .brand-mark { height: 34px; }
+.brand .brand-mark { height: 34px; width: auto; display: block; }
 
 .nav-links { display: none; gap: 26px; }
 .nav-links a { font-family: var(--f-text); font-weight: 500; font-size: .92rem; letter-spacing: .01em; position: relative; padding: 4px 0; opacity: .86; transition: opacity .25s; }
@@ -260,7 +261,7 @@ em, .serif-it { }
    (Book a call lives in the drawer and the sticky bottom bar) */
 @media (max-width: 620px){
   /* float the pill with the nav's own side gutter so it never overflows */
-  .nav { padding: 10px 12px 0; }
+  .nav { padding: 8px 12px 0; }
   .nav-in { max-width: none; margin: 0; padding: 9px 8px 9px 16px; border-radius: 999px; }
   .brand .brand-mark { height: 32px; }
   .nav-right { gap: 10px; }
@@ -645,6 +646,38 @@ html.js .reveal-group.draw.in::after { transform: scaleX(1); }
 .irow .go:hover { gap: .85em; color: var(--gold-600); border-color: var(--gold-500); }
 
 /* ---------- Video facade ---------- */
+/* ------------------------------------------------------------------
+   VIDEO FEATURE — the biggest single element on the home page after the
+   hero. Navy ground so it separates from the bone/paper sections, and a
+   stage wider than the reading column so it reads as a moment.
+   ------------------------------------------------------------------ */
+.video-feature { background: linear-gradient(180deg, #02061f 0%, #050d6e 78%, #050d6e 100%); color: var(--bone); }
+.video-feature .h2 { color: var(--bone); max-width: 18ch; }
+.video-feature .video-feature-head p { color: rgba(247,244,236,.78); font-size: clamp(1.05rem,1.4vw,1.2rem); max-width: 48ch; }
+
+/* Wider than the text column, and it keeps its own breathing room. */
+.video-stage { max-width: 1120px; margin-inline: auto; }
+.video-feature .video {
+  border-radius: 18px;
+  box-shadow: 0 30px 90px -30px rgba(0,0,0,.75), 0 0 0 1px rgba(220,187,85,.22);
+}
+/* Bigger target and a warmer play affordance than the in-column version. */
+.video-feature .video-play { width: 96px; height: 96px; }
+.video-feature .video-facade::after { background: rgba(2,6,31,.24); }
+.video-feature .video-facade:hover::after { background: rgba(2,6,31,.08); }
+.video-feature .video-facade:hover .video-play { transform: scale(1.08); }
+
+.video-feature .video-cap { margin-top: 20px; }
+.video-feature .video-cap b { color: var(--bone); font-size: 1.45rem; }
+.video-feature .video-cap span { color: rgba(247,244,236,.72); }
+
+@media (max-width: 719px) {
+  .video-stage { margin-top: 32px; }
+  .video-feature .video { border-radius: 12px; box-shadow: 0 18px 50px -22px rgba(0,0,0,.7), 0 0 0 1px rgba(220,187,85,.18); }
+  .video-feature .video-play { width: 68px; height: 68px; }
+  .video-feature .video-cap { flex-direction: column; gap: 4px; }
+}
+
 .video-cap { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 4px 18px; justify-content: space-between; align-items: baseline; }
 .video-cap b { font-family: var(--f-disp); font-weight: 600; font-size: 1.35rem; color: var(--navy-900); letter-spacing: -.01em; }
 .video-cap span { font-family: var(--f-text); font-weight: 500; font-size: 1.02rem; color: var(--ink); letter-spacing: 0; text-transform: none; }
@@ -704,6 +737,7 @@ html.js .reveal-group.draw.in::after { transform: scaleX(1); }
 
 /* utilities */
 .mt-1{margin-top:14px}.mt-2{margin-top:26px}.mt-3{margin-top:44px}.mt-4{margin-top:64px}
+.mt-5{margin-top:88px}.mt-6{margin-top:120px}
 .stack-tight{display:flex;flex-direction:column;gap:10px}
 .row{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
 .maxw-60{max-width:60ch}.maxw-46{max-width:46ch}
@@ -711,3 +745,59 @@ html.js .reveal-group.draw.in::after { transform: scaleX(1); }
 .on-bone{background:var(--bone)}
 .tags{display:flex;flex-wrap:wrap;gap:8px}
 .tag{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);padding:6px 12px;border-radius:3px}
+
+/* ==================================================================
+   BLOG
+   ================================================================== */
+.postrow .posttitle { font-family: var(--f-disp); font-weight: 600; font-size: clamp(1.45rem,2.2vw,1.95rem); color: var(--forest); line-height: 1.15; }
+.postrow .posttitle a { color: inherit; }
+.postrow .posttitle a:hover { color: var(--navy-700); }
+.postmeta { margin-top: 10px; color: var(--muted); font-size: .95rem; }
+.postmeta-hero { color: rgba(247,244,236,.72); margin-top: 18px; }
+.backlink { display: inline-flex; align-items: center; gap: .5em; color: var(--gold-400); font-weight: 600; font-size: .95rem; }
+.backlink::before { content: "\2190"; }
+.phero-post .h1 { max-width: 20ch; }
+
+.tagrow { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; padding: 0; }
+
+/* Long-form reading column. Everything here is tuned for an older reader on a
+   laptop: generous measure, real line-height, no tight tracking. */
+.prose { max-width: 68ch; font-size: clamp(1.1rem, 1.25vw, 1.22rem); line-height: 1.72; color: var(--ink); }
+.prose > * + * { margin-top: 1.15em; }
+.prose h2 { font-family: var(--f-disp); font-weight: 600; font-size: clamp(1.5rem,2.4vw,2.05rem); line-height: 1.2; color: var(--forest); margin-top: 2.2em; letter-spacing: -.01em; }
+.prose h3 { font-family: var(--f-disp); font-weight: 600; font-size: clamp(1.2rem,1.8vw,1.45rem); color: var(--forest); margin-top: 1.8em; }
+.prose p { color: var(--ink); }
+.prose strong { font-weight: 600; color: var(--forest); }
+.prose em { font-style: normal; font-weight: 600; }   /* no italics, per client */
+.prose a { color: var(--navy-900); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; text-decoration-color: var(--gold-500); }
+.prose a:hover { color: var(--gold-600); }
+.prose ul, .prose ol { padding-left: 1.3em; }
+.prose li + li { margin-top: .5em; }
+.prose li::marker { color: var(--gold-600); }
+.prose blockquote { border-left: 2px solid var(--gold-500); padding-left: 1.1em; color: var(--muted); font-family: var(--f-disp); font-size: 1.15em; line-height: 1.5; }
+.prose hr { border: 0; border-top: 1px solid var(--line); margin: 2.4em 0; }
+.prose code { font-size: .92em; background: var(--bone); padding: .12em .35em; border-radius: 4px; }
+@media (max-width: 719px) { .prose { font-size: 1.06rem; line-height: 1.68; } }
+
+/* ------------------------------------------------------------------
+   3D BOOK — the canvas mounts into the same box the static cover
+   occupied, so there is no layout shift when it takes over.
+   ------------------------------------------------------------------ */
+.book3d { position: relative; width: 100%; max-width: 380px; aspect-ratio: 2/3; margin-inline: auto; }
+.book3d picture, .book3d img { display: block; width: 100%; height: 100%; }
+.book3d img {
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 34px 70px -28px rgba(0,0,0,.7), 0 2px 10px -4px rgba(0,0,0,.4);
+  transition: opacity .5s var(--ease);
+}
+.book3d canvas { position: absolute; inset: 0; }
+/* Once the canvas is live the flat image fades out beneath it. */
+.book3d.is-live img { opacity: 0; }
+/* Drop shadow under the 3D book, since a canvas cannot cast one. */
+.book3d.is-live::after {
+  content: ""; position: absolute; left: 12%; right: 12%; bottom: 4%; height: 8%;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,.55), rgba(0,0,0,0) 70%);
+  filter: blur(10px); z-index: -1; pointer-events: none;
+}
+@media (max-width: 767px) { .book3d { max-width: 300px; } }

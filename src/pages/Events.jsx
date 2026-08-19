@@ -46,7 +46,7 @@ export default function Events() {
             <Reveal delay={0.05}>
               <div className="label">What happens in the room</div>
               <ul className="ticks mt-2">
-                <li>A real table conversation among leaders — not a lecture or a sales pitch</li>
+                <li>A real conversation among leaders, not a lecture and not a sales pitch</li>
                 <li>One leadership topic each month, worked through together</li>
                 <li>Scripture and prayer applied to the decision in front of you</li>
                 <li>Honest peer accountability with other Northern Virginia leaders</li>
@@ -67,14 +67,14 @@ export default function Events() {
           <div className="sec-head">
             <Reveal>
               <h2 className="h2 maxw-60">The Monthly Webinar</h2>
-              <p className="mt-2 muted maxw-60">A 60-minute interactive introduction to the Working With God method — for leaders anywhere, no travel required.</p>
+              <p className="mt-2 muted maxw-60">A 60-minute interactive introduction to the Working With God method, for leaders anywhere, no travel required.</p>
             </Reveal>
           </div>
           <Reveal className="mt-4">
             <ul className="ticks ticks-2">
               <li>What the “Ten Modes of Elevated Leadership” are, in plain terms</li>
               <li>How to tell which mode the decision in front of you actually needs</li>
-              <li>A worked example on a real business challenge — strategy, a hire, timing</li>
+              <li>A worked example on a real business challenge: strategy, a hire, timing</li>
               <li>Live Q&amp;A with Eliyahu</li>
             </ul>
             <div className="mt-4"><a href={MEETUP} target="_blank" rel="noopener" className="btn btn-line">Register on Meetup <Arrow /></a></div>

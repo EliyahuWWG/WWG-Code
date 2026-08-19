@@ -103,6 +103,8 @@ function Layout() {
   )
 }
 
+import { postSlugs } from './blog'
+
 // Route records consumed by ViteReactSSG (build-time prerender + client router).
 // Pages are lazy so each route ships as its own chunk.
 export const routes = [
@@ -117,6 +119,15 @@ export const routes = [
       { path: 'the-book', lazy: () => import('./pages/TheBook') },
       { path: 'about', lazy: () => import('./pages/About') },
       { path: 'contact', lazy: () => import('./pages/Contact') },
+      { path: 'blog', lazy: () => import('./pages/Blog') },
+      {
+        path: 'blog/:slug',
+        lazy: () => import('./pages/BlogPost'),
+        // One prerendered HTML file per post, so search engines and LLM
+        // crawlers get the full text without executing any JavaScript.
+        entry: 'src/pages/BlogPost.jsx',
+        getStaticPaths: () => postSlugs.map(s => `blog/${s}`),
+      },
       // Prerendered so Netlify has a real 404.html to serve (see scripts/postbuild.mjs).
       { path: '404', lazy: () => import('./pages/NotFound') },
       { path: '*', lazy: () => import('./pages/NotFound') },

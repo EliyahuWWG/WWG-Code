@@ -70,8 +70,26 @@ export default function Home() {
         </div>
       </section>
 
-      {/* MEET ELIYAHU — the video folded in, so it is no longer a section of
-          its own competing for attention. */}
+      {/* VIDEO — the single biggest thing on the page after the hero. He is the
+          product, so hearing him is the shortest path to trust. Full-width on
+          navy so it reads as a moment rather than an embed in a column. */}
+      <section className="section video-feature">
+        <div className="container">
+          <Reveal className="video-feature-head">
+            <h2 className="h2">Hear him for two minutes.</h2>
+            <p className="mt-2">The fastest way to know whether this is for you.</p>
+          </Reveal>
+          <Reveal delay={0.06} className="video-stage mt-3">
+            <VideoFacade />
+            <figcaption className="video-cap">
+              <b>Dr. Eliyahu Lotzar</b>
+              <span>Ed.D., MSW · Author of Working With God</span>
+            </figcaption>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* MEET ELIYAHU */}
       <section className="section">
         <div className="container">
           <div className="person-grid">
@@ -91,14 +109,6 @@ export default function Home() {
               <div className="mt-3"><Link to="/about" className="tlink">Read his story <Arrow /></Link></div>
             </Reveal>
           </div>
-
-          <Reveal className="mt-5" style={{ maxWidth: 880, margin: '0 auto' }}>
-            <VideoFacade />
-            <figcaption className="video-cap">
-              <b>Dr. Eliyahu Lotzar</b>
-              <span>Ed.D., MSW · Author of Working With God</span>
-            </figcaption>
-          </Reveal>
         </div>
       </section>
 
@@ -142,7 +152,7 @@ export default function Home() {
             ))}
           </Reveal>
           <Reveal className="mt-4">
-            <p className="muted maxw-60">There is also the book, <Link to="/the-book" className="tlink">Working With God: The Ten Modes of Elevated Leadership</Link>, if you would rather start on your own.</p>
+            <p className="muted maxw-60">There is also the book, <Link to="/the-book" className="tlink">Working With God: The Ten Modes of Elevated Leadership</Link>, and some <Link to="/blog" className="tlink">writing</Link>, if you would rather start on your own.</p>
           </Reveal>
         </div>
       </section>

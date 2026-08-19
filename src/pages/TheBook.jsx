@@ -2,7 +2,7 @@ import Reveal from '../components/Reveal'
 import CTA from '../components/CTA'
 import Arrow from '../components/Arrow'
 import MaskLines from '../components/MaskLines'
-import Tilt from '../components/Tilt'
+import Book3D from '../components/Book3D'
 import Seo from '../components/Seo'
 import { bookSchema, breadcrumbSchema } from '../seo/schema'
 import { endorsements, AMAZON } from '../data'
@@ -30,16 +30,9 @@ export default function TheBook() {
               </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Tilt max={9}>
-                <div className="book-cover">
-                  {/* LCP element on this page, so deliberately NOT lazy. */}
-                  <picture>
-                    <source srcSet="/book-cover.webp" type="image/webp" />
-                    <img src="/book-cover.jpg" width="620" height="930" fetchPriority="high" decoding="async"
-                      alt="Working With God: The Ten Modes of Elevated Leadership, by Dr. Eliyahu Lotzar" />
-                  </picture>
-                </div>
-              </Tilt>
+              {/* 3D book. Progressive enhancement over the static cover, which
+                  is still the LCP element and what gets indexed. */}
+              <Book3D />
             </div>
           </div>
         </div>
@@ -88,7 +81,7 @@ export default function TheBook() {
               <h2 className="h2 mt-2 maxw-60">Real stories, real tools, real next steps.</h2>
             </Reveal>
             <Reveal delay={0.05}>
-              <p className="lead">Replete with stories from CEOs and concrete action steps, it gives you strategic tools for connecting with God about your team, project, or organization — and it increases your agility in the moment a hard decision lands.</p>
+              <p className="lead">Replete with stories from CEOs and concrete action steps, it gives you strategic tools for connecting with God about your team, project, or organization, and it builds your agility for the moment a hard decision lands.</p>
               <p className="mt-2 serif-it" style={{ fontSize: '1.15rem' }}>Expect support, expect challenge, expect the unexpected, expect God’s love at work.</p>
             </Reveal>
           </div>
@@ -96,7 +89,7 @@ export default function TheBook() {
             <div className="label">What you’ll walk away with</div>
             <ul className="ticks ticks-2 mt-2">
               <li>The Ten Modes of Elevated Leadership, taught through real business stories</li>
-              <li>“Modal Agility” — how to shift to the mode a decision actually needs</li>
+              <li>“Modal Agility”, or how to shift to the mode a decision actually needs</li>
               <li>Concrete action steps you can use on Monday, not just ideas</li>
               <li>A repeatable way to bring God into strategy, hiring, budgets, and timing</li>
             </ul>

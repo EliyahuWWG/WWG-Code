@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="container">
         <div className="grid-f">
           <div>
-            <Link to="/" className="footer-brand" aria-label="Working With God — home">
+            <Link to="/" className="footer-brand" aria-label="Working With God, home">
               <img src="/wwg-logo.jpg" alt="Working With God" width="300" height="300" loading="lazy" decoding="async" />
             </Link>
             <p className="fdesc">Lead as the CHIEF’S Executive Officer, working with God, not just for Him. Faith-based leadership coaching, a two-day Master’s Class, and free community events. {SERVICE_AREA}.</p>
@@ -18,6 +18,7 @@ export default function Footer() {
             <Link className="fl" to="/services">Services</Link>
             <Link className="fl" to="/events">Events</Link>
             <Link className="fl" to="/the-book">The Book</Link>
+            <Link className="fl" to="/blog">Writing</Link>
             <Link className="fl" to="/about">About Eliyahu</Link>
             <Link className="fl" to="/contact">Contact</Link>
           </div>

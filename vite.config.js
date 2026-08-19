@@ -1,5 +1,8 @@
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
+import { readFileSync } from 'node:fs'
+import { marked } from 'marked'
+import * as yaml from 'js-yaml'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
@@ -44,9 +47,38 @@ const dropWoff1 = {
   },
 }
 
+// Markdown posts are compiled to HTML at BUILD time, so `marked` never reaches
+// the browser bundle. Each .md becomes a module exporting its front matter
+// plus the rendered html.
+const markdown = {
+  name: 'markdown-posts',
+  enforce: 'pre',
+  transform(code, id) {
+    if (!id.endsWith('.md')) return null
+    const m = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?/.exec(code)
+    const data = m ? yaml.load(m[1]) : {}
+    const body = m ? code.slice(m[0].length) : code
+    const html = marked.parse(body, { mangle: false, headerIds: true })
+    // Reading time from the source text, not the HTML.
+    const words = body.replace(/[#>*`\-\[\]()]/g, ' ').split(/\s+/).filter(Boolean).length
+    const post = { ...data, html, words, readingMinutes: Math.max(1, Math.round(words / 220)) }
+    return { code: `export default ${JSON.stringify(post)}`, map: null }
+  },
+}
+
 export default defineConfig({
-  plugins: [react(), previewDirIndex, dropWoff1],
+  plugins: [markdown, react(), previewDirIndex, dropWoff1],
   base: '/',
+  build: {
+    modulePreload: {
+      // three.js is loaded on demand by Book3D, and only on desktop, only in
+      // view, only without prefers-reduced-motion. Vite's automatic
+      // modulepreload was pulling all ~190 KB gz of it into the initial HTML
+      // of /the-book, which paid the cost for every visitor including the ones
+      // the component deliberately skips.
+      resolveDependencies: (_url, deps) => deps.filter(d => !d.includes('three.module')),
+    },
+  },
   ssgOptions: {
     dirStyle: 'nested',
   },

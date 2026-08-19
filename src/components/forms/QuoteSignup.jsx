@@ -34,7 +34,7 @@ export default function QuoteSignup() {
     <div className="quote-card">
       <ul className="quote-perks">
         <li>One short, practical line each workday morning</li>
-        <li>Written by Eliyahu — no fluff, no daily sermon</li>
+        <li>Written by Eliyahu himself. No fluff, no daily sermon</li>
         <li>Occasional word about upcoming free events</li>
       </ul>
       <form ref={ref} className="form quote-form" name="quote-signup" method="POST" data-netlify="true"

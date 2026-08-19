@@ -7,8 +7,8 @@ import { breadcrumbSchema, roundtableEventSchema } from '../seo/schema'
 import { roundtableTopics, ROUNDTABLE_ADDRESS, ROUNDTABLE_TIME, NEXT_ROUNDTABLE } from '../data'
 
 const flow = [
-  { t: 'Gather', d: 'Coffee and introductions. A room of leaders who actually run things — owners, CEOs, senior managers.' },
-  { t: 'A topic worth the hour', d: 'One leadership challenge each month — agility, hiring, kingdom economics, sales — opened up honestly around the table.' },
+  { t: 'Gather', d: 'Coffee and introductions. A room of leaders who actually run things: owners, CEOs, senior managers.' },
+  { t: 'A topic worth the hour', d: 'One leadership challenge each month, whether that is agility, hiring, kingdom economics, or sales, opened up honestly around the table.' },
   { t: 'Scripture & prayer, applied', d: 'Not a devotional. We bring God into the real decision in front of you and ask what He wants to do through it.' },
   { t: 'Leave with a next step', d: 'You walk out with a clearer head on something specific, plus a few leaders who’ll check in on how it went.' },
 ]
@@ -27,7 +27,7 @@ export default function Roundtable() {
         <div className="container">
           <div className="eyebrow">Roundtable · free</div>
           <h1 className="h1 mt-3 balance"><MaskLines>A monthly table for leaders who want God in the room.</MaskLines></h1>
-          <p className="lead">Two hours of in-person community, leadership practice, scripture, and prayer — near Chantilly, Virginia. No fee. Refreshments provided.</p>
+          <p className="lead">We meet for two hours near Chantilly, Virginia, and we spend them together: talking honestly about the work, opening scripture, and praying over what is actually on our desks. There is no charge, and there is always coffee waiting.</p>
           <div className="row mt-3">
             <a href="#register" className="btn btn-onink btn-lg">Save your seat <Arrow /></a>
             <span className="phero-note">{ROUNDTABLE_TIME}</span>
@@ -41,14 +41,14 @@ export default function Roundtable() {
           <div className="sec-head">
             <Reveal>
               <h2 className="h2 maxw-60">A real table, not a webinar and not a sermon.</h2>
-              <p className="mt-2 muted maxw-60">Most faith-and-work events are a talk you watch. This is a conversation you’re in — a small circle of leaders working through the actual decisions on their desks, with God invited into each one.</p>
+              <p className="mt-2 muted maxw-60">Most faith-and-work events are a talk you watch. This is a conversation you are in. A small circle of leaders working through the real decisions in front of them, with God invited into every one of them.</p>
             </Reveal>
           </div>
           <Reveal className="mt-4">
             <ul className="ticks ticks-2">
               <li>For owners, CEOs, and senior leaders of faith in Northern Virginia</li>
-              <li>Confidential — what’s said at the table stays at the table</li>
-              <li>Practical — aimed at strategy, people, money, and timing</li>
+              <li>Confidential. What is said at the table stays at the table</li>
+              <li>Practical. We talk about strategy, people, money, and timing</li>
               <li>Free, with refreshments, on the 3rd Wednesday each month</li>
             </ul>
           </Reveal>

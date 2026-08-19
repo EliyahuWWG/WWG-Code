@@ -57,3 +57,50 @@ export function faqSchema(faqs) {
     '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(f => ({
       '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a }, })), }
 }
+
+// ---------- Blog ----------
+// BlogPosting + Blog markup. This is what makes the writing eligible for
+// article rich results, and it is also the structure LLM crawlers read to
+// attribute a claim to a named author with credentials.
+export function articleSchema(post) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    '@id': `${SITE_URL}/blog/${post.slug}#article`,
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    dateModified: post.updated || post.date,
+    inLanguage: 'en-US',
+    wordCount: post.words,
+    keywords: (post.tags || []).join(', '),
+    author: { '@id': PERSON_ID },
+    publisher: { '@id': ORG_ID },
+    isPartOf: { '@id': `${SITE_URL}/blog#blog` },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE_URL}/blog/${post.slug}` },
+    url: `${SITE_URL}/blog/${post.slug}`,
+  }
+}
+
+export function blogSchema(posts) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    '@id': `${SITE_URL}/blog#blog`,
+    name: 'Working With God, writing',
+    description: 'Essays on leading with God rather than just for Him, from Dr. Eliyahu Lotzar.',
+    url: `${SITE_URL}/blog`,
+    inLanguage: 'en-US',
+    author: { '@id': PERSON_ID },
+    publisher: { '@id': ORG_ID },
+    blogPost: posts.map(p => ({
+      '@type': 'BlogPosting',
+      '@id': `${SITE_URL}/blog/${p.slug}#article`,
+      headline: p.title,
+      description: p.description,
+      datePublished: p.date,
+      url: `${SITE_URL}/blog/${p.slug}`,
+      author: { '@id': PERSON_ID },
+    })),
+  }
+}

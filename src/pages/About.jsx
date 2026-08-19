@@ -57,7 +57,7 @@ export default function About() {
       <section className="section on-bone">
         <div className="container">
           <div className="sec-head">
-            <Reveal><h2 className="h2 maxw-60">A therapist, business owner, and academic — in one leadership practice.</h2>
+            <Reveal><h2 className="h2 maxw-60">A therapist, a business owner, and an academic, in one leadership practice.</h2>
               <p className="mt-2 muted maxw-60">His doctoral research on organizational culture has been sought after in many countries. Years as a clinical therapist and small-business owner keep the coaching grounded in the real world, not the seminar room.</p></Reveal>
           </div>
           <Reveal className="stack-tight mt-4">
@@ -69,7 +69,7 @@ export default function About() {
             ))}
           </Reveal>
           <p className="mt-3 muted maxw-60">
-            Before Working With God, Eliyahu built <a className="tlink" style={{ display: 'inline' }} href={RR_SITE} target="_blank" rel="noopener">Reframed Reality</a> — an organizational-development and executive-coaching practice serving commercial ventures, national associations, and government. That work is the engine room behind the method: the same tools that turn around a stuck team now help leaders bring God into the decision itself.
+            Before Working With God, Eliyahu built <a className="tlink" style={{ display: 'inline' }} href={RR_SITE} target="_blank" rel="noopener">Reframed Reality</a>, an organizational-development and executive-coaching practice serving commercial ventures, national associations, and government. That work is the engine room behind the method: the same tools that turn around a stuck team now help leaders bring God into the decision itself.
           </p>
         </div>
       </section>
