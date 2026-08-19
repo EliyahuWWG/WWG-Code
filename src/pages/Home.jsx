@@ -34,18 +34,28 @@ export default function Home() {
         <span className="aurora aurora-3" aria-hidden="true" />
         <div className="container">
           <div className="hero-top">
-            <div>
+            <div className="hero-lead">
               <h1 className="display">
                 <MaskLines>Leaders don’t plateau for lack of effort. They plateau for lack of <em className="hi-it">perspective.</em></MaskLines>
               </h1>
-              <div className="mt-3">
-                <BookCallLink className="btn btn-onink btn-lg">Book a call</BookCallLink>
-              </div>
             </div>
+
+            {/* Right column, matching the reference layout: a short first-person
+                introduction, then the call to action directly beneath it. The
+                column is aligned to the lower half of the headline rather than
+                its top, which is what makes the two blocks read as one
+                composition instead of two stacked ones. */}
             <div className="hero-side">
+              {/* The client asked for the Working With God lockup on the right,
+                  so it stays, but subordinated: at display size it competed
+                  with the H1 and made the column too tall to align the way the
+                  reference does. */}
               <p className="hero-mark">Working With God</p>
               <p className="hero-sub">The Ten Modes of Elevated Leadership</p>
-              <p className="mt-3">Working With God gives you the biggest and best perspective possible. A practical way to hear what God wants to do through your leadership, right in the middle of real strategy, hiring, and timing.</p>
+              <p className="hero-intro">I’m Dr. Eliyahu Lotzar. I help CEOs, executives, and teams break through the challenges that quietly cap their growth, by bringing God into the decision itself rather than asking Him to bless it afterwards.</p>
+              <div className="hero-cta">
+                <BookCallLink className="btn btn-onink btn-lg">Book a discovery call</BookCallLink>
+              </div>
             </div>
           </div>
 
