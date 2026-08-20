@@ -4,6 +4,7 @@ import CTA from '../components/CTA'
 import Arrow from '../components/Arrow'
 import MaskLines from '../components/MaskLines'
 import VideoFacade from '../components/VideoFacade'
+import HeroBackdrop from '../components/HeroBackdrop'
 import BookCallLink from '../components/BookCallLink'
 import FAQ from '../components/FAQ'
 import Seo from '../components/Seo'
@@ -28,6 +29,9 @@ export default function Home() {
           the right and the Ten Modes subtitle sits beneath it. The competing
           eyebrow ("When it’s time to be the leader HE needs you to be") is gone. */}
       <section className="hero hero-aurora">
+        {/* Backdrop first in the DOM so the aurora blobs layer over the footage
+            rather than under it, which is what gives the hero depth. */}
+        <HeroBackdrop />
         <span className="aurora aurora-1" aria-hidden="true" />
         <span className="aurora aurora-2" aria-hidden="true" />
         <span className="aurora aurora-3" aria-hidden="true" />

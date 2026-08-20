@@ -12,6 +12,41 @@ export const AMAZON   = "https://www.amazon.com/Working-God-Modes-Elevated-Leade
 export const LINKEDIN = "https://www.linkedin.com/in/eliyahulotzar/";
 export const RR_SITE  = "https://reframedreality.com";
 export const VIDEO_ID = "hAgiN3Jl_nU";
+
+// ---------------------------------------------------------------------------
+// Faint moving backdrop for the hero.
+//
+// Delivered straight off Cloudinary as a plain video file, NOT through their
+// player embed. The <iframe> player would drag in player JS, cannot be styled
+// below opacity, and cannot be dimmed to 11% - all of which defeats a backdrop.
+// Cloudinary re-encodes on the fly from the transformation string, so the
+// browser only ever downloads the small derivative, never the master.
+//
+// The transformation, left to right:
+//   so_3,du_12   start 3s in, 12 seconds long  <- tune this to the calmest bit
+//   w_1280,c_scale  no wider than it renders at 11% opacity behind a scrim
+//   fps_24       background motion does not need 30/60
+//   ac_none      DROP THE AUDIO TRACK. A muted <video> still downloads audio
+//                if a stream is present, which is pure waste here.
+//   q_auto:eco   aggressive; detail is invisible under the scrim anyway
+// ---------------------------------------------------------------------------
+const CLD = 'https://res.cloudinary.com/dkzhqy2od/video/upload'
+// The version segment is optional for delivery but worth keeping: it pins this
+// exact upload, so replacing the clip later cannot serve a stale CDN copy, and
+// accounts with strict/invalidated transformations reject unversioned URLs.
+// Order matters - transformations go BEFORE the version, never after.
+const HERO_VER = 'v1787255667'
+const HERO_CLIP = '0821_eruokl'
+const HERO_TX = 'so_3,du_12,w_1280,c_scale,fps_24,ac_none,q_auto:eco'
+
+export const HERO_BG_VIDEO = {
+  webm: `${CLD}/${HERO_TX}/${HERO_VER}/${HERO_CLIP}.webm`,
+  mp4: `${CLD}/${HERO_TX}/${HERO_VER}/${HERO_CLIP}.mp4`,
+  // Poster frame pulled from the same clip, so the fallback still and the
+  // video are the same footage rather than a YouTube thumbnail of a different
+  // moment.
+  poster: `${CLD}/so_3,w_1280,c_scale,q_auto/${HERO_VER}/${HERO_CLIP}.jpg`,
+}
 export const ASIN     = "1961202298";
 
 export const ROUNDTABLE_ADDRESS = "4412 Chantilly Shopping Center, Chantilly, VA";

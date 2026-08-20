@@ -289,6 +289,51 @@ em, .serif-it { }
   /* Top padding raised so the headline sits lower in the frame. */
   padding: clamp(180px, 24vh, 280px) 0 clamp(64px, 8vh, 104px);
   position: relative; overflow: hidden; }
+/* ------------------------------------------------------------------
+   HERO BACKDROP — the clip, very faint, under everything.
+
+   Opacity is the whole design here. Much above .14 and the footage starts
+   competing with the headline for attention, which is the opposite of what a
+   backdrop is for; much below .06 and it reads as a smudge rather than as him.
+   .11 is where it registers as motion without ever becoming a subject.
+
+   The scrim underneath matters as much as the opacity: bone text over the
+   bright parts of a face loses contrast fast, so a navy wash sits between the
+   footage and the content and is heaviest exactly where the copy sits.
+   ------------------------------------------------------------------ */
+.hero-backdrop { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.hero-backdrop-still,
+.hero-backdrop-video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: .11;
+  /* Desaturated and slightly lifted in black so the footage sits INSIDE the
+     navy rather than punching a grey hole in it. */
+  filter: saturate(.55) contrast(1.06) brightness(1.02);
+}
+/* The video covers the still once it can actually play. */
+.hero-backdrop-video { opacity: 0; transition: opacity 1.2s var(--ease); }
+.hero-backdrop-video[data-playing="true"] { opacity: .11; }
+/* Scrim: densest at the left and bottom, where the H1 and the credential row
+   sit, and it never fully clears so the top edge does not flash bright. */
+.hero-backdrop::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(100deg, rgba(2,6,31,.92) 0%, rgba(2,6,31,.55) 45%, rgba(2,6,31,.35) 100%),
+    linear-gradient(180deg, rgba(2,6,31,.55) 0%, rgba(2,6,31,.15) 35%, rgba(4,10,82,.72) 100%);
+}
+@media (max-width: 719px) {
+  /* Small screens: the copy occupies nearly the whole frame, so the backdrop
+     goes quieter still and the scrim goes flat instead of directional. */
+  .hero-backdrop-still, .hero-backdrop-video[data-playing="true"] { opacity: .08; }
+  .hero-backdrop::after { background: linear-gradient(180deg, rgba(2,6,31,.78), rgba(4,10,82,.85)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-backdrop-video { display: none; }
+  .hero-backdrop-video { transition: none; }
+}
+
 /* soft drifting aurora blobs behind the content */
 .aurora { position: absolute; z-index: 0; pointer-events: none; border-radius: 50%; filter: blur(72px); opacity: .5; }
 .aurora-1 { width: 62vw; height: 62vw; left: -8vw; top: -20vh; background: radial-gradient(circle, rgba(46,86,224,.72), rgba(46,86,224,0) 62%); animation: aurora-a 22s ease-in-out infinite alternate; }
