@@ -9,7 +9,19 @@
   publish  = "dist"
 
 [build.environment]
-  NODE_VERSION = "20"
+  # Vite 8 and @vitejs/plugin-react 6 both declare engines
+  # "^20.19.0 || >=22.12.0". Netlify's "20" resolves to the newest 20.x, which
+  # satisfies that today, but it sits one patch line away from failing. 22 is
+  # the current LTS and is what the build is developed against.
+  NODE_VERSION = "22"
+
+  # Netlify's secrets scanner fails a deploy when the value of any configured
+  # environment variable appears in the build output. Everything prefixed VITE_
+  # is inlined into the client bundle BY DESIGN - that is what the prefix means
+  # - so a form endpoint set in the Netlify UI would be flagged as a leaked
+  # secret and kill the deploy. These keys are public by definition; omit them.
+  # Never add a genuinely secret key to this list.
+  SECRETS_SCAN_OMIT_KEYS = "VITE_FORM_ENDPOINT,VITE_SITE_ENV"
 
 # ---- Content-hashed assets: immutable. --------------------------------
 # Everything under /assets/ carries a Vite content hash, so a changed file is
