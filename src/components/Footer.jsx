@@ -18,6 +18,7 @@ export default function Footer() {
             <Link className="fl" to="/services">Services</Link>
             <Link className="fl" to="/events">Events</Link>
             <Link className="fl" to="/the-book">The Book</Link>
+            <Link className="fl" to="/speaking">Speaking</Link>
             <Link className="fl" to="/blog">Writing</Link>
             <Link className="fl" to="/about">About Eliyahu</Link>
             <Link className="fl" to="/contact">Contact</Link>

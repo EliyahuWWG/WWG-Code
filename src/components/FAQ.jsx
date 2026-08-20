@@ -8,7 +8,7 @@ import { faqs } from '../data'
 export default function FAQ() {
   const [openIdx, setOpenIdx] = useState(0)
   return (
-    <section className="section">
+    <section className="section" id="faq" style={{ scrollMarginTop: 96 }}>
       <div className="container">
         <div className="sec-head">
           <Reveal><h2 className="h2 maxw-60">The things people ask before they book.</h2></Reveal>

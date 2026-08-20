@@ -3,7 +3,7 @@ import CTA from '../components/CTA'
 import Arrow from '../components/Arrow'
 import Seo from '../components/Seo'
 import { breadcrumbSchema, articleSchema } from '../seo/schema'
-import { getPost, posts, formatDate, postSlugs } from '../blog'
+import { getPost, posts, formatDate, postSlugs, relatedPosts } from '../blog'
 
 export default function BlogPost() {
   const { slug } = useParams()
@@ -20,7 +20,8 @@ export default function BlogPost() {
     )
   }
 
-  const others = posts.filter(p => p.slug !== post.slug).slice(0, 2)
+  // Scored by shared tags, not just the next two by date.
+  const others = relatedPosts(post.slug, 2)
 
   return (
     <>
@@ -37,8 +38,11 @@ export default function BlogPost() {
 
       {/* One <article> wrapping header + body, so a crawler can see where the
           piece starts and ends rather than inferring it from a div soup. */}
-      <article>
-        <header className="phero phero-post">
+      <article className="post">
+        {/* Compact header, not the full-viewport .phero the marketing pages
+            use. An article should not spend a whole screen before the first
+            sentence. Light ground, because that is what you read on. */}
+        <header className="post-head">
           <div className="container">
             {/* Visible breadcrumb. BreadcrumbList JSON-LD already existed, but
                 Google prefers the markup and the rendering to agree. */}
@@ -60,19 +64,25 @@ export default function BlogPost() {
           </div>
         </header>
 
-        <div className="section">
+        <div className="post-body">
           <div className="container">
             {/* Compiled from markdown at build time (vite.config.js markdown-posts). */}
             <div className="prose" dangerouslySetInnerHTML={{ __html: post.html }} />
 
-            {post.tags?.length > 0 && (
-              <footer className="mt-4">
-                <h2 className="vh">Topics</h2>
-                <ul className="tagrow">
-                  {post.tags.map(t => <li key={t} className="tag">{t}</li>)}
-                </ul>
-              </footer>
-            )}
+            <footer className="post-foot">
+              {post.tags?.length > 0 && (
+                <>
+                  <h2 className="vh">Topics</h2>
+                  <ul className="tagrow">
+                    {post.tags.map(t => <li key={t} className="tag">{t}</li>)}
+                  </ul>
+                </>
+              )}
+              <p className="post-byline">
+                Written by <a href="/about" rel="author">Dr. Eliyahu Lotzar</a>, Ed.D., MSW.
+                If any of this lands, <Link to="/contact">start a conversation</Link>.
+              </p>
+            </footer>
           </div>
         </div>
       </article>

@@ -44,3 +44,22 @@ describe('blog index', () => {
     expect(formatDate('2026-01-01')).toBe('January 1, 2026')
   })
 })
+
+describe('related posts', () => {
+  it('prefers posts that share a tag over merely recent ones', async () => {
+    const { relatedPosts } = await import('../src/blog')
+    const seed = posts[0]
+    const rel = relatedPosts(seed.slug, 2)
+    expect(rel.every(p => p.slug !== seed.slug), 'must not relate a post to itself').toBe(true)
+    const sharedFirst = rel.map(p => (p.tags || []).filter(t => (seed.tags || []).includes(t)).length)
+    // Scores must be non-increasing: the best match comes first.
+    expect([...sharedFirst].sort((a, b) => b - a)).toEqual(sharedFirst)
+  })
+
+  it('always fills the slots, even with no tag overlap at all', async () => {
+    const { relatedPosts } = await import('../src/blog')
+    for (const p of posts) {
+      expect(relatedPosts(p.slug, 2).length).toBe(Math.min(2, posts.length - 1))
+    }
+  })
+})

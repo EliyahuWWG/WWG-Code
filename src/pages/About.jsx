@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
 import Reveal from '../components/Reveal'
-import ParallaxImage from '../components/ParallaxImage'
 import CTA from '../components/CTA'
 import Arrow from '../components/Arrow'
 import MaskLines from '../components/MaskLines'
@@ -28,7 +27,7 @@ export default function About() {
       <section className="phero">
         <div className="container">
           <div className="eyebrow">About</div>
-          <h1 className="h1 mt-3 balance"><MaskLines>Dr. Eliyahu Lotzar: A Teacher of the Word in Business</MaskLines></h1>
+          <h1 className="h1 mt-3 balance"><MaskLines>A teacher of the Word, in business.</MaskLines></h1>
           <p className="lead">I am an executive coach, group facilitator, and leadership consultant. I help leaders step into their calling as the CHIEF’S Executive Officer, working with God, not just for Him.</p>
         </div>
       </section>
@@ -37,13 +36,13 @@ export default function About() {
       <section className="section">
         <div className="container">
           <div className="person-grid">
-            <Reveal><ParallaxImage className="portrait">
+            <Reveal className="portrait">
               <picture>
                 <source srcSet="/eliyahu.webp" type="image/webp" />
                 <img src="/eliyahu.jpg" alt="Dr. Eliyahu Lotzar" width="920" height="1227" loading="lazy" decoding="async" />
               </picture>
               <div className="cap"><b>Dr. Eliyahu Lotzar, Ed.D., MSW</b><span>Executive coach · facilitator · author</span></div>
-            </ParallaxImage></Reveal>
+            </Reveal>
             <Reveal delay={0.05}>
               <h2 className="h2 mt-2 maxw-60">It started when I was eight years old.</h2>
               <p className="mt-2 lead">When I was eight years old I had a moment of revelation, and I am happy to tell you about it if we ever sit down together. The Ancient of Days gave me an out-of-the-box knack for noticing the deep details of how people relate to themselves, to each other, and to Him. That encounter set me on a lifelong quest to help us live and lead from a bigger perspective.</p>

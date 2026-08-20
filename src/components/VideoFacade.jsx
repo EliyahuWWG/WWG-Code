@@ -26,7 +26,7 @@ export default function VideoFacade({ id = VIDEO_ID, title = 'Working With God' 
     return (
       <div className="video">
         <iframe
-          src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`}
+          src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&playsinline=1&vq=hd1080&hd=1`}
           title={title}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen

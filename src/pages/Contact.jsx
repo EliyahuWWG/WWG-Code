@@ -20,7 +20,7 @@ export default function Contact() {
       <section className="phero" style={{ paddingBottom: 'clamp(40px,5vw,64px)' }}>
         <div className="container">
           <div className="eyebrow">Contact</div>
-          <h1 className="h1 mt-3 balance"><MaskLines>Eliyahu looks forward to connecting with you.</MaskLines></h1>
+          <h1 className="h1 mt-3 balance"><MaskLines>I’d like to hear from you.</MaskLines></h1>
           <p className="lead">Tell him what’s in front of you. He reads every message personally.</p>
         </div>
       </section>

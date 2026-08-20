@@ -126,6 +126,8 @@ export const routes = [
       { path: 'the-book', lazy: () => import('./pages/TheBook') },
       { path: 'about', lazy: () => import('./pages/About') },
       { path: 'contact', lazy: () => import('./pages/Contact') },
+      { path: 'speaking', lazy: () => import('./pages/Speaking') },
+      { path: 'book-a-call', lazy: () => import('./pages/BookACall') },
       { path: 'blog', lazy: () => import('./pages/Blog') },
       {
         path: 'blog/:slug',

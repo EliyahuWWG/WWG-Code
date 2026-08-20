@@ -17,7 +17,7 @@ export default function NotFound() {
           <p className="lead">The address you followed doesn’t exist. The rest of the site is exactly where it should be.</p>
           <div className="row mt-3">
             <Link to="/" className="btn btn-onink">Back to the homepage <Arrow /></Link>
-            <BookCallLink className="tlink lt" arrow={false}>Book a call</BookCallLink>
+            <BookCallLink className="tlink" arrow={false}>Book a call</BookCallLink>
           </div>
         </div>
       </section>

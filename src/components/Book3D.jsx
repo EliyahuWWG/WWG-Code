@@ -1,17 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
 
 /**
- * Premium 3D rendering of the book, as progressive enhancement.
+ * Physical rendering of the book, as progressive enhancement.
  *
  * The static <img> is what prerenders, what search engines index, and what
  * every visitor sees first. This only takes over when all of the following
- * hold, and it lazy-imports three.js (~170 KB gz) so nothing is paid for
+ * hold, and it lazy-imports three.js (~190 KB gz) so nothing is paid for
  * unless it is actually used:
  *
  *   - the viewport is wide enough to be worth it
  *   - the element has scrolled into view
  *   - the user has not asked for reduced motion
- *   - the device is not reporting low memory / few cores
+ *   - the device is not reporting low memory
  *   - WebGL actually initialises
  *
  * Any failure leaves the <img> in place. There is no visual gap and no CLS,
@@ -27,14 +27,8 @@ export default function Book3D({
   useEffect(() => {
     const host = hostRef.current
     if (!host || typeof window === 'undefined') return
-
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     if (window.matchMedia('(max-width: 767px)').matches) return
-    // Only a genuine low-memory signal opts out. A core-count gate was tried
-    // first and was too blunt: VMs, some laptops and every headless browser
-    // report 2, and they render this fine. The real protections are the
-    // WebGL-init try/catch below and the visibility pause, which stops the
-    // loop whenever the book is off screen or the tab is hidden.
     if ((navigator.deviceMemory || 8) < 4) return
 
     let cleanup = () => {}
@@ -49,11 +43,7 @@ export default function Book3D({
 
     async function start() {
       let THREE
-      try {
-        THREE = await import('three')
-      } catch {
-        return                       // offline / blocked: keep the image
-      }
+      try { THREE = await import('three') } catch { return }
       if (cancelled) return
 
       const W = host.clientWidth
@@ -63,79 +53,137 @@ export default function Book3D({
       let renderer
       try {
         renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' })
-      } catch {
-        return                       // no WebGL: keep the image
-      }
+      } catch { return }
 
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
       renderer.setSize(W, H)
       renderer.outputColorSpace = THREE.SRGBColorSpace
       renderer.toneMapping = THREE.ACESFilmicToneMapping
-      renderer.toneMappingExposure = 1.05
+      renderer.toneMappingExposure = 1.08
+      // A real cast shadow, rather than a CSS blob behind the canvas. One
+      // casting light at 1024 is plenty at this size.
+      renderer.shadowMap.enabled = true
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap
       renderer.domElement.setAttribute('aria-hidden', 'true')
       renderer.domElement.style.cssText = 'width:100%;height:100%;display:block'
 
       const scene = new THREE.Scene()
-      const camera = new THREE.PerspectiveCamera(30, W / H, 0.1, 100)
-      camera.position.set(0, 0, 8.6)
+      // A longer lens from further back flattens the perspective the way a
+      // product photograph does. A wide lens up close makes a book look like
+      // a toy.
+      const camera = new THREE.PerspectiveCamera(21, W / H, 0.1, 100)
+      // Pulled back so the book still clears the frame at the extremes of
+      // its rotation. It was being clipped at the bottom edge.
+      camera.position.set(0, 0.02, 13.4)
 
-      // ---- Materials -------------------------------------------------
+      // ---------- Textures ----------
       const loader = new THREE.TextureLoader()
       const coverTex = await new Promise(res => loader.load(cover, res, undefined, () => res(null)))
       if (cancelled || !coverTex) { renderer.dispose(); return }
       coverTex.colorSpace = THREE.SRGBColorSpace
       coverTex.anisotropy = renderer.capabilities.getMaxAnisotropy()
 
-      // Page block: thin warm stripes so the fore-edge reads as paper.
+      // Page block: fine alternating lines read as individual leaves; the
+      // low-frequency waves stop it looking like a regular pattern.
       const pageCanvas = document.createElement('canvas')
-      pageCanvas.width = 8; pageCanvas.height = 256
+      pageCanvas.width = 16; pageCanvas.height = 512
       const pctx = pageCanvas.getContext('2d')
-      for (let y = 0; y < 256; y++) {
-        const v = 232 + Math.sin(y * 1.7) * 10 + (Math.random() * 6 - 3)
-        pctx.fillStyle = `rgb(${v|0},${(v-6)|0},${(v-18)|0})`
-        pctx.fillRect(0, y, 8, 1)
+      for (let y = 0; y < 512; y++) {
+        const fine = (y % 2) * 8
+        const wave = Math.sin(y * 0.35) * 5 + Math.sin(y * 0.07) * 7
+        const v = 228 - fine + wave + (Math.random() * 5 - 2.5)
+        pctx.fillStyle = `rgb(${v | 0},${(v - 7) | 0},${(v - 20) | 0})`
+        pctx.fillRect(0, y, 16, 1)
       }
       const pageTex = new THREE.CanvasTexture(pageCanvas)
       pageTex.wrapS = pageTex.wrapT = THREE.RepeatWrapping
-      pageTex.repeat.set(1, 3)
+      pageTex.repeat.set(1, 2)
+      pageTex.anisotropy = renderer.capabilities.getMaxAnisotropy()
 
-      const navy = new THREE.MeshStandardMaterial({ color: 0x0a1030, roughness: 0.62, metalness: 0.06 })
-      const pages = new THREE.MeshStandardMaterial({ map: pageTex, roughness: 0.94, metalness: 0 })
-      const front = new THREE.MeshStandardMaterial({ map: coverTex, roughness: 0.42, metalness: 0.05 })
-      const back  = new THREE.MeshStandardMaterial({ color: 0x0d1533, roughness: 0.55, metalness: 0.05 })
+      // ---------- Materials ----------
+      // Matte laminate on the case, uncoated stock in the block.
+      const navy      = new THREE.MeshStandardMaterial({ color: 0x0a1030, roughness: 0.56, metalness: 0.04 })
+      const spineMat  = new THREE.MeshStandardMaterial({ color: 0x0c1338, roughness: 0.5,  metalness: 0.05 })
+      const pages     = new THREE.MeshStandardMaterial({ map: pageTex, roughness: 0.95, metalness: 0 })
+      const front     = new THREE.MeshStandardMaterial({ map: coverTex, roughness: 0.36, metalness: 0.07 })
+      const back      = new THREE.MeshStandardMaterial({ color: 0x0d1533, roughness: 0.48, metalness: 0.05 })
+
+      // ---------- Bodies ----------
+      // A hardback is two things: a page block, and a case slightly larger
+      // than it. That overhang is what reads as "book" instead of "textured
+      // box".
+      const BW = 2.72, BH = 4.06, BD = 0.52, LIP = 0.05
 
       // BoxGeometry face order: +x, -x, +y, -y, +z, -z
-      const geo = new THREE.BoxGeometry(2.55, 3.82, 0.42, 1, 1, 1)
-      const book = new THREE.Mesh(geo, [pages, navy, pages, pages, front, back])
-      // Slight bevel illusion: the spine edge sits marginally proud.
+      const caseGeo = new THREE.BoxGeometry(BW, BH, BD)
+      const caseMesh = new THREE.Mesh(caseGeo, [spineMat, spineMat, navy, navy, front, back])
+      caseMesh.castShadow = true
+
+      const blockGeo = new THREE.BoxGeometry(BW - LIP * 2, BH - LIP * 2, BD - 0.07)
+      const block = new THREE.Mesh(blockGeo, [pages, spineMat, pages, pages, pages, pages])
+      block.position.x = LIP * 0.7        // pushed toward the fore-edge, away from the spine
+      block.castShadow = true
+
       const group = new THREE.Group()
-      group.add(book)
+      group.add(caseMesh, block)
       scene.add(group)
 
-      // ---- Light: one key, one warm rim, gentle fill ------------------
-      scene.add(new THREE.AmbientLight(0xbfd0ff, 0.55))
-      const key = new THREE.DirectionalLight(0xffffff, 2.1)
-      key.position.set(3.4, 4.2, 5.2)
+      // Catcher for the cast shadow. ShadowMaterial is transparent, so only
+      // the shadow renders over the page background.
+      const floorGeo = new THREE.PlaneGeometry(24, 24)
+      // The page is light now, so the cast shadow reads much more strongly.
+      const floorMat = new THREE.ShadowMaterial({ opacity: 0.28 })
+      const floor = new THREE.Mesh(floorGeo, floorMat)
+      floor.rotation.x = -Math.PI / 2
+      floor.position.y = -BH / 2 - 0.44
+      floor.receiveShadow = true
+      scene.add(floor)
+
+      // ---------- Light: one key that casts, a warm rim, a cool bounce ----------
+      scene.add(new THREE.AmbientLight(0xbfd0ff, 0.48))
+
+      const key = new THREE.DirectionalLight(0xffffff, 2.4)
+      key.position.set(3.4, 5.6, 5.2)
+      key.castShadow = true
+      key.shadow.mapSize.set(1024, 1024)
+      key.shadow.camera.near = 1
+      key.shadow.camera.far = 24
+      key.shadow.camera.left = -6; key.shadow.camera.right = 6
+      key.shadow.camera.top = 6;   key.shadow.camera.bottom = -6
+      key.shadow.radius = 5
+      key.shadow.bias = -0.0015
       scene.add(key)
-      const rim = new THREE.DirectionalLight(0xdcbb55, 1.5)   // brand gold
-      rim.position.set(-4.2, 1.6, -2.4)
+
+      const rim = new THREE.DirectionalLight(0xdcbb55, 1.6)   // brand gold
+      rim.position.set(-4.4, 1.8, -2.6)
       scene.add(rim)
-      const fill = new THREE.DirectionalLight(0x4a70ee, 0.7)  // brand navy bounce
-      fill.position.set(-2.4, -2.6, 3.0)
+
+      const fill = new THREE.DirectionalLight(0x4a70ee, 0.75) // brand navy bounce
+      fill.position.set(-2.6, -2.8, 3.2)
       scene.add(fill)
 
       host.querySelector('img')?.style.setProperty('opacity', '0')
       host.appendChild(renderer.domElement)
       if (!cancelled) setLive(true)
 
-      // ---- Motion: idle drift, plus pointer parallax ------------------
-      let targetX = 0, targetY = 0, curX = 0, curY = 0
+      // ---------- Motion ----------
+      // Rest pose: turned a little off-axis so both the cover and the fore-edge
+      // read at a glance. The pointer steers from there.
+      const REST_Y = -0.40, REST_X = 0.06
+      let targetX = 0, targetY = 0, targetZ = 0
+      let curX = 0, curY = 0, curZ = 0
+      let hover = 0, hoverTarget = 0
+
       const onPointer = (e) => {
         const r = host.getBoundingClientRect()
-        targetY = ((e.clientX - r.left) / r.width - 0.5) * 0.85
-        targetX = ((e.clientY - r.top) / r.height - 0.5) * 0.45
+        const nx = ((e.clientX - r.left) / r.width) * 2 - 1
+        const ny = ((e.clientY - r.top) / r.height) * 2 - 1
+        targetY = nx * 0.62          // yaw follows the cursor across
+        targetX = ny * 0.34          // pitch follows it down
+        targetZ = -nx * 0.05         // a touch of roll, so it feels held not hinged
+        hoverTarget = 1
       }
-      const onLeave = () => { targetX = 0; targetY = 0 }
+      const onLeave = () => { targetX = 0; targetY = 0; targetZ = 0; hoverTarget = 0 }
       host.addEventListener('pointermove', onPointer)
       host.addEventListener('pointerleave', onLeave)
 
@@ -144,16 +192,26 @@ export default function Book3D({
         if (!running) return
         raf = requestAnimationFrame(tick)
         t += 0.006
-        curX += (targetX - curX) * 0.06
-        curY += (targetY - curY) * 0.06
-        group.rotation.x = curX + Math.sin(t * 0.9) * 0.035
-        group.rotation.y = curY - 0.42 + Math.sin(t * 0.6) * 0.07
-        group.position.y = Math.sin(t * 0.75) * 0.06
+        // Critically-damped-ish easing: quick to respond, no overshoot.
+        curX += (targetX - curX) * 0.075
+        curY += (targetY - curY) * 0.075
+        curZ += (targetZ - curZ) * 0.075
+        hover += (hoverTarget - hover) * 0.07
+
+        // The idle drift fades out as the pointer takes over, so the two
+        // motions never fight each other.
+        const idle = 1 - hover
+        group.rotation.x = REST_X + curX + Math.sin(t * 0.9) * 0.03 * idle
+        group.rotation.y = REST_Y + curY + Math.sin(t * 0.6) * 0.06 * idle
+        group.rotation.z = curZ
+        group.position.y = Math.sin(t * 0.75) * 0.05 * idle
+        // Leans toward the viewer on hover.
+        group.position.z = hover * 0.34
         renderer.render(scene, camera)
       }
       tick()
 
-      // Stop the loop entirely when the book is off screen or the tab is hidden.
+      // Stop the loop entirely when off screen or the tab is hidden.
       const vis = new IntersectionObserver(([e]) => {
         if (e.isIntersecting && !running && !document.hidden) { running = true; tick() }
         else if (!e.isIntersecting) { running = false; cancelAnimationFrame(raf) }
@@ -183,8 +241,9 @@ export default function Book3D({
         host.removeEventListener('pointermove', onPointer)
         host.removeEventListener('pointerleave', onLeave)
         renderer.domElement.remove()
-        geo.dispose(); coverTex.dispose(); pageTex.dispose()
-        ;[navy, pages, front, back].forEach(m => m.dispose())
+        caseGeo.dispose(); blockGeo.dispose(); floorGeo.dispose(); floorMat.dispose()
+        coverTex.dispose(); pageTex.dispose()
+        ;[navy, spineMat, pages, front, back].forEach(m => m.dispose())
         renderer.dispose()
       }
     }

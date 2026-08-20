@@ -21,8 +21,19 @@ export default function Services() {
       <section className="phero">
         <div className="container">
           <div className="eyebrow">Ways to engage</div>
-          <h1 className="h1 mt-3 balance"><MaskLines>Ways to Engage With Working With God</MaskLines></h1>
+          <h1 className="h1 mt-3 balance"><MaskLines>Ways to work with me.</MaskLines></h1>
           <p className="lead">Coaching for the leader, a two-day immersion for the toughest decisions, and speaking for your people. Each one brings God into the real work of leadership.</p>
+        </div>
+      </section>
+
+      {/* One quote before the offers. The page asks for money; something
+          should vouch for him before it does. */}
+      <section className="section-sm on-bone">
+        <div className="container">
+          <Reveal className="pullquote" style={{ borderTop: 0, paddingTop: 0 }}>
+            <blockquote>“I can’t recommend Eliyahu enough as a coach. He identifies the key attributes you bring as a leader, then offers usable tactics to strengthen your skills and become a better leader.”</blockquote>
+            <div className="attr"><b>TJ Schulz</b>, President, Airport Consultants Council</div>
+          </Reveal>
         </div>
       </section>
 

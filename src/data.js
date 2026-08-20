@@ -45,6 +45,28 @@ export const roundtableTopics = [
 ];
 
 // ---------- Past events (Events), real, no invented detail ----------
+// ---------- Speaking ----------
+// What he actually does on a stage, drawn from the Roundtable topics and the
+// book's method. TODO(client): confirm formats, and add fee/travel terms.
+export const speakingTopics = [
+  { n: "01", t: "Working with God, not just for Him",
+    body: "The talk the practice is named after. Why faith-driven leaders plateau, what changes when the conversation moves inside the decision, and what that looks like on a Tuesday afternoon." },
+  { n: "02", t: "The Ten Modes of Elevated Leadership",
+    body: "The framework from the book: what a leadership mode is, why agility between modes beats mastery of any one, and how to tell which mode a decision is asking for." },
+  { n: "03", t: "The Chief’s Executive Officer",
+    body: "A leadership identity talk. Trading burnout and self-reliance for grounded, divine confidence, without becoming less rigorous about the numbers." },
+  { n: "04", t: "Organizational health for faith-led teams",
+    body: "Drawn from years of consulting: aligning values, strategy and culture so a team stops working against itself. Workshop or keynote format." },
+]
+
+// TODO(client): audience size, typical run time, and whether travel is included.
+export const speakingFormats = [
+  { t: "Keynote", body: "45 to 60 minutes, with time for questions. Works for conferences, association meetings, and leadership summits." },
+  { t: "Workshop", body: "Half or full day, interactive, built around the decisions your people are actually carrying." },
+  { t: "Panel", body: "Moderated or as a panelist. Most recently on “Jesus in the Marketplace” in Vienna, VA." },
+  { t: "Team session", body: "In-house, for a leadership team that needs to work through something specific together." },
+]
+
 export const pastEvents = [
   { when: "June 2026", what: "WWG Roundtable, “Being a True Leader Through Your Specific God-Given Identity”" }, { when: "April 2026", what: "Author’s Panel, “Jesus in the Marketplace,” Vienna, VA" }, { when: "April 2026", what: "SWC Conference, national stage, Orlando" },
 ];

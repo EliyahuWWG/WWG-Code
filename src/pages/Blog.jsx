@@ -16,7 +16,7 @@ export default function Blog() {
         schema={[breadcrumbSchema([{ name: 'Writing', path: '/blog' }]), blogSchema(posts)]}
       />
 
-      <section className="phero">
+      <section className="post-head post-head-index">
         <div className="container">
           <div className="eyebrow">Writing</div>
           <h1 className="h1 mt-3 balance">Thinking out loud about faith and the work.</h1>

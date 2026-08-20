@@ -70,3 +70,29 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     X-Frame-Options = "SAMEORIGIN"
+
+# ---- Deploy contexts ----------------------------------------------------
+# Production builds from `main`. Every other branch and every pull request
+# gets its own URL, which is what the client reviews instead of screenshots.
+
+[context.production.environment]
+  VITE_SITE_ENV = "production"
+
+# Branch deploys and deploy previews are NOINDEX'd at the header level.
+# Without this, Netlify's preview URLs get crawled and you end up competing
+# with your own client for their brand terms.
+[context.deploy-preview.environment]
+  VITE_SITE_ENV = "preview"
+
+[context.branch-deploy.environment]
+  VITE_SITE_ENV = "preview"
+
+[[context.deploy-preview.headers]]
+  for = "/*"
+  [context.deploy-preview.headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[context.branch-deploy.headers]]
+  for = "/*"
+  [context.branch-deploy.headers.values]
+    X-Robots-Tag = "noindex, nofollow"

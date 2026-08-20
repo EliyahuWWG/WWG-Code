@@ -90,11 +90,13 @@ describe.skipIf(!has)('build output', () => {
     expect(html).not.toContain('rel="canonical"')
   })
 
-  it('does not preload the on-demand three.js chunk', () => {
-    // Regression guard: this cost every /the-book visitor ~190 KB gz for a
-    // component most of them never trigger.
+  it('ships no three.js at all', () => {
+    // The 3D book was removed in favour of the static cover. This guards
+    // against it (or any other heavy 3D dependency) creeping back in.
     const html = read('the-book/index.html')
-    expect(html).not.toMatch(/modulepreload[^>]*three\.module/)
+    expect(html).not.toMatch(/three\.module/)
+    const assets = readdirSync(join(DIST, 'assets'))
+    expect(assets.filter(f => /three/i.test(f))).toEqual([])
   })
 
   it('ships no legacy .woff fallbacks', () => {

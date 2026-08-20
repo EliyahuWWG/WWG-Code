@@ -2,7 +2,7 @@ import Reveal from '../components/Reveal'
 import CTA from '../components/CTA'
 import Arrow from '../components/Arrow'
 import MaskLines from '../components/MaskLines'
-import Book3D from '../components/Book3D'
+import Tilt from '../components/Tilt'
 import Seo from '../components/Seo'
 import { bookSchema, breadcrumbSchema } from '../seo/schema'
 import { endorsements, AMAZON } from '../data'
@@ -30,9 +30,19 @@ export default function TheBook() {
               </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              {/* 3D book. Progressive enhancement over the static cover, which
-                  is still the LCP element and what gets indexed. */}
-              <Book3D />
+              {/* Static cover with the shared hover zoom. A three.js version was
+                  tried and pulled: ~190 KB of chunk, a WebGL context and a
+                  render loop, for something the flat image says just as well. */}
+              <Tilt max={9}>
+                <div className="book-cover">
+                  {/* LCP element on this page, so deliberately NOT lazy. */}
+                  <picture>
+                    <source srcSet="/book-cover.webp" type="image/webp" />
+                    <img src="/book-cover.jpg" width="620" height="930" fetchPriority="high" decoding="async"
+                      alt="Working With God: The Ten Modes of Elevated Leadership, by Dr. Eliyahu Lotzar" />
+                  </picture>
+                </div>
+              </Tilt>
             </div>
           </div>
         </div>

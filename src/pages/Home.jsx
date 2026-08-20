@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
 import Reveal from '../components/Reveal'
-import ParallaxImage from '../components/ParallaxImage'
 import CTA from '../components/CTA'
 import Arrow from '../components/Arrow'
 import MaskLines from '../components/MaskLines'
@@ -46,13 +45,12 @@ export default function Home() {
                 its top, which is what makes the two blocks read as one
                 composition instead of two stacked ones. */}
             <div className="hero-side">
-              {/* The client asked for the Working With God lockup on the right,
-                  so it stays, but subordinated: at display size it competed
-                  with the H1 and made the column too tall to align the way the
-                  reference does. */}
-              <p className="hero-mark">Working With God</p>
-              <p className="hero-sub">The Ten Modes of Elevated Leadership</p>
-              <p className="hero-intro">I’m Dr. Eliyahu Lotzar. I help CEOs, executives, and teams break through the challenges that quietly cap their growth, by bringing God into the decision itself rather than asking Him to bless it afterwards.</p>
+              {/* No brand lockup here: the site is already called Working With
+                  God in the nav, the title and the footer, and repeating it
+                  above this paragraph was a second headline competing with the
+                  H1. Matches the reference hero, which carries only the
+                  introduction and the CTA in this column. */}
+              <p className="hero-intro">I’m Dr. Eliyahu Lotzar. For thirty years I have sat with leaders in the decisions that actually cost them something. I can help you bring God into that room, not just into the prayer before it.</p>
               <div className="hero-cta">
                 <BookCallLink className="btn btn-onink btn-lg">Book a discovery call</BookCallLink>
               </div>
@@ -86,17 +84,23 @@ export default function Home() {
           navy so it reads as a moment rather than an embed in a column. */}
       <section className="section video-feature">
         <div className="container">
-          <Reveal className="video-feature-head">
-            <h2 className="h2">Give me two minutes.</h2>
-            <p className="mt-2">It is the fastest way to work out whether I am the right person for you.</p>
-          </Reveal>
-          <Reveal delay={0.06} className="video-stage mt-3">
-            <VideoFacade />
-            <figcaption className="video-cap">
-              <b>Dr. Eliyahu Lotzar</b>
-              <span>Ed.D., MSW · Author of Working With God</span>
-            </figcaption>
-          </Reveal>
+          {/* Heading, video and caption all share ONE column, so the text
+              starts on the video's left edge rather than the container's.
+              The video is narrower than the container (it is capped by
+              viewport height), which is why they did not line up before. */}
+          <div className="video-inner">
+            <Reveal className="video-feature-head">
+              <h2 className="h2">Give me two minutes.</h2>
+              <p className="mt-2">It is the fastest way to work out whether I am the right person for you.</p>
+            </Reveal>
+            <Reveal delay={0.06} className="video-stage mt-3">
+              <VideoFacade />
+              <figcaption className="video-cap">
+                <b>Dr. Eliyahu Lotzar</b>
+                <span>Ed.D., MSW · Author of Working With God</span>
+              </figcaption>
+            </Reveal>
+          </div>
         </div>
       </section>
 
@@ -104,14 +108,14 @@ export default function Home() {
       <section className="section">
         <div className="container">
           <div className="person-grid">
-            <Reveal><ParallaxImage className="portrait">
+            <Reveal className="portrait">
               <picture>
                 <source srcSet="/eliyahu.webp" type="image/webp" />
                 <img src="/eliyahu.jpg" alt="Dr. Eliyahu Lotzar" width="920" height="1227"
                   loading="lazy" decoding="async" />
               </picture>
               <div className="cap"><b>Dr. Eliyahu Lotzar, Ed.D., MSW</b><span>Executive coach · facilitator · author</span></div>
-            </ParallaxImage></Reveal>
+            </Reveal>
             <Reveal delay={0.05}>
               {/* TODO(client): he is rewriting this line. Superlative removed for now. */}
               <h2 className="h2 maxw-60">I bring a bigger perspective into the room.</h2>
@@ -163,7 +167,7 @@ export default function Home() {
             ))}
           </Reveal>
           <Reveal className="mt-4">
-            <p className="muted maxw-60">There is also my book, <Link to="/the-book" className="tlink">Working With God: The Ten Modes of Elevated Leadership</Link>, and some <Link to="/blog" className="tlink">writing</Link>, if you would rather start on your own.</p>
+            <p className="muted maxw-60">There is also my book, <Link to="/the-book" className="tlink">Working With God: The Ten Modes of Elevated Leadership</Link>, and some <Link to="/blog" className="tlink">writing</Link>, if you would rather start on your own. Still deciding? <a className="tlink" style={{ display: 'inline' }} href="#faq">Read the questions people usually ask</a>.</p>
           </Reveal>
         </div>
       </section>

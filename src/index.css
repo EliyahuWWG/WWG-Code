@@ -177,7 +177,7 @@ em, .serif-it { }
 
 /* ---------- Layout ---------- */
 .container { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad); width: 100%; }
-.section { padding: clamp(64px, 9vw, 132px) 0; }
+.section { padding: clamp(52px, 6vw, 92px) 0; }
 .section-sm { padding: clamp(44px, 6vw, 84px) 0; }
 .rule { height: 1px; background: var(--line); border: 0; }
 .rule-dk { height: 1px; background: var(--line-dk); border: 0; }
@@ -275,7 +275,7 @@ em, .serif-it { }
 .menu-x { font-size: 1.6rem; line-height: 1; min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
 .menu-links { margin-top: auto; margin-bottom: auto; display: flex; flex-direction: column; }
 .menu-links a { font-family: var(--f-disp); font-weight: 300; font-size: clamp(2rem, 9vw, 3rem); padding: 14px 0; border-bottom: 1px solid var(--line-dk); display: flex; justify-content: space-between; align-items: baseline; }
-.menu-links a .n { font-family: var(--f-mono); font-size: .81rem; color: var(--clay-lt); letter-spacing: .1em; }
+.menu-links a .n { font-family: var(--f-mono); font-size: .84rem; color: var(--clay-lt); letter-spacing: .1em; }
 
 /* ---------- Hero ---------- */
 /* Full-viewport hero: the navy field fills the screen on load; the rest of the
@@ -286,7 +286,8 @@ em, .serif-it { }
   color: var(--bone);
   min-height: 100vh; min-height: 100svh;
   display: flex; flex-direction: column; justify-content: center;
-  padding: clamp(128px, 16vh, 188px) 0 clamp(72px, 10vh, 128px);
+  /* Top padding raised so the headline sits lower in the frame. */
+  padding: clamp(180px, 24vh, 280px) 0 clamp(64px, 8vh, 104px);
   position: relative; overflow: hidden; }
 /* soft drifting aurora blobs behind the content */
 .aurora { position: absolute; z-index: 0; pointer-events: none; border-radius: 50%; filter: blur(72px); opacity: .5; }
@@ -321,11 +322,11 @@ em, .serif-it { }
    headline, with the CTA directly beneath it. Aligning the two columns at
    the top made them read as two separate stacked blocks. */
 @media (min-width: 900px){
-  .hero-top { grid-template-columns: 1.4fr .6fr; align-items: end; column-gap: clamp(44px,4.5vw,80px); }
-  .hero-side { padding-bottom: .4em; }
+  .hero-top { grid-template-columns: 1.45fr .55fr; align-items: end; column-gap: clamp(44px,4.5vw,80px); }
+  .hero-side { padding-bottom: 0; }
 }
 @media (max-width: 560px){ .eyebrow { font-size: .88rem; } }
-.hero .display { color: var(--bone); max-width: 21ch; font-weight: 600; font-size: clamp(2.4rem, 5.4vw, 4.6rem); letter-spacing: -.02em; line-height: 1.02; }
+.hero .display { color: var(--bone); max-width: 15ch; font-weight: 600; font-size: clamp(2.6rem, 6.2vw, 5.4rem); letter-spacing: -.025em; line-height: 1.0; }
 .hero .display .hi-it { color: var(--gold-400); }
 /* Brand lockup, now in the right-hand column beneath the headline. */
 .hero-side .hero-mark { font-family: var(--f-disp); font-weight: 600; font-size: clamp(1.15rem,1.5vw,1.4rem); color: var(--bone); letter-spacing: -.01em; line-height: 1.15; }
@@ -340,26 +341,26 @@ em, .serif-it { }
 
 /* The introduction paragraph and its CTA. Deliberately smaller than the
    headline column: this is the supporting voice, not a second headline. */
-.hero-intro { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--line-dk); }
-.hero-cta { margin-top: 26px; }
+.hero-intro { margin-top: 0; }
+.hero-cta { margin-top: 22px; }
 .hero-side .btn { min-width: 0; }
 @media (max-width: 899px){
   .hero-side { padding-top: 4px; }
   .hero-intro { margin-top: 18px; }
   .hero-cta { margin-top: 22px; }
 }
-.hero-meta { display: flex; flex-wrap: wrap; gap: 8px 0; margin-top: clamp(40px,6vw,72px); border-top: 1px solid var(--line-dk); }
-.hero-meta div { flex: 1 1 50%; padding: 18px 0; }
+.hero-meta { display: flex; flex-wrap: wrap; gap: 8px 0; margin-top: clamp(52px,7vw,86px); }
+.hero-meta div { flex: 1 1 50%; padding: 16px 0; }
 @media (min-width: 720px){ .hero-meta div { flex: 1 1 25%; border-left: 1px solid var(--line-dk); padding-left: 20px; } .hero-meta div:first-child { border-left: 0; padding-left: 0; } }
-.hero-meta .k { font-family: var(--f-label); font-size: .78rem; font-weight: 600; letter-spacing: .04em; color: var(--gold-400); }
-.hero-meta .v { font-family: var(--f-disp); font-size: 1.12rem; margin-top: 6px; color: var(--bone); }
+.hero-meta .k { font-family: var(--f-label); font-size: .84rem; font-weight: 600; letter-spacing: .04em; color: var(--gold-400); line-height: 1.2; }
+.hero-meta .v { font-family: var(--f-disp); font-size: 1.12rem; margin-top: 8px; line-height: 1.25; color: var(--bone); }
 
 /* ---------- Marquee / trust ---------- */
 .trust { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 26px 0; overflow: hidden; }
 /* marquee edge fades - org names dissolve at the container edges */
 .mq { -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
-.trust .lbl { font-family: var(--f-mono); font-size: .81rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+.trust .lbl { font-family: var(--f-mono); font-size: .84rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
 .trust-row { display: flex; flex-wrap: wrap; gap: 6px 28px; }
 .trust-row span { font-family: var(--f-disp); font-weight: 400; font-size: clamp(1rem,1.5vw,1.25rem); color: var(--ink); opacity: .8; }
 .trust-row span::before { content: "·"; color: var(--clay); margin-right: 12px; opacity: .6; }
@@ -369,12 +370,12 @@ em, .serif-it { }
    body text below it (not squeezed into a third column). Reads as clear blocks
    for a 40+ audience, keeping the numbered-row structure. */
 .ilist { border-top: 1px solid var(--line); }
-.irow { display: grid; grid-template-columns: 1fr; gap: 10px; padding: clamp(30px,3.4vw,48px) 0; border-bottom: 1px solid var(--line); align-items: start; }
+.irow { display: grid; grid-template-columns: 1fr; gap: 8px; padding: clamp(22px,2.2vw,30px) 0; border-bottom: 1px solid var(--line); align-items: start; }
 @media (min-width: 780px){ .irow { grid-template-columns: 58px 1fr; gap: 8px 32px; } }
 /* SUB numbering — mono numerals (distinct font from the serif head number) */
-.irow .n { font-family: var(--f-mono); font-weight: 500; font-size: 1rem; letter-spacing: .06em; color: var(--gold-600); line-height: 1; grid-row: span 2; padding-top: .5em; }
-.irow h3 { font-family: var(--f-disp); font-weight: 600; font-size: clamp(1.45rem,2.2vw,1.95rem); color: var(--forest); }
-.irow p { color: var(--muted); font-size: 1.12rem; line-height: 1.62; max-width: 62ch; }
+.irow .n { font-family: var(--f-mono); font-weight: 600; font-size: 1rem; letter-spacing: .06em; color: var(--gold-600); line-height: 1; grid-row: span 2; padding-top: .5em; }
+.irow h3 { font-family: var(--f-disp); font-weight: 600; font-size: clamp(1.28rem,1.8vw,1.6rem); color: var(--forest); line-height: 1.2; }
+.irow p { color: var(--muted); font-size: 1.05rem; line-height: 1.55; max-width: 62ch; }
 @media (min-width: 780px){ .irow p { grid-column: 2; } }
 .irow p b { color: var(--ink); font-weight: 600; }
 
@@ -392,15 +393,15 @@ em, .serif-it { }
 .portrait img { width: 100%; height: 100%; object-fit: cover; }
 .portrait .ph { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; color: rgba(243,238,226,.9); }
 .portrait .ph .mono { font-family: var(--f-disp); font-weight: 300; font-size: 5rem; color: var(--bone); line-height: 1; }
-.portrait .ph small { display: block; font-family: var(--f-mono); font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(243,238,226,.7); margin-top: 14px; }
+.portrait .ph small { display: block; font-family: var(--f-mono); font-size: .84rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(243,238,226,.7); margin-top: 14px; }
 .portrait .cap { position: absolute; left: 0; bottom: 0; right: 0; padding: 18px 20px; background: linear-gradient(0deg, rgba(2,6,31,.92), transparent); color: var(--bone); }
 .portrait .cap b { font-family: var(--f-disp); font-weight: 500; display: block; font-size: 1.05rem; }
-.portrait .cap span { font-family: var(--f-mono); font-size: .8rem; letter-spacing: .06em; color: rgba(243,238,226,.7); }
+.portrait .cap span { font-family: var(--f-mono); font-size: .86rem; letter-spacing: .06em; color: rgba(243,238,226,.7); }
 
 /* ---------- Testimonials ---------- */
 .pullquote { border-top: 1px solid var(--line); padding-top: clamp(28px,4vw,44px); }
 .pullquote blockquote { font-family: var(--f-disp); font-weight: 300; font-size: clamp(1.7rem,3.4vw,2.8rem); line-height: 1.16; letter-spacing: -.02em; max-width: 20ch; }
-.pullquote .attr { margin-top: 28px; font-family: var(--f-mono); font-size: .83rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.pullquote .attr { margin-top: 28px; font-family: var(--f-mono); font-size: .84rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
 .pullquote .attr b { color: var(--ink); font-weight: 500; }
 
 .qgrid { display: grid; grid-template-columns: 1fr; border-top: 1px solid var(--line); }
@@ -412,7 +413,7 @@ em, .serif-it { }
 .q blockquote::before { content: "“"; font-family: var(--f-disp); color: var(--clay); font-size: 1.4rem; margin-right: 2px; }
 .q .attr { margin-top: 20px; }
 .q .attr b { font-family: var(--f-disp); font-weight: 500; font-size: 1rem; display: block; }
-.q .attr span { font-family: var(--f-mono); font-size: .8rem; letter-spacing: .04em; color: var(--muted); text-transform: uppercase; }
+.q .attr span { font-family: var(--f-mono); font-size: .84rem; letter-spacing: .04em; color: var(--muted); text-transform: uppercase; }
 @media (min-width: 720px){ .qgrid.c2 .q:nth-child(2n){ border-right: 0; padding-left: clamp(28px,2.6vw,44px); } }
 @media (min-width: 1040px){ .qgrid.c3 .q:nth-child(3n){ border-right: 0; } .qgrid.c3 .q { padding-left: clamp(24px,2vw,30px); } .qgrid.c3 .q:first-child{padding-left:0;} }
 
@@ -424,10 +425,10 @@ em, .serif-it { }
 
 /* Placeholder book cover: navy field with a gold "GOD", echoing the real cover. */
 .book { aspect-ratio: 311/466; background: linear-gradient(165deg, var(--navy-800), var(--navy-950)); color: var(--bone); padding: 30px; display: flex; flex-direction: column; justify-content: space-between; max-width: 320px; border: 1px solid var(--line-dk); }
-.book .k { font-family: var(--f-mono); font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(247,244,236,.72); }
+.book .k { font-family: var(--f-mono); font-size: .84rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(247,244,236,.72); }
 .book .t { font-family: var(--f-disp); font-weight: 400; font-size: clamp(1.8rem,3vw,2.4rem); line-height: 1; }
 .book .t b { color: var(--gold-400); font-weight: 500; }
-.book .sub { font-family: var(--f-mono); font-size: .79rem; letter-spacing: .06em; color: rgba(247,244,236,.68); margin-top: 8px; }
+.book .sub { font-family: var(--f-mono); font-size: .84rem; letter-spacing: .06em; color: rgba(247,244,236,.68); margin-top: 8px; }
 
 /* ---------- CTA block ---------- */
 .cta { background: var(--forest); color: var(--bone); }
@@ -451,7 +452,6 @@ em, .serif-it { }
 .phero .lead { color: rgba(247,244,236,.8); max-width: 58ch; margin-top: 24px; }
 
 /* ---------- Calendly wrap ---------- */
-.cal-wrap { border: 1px solid var(--line); background: var(--paper); }
 .cal-fallback { min-height: 640px; display: grid; place-items: center; text-align: center; padding: 40px; }
 
 /* ---------- Footer ---------- */
@@ -464,7 +464,7 @@ em, .serif-it { }
 .footer .fdesc { color: rgba(243,238,226,.55); max-width: 34ch; margin-top: 18px; font-size: .95rem; }
 .footer a.fl { display: block; padding: 6px 0; color: rgba(243,238,226,.8); transition: color .25s; }
 .footer a.fl:hover { color: var(--clay); }
-.footer .fbot { border-top: 1px solid var(--line-dk); margin-top: 48px; padding-top: 24px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; font-family: var(--f-mono); font-size: .8rem; letter-spacing: .06em; color: rgba(243,238,226,.6); text-transform: uppercase; }
+.footer .fbot { border-top: 1px solid var(--line-dk); margin-top: 48px; padding-top: 24px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; font-family: var(--f-mono); font-size: .84rem; letter-spacing: .06em; color: rgba(243,238,226,.6); text-transform: uppercase; }
 
 /* ---------- Reveal ---------- */
 /* Hidden state gated on html.js so prerendered HTML is visible without JS. */
@@ -542,7 +542,7 @@ html.js .reveal-group.draw.in::after { transform: scaleX(1); }
 .tcar-card blockquote::before { content: "\201C"; font-family: var(--f-disp); color: var(--gold-600); font-size: 1.5rem; line-height: 0; margin-right: 3px; }
 .tcar-attr { margin-top: auto; padding-top: 20px; }
 .tcar-attr b { font-family: var(--f-disp); font-weight: 600; font-size: 1.05rem; color: var(--navy-900); display: block; }
-.tcar-attr span { font-family: var(--f-mono); font-size: .79rem; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); display: block; margin-top: 5px; }
+.tcar-attr span { font-family: var(--f-mono); font-size: .84rem; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); display: block; margin-top: 5px; }
 @keyframes tcar-scroll { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce){
   .tcar { -webkit-mask-image: none; mask-image: none; }
@@ -567,7 +567,7 @@ html.js .reveal-group.draw.in::after { transform: scaleX(1); }
 /* ---------- Micro-proof (under booking CTA) ---------- */
 .microproof { border-left: 2px solid var(--clay); padding: 4px 0 4px 18px; }
 .microproof blockquote { font-family: var(--f-disp); font-weight: 300; font-size: 1.12rem; line-height: 1.35; letter-spacing: -.01em; }
-.microproof figcaption { font-family: var(--f-mono); font-size: .8rem; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin-top: 10px; }
+.microproof figcaption { font-family: var(--f-mono); font-size: .84rem; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin-top: 10px; }
 .microproof figcaption b { color: var(--ink); font-weight: 500; }
 
 /* org marquee - duplicated track, slow loop, pauses on hover */
@@ -595,7 +595,7 @@ html.js .reveal-group.draw.in::after { transform: scaleX(1); }
 .faq-h { margin: 0; font-size: inherit; }
 .faq-q { display: grid; grid-template-columns: 48px 1fr auto; align-items: baseline; gap: 16px; width: 100%;
   text-align: left; padding: clamp(20px, 2.6vw, 28px) 0; }
-.faq-q .n { font-family: var(--f-mono); font-size: .8rem; color: var(--clay-ink); }
+.faq-q .n { font-family: var(--f-mono); font-size: .84rem; color: var(--clay-ink); }
 .faq-q .qt { font-family: var(--f-disp); font-weight: 500; font-size: clamp(1.15rem, 1.9vw, 1.5rem); letter-spacing: -.01em; transition: color .25s var(--ease); }
 .faq-q:hover .qt { color: var(--clay-ink); }
 .faq-x { position: relative; width: 14px; height: 14px; align-self: center; }
@@ -660,7 +660,7 @@ html.js .reveal-group.draw.in::after { transform: scaleX(1); }
 .eyebrow { font-family: var(--f-label); font-size: .95rem; font-weight: 600; letter-spacing: .01em; color: var(--gold-600); }
 /* on navy blocks the eyebrow uses the lighter gold for AA contrast */
 .hero .eyebrow, .phero .eyebrow, .cta .eyebrow, .on-ink .eyebrow { color: var(--gold-400); }
-.pill { display: inline-block; font-family: var(--f-mono); font-size: .78rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
+.pill { display: inline-block; font-family: var(--f-mono); font-size: .84rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
   color: var(--gold-600); border: 1px solid var(--gold-500); border-radius: 999px; padding: 3px 10px; vertical-align: middle; }
 .on-ink .pill, .cta .pill, .hero .pill { color: var(--gold-400); border-color: var(--gold-400); }
 
@@ -676,30 +676,62 @@ html.js .reveal-group.draw.in::after { transform: scaleX(1); }
    hero. Navy ground so it separates from the bone/paper sections, and a
    stage wider than the reading column so it reads as a moment.
    ------------------------------------------------------------------ */
-.video-feature { background: linear-gradient(180deg, #02061f 0%, #050d6e 78%, #050d6e 100%); color: var(--bone); }
-.video-feature .h2 { color: var(--bone); max-width: 18ch; }
-.video-feature .video-feature-head p { color: rgba(247,244,236,.78); font-size: clamp(1.05rem,1.4vw,1.2rem); max-width: 48ch; }
+/* Full-bleed: the navy owns the entire viewport while you are on it, the same
+   way .hero and .phero do. Without a min-height the section was only as tall as
+   its content, so the bone section above it stayed on screen and the navy read
+   as an inset band rather than a moment. Content is centred vertically so the
+   spare height is split above and below instead of pooling at the bottom. */
+.video-feature { background: linear-gradient(180deg, #02061f 0%, #050d6e 78%, #050d6e 100%); color: var(--bone);
+  min-height: 100vh; min-height: 100svh;
+  display: flex; flex-direction: column; justify-content: center;
+  /* Overlap the bone section above by a pixel. At fractional scroll offsets the
+     browser rounds the two section edges independently, which leaves a hairline
+     of cream on a near-black band. The overlap removes the seam; the padding
+     gives the pixel back so nothing shifts. */
+  margin-top: -1px;
+  padding-top: calc(clamp(72px,9vh,110px) + 1px); padding-bottom: clamp(48px,6vh,72px);
+  /* Anchored scrolls must clear the fixed nav. */
+  scroll-margin-top: 0; }
+.video-feature > .container { width: 100%; }
+.video-feature .h2 { color: var(--bone); max-width: 22ch; font-size: clamp(1.55rem,2.6vw,2.1rem); }
+.video-feature .video-feature-head p { color: rgba(247,244,236,.78); font-size: clamp(1rem,1.2vw,1.1rem); max-width: 52ch; margin-top: 12px; }
 
 /* Wider than the text column, and it keeps its own breathing room. */
-/* Same measure as the rest of the page. It was 1120px, wider than the
-   content column, which is why it did not sit right. */
-.video-stage { max-width: none; }
+/* The stage is capped by HEIGHT, not width. At the full column width a 16:9
+   frame is ~640px tall, which fills a laptop viewport by itself and pushes the
+   heading up under the nav. Deriving the width from the height budget keeps
+   the heading, copy, video and caption on one screen. */
+/* One column for the whole feature. Its width is the video's width, so the
+   heading starts on the video's left edge instead of the container's. */
+.video-inner { max-width: min(100%, calc(52svh * 16 / 9)); margin-inline: auto; }
+.video-stage { margin-inline: auto; }
+/* Drive the VIDEO's height directly rather than inferring a width budget.
+   Deriving width from `100vh` was tuned to one window size and still overflowed
+   on shorter ones; setting height with aspect-ratio makes the frame's size a
+   guarantee instead of an estimate. svh accounts for mobile browser chrome. */
+.video-feature .video {
+  height: min(52svh, 520px);
+  width: auto;
+  max-width: 100%;
+  margin-inline: auto;
+  aspect-ratio: 16 / 9;
+}
 .video-feature .video {
   border-radius: 18px;
   box-shadow: 0 30px 90px -30px rgba(0,0,0,.75), 0 0 0 1px rgba(220,187,85,.22);
 }
 /* Bigger target and a warmer play affordance than the in-column version. */
 .video-feature .video-play { width: 84px; height: 84px; }
-.video-feature .video-facade::after { background: rgba(2,6,31,.24); }
-.video-feature .video-facade:hover::after { background: rgba(2,6,31,.08); }
+.video-feature .video-facade::after { background: rgba(2,6,31,.30); }
+.video-feature .video-facade:hover::after { background: rgba(2,6,31,.16); }
 .video-feature .video-facade:hover .video-play { transform: scale(1.08); }
 
-.video-feature .video-cap { margin-top: 20px; }
-.video-feature .video-cap b { color: var(--bone); font-size: 1.45rem; }
+.video-feature .video-cap { margin-top: 14px; }
+.video-feature .video-cap b { color: var(--bone); font-size: 1.2rem; }
 .video-feature .video-cap span { color: rgba(247,244,236,.72); }
 
 @media (max-width: 719px) {
-  .video-stage { margin-top: 32px; }
+  .video-stage { margin-top: 22px; }
   .video-feature .video { border-radius: 12px; box-shadow: 0 18px 50px -22px rgba(0,0,0,.7), 0 0 0 1px rgba(220,187,85,.18); }
   .video-feature .video-play { width: 68px; height: 68px; }
   .video-feature .video-cap { flex-direction: column; gap: 4px; }
@@ -714,9 +746,67 @@ html.js .reveal-group.draw.in::after { transform: scaleX(1); }
 .video-facade { display: grid; place-items: center; background-size: cover; background-position: center; cursor: pointer; padding: 0; }
 .video-facade::after { content: ""; position: absolute; inset: 0; background: rgba(2,6,31,.32); transition: background .3s var(--ease); }
 .video-facade:hover::after { background: rgba(2,6,31,.14); }
-.video-play { position: relative; z-index: 1; display: grid; place-items: center; width: 74px; height: 74px; border-radius: 50%;
-  background: var(--paper); color: var(--navy-900); padding-left: 4px; transition: transform .3s var(--ease); }
+/* Play button: frosted glass rather than a flat white disc.
+   The three inset shadows are what sell it as a physical lens: a bright top
+   edge where light catches, a darker bottom edge, and a faint inner ring.
+   A solid fallback is kept for browsers without backdrop-filter, where a
+   translucent white disc over a photo would be unreadable. */
+.video-play {
+  position: relative; z-index: 1; display: grid; place-items: center;
+  width: 74px; height: 74px; border-radius: 50%;
+  padding-left: 4px;
+  color: var(--bone);
+  background: rgba(247, 244, 236, .82);
+  transition: transform .4s var(--ease), background .4s var(--ease), box-shadow .4s var(--ease);
+}
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .video-play {
+    background: rgba(247, 244, 236, .14);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(247, 244, 236, .34);
+    box-shadow:
+      0 10px 34px -10px rgba(0, 0, 0, .6),
+      inset 0 1px 0 rgba(255, 255, 255, .5),
+      inset 0 -1px 0 rgba(0, 0, 0, .18),
+      inset 0 0 22px rgba(255, 255, 255, .1);
+  }
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .video-play { color: var(--navy-900); }
+}
+
+/* A ring that sits just outside the glass and opens up on hover, so the
+   affordance reads before the cursor arrives. */
+.video-play::before {
+  content: "";
+  position: absolute; inset: -10px;
+  border-radius: 50%;
+  border: 1px solid rgba(247, 244, 236, .22);
+  opacity: 0;
+  transform: scale(.9);
+  transition: opacity .45s var(--ease), transform .45s var(--ease);
+  pointer-events: none;
+}
 .video-facade:hover .video-play { transform: scale(1.06); }
+.video-facade:hover .video-play::before { opacity: 1; transform: scale(1); }
+
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .video-facade:hover .video-play {
+    background: rgba(247, 244, 236, .24);
+    box-shadow:
+      0 14px 42px -10px rgba(0, 0, 0, .66),
+      inset 0 1px 0 rgba(255, 255, 255, .62),
+      inset 0 -1px 0 rgba(0, 0, 0, .18),
+      inset 0 0 26px rgba(255, 255, 255, .16);
+  }
+}
+.video-facade:focus-visible .video-play::before { opacity: 1; transform: scale(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .video-play, .video-play::before { transition: none; }
+  .video-facade:hover .video-play { transform: none; }
+}
 
 /* ---------- Forms ---------- */
 .form { display: grid; gap: 22px; max-width: 560px; }
@@ -733,7 +823,7 @@ html.js .reveal-group.draw.in::after { transform: scaleX(1); }
 .field input:focus, .field textarea:focus { outline: none; border-bottom-color: var(--gold-500); border-bottom-width: 2px; padding-bottom: 8px; }
 .field textarea { resize: vertical; min-height: 120px; }
 .field input[aria-invalid="true"], .field textarea[aria-invalid="true"] { border-bottom-color: #b3402f; }
-.field .err { font-size: .82rem; color: #b3402f; }
+.field .err { font-size: .84rem; color: #b3402f; }
 .field-check { display: flex; gap: 12px; align-items: flex-start; font-size: .95rem; color: var(--muted); cursor: pointer; }
 .field-check input { width: 18px; height: 18px; margin-top: 3px; accent-color: var(--navy-900); flex: none; }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
@@ -756,7 +846,7 @@ html.js .reveal-group.draw.in::after { transform: scaleX(1); }
   background-size: 12px; background-repeat: no-repeat; background-position: center; }
 .on-ink .ticks li, .phero .ticks li { color: var(--bone); }
 @media (min-width: 720px){ .ticks-2 { grid-template-columns: 1fr 1fr; gap: 16px 40px; } }
-.phero-note { font-family: var(--f-mono); font-size: .83rem; letter-spacing: .06em; text-transform: uppercase; color: rgba(247,244,236,.7); align-self: center; }
+.phero-note { font-family: var(--f-label); font-size: .9rem; letter-spacing: .01em; color: rgba(247,244,236,.7); align-self: center; }
 .form-done { border: 1px solid var(--line); border-left: 3px solid var(--gold-500); padding: clamp(24px,3vw,36px); background: var(--paper); }
 .form-done h3 { color: var(--navy-900); font-size: clamp(1.4rem,2.2vw,1.9rem); }
 .form-done p { color: var(--muted); margin-top: 10px; max-width: 52ch; }
@@ -806,32 +896,10 @@ html.js .reveal-group.draw.in::after { transform: scaleX(1); }
 .prose code { font-size: .92em; background: var(--bone); padding: .12em .35em; border-radius: 4px; }
 @media (max-width: 719px) { .prose { font-size: 1.06rem; line-height: 1.68; } }
 
-/* ------------------------------------------------------------------
-   3D BOOK — the canvas mounts into the same box the static cover
-   occupied, so there is no layout shift when it takes over.
-   ------------------------------------------------------------------ */
-.book3d { position: relative; width: 100%; max-width: 380px; aspect-ratio: 2/3; margin-inline: auto; }
-.book3d picture, .book3d img { display: block; width: 100%; height: 100%; }
-.book3d img {
-  object-fit: contain;
-  border-radius: 4px;
-  box-shadow: 0 34px 70px -28px rgba(0,0,0,.7), 0 2px 10px -4px rgba(0,0,0,.4);
-  transition: opacity .5s var(--ease);
-}
-.book3d canvas { position: absolute; inset: 0; }
-/* Once the canvas is live the flat image fades out beneath it. */
-.book3d.is-live img { opacity: 0; }
-/* Drop shadow under the 3D book, since a canvas cannot cast one. */
-.book3d.is-live::after {
-  content: ""; position: absolute; left: 12%; right: 12%; bottom: 4%; height: 8%;
-  background: radial-gradient(ellipse at center, rgba(0,0,0,.55), rgba(0,0,0,0) 70%);
-  filter: blur(10px); z-index: -1; pointer-events: none;
-}
-@media (max-width: 767px) { .book3d { max-width: 300px; } }
 
 /* Footer column labels. These were <h4> under an <h2>, which is a heading-level
    jump; they are <h2 class="fh"> now and keep the identical look. */
-.footer .fh { font-family: var(--f-label); font-weight: 500; font-size: .81rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(243,238,226,.65); margin-bottom: 18px; }
+.footer .fh { font-family: var(--f-label); font-weight: 600; font-size: .86rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(243,238,226,.65); margin-bottom: 18px; }
 
 /* Visually hidden, still read by screen readers and parsed by crawlers.
    Used for headings that would be redundant on screen but keep the document
@@ -890,13 +958,20 @@ html.js .reveal-group.draw.in::after { transform: scaleX(1); }
   /* The frame clips; the image scales inside it. */
   .portrait, .video, .book-cover, .tcard-img { overflow: hidden; }
   .portrait img,
-  .video-facade,
-  .book-cover img {
+  .video-facade {
     transition: transform .7s var(--ease);
     will-change: auto;
   }
-  .portrait:hover img,
-  .book-cover:hover img { transform: scale(1.035); }
+  .portrait:hover img { transform: scale(1.035); }
+  /* The book cover does NOT zoom. Scaling a cover crops its own edges, which
+     reads as the artwork moving rather than the object responding. It lifts
+     instead: the shadow deepens and the whole cover rises a few pixels. */
+  .book-cover { transition: transform .5s var(--ease), box-shadow .5s var(--ease); }
+  .book-cover:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 46px 70px -22px rgba(2,6,31,.68), 0 16px 28px -14px rgba(2,6,31,.5);
+  }
+  .book-cover:hover img { transform: none; }
   .video-facade:hover { transform: scale(1.02); }
 
   /* The video already dims its overlay on hover; keep the play button as the
@@ -919,23 +994,119 @@ html.js .reveal-group.draw.in::after { transform: scaleX(1); }
 
 /* Nothing above survives a reduced-motion preference. */
 @media (prefers-reduced-motion: reduce) {
-  .irow, .irow::before, .portrait img, .video-facade, .book-cover img, .btn,
+  .irow, .irow::before, .portrait img, .video-facade, .book-cover, .book-cover img, .btn,
   .video-play, .tlink, .go, .fl, .nav-links a { transition: none !important; }
   .irow:hover { transform: none; }
-  .portrait:hover img, .book-cover:hover img, .video-facade:hover { transform: none; }
+  .portrait:hover img, .book-cover:hover, .book-cover:hover img, .video-facade:hover { transform: none; }
   .btn:hover { transform: none; }
 }
 
+
+/* ==================================================================
+   BLOG READING LAYOUT
+   The marketing pages use a full-viewport .phero. An article should not
+   spend a whole screen before its first sentence, and long-form reads
+   better on a light ground than on the navy. This is deliberately a
+   different surface from the rest of the site.
+   ================================================================== */
+.post-head {
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+  padding: clamp(96px,13vh,140px) 0 clamp(30px,4vh,44px);
+}
+.post-head-index { padding-bottom: clamp(40px,5vh,60px); }
+
+/* Header and body share ONE centred measure, so the title sits directly over
+   the text it belongs to instead of drifting left of a narrow column. */
+.post-head .container > *,
+.post-body .container > * { max-width: 68ch; margin-inline: auto; }
+
+.post-head .crumbs ol { color: var(--muted); font-size: .88rem; }
+.post-head .crumbs a { color: var(--gold-600); }
+.post-head .crumbs a:hover { color: var(--navy-900); }
+.post-head .crumbs li + li::before { color: var(--line); }
+.post-head .crumbs [aria-current="page"] { color: var(--muted); }
+
+.post-head .h1 {
+  color: var(--forest);
+  max-width: 22ch;
+  font-size: clamp(2rem, 4vw, 3.1rem);
+  line-height: 1.12;
+  letter-spacing: -.02em;
+  margin-top: 20px;
+}
+.post-head .eyebrow { color: var(--gold-600); }
+.post-head .lead { color: var(--muted); margin-top: 18px; max-width: 58ch; }
+.postmeta-hero { color: var(--muted); margin-top: 20px; font-size: .95rem; }
+.postmeta-hero a { color: var(--navy-900); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--gold-500); }
+
+.post-body { background: var(--paper); padding: clamp(40px,6vh,64px) 0 clamp(56px,8vh,88px); }
+
+/* The reading column itself. 68ch is the comfortable measure; the size and
+   leading are set for sustained reading rather than for scanning. */
+.prose { margin-inline: auto; }
+.prose > p:first-child { font-size: 1.14em; color: var(--forest); }
+
+.post-foot { max-width: 68ch; margin: clamp(40px,5vh,56px) auto 0; padding-top: 28px; border-top: 1px solid var(--line); }
+.post-byline { margin-top: 20px; color: var(--muted); font-size: .98rem; line-height: 1.6; }
+.post-byline a { color: var(--navy-900); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--gold-500); }
+.post-byline a:hover { color: var(--gold-600); }
+
+/* Mobile reading. Slightly smaller measure and tighter heads, but the leading
+   stays generous: cramped line spacing is what makes long reads tiring on a
+   phone. */
+@media (max-width: 719px) {
+  .post-head { padding: clamp(84px,12vh,110px) 0 26px; }
+  .post-head .h1 { font-size: clamp(1.75rem,7vw,2.15rem); line-height: 1.16; margin-top: 16px; }
+  .postmeta-hero { margin-top: 14px; font-size: .9rem; }
+  .post-body { padding: 30px 0 48px; }
+  .prose { font-size: 1.08rem; line-height: 1.7; }
+  .prose h2 { font-size: 1.4rem; margin-top: 1.9em; }
+  .prose h3 { font-size: 1.18rem; }
+  .prose > * + * { margin-top: 1.05em; }
+}
+
+/* ---------- Book a call ---------- */
+.cal-wrap { display: grid; gap: clamp(28px,4vw,56px); grid-template-columns: 1fr; align-items: start; }
+@media (min-width: 940px){ .cal-wrap { grid-template-columns: 1.35fr .65fr; } }
+.cal-rail h2 { font-family: var(--f-disp); font-weight: 600; font-size: clamp(1.25rem,1.8vw,1.5rem); color: var(--forest); }
+.cal-proof blockquote { border-left: 2px solid var(--gold-500); padding-left: 1.05em; margin-top: 22px;
+  font-family: var(--f-disp); font-size: 1.05rem; line-height: 1.5; color: var(--ink); }
+.cal-proof cite { display: block; margin-top: 10px; font-family: var(--f-text); font-style: normal;
+  font-size: .9rem; color: var(--muted); }
+.cal-proof cite b { color: var(--forest); font-weight: 600; }
+
+/* Speaking formats: simple two-up cards, no borders, just rhythm. */
+.fmt { border-top: 1px solid var(--line); padding-top: 20px; }
+.fmt .h3 { font-family: var(--f-disp); font-weight: 600; font-size: clamp(1.15rem,1.6vw,1.35rem); color: var(--forest); }
+/* Recent rooms: date in the numeral column, so it scans as a list of dates. */
+.evrow .n { font-family: var(--f-label); font-size: .9rem; letter-spacing: 0; white-space: nowrap; }
+@media (min-width: 780px){ .evrow { grid-template-columns: 130px 1fr; } .evrow p { grid-column: 2; } }
+
 /* ------------------------------------------------------------------
-   PARALLAX FRAME
-   The frame clips and holds its aspect ratio; the image is scaled up
-   and translated inside it on scroll. Only applied once JS confirms a
-   fine pointer and no reduced-motion preference, so the static case is
-   unchanged and there is no layout shift either way.
+   QUOTE CARD HOVER
+   The same restraint as the list rows: a warm wash, a gold rule that
+   draws in from the top, and a small lift. Nothing scales, because
+   scaling a block of someone's testimonial always looks cheap.
    ------------------------------------------------------------------ */
-/* Hover parallax. The image is scaled slightly at rest so there is material
-   to move without ever exposing an edge at the extremes of travel; the frame
-   already clips. */
-.is-parallax { transform: translateZ(0); }
-.is-parallax img { will-change: transform; transform: scale(1.06); }
-@media (prefers-reduced-motion: reduce) { .is-parallax img { transform: none !important; will-change: auto; } }
+@media (hover: hover) and (pointer: fine) {
+  .q {
+    position: relative;
+    transition: transform .45s var(--ease), background .45s var(--ease);
+  }
+  .q::before {
+    content: "";
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 2px; background: var(--gold-500);
+    transform: scaleY(0); transform-origin: 50% 0;
+    transition: transform .5s var(--ease);
+  }
+  .q:hover { background: rgba(201,162,39,.05); transform: translateY(-3px); }
+  .q:hover::before { transform: scaleY(1); }
+  .q blockquote, .q .attr b { transition: color .35s var(--ease); }
+  .q:hover .attr b { color: var(--navy-900); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .q, .q::before { transition: none; }
+  .q:hover { transform: none; }
+}
