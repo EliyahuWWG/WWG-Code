@@ -301,37 +301,49 @@ em, .serif-it { }
    bright parts of a face loses contrast fast, so a navy wash sits between the
    footage and the content and is heaviest exactly where the copy sits.
    ------------------------------------------------------------------ */
-.hero-backdrop { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.hero-backdrop { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none;
+  /* One knob for the whole effect. Everything below reads from it, so tuning
+     the strength of the backdrop is a single-number change. */
+  --bd-o: .22; }
 .hero-backdrop-still,
 .hero-backdrop-video {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
   object-fit: cover;
-  opacity: .11;
   /* Desaturated and slightly lifted in black so the footage sits INSIDE the
      navy rather than punching a grey hole in it. */
   filter: saturate(.55) contrast(1.06) brightness(1.02);
+  transition: opacity 1.2s var(--ease);
 }
-/* The video covers the still once it can actually play. */
-.hero-backdrop-video { opacity: 0; transition: opacity 1.2s var(--ease); }
-.hero-backdrop-video[data-playing="true"] { opacity: .11; }
+/* CROSS-FADE, not stack. Both layers used to sit at the same opacity at the
+   same time, so the poster frame showed THROUGH the moving footage as a ghost
+   and the two together read as roughly double the intended strength. The still
+   is a placeholder for the video, not a layer under it: exactly one of them is
+   ever visible. */
+.hero-backdrop-still { opacity: var(--bd-o); }
+.hero-backdrop-video { opacity: 0; }
+.hero-backdrop[data-video="on"] .hero-backdrop-still { opacity: 0; }
+.hero-backdrop[data-video="on"] .hero-backdrop-video { opacity: var(--bd-o); }
+
 /* Scrim: densest at the left and bottom, where the H1 and the credential row
-   sit, and it never fully clears so the top edge does not flash bright. */
+   sit, and it never fully clears so the top edge does not flash bright.
+   Lightened alongside the opacity bump so the footage reads at the new
+   strength instead of being eaten by the wash. */
 .hero-backdrop::after {
   content: ""; position: absolute; inset: 0;
   background:
-    linear-gradient(100deg, rgba(2,6,31,.92) 0%, rgba(2,6,31,.55) 45%, rgba(2,6,31,.35) 100%),
-    linear-gradient(180deg, rgba(2,6,31,.55) 0%, rgba(2,6,31,.15) 35%, rgba(4,10,82,.72) 100%);
+    linear-gradient(100deg, rgba(2,6,31,.88) 0%, rgba(2,6,31,.46) 45%, rgba(2,6,31,.24) 100%),
+    linear-gradient(180deg, rgba(2,6,31,.46) 0%, rgba(2,6,31,.08) 35%, rgba(4,10,82,.66) 100%);
 }
 @media (max-width: 719px) {
   /* Small screens: the copy occupies nearly the whole frame, so the backdrop
-     goes quieter still and the scrim goes flat instead of directional. */
-  .hero-backdrop-still, .hero-backdrop-video[data-playing="true"] { opacity: .08; }
-  .hero-backdrop::after { background: linear-gradient(180deg, rgba(2,6,31,.78), rgba(4,10,82,.85)); }
+     goes quieter and the scrim goes flat instead of directional. */
+  .hero-backdrop { --bd-o: .14; }
+  .hero-backdrop::after { background: linear-gradient(180deg, rgba(2,6,31,.74), rgba(4,10,82,.82)); }
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-backdrop-video { display: none; }
-  .hero-backdrop-video { transition: none; }
+  .hero-backdrop-still, .hero-backdrop-video { transition: none; }
 }
 
 /* soft drifting aurora blobs behind the content */

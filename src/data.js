@@ -37,7 +37,11 @@ const CLD = 'https://res.cloudinary.com/dkzhqy2od/video/upload'
 // Order matters - transformations go BEFORE the version, never after.
 const HERO_VER = 'v1787255667'
 const HERO_CLIP = '0821_eruokl'
-const HERO_TX = 'so_3,du_12,w_1280,c_scale,fps_24,ac_none,q_auto:eco'
+// w_1920 not w_1280: the backdrop is object-fit:cover on a full-viewport hero,
+// so on a 1920-wide display a 1280 source is upscaled 1.5x and reads as blur.
+// q_auto:good not :eco for the same reason - at 22% opacity the compression
+// artefacts of :eco are visible, which they were not at 11%.
+const HERO_TX = 'so_3,du_12,w_1920,c_scale,fps_24,ac_none,q_auto:good'
 
 export const HERO_BG_VIDEO = {
   webm: `${CLD}/${HERO_TX}/${HERO_VER}/${HERO_CLIP}.webm`,
@@ -45,7 +49,7 @@ export const HERO_BG_VIDEO = {
   // Poster frame pulled from the same clip, so the fallback still and the
   // video are the same footage rather than a YouTube thumbnail of a different
   // moment.
-  poster: `${CLD}/so_3,w_1280,c_scale,q_auto/${HERO_VER}/${HERO_CLIP}.jpg`,
+  poster: `${CLD}/so_3,w_1920,c_scale,q_auto:good/${HERO_VER}/${HERO_CLIP}.jpg`,
 }
 export const ASIN     = "1961202298";
 
