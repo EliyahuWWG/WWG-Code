@@ -45,11 +45,12 @@ export function warmCalendly() {
   return loading
 }
 
-// Conversion event, every booking CTA funnels through here (Plausible).
+// Conversion event, every booking CTA funnels through here (Google Analytics 4).
 export function trackBookCall(source) {
-  if (typeof window === 'undefined' || typeof window.plausible !== 'function') return
-  window.plausible('book_call_click', {
-    props: { source: source || (window.location && window.location.pathname) || '' }, })
+  if (typeof window === 'undefined' || typeof window.gtag !== 'function') return
+  window.gtag('event', 'book_call_click', {
+    source: source || (window.location && window.location.pathname) || '',
+  })
 }
 
 // Opens the Calendly popup if the widget is ready; otherwise starts loading it

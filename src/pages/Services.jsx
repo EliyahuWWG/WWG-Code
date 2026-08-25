@@ -22,7 +22,7 @@ export default function Services() {
         <div className="container">
           <div className="eyebrow">Engage</div>
           <h1 className="h1 mt-3 balance"><MaskLines>Ways to work with me.</MaskLines></h1>
-          <p className="lead">Coaching for the leader, the owner, the professional. A two day immersion for really getting the Ten Modes and how to utilize them ongoingly. Speaking to your people to inspire and instigate forward movement.</p>
+          <p className="lead"><strong>Coaching</strong> for the leader, the owner, the professional. <strong>A two day immersion</strong> for really getting the Ten Modes and how to utilize them ongoingly. <strong>Speaking</strong> to your people to inspire and instigate forward movement.</p>
         </div>
       </section>
 

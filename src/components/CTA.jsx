@@ -16,13 +16,13 @@ export default function CTA({
           <h2 className="h2 cta-title">{title}</h2>
           <div className="cta-body">
             <p>{text}</p>
-            <div className="mt-2 row">
+            <div className="mt-3 cta-actions">
               <a href={CALENDLY} target="_blank" rel="noopener" onClick={openCalendly}
-                onPointerEnter={warmCalendly} onFocus={warmCalendly} className="btn btn-onink btn-lg">
+                onPointerEnter={warmCalendly} onFocus={warmCalendly} className="btn btn-onink">
                 Book a call to discuss coaching. <Arrow />
               </a>
               {showRoundtable && (
-                <Link to="/roundtable" className="btn btn-onink btn-lg">
+                <Link to="/roundtable" className="btn btn-onink">
                   Register for the Roundtable. <Arrow />
                 </Link>
               )}

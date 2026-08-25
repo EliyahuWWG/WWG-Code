@@ -8,16 +8,44 @@
          is required even same-origin: fonts are always fetched in CORS mode,
          and without it the preload is discarded and fetched a second time. -->
     <link rel="preload" as="font" type="font/woff2" href="/fonts/fraunces-opsz-latin.woff2" crossorigin />
-    <link rel="preconnect" href="https://plausible.io" crossorigin />
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+    <link rel="preconnect" href="https://www.clarity.ms" crossorigin />
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#050d6e" />
-    <!-- Plausible: privacy-friendly, cookieless analytics (no consent banner needed).
-         Custom event `book_call_click` fires from src/components/useCalendly.js. -->
-    <script defer data-domain="workingwithgod.live" src="https://plausible.io/js/script.js"></script>
-    <script>window.plausible = window.plausible || function(){ (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+    <!-- ============================ ANALYTICS ============================
+         Two free tools. Replace the two placeholder IDs below with the real
+         ones AFTER the client creates each account (see the setup guide).
+         Until then they simply collect no data — nothing breaks.
+
+           1) Google Analytics 4  →  ID looks like  G-XXXXXXXXXX
+              analytics.google.com → Admin → Data streams → Measurement ID
+           2) Microsoft Clarity   →  ID looks like  abcde12345
+              clarity.microsoft.com → Settings → Overview → Clarity project id
+
+         The custom conversion event `book_call_click` is sent to GA4 from
+         src/components/useCalendly.js on every booking CTA.
+         ================================================================== -->
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "CLARITY_PROJECT_ID");
+    </script>
     <style>
       /* First-load curtain - self-contained so it paints before the app CSS/JS. */
       #curtain { display: none; }
