@@ -63,7 +63,7 @@ export default function Services() {
         <div className="container">
           <div className="sec-head">
             <Reveal><h2 className="h2 maxw-60">Two days of empowering perspective on identity, strategy, and operations.</h2>
-              <p className="mt-2 muted maxw-60">A deep-dive into the Ten Modes of Elevated Leadership. Includes learning about the modes, experiencing each mode, and applying each mode to your business, team, or project. We look at identity, strategy, and operations.</p></Reveal>
+              <p className="mt-2 muted maxw-60">A deep-dive into the Ten Modes. Really get <span className="serif-it">Modal Agility</span>.</p></Reveal>
           </div>
           <Reveal className="ilist mt-4 draw" stagger={0.08}>
             {mastersClassPoints.map((p, i) => (
@@ -84,7 +84,7 @@ export default function Services() {
         <div className="container">
           <div className="grid two" style={{ alignItems: 'start' }}>
             <Reveal>
-              <h2 className="h2 mt-2 maxw-60">A picture of what can be.</h2>
+              <h2 className="h2 mt-2 maxw-60">Speaking: A picture of what can be.</h2>
             </Reveal>
             <Reveal delay={0.05}>
               <p className="lead">I will show you a picture of what becomes possible when you consciously lead <span className="serif-it">with</span> God, not just <span className="serif-it">for</span> Him.</p>
