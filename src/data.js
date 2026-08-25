@@ -134,7 +134,7 @@ export const testimonialsArchive = [
 
 // ---------- Services detail (Services page), sub-heads VERBATIM ----------
 export const coachingPoints = [
-  { t: "An Expansive Leadership Toolkit", d: "More than 25 leadership tools, brought to bear on the specific challenge in front of you." }, { t: "Inspired Counsel", d: "Skilled executive coaching combined with prayer and the application of Biblical principles." }, { t: "Leadership Growth", d: "For leaders whose business is coasting along, plateaued, and for those feeling stagnant or underutilized, or overwhelmed and anxious." },
+  { t: "An Expansive Leadership Toolkit", d: "More than 25 leadership tools, brought to bear on the specific challenge in front of you." }, { t: "Inspired Counsel", d: "Skilled executive coaching combined with prayer and the application of Biblical principles." }, { t: "Leadership Growth", d: "For leaders who feel plateaued, who stagnant or underutilized, or for those feel overwhelmed." },
 ];
 
 export const mastersClassPoints = [
