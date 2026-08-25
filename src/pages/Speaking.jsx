@@ -1,11 +1,10 @@
-import { Link } from 'react-router-dom'
 import Reveal from '../components/Reveal'
 import CTA from '../components/CTA'
 import Arrow from '../components/Arrow'
 import BookCallLink from '../components/BookCallLink'
 import Seo from '../components/Seo'
 import { breadcrumbSchema } from '../seo/schema'
-import { speakingTopics, speakingFormats, pastEvents, EMAIL } from '../data'
+import { speakingTopics, speakingFormats, EMAIL } from '../data'
 
 export default function Speaking() {
   return (
@@ -34,7 +33,7 @@ export default function Speaking() {
         <div className="container">
           <div className="sec-head">
             <Reveal><h2 className="h2">What I speak on.</h2>
-              <p className="mt-2 muted">Each of these adapts to your audience. Tell me who is in the room and what they are wrestling with, and I will shape it around that.</p></Reveal>
+              <p className="mt-2 muted">Each talk is customized to your audience. Tell me who is in the room, what they are wrestling with, and what the outcomes are that you are looking for. I shape the talk around that… and around what I hear from God through prayer.</p></Reveal>
           </div>
           <Reveal className="ilist mt-4 draw" stagger={0.08}>
             {speakingTopics.map(t => (
@@ -61,28 +60,6 @@ export default function Speaking() {
                 <p className="mt-2 muted">{f.body}</p>
               </div>
             ))}
-          </Reveal>
-        </div>
-      </section>
-
-      {/* WHERE I HAVE BEEN */}
-      <section className="section">
-        <div className="container">
-          <div className="sec-head">
-            <Reveal><h2 className="h2">Recent rooms.</h2></Reveal>
-          </div>
-          <Reveal className="ilist mt-4">
-            {pastEvents.map(e => (
-              <div className="irow evrow" key={e.when + e.what}>
-                <div className="n">{e.when}</div>
-                <p>{e.what}</p>
-              </div>
-            ))}
-          </Reveal>
-          <Reveal className="mt-4">
-            <p className="muted maxw-60">
-              I also run a <Link className="tlink" style={{ display: 'inline' }} to="/events">free monthly Roundtable</Link> near Chantilly, Virginia, which is the easiest way to see how I work before you book me for anything.
-            </p>
           </Reveal>
         </div>
       </section>
