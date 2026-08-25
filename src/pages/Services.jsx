@@ -42,7 +42,7 @@ export default function Services() {
         <div className="container">
           <div className="sec-head">
             <Reveal><h2 className="h2 maxw-60">Skilled coaching.</h2>
-              <p className="mt-2 muted maxw-60">For leaders whose business is <span className="serif-it">coasting along, plateaued</span> and for those at a transition point who feel stagnant or underutilized, or overwhelmed and anxious.</p></Reveal>
+              <p className="mt-2 muted maxw-60">For those whose business plateaued, who feel stagnant or underutilized; for those at an inflection point; or for those who feel overwhelmed and anxious: <span className="serif-it">expert coaching is available</span>.</p></Reveal>
           </div>
           <Reveal className="ilist mt-4 draw" stagger={0.08}>
             {coachingPoints.map((p, i) => (
