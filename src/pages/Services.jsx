@@ -41,7 +41,7 @@ export default function Services() {
       <section className="section">
         <div className="container">
           <div className="sec-head">
-            <Reveal><h2 className="h2 maxw-60">Skilled coaching, prayer, and the Ten Modes, applied to your challenge.</h2>
+            <Reveal><h2 className="h2 maxw-60">Skilled coaching.</h2>
               <p className="mt-2 muted maxw-60">For leaders whose business is <span className="serif-it">coasting along, plateaued</span> and for those at a transition point who feel stagnant or underutilized, or overwhelmed and anxious.</p></Reveal>
           </div>
           <Reveal className="ilist mt-4 draw" stagger={0.08}>
@@ -62,7 +62,7 @@ export default function Services() {
       <section className="section on-bone">
         <div className="container">
           <div className="sec-head">
-            <Reveal><h2 className="h2 maxw-60">Two days on your most complex operational matters.</h2>
+            <Reveal><h2 className="h2 maxw-60">Two days of empowering perspective on identity, strategy, and operations.</h2>
               <p className="mt-2 muted maxw-60">An experiential deep-dive into the Ten Modes and <span className="serif-it">Modal Agility</span>.</p></Reveal>
           </div>
           <Reveal className="ilist mt-4 draw" stagger={0.08}>
