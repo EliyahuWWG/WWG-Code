@@ -63,7 +63,7 @@ export default function Services() {
         <div className="container">
           <div className="sec-head">
             <Reveal><h2 className="h2 maxw-60">Two days of empowering perspective on identity, strategy, and operations.</h2>
-              <p className="mt-2 muted maxw-60">An experiential deep-dive into the Ten Modes and <span className="serif-it">Modal Agility</span>.</p></Reveal>
+              <p className="mt-2 muted maxw-60">A deep-dive into the Ten Modes of Elevated Leadership. Includes learning about the modes, experiencing each mode, and applying each mode to your business, team, or project. We look at identity, strategy, and operations.</p></Reveal>
           </div>
           <Reveal className="ilist mt-4 draw" stagger={0.08}>
             {mastersClassPoints.map((p, i) => (

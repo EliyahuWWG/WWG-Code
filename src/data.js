@@ -138,7 +138,7 @@ export const coachingPoints = [
 ];
 
 export const mastersClassPoints = [
-  { t: "Here’s How It Works", d: "An experiential, two-day deep-dive into your most complex operational matters." }, { t: "Break the Pattern", d: "Move beyond old defaults to see the situation, and yourself, with Godly perspective." }, { t: "The Ten Modes of Elevated Leadership", d: "Learn the modes and build “Modal Agility”, the skill of shifting to the mode each situation actually needs." }, { t: "Get Expert Guidance", d: "Led by Dr. Lotzar, who has facilitated leadership workshops since 1989." },
+  { t: "Here’s How It Works", d: "An experiential, two-day deep-dive into your most complex operational matters." }, { t: "Break the Pattern", d: "Move beyond old defaults to see the situation, and yourself, with Godly perspective." }, { t: "The Ten Modes of Elevated Leadership", d: "Learn the modes and build “Modal Agility”, the skill of shifting to the mode each situation actually needs." }, { t: "Result", d: "You are able to flow more easily between modes and more closely follow where God is leading." },
 ];
 
 // ---------- Organizations served (About), real ----------
