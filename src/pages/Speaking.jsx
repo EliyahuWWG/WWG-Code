@@ -87,7 +87,7 @@ export default function Speaking() {
         </div>
       </section>
 
-      <CTA label="(→) Speaking" title="Tell me about your event." text="Send me the audience, the date and what you want them to walk out with. If I am not the right speaker for it, I will say so and try to point you at someone who is." />
+      <CTA label="(→) Speaking" title="Tell me about your event." text="Send me the audience, the date and what you want them to walk out with. If I am not the right speaker for it, I will say so and try to point you at someone who is." showRoundtable={false} />
     </>
   )
 }

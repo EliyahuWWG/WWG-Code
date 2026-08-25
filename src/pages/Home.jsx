@@ -9,7 +9,7 @@ import BookCallLink from '../components/BookCallLink'
 import FAQ from '../components/FAQ'
 import Seo from '../components/Seo'
 import { organizationSchema, personSchema, faqSchema } from '../seo/schema'
-import { pillars, offerings, testimonials, faqs } from '../data'
+import { offerings, testimonials, faqs } from '../data'
 
 export default function Home() {
   const feature = testimonials.find(t => t.feature) || testimonials[0]
@@ -54,7 +54,7 @@ export default function Home() {
                   above this paragraph was a second headline competing with the
                   H1. Matches the reference hero, which carries only the
                   introduction and the CTA in this column. */}
-              <p className="hero-intro">I’m Dr. Eliyahu Lotzar. For thirty years I have sat with leaders in the decisions that actually cost them something. I can help you bring God into that room, not just into the prayer before it.</p>
+              <p className="hero-intro">I’m Dr. Eliyahu Lotzar. For thirty years I have sat with people in the decisions that actually cost them something. I even help you get perspective by bringing God into that process.</p>
               <div className="hero-cta">
                 <BookCallLink className="btn btn-onink btn-lg">Book a discovery call</BookCallLink>
               </div>
@@ -65,8 +65,8 @@ export default function Home() {
           <div className="hero-meta">
             <div><div className="k">Doctorate</div><div className="v">Ed.D., Executive Leadership</div></div>
             <div><div className="k">Clinical</div><div className="v">MSW, Therapist</div></div>
-            <div><div className="k">Certified</div><div className="v">Adizes · DiSC · Arbinger</div></div>
             <div><div className="k">Author</div><div className="v">Working With God</div></div>
+            <div><div className="k">Certified</div><div className="v">Adizes · Arbinger · DiSC</div></div>
           </div>
         </div>
       </section>
@@ -94,7 +94,7 @@ export default function Home() {
               viewport height), which is why they did not line up before. */}
           <div className="video-inner">
             <Reveal className="video-feature-head">
-              <h2 className="h2">Give me two minutes.</h2>
+              <h2 className="h2">Take two minutes.</h2>
               <p className="mt-2">It is the fastest way to work out whether I am the right person for you.</p>
             </Reveal>
             <Reveal delay={0.06} className="video-stage mt-3">
@@ -123,29 +123,11 @@ export default function Home() {
             <Reveal delay={0.05}>
               {/* TODO(client): he is rewriting this line. Superlative removed for now. */}
               <h2 className="h2 maxw-60">I bring a bigger perspective into the room.</h2>
-              <p className="mt-2 lead">I have been coaching, counseling, and facilitating leadership groups for over 30 years, and working specifically with CEOs and owners for the past seven. I am a clinical therapist by training, a former business owner, and a scholar of what actually makes organizations healthy.</p>
-              <p className="mt-2 muted maxw-60">Working With God is where all of that meets faith. It is a practical way for you to hear what God wants to do through your leadership, right in the middle of real strategy, hiring, and timing.</p>
+              <p className="mt-2 lead">I have been coaching, counseling, consulting and facilitating for over 30 years. Experience brings some perspective. I also have been walking more and more closely with God for decades, and that brings an even more trustworthy, challenging, and valuable perspective.</p>
+              <p className="mt-2 muted maxw-60">Working With God is where all of that meets you and your situation. Whether things feel blocked and dragging or chaotic and on fire, WWG coaching helps you hone in on what God wants to do through your leadership, right in the middle of real strategy and implementation.</p>
               <div className="mt-3"><Link to="/about" className="tlink">Read my story <Arrow /></Link></div>
             </Reveal>
           </div>
-        </div>
-      </section>
-
-      {/* THE ARGUMENT */}
-      <section className="section on-bone">
-        <div className="container">
-          <div className="sec-head">
-            <Reveal><h2 className="h2">Not asking God to bless your plans. Asking what He wants to do through your leadership.</h2></Reveal>
-          </div>
-          <Reveal className="ilist mt-4 draw" stagger={0.08}>
-            {pillars.map(p => (
-              <div className="irow" key={p.n}>
-                <div className="n">{p.n}</div>
-                <h3>{p.t}</h3>
-                <p dangerouslySetInnerHTML={{ __html: p.body }} />
-              </div>
-            ))}
-          </Reveal>
         </div>
       </section>
 
@@ -171,7 +153,7 @@ export default function Home() {
             ))}
           </Reveal>
           <Reveal className="mt-4">
-            <p className="muted maxw-60">There is also my book, <Link to="/the-book" className="tlink">Working With God: The Ten Modes of Elevated Leadership</Link>, and some <Link to="/blog" className="tlink">writing</Link>, if you would rather start on your own. Still deciding? <a className="tlink" style={{ display: 'inline' }} href="#faq">Read the questions people usually ask</a>.</p>
+            <p className="muted maxw-60">There is also my book, <Link to="/the-book" className="tlink"><em>Working With God: The Ten Modes of Elevated Leadership</em></Link>, if you would rather start on your own. Still deciding? <a className="tlink" style={{ display: 'inline' }} href="#faq">Read the questions people usually ask</a>.</p>
           </Reveal>
         </div>
       </section>

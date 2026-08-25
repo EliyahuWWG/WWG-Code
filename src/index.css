@@ -956,7 +956,7 @@ html.js .reveal-group.draw.in::after { transform: scaleX(1); }
 
 /* Footer column labels. These were <h4> under an <h2>, which is a heading-level
    jump; they are <h2 class="fh"> now and keep the identical look. */
-.footer .fh { font-family: var(--f-label); font-weight: 600; font-size: .86rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(243,238,226,.65); margin-bottom: 18px; }
+.footer .fh { font-family: var(--f-label); font-weight: 600; font-size: .86rem; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-400); margin-bottom: 18px; }
 
 /* Visually hidden, still read by screen readers and parsed by crawlers.
    Used for headings that would be redundant on screen but keep the document
