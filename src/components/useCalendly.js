@@ -53,6 +53,18 @@ export function trackBookCall(source) {
   })
 }
 
+// On-brand colours for the Calendly booking page (hex without the #), plus a
+// trim of Calendly's own landing/GDPR chrome so the popup is shorter and does
+// not overflow. Colours mirror the site tokens: bone background, navy accent,
+// ink text.
+export const CAL_PAGE_SETTINGS = {
+  backgroundColor: 'faf7ef',
+  primaryColor: '0a1568',
+  textColor: '1a1f38',
+  hideLandingPageDetails: true,
+  hideGdprBanner: true,
+}
+
 // Opens the Calendly popup if the widget is ready; otherwise starts loading it
 // and lets the <a href> fall through to /book-a-call (inline calendar there).
 export function openCalendly(e) {
@@ -60,7 +72,7 @@ export function openCalendly(e) {
   trackBookCall()
   if (window.Calendly && window.Calendly.initPopupWidget) {
     if (e) e.preventDefault()
-    window.Calendly.initPopupWidget({ url: calendlyUrl() })
+    window.Calendly.initPopupWidget({ url: calendlyUrl(), pageSettings: CAL_PAGE_SETTINGS })
   } else {
     warmCalendly()
   }

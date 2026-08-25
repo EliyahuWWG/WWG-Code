@@ -82,16 +82,12 @@ export default function Services() {
       {/* SPEAKING */}
       <section className="section">
         <div className="container">
-          <div className="grid two" style={{ alignItems: 'start' }}>
-            <Reveal>
-              <h2 className="h2 mt-2 maxw-60">Speaking: A picture of what can be.</h2>
-            </Reveal>
-            <Reveal delay={0.05}>
-              <p className="lead">I will show you a picture of what becomes possible when you consciously lead <span className="serif-it">with</span> God, not just <span className="serif-it">for</span> Him.</p>
-              <div className="mt-3">
-                <BookCallLink className="tlink" arrow={false}>Contact Eliyahu About Speaking to Your People</BookCallLink>
-              </div>
-            </Reveal>
+          <div className="sec-head">
+            <Reveal><h2 className="h2 maxw-60">Speaking: A picture of what can be.</h2>
+              <p className="mt-2 muted maxw-60">I will show you a picture of what becomes possible when you consciously lead <span className="serif-it">with</span> God, not just <span className="serif-it">for</span> Him.</p></Reveal>
+          </div>
+          <div className="mt-3">
+            <Link className="btn btn-solid" to="/speaking">Find Out More About Eliyahu’s Speaking Engagements</Link>
           </div>
         </div>
       </section>

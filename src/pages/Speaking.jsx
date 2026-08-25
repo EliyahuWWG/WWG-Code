@@ -21,7 +21,7 @@ export default function Speaking() {
         <div className="container">
           <div className="eyebrow">Speaking</div>
           <h1 className="h1 mt-3 balance">Bring me in to talk to your people.</h1>
-          <p className="lead">I speak to leadership teams, associations and conferences about what changes when you stop asking God to bless the plan and start asking what He wants to do through it. Rigorous, practical, and aimed at the decisions in the room.</p>
+          <p className="lead">I give inspirational-instructional talks to leadership teams about the Ten Modes of Elevated Leadership. These talks can be simply inspirational or also move into practical application to your team’s current challenges. I also give inspirational talks to larger groups. The focus is on looking for God so closely that we go where He goes.</p>
           <div className="row mt-3">
             <BookCallLink className="btn btn-onink btn-lg">Check my availability</BookCallLink>
             <a className="tlink" style={{ display: 'inline' }} href={`mailto:${EMAIL}?subject=Speaking%20enquiry`}>Or email me directly</a>

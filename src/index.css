@@ -1176,3 +1176,21 @@ html.js .reveal-group.draw.in::after { transform: scaleX(1); }
 /* Bold the main offerings in the dark hero (phero) lead so the eye catches
    them at a glance. */
 .phero .lead strong { font-weight: 700; color: inherit; }
+
+
+/* ---- Calendly popup, themed to the site (navy / bone) ------------------
+   Colours of the calendar itself come from pageSettings in useCalendly.js;
+   these rules restyle Calendly's injected overlay + popup shell. */
+.calendly-overlay { background-color: rgba(5, 10, 46, .62) !important; }
+.calendly-popup { border-radius: 18px !important; overflow: hidden !important;
+  box-shadow: 0 30px 90px rgba(2, 6, 31, .5) !important;
+  max-height: min(90vh, 780px) !important; }
+.calendly-popup .calendly-popup-content { border-radius: 18px !important; }
+/* swap Calendly's chunky grey scrollbar for a slim, on-brand one */
+.calendly-popup-content::-webkit-scrollbar { width: 8px; height: 8px; }
+.calendly-popup-content::-webkit-scrollbar-track { background: transparent; }
+.calendly-popup-content::-webkit-scrollbar-thumb {
+  background: rgba(10, 21, 104, .32); border-radius: 8px; }
+.calendly-popup-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(10, 21, 104, .5); }
+.calendly-popup-content { scrollbar-width: thin; scrollbar-color: rgba(10,21,104,.32) transparent; }
