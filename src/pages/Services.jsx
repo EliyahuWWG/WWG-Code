@@ -63,7 +63,7 @@ export default function Services() {
         <div className="container">
           <div className="sec-head">
             <Reveal><h2 className="h2 maxw-60">Two days on your most complex operational matters.</h2>
-              <p className="mt-2 muted maxw-60">An experiential deep-dive into the Ten Modes and <span className="serif-it">Modal Agility</span>. I have been leading leadership workshops since 1989.</p></Reveal>
+              <p className="mt-2 muted maxw-60">An experiential deep-dive into the Ten Modes and <span className="serif-it">Modal Agility</span>.</p></Reveal>
           </div>
           <Reveal className="ilist mt-4 draw" stagger={0.08}>
             {mastersClassPoints.map((p, i) => (
