@@ -11,9 +11,9 @@ import { openCalendly, warmCalendly, trackBookCall } from './useCalendly'
 // The /roundtable, /contact and /#testimonials routes all still resolve, so
 // nothing that was ever linked or indexed 404s.
 const links = [
+  { to: '/the-book', label: 'The Book' },
   { to: '/services', label: 'Services' },
   { to: '/events', label: 'Events' },
-  { to: '/the-book', label: 'The Book' },
   { to: '/about', label: 'About' },
 ]
 
