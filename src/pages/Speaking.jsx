@@ -23,7 +23,7 @@ export default function Speaking() {
           <p className="lead">I give inspirational-instructional talks to leadership teams about the Ten Modes of Elevated Leadership. These talks can be simply inspirational or also move into practical application to your team’s current challenges. I also give inspirational talks to larger groups. The focus is on looking for God so closely that we go where He goes.</p>
           <div className="row mt-3">
             <BookCallLink className="btn btn-onink btn-lg">Check my availability</BookCallLink>
-            <a className="tlink" style={{ display: 'inline' }} href={`mailto:${EMAIL}?subject=Speaking%20enquiry`}>Or email me directly</a>
+            <a className="tlink lt" style={{ display: 'inline' }} href={`mailto:${EMAIL}?subject=Speaking%20enquiry`}>Or email me directly</a>
           </div>
         </div>
       </section>
@@ -33,7 +33,7 @@ export default function Speaking() {
         <div className="container">
           <div className="sec-head">
             <Reveal><h2 className="h2">What I speak on.</h2>
-              <p className="mt-2 muted">Each talk is customized to your audience. Tell me who is in the room, what they are wrestling with, and what the outcomes are that you are looking for. I shape the talk around that… and around what I hear from God through prayer.</p></Reveal>
+              <p className="mt-2 muted">Each talk is customized to your audience. Who is in the room? What are they wrestling with? What the outcomes are that you are looking for? I shape the talk around those things… and around what I hear from the Lord in prayer.</p></Reveal>
           </div>
           <Reveal className="ilist mt-4 draw" stagger={0.08}>
             {speakingTopics.map(t => (
