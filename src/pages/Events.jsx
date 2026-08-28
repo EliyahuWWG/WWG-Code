@@ -5,7 +5,8 @@ import Arrow from '../components/Arrow'
 import MaskLines from '../components/MaskLines'
 import Seo from '../components/Seo'
 import { breadcrumbSchema, roundtableEventSchema } from '../seo/schema'
-import { roundtableTopics, pastEvents, MEETUP, ROUNDTABLE_ADDRESS, ROUNDTABLE_TIME, NEXT_ROUNDTABLE } from '../data'
+import { roundtableWhatHappens, roundtableWhoShouldAttend, roundtableSponsorLabel,
+  MEETUP, ROUNDTABLE_ADDRESS, ROUNDTABLE_TIME, NEXT_ROUNDTABLE, SPONSOR } from '../data'
 
 export default function Events() {
   return (
@@ -39,22 +40,22 @@ export default function Events() {
             <Reveal className="stack-tight">
               <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>When</b><br /><span className="muted">{ROUNDTABLE_TIME}</span></div>
               <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>Where</b><br /><span className="muted">Private room at Starbucks · {ROUNDTABLE_ADDRESS}</span></div>
-              {/* TODO(client): update monthly, the specific next date */}
-              <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>Next meeting</b><br /><span className="muted">3rd Wednesday, monthly{NEXT_ROUNDTABLE !== 'TBD' ? ` · ${NEXT_ROUNDTABLE}` : ''}</span></div>
-              <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>Sponsor</b><br /><span className="muted">MBH Settlement Group (Rich Nguyen, Esq.)</span></div>
+              {/* Both of these come from the monthly block at the top of
+                  src/data.js. The sponsor label follows the date's month. */}
+              <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>Next meeting</b><br /><span className="muted">{NEXT_ROUNDTABLE}</span></div>
+              <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>{roundtableSponsorLabel()}</b><br /><span className="muted">{SPONSOR}</span></div>
             </Reveal>
             <Reveal delay={0.05}>
               <div className="label">What happens in the room</div>
               <ul className="ticks mt-2">
-                <li>A real conversation among leaders, not a lecture and not a sales pitch</li>
-                <li>One leadership topic each month, worked through together</li>
-                <li>Scripture and prayer applied to the decision in front of you</li>
-                <li>Honest peer accountability with other Northern Virginia leaders</li>
+                {roundtableWhatHappens.map(t => <li key={t}>{t}</li>)}
               </ul>
-              <div className="label mt-3">Topics have included</div>
-              <div className="tags mt-2">
-                {roundtableTopics.map(t => <span className="tag" key={t}>{t}</span>)}
-              </div>
+              {/* Was a row of topic tags. He replaced it with who the room is
+                  for, which is sentences, not labels, so it is a list now. */}
+              <div className="label mt-3">Who should attend</div>
+              <ul className="ticks mt-2">
+                {roundtableWhoShouldAttend.map(t => <li key={t}>{t}</li>)}
+              </ul>
               <div className="mt-3"><Link to="/roundtable" className="btn btn-solid">Register for the next Roundtable <Arrow /></Link></div>
             </Reveal>
           </div>
@@ -74,28 +75,10 @@ export default function Events() {
             <ul className="ticks ticks-2">
               <li>What the “Ten Modes of Elevated Leadership” are, in plain terms</li>
               <li>How to tell which mode the decision in front of you actually needs</li>
-              <li>A worked example on a real business challenge: strategy, a hire, timing</li>
+              <li>A worked example on a real business challenge: cash flow, succession planning, a new hire</li>
               <li>Live Q&amp;A with Eliyahu</li>
             </ul>
             <div className="mt-4"><a href={MEETUP} target="_blank" rel="noopener" className="btn btn-line">Register on Meetup <Arrow /></a></div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* PAST EVENTS */}
-      <section className="section">
-        <div className="container">
-          <div className="sec-head">
-            <Reveal><h2 className="h2 maxw-60">Recent gatherings and appearances.</h2>
-              <p className="mt-2 muted maxw-60">A sense of the rooms I have been in lately: roundtables, author panels, and national stages.</p></Reveal>
-          </div>
-          <Reveal className="ilist mt-4 draw" stagger={0.08}>
-            {pastEvents.map(e => (
-              <div className="irow" key={e.what} style={{ gridTemplateColumns: '160px 1fr' }}>
-                <div className="n" style={{ fontSize: '1rem', fontFamily: 'var(--f-mono)', letterSpacing: '.04em' }}>{e.when}</div>
-                <p style={{ color: 'var(--ink)' }}>{e.what}</p>
-              </div>
-            ))}
           </Reveal>
         </div>
       </section>
@@ -104,13 +87,13 @@ export default function Events() {
       <section className="section on-bone">
         <div className="container">
           <Reveal className="pullquote">
-            <blockquote>“I found the Working With God roundtable event so valuable, truly enlightening; it was a foundational conversation.”</blockquote>
+            <blockquote>“I found the Working With God roundtable event so valuable. The recent session on clarifying my Godly identity was truly enlightening; it was a foundational conversation for being fully the leader God made me to be. It was real, relevant and relatable (authentic). I enjoyed meeting folks and look forward to further interactions.”</blockquote>
             <div className="attr"><b>Sylvia Palmer</b>, Chief Impact Officer, Amplify</div>
           </Reveal>
         </div>
       </section>
 
-      <CTA label="(→) Come to the next one" title="There’s a seat for you at the Roundtable." text="It’s free, it’s in person, and it’s two hours well spent with other leaders inviting God into their daily work." />
+      <CTA label="(→) Come to the next one" title="There’s a seat for you at the Roundtable." text="It’s free, it’s in person, and it’s two hours well spent with other leaders inviting God into their daily work." showCoaching={false} />
     </>
   )
 }

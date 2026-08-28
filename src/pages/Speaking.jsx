@@ -4,7 +4,7 @@ import Arrow from '../components/Arrow'
 import BookCallLink from '../components/BookCallLink'
 import Seo from '../components/Seo'
 import { breadcrumbSchema } from '../seo/schema'
-import { speakingTopics, speakingFormats, EMAIL } from '../data'
+import { speakingTopics, speakingFormats, appearances, EMAIL } from '../data'
 
 export default function Speaking() {
   return (
@@ -58,6 +58,28 @@ export default function Speaking() {
               <div key={f.t} className="fmt">
                 <h3 className="h3">{f.t}</h3>
                 <p className="mt-2 muted">{f.body}</p>
+              </div>
+            ))}
+          </Reveal>
+        </div>
+      </section>
+
+      {/* HEARD ELSEWHERE — the interviews he sent, as proof he can hold a room. */}
+      <section className="section">
+        <div className="container">
+          <div className="sec-head">
+            <Reveal><h2 className="h2">Heard elsewhere.</h2>
+              <p className="mt-2 muted maxw-60">Conversations I have been invited into, if you would rather hear me than read about me.</p></Reveal>
+          </div>
+          <Reveal className="ilist mt-4 draw" stagger={0.08}>
+            {appearances.map(a => (
+              <div className="irow" key={a.href} style={{ gridTemplateColumns: '1fr' }}>
+                <div>
+                  <h3>{a.t}</h3>
+                  <a className="go mt-1" href={a.href} target="_blank" rel="noopener">
+                    {a.where} <Arrow />
+                  </a>
+                </div>
               </div>
             ))}
           </Reveal>

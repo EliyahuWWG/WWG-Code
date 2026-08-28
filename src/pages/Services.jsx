@@ -6,7 +6,7 @@ import MaskLines from '../components/MaskLines'
 import BookCallLink from '../components/BookCallLink'
 import Seo from '../components/Seo'
 import { breadcrumbSchema } from '../seo/schema'
-import { coachingPoints, mastersClassPoints } from '../data'
+import { coachingPoints, mastersClassPoints, coachingScripture } from '../data'
 
 export default function Services() {
   return (
@@ -42,7 +42,7 @@ export default function Services() {
         <div className="container">
           <div className="sec-head">
             <Reveal><h2 className="h2 maxw-60">Skilled coaching.</h2>
-              <p className="mt-2 muted maxw-60">For those whose business plateaued, who feel stagnant or underutilized; for those at an inflection point; or for those who feel overwhelmed and anxious: <span className="serif-it">expert coaching is available</span>.</p></Reveal>
+              <p className="mt-2 muted maxw-60">For those whose business plateaued, who feel stagnant or underutilized; for those at an inflection point; or for those who feel overwhelmed and anxious: <span className="serif-it">expert coaching is available</span>. Dr. Eliyahu Lotzar provides a confidential space to find greater clarity, peace, and focused forward momentum for the success of what you are called to be and do.</p></Reveal>
           </div>
           <Reveal className="ilist mt-4 draw" stagger={0.08}>
             {coachingPoints.map((p, i) => (
@@ -53,17 +53,25 @@ export default function Services() {
             ))}
           </Reveal>
           <div className="mt-3">
-            <BookCallLink className="btn btn-solid">Contact Eliyahu About Coaching</BookCallLink>
+            <BookCallLink className="btn btn-solid">Schedule a free 30-minute exploratory conversation.</BookCallLink>
           </div>
+          {/* His scripture, set apart from the sell above it: display face, a
+              gold rule instead of quote marks, and its own breathing room. */}
+          <Reveal className="scripture mt-5">
+            <blockquote>{coachingScripture.text}</blockquote>
+            <cite>{coachingScripture.ref}</cite>
+          </Reveal>
         </div>
       </section>
 
-      {/* MASTER'S CLASS */}
-      <section className="section on-bone">
+      {/* MASTER'S CLASS
+          id + scroll-margin so the "Find out more" link on the home page lands
+          on this section with the heading clear of the fixed nav. */}
+      <section className="section on-bone" id="masters-class" style={{ scrollMarginTop: 110 }}>
         <div className="container">
           <div className="sec-head">
             <Reveal><h2 className="h2 maxw-60">Two days of empowering perspective on identity, strategy, and operations.</h2>
-              <p className="mt-2 muted maxw-60">A deep-dive into the Ten Modes. Really get <span className="serif-it">Modal Agility</span>.</p></Reveal>
+              <p className="mt-2 muted maxw-60">A deep-dive into the Ten Modes. Really get <span className="serif-it">Modal Agility</span> and see how you can follow God more closely in your decision-making.</p></Reveal>
           </div>
           <Reveal className="ilist mt-4 draw" stagger={0.08}>
             {mastersClassPoints.map((p, i) => (
@@ -84,7 +92,7 @@ export default function Services() {
         <div className="container">
           <div className="sec-head">
             <Reveal><h2 className="h2 maxw-60">Speaking: A picture of what can be.</h2>
-              <p className="mt-2 muted maxw-60">I will show you a picture of what becomes possible when you consciously lead <span className="serif-it">with</span> God, not just <span className="serif-it">for</span> Him.</p></Reveal>
+              <p className="mt-2 muted maxw-60">I show your group a picture of what becomes possible when you consciously lead <span className="serif-it">with</span> God, not just <span className="serif-it">for</span> Him.</p></Reveal>
           </div>
           <div className="mt-3">
             <Link className="btn btn-solid" to="/speaking">Find Out More About Eliyahu’s Speaking Engagements</Link>

@@ -952,6 +952,29 @@ html.js .reveal-group.draw.in::after { transform: scaleX(1); }
 
 /* Footer column labels. These were <h4> under an <h2>, which is a heading-level
    jump; they are <h2 class="fh"> now and keep the identical look. */
+/* ------------------------------------------------------------------
+   SCRIPTURE — a verse set apart from the copy around it.
+
+   The brief was "somehow set it apart with font or whatever". Quote marks
+   would make it read as another testimonial, which is exactly what it is not,
+   so the separation is structural instead: a gold rule down the left, the
+   display face at reading size, and real space above and below. It sits after
+   a call to action, so it deliberately does NOT compete with the button.
+   ------------------------------------------------------------------ */
+.scripture { max-width: 60ch; padding-left: clamp(18px, 2vw, 28px); border-left: 2px solid var(--gold-500); }
+.scripture blockquote {
+  font-family: var(--f-disp); font-weight: 400; font-style: italic;
+  font-size: clamp(1.15rem, 1.7vw, 1.42rem); line-height: 1.45;
+  color: var(--navy-800); letter-spacing: -.01em; margin: 0;
+}
+.scripture cite {
+  display: block; margin-top: 12px; font-style: normal;
+  font-family: var(--f-mono); font-size: .8rem; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--gold-600);
+}
+.on-ink .scripture blockquote, .phero .scripture blockquote { color: var(--bone); }
+.on-ink .scripture cite, .phero .scripture cite { color: var(--gold-400); }
+
 .footer .fh { font-family: var(--f-label); font-weight: 600; font-size: .86rem; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-400); margin-bottom: 18px; }
 
 /* Visually hidden, still read by screen readers and parsed by crawlers.

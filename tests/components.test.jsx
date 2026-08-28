@@ -11,6 +11,7 @@ describe('Nav', () => {
     wrap(<Nav />)
     const primary = screen.getByRole('navigation', { name: /primary/i })
     const labels = [...primary.querySelectorAll('a')].map(a => a.textContent)
-    expect(labels).toEqual(['Services', 'Events', 'The Book', 'About'])
+    // Order per Lakshya's 28 Aug reorder: the book leads the nav.
+    expect(labels).toEqual(['The Book', 'Services', 'Events', 'About'])
   })
 })
