@@ -1,11 +1,10 @@
-import { Link } from 'react-router-dom'
 import Reveal from '../components/Reveal'
 import CTA from '../components/CTA'
-import Arrow from '../components/Arrow'
 import BookCallLink from '../components/BookCallLink'
 import Seo from '../components/Seo'
 import { breadcrumbSchema } from '../seo/schema'
-import { speakingTopics, speakingFormats, pastEvents, EMAIL } from '../data'
+import AppearanceCard from '../components/AppearanceCard'
+import { speakingTopics, speakingFormats, appearances, EMAIL } from '../data'
 
 export default function Speaking() {
   return (
@@ -21,10 +20,10 @@ export default function Speaking() {
         <div className="container">
           <div className="eyebrow">Speaking</div>
           <h1 className="h1 mt-3 balance">Bring me in to talk to your people.</h1>
-          <p className="lead">I speak to leadership teams, associations and conferences about what changes when you stop asking God to bless the plan and start asking what He wants to do through it. Rigorous, practical, and aimed at the decisions in the room.</p>
+          <p className="lead">I give inspirational-instructional talks to leadership teams about the Ten Modes of Elevated Leadership. These talks can be simply inspirational or also move into practical application to your team’s current challenges. I also give inspirational talks to larger groups. The focus is on looking for God so closely that we go where He goes.</p>
           <div className="row mt-3">
             <BookCallLink className="btn btn-onink btn-lg">Check my availability</BookCallLink>
-            <a className="tlink" style={{ display: 'inline' }} href={`mailto:${EMAIL}?subject=Speaking%20enquiry`}>Or email me directly</a>
+            <a className="tlink lt" style={{ display: 'inline' }} href={`mailto:${EMAIL}?subject=Speaking%20enquiry`}>Or email me directly</a>
           </div>
         </div>
       </section>
@@ -34,7 +33,7 @@ export default function Speaking() {
         <div className="container">
           <div className="sec-head">
             <Reveal><h2 className="h2">What I speak on.</h2>
-              <p className="mt-2 muted">Each of these adapts to your audience. Tell me who is in the room and what they are wrestling with, and I will shape it around that.</p></Reveal>
+              <p className="mt-2 muted">Each talk is customized to your audience. Who is in the room? What are they wrestling with? What the outcomes are that you are looking for? I shape the talk around those things… and around what I hear from the Lord in prayer.</p></Reveal>
           </div>
           <Reveal className="ilist mt-4 draw" stagger={0.08}>
             {speakingTopics.map(t => (
@@ -65,29 +64,20 @@ export default function Speaking() {
         </div>
       </section>
 
-      {/* WHERE I HAVE BEEN */}
+      {/* HEARD ELSEWHERE — the interviews he sent, as proof he can hold a room. */}
       <section className="section">
         <div className="container">
           <div className="sec-head">
-            <Reveal><h2 className="h2">Recent rooms.</h2></Reveal>
+            <Reveal><h2 className="h2">Heard elsewhere.</h2>
+              <p className="mt-2 muted maxw-60">Conversations I have been invited into, if you would rather hear me than read about me.</p></Reveal>
           </div>
-          <Reveal className="ilist mt-4">
-            {pastEvents.map(e => (
-              <div className="irow evrow" key={e.when + e.what}>
-                <div className="n">{e.when}</div>
-                <p>{e.what}</p>
-              </div>
-            ))}
-          </Reveal>
-          <Reveal className="mt-4">
-            <p className="muted maxw-60">
-              I also run a <Link className="tlink" style={{ display: 'inline' }} to="/events">free monthly Roundtable</Link> near Chantilly, Virginia, which is the easiest way to see how I work before you book me for anything.
-            </p>
+          <Reveal className="appears mt-4" stagger={0.06}>
+            {appearances.map(a => <AppearanceCard item={a} key={a.href} />)}
           </Reveal>
         </div>
       </section>
 
-      <CTA label="(→) Speaking" title="Tell me about your event." text="Send me the audience, the date and what you want them to walk out with. If I am not the right speaker for it, I will say so and try to point you at someone who is." />
+      <CTA label="(→) Speaking" title="Tell me about your event." text="Send me the audience, the date and what you want them to walk out with. If I am not the right speaker for it, I will say so and try to point you at someone who is." showRoundtable={false} />
     </>
   )
 }

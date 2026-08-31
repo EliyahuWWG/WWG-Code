@@ -14,12 +14,34 @@ export async function submitForm(formName, data) {
   fd.append('form-name', formName)
 
   const url = ENDPOINT || '/'
+
+  // Netlify accepts both encodings, but urlencoded is the better-trodden path
+  // for text-only forms: multipart bodies are what its parser handles least
+  // predictably, and a submission that silently fails to register is the worst
+  // possible failure here because nobody finds out until someone complains they
+  // registered and never heard back. Only reach for multipart when the form
+  // genuinely carries a file, since urlencoded cannot express one.
+  const hasFile = [...fd.values()].some(v => typeof File !== 'undefined' && v instanceof File && v.size > 0)
+
   const res = await fetch(url, {
     method: 'POST',
-    body: fd,
-    headers: ENDPOINT ? { Accept: 'application/json' } : undefined,
+    body: hasFile ? fd : new URLSearchParams(stripEmptyFiles(fd)),
+    headers: ENDPOINT
+      ? { Accept: 'application/json' }
+      : (hasFile ? undefined : { 'Content-Type': 'application/x-www-form-urlencoded' }),
   })
   if (!res.ok) throw new Error(`Submit failed (${res.status})`)
+}
+
+// An untouched <input type="file"> still yields an empty File in the FormData,
+// which URLSearchParams would stringify as "[object File]". Drop those.
+function stripEmptyFiles(fd) {
+  const out = new FormData()
+  for (const [k, v] of fd.entries()) {
+    if (typeof File !== 'undefined' && v instanceof File) continue
+    out.append(k, v)
+  }
+  return out
 }
 
 function toFormData(obj) {

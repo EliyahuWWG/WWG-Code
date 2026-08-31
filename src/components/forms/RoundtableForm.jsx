@@ -28,7 +28,13 @@ export default function RoundtableForm() {
     return (
       <div className="form-done">
         <h3>You’re registered.</h3>
-        <p>You’ll get an email confirmation with meeting details and a calendar invite, usually within 24 hours.</p>
+        {/* NOTE: nothing automated sends this. Netlify emails Eliyahu on every
+            submission; he sends the confirmation and calendar invite himself,
+            exactly as he did on the old site. Wording matches his own promise
+            on workingwithgod.live/roundtable-reg, including "business day",
+            which does not over-promise across a weekend. If this ever becomes
+            automated, that is a Netlify Function on submission-created. */}
+        <p>You’ll get an email confirmation with meeting details and a calendar invite, typically within one business day.</p>
       </div>
     )
   }

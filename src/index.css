@@ -150,14 +150,10 @@ p em, li em, .irow em, .lead em, blockquote em { font-style: normal; font-weight
 .hi-it { font-family: var(--f-disp); font-style: italic; font-weight: 400; }
 em, .serif-it { }
 
-/* subtle gold "highlighter" under section headings — just a hint of emphasis.
-   display:inline makes the marker wrap per line; the width limit moves to the
-   sec-head heading column so it stays readable. */
-.sec-head h2 { display: inline; line-height: 1.24; padding-bottom: .04em;
-  background-image: linear-gradient(transparent 58%, rgba(201,162,39,.18) 58%, rgba(201,162,39,.18) 90%, transparent 90%);
-  -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+/* Section headings sit plain — the gold highlighter behind them was removed
+   at the client's request. */
+.sec-head h2 { line-height: 1.24; }
 .sec-head > *:last-child { max-width: 62ch; }
-.on-ink .sec-head h2, .phero .sec-head h2 { background-image: linear-gradient(transparent 58%, rgba(220,187,85,.22) 58%, rgba(220,187,85,.22) 90%, transparent 90%); }
 
 /* small-caps display treatment, echoing the live site's section headings.
    Apply to short, punchy section headers - not long hero sentences. */
@@ -653,8 +649,8 @@ html.js .reveal-group.draw.in::after { transform: scaleX(1); }
 .faq-q { display: grid; grid-template-columns: 48px 1fr auto; align-items: baseline; gap: 16px; width: 100%;
   text-align: left; padding: clamp(20px, 2.6vw, 28px) 0; }
 .faq-q .n { font-family: var(--f-mono); font-size: .84rem; color: var(--clay-ink); }
-.faq-q .qt { font-family: var(--f-disp); font-weight: 500; font-size: clamp(1.15rem, 1.9vw, 1.5rem); letter-spacing: -.01em; transition: color .25s var(--ease); }
-.faq-q:hover .qt { color: var(--clay-ink); }
+.faq-q .qt { font-family: var(--f-disp); font-weight: 500; font-size: clamp(1.15rem, 1.9vw, 1.5rem); letter-spacing: -.01em; transition: color .3s var(--ease), transform .3s var(--ease); }
+.faq-q:hover .qt { color: var(--clay-ink); transform: translateX(3px); }
 .faq-x { position: relative; width: 14px; height: 14px; align-self: center; }
 .faq-x::before, .faq-x::after { content: ""; position: absolute; inset: 50% auto auto 0; width: 14px; height: 1.5px; background: var(--clay-ink); transition: transform .3s var(--ease); }
 .faq-x::after { transform: rotate(90deg); }
@@ -956,7 +952,111 @@ html.js .reveal-group.draw.in::after { transform: scaleX(1); }
 
 /* Footer column labels. These were <h4> under an <h2>, which is a heading-level
    jump; they are <h2 class="fh"> now and keep the identical look. */
-.footer .fh { font-family: var(--f-label); font-weight: 600; font-size: .86rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(243,238,226,.65); margin-bottom: 18px; }
+/* Keeps a trailing mark from wrapping onto a line of its own, where it reads
+   as a mistake rather than a flourish. */
+.nowrap { white-space: nowrap; }
+
+/* Small drawn smile. Sized from the text it sits in and nudged onto the
+   baseline, so it reads as punctuation rather than a pasted-in sticker. */
+.smile { width: 1.05em; height: 1.05em; display: inline-block; vertical-align: -.16em;
+  margin-left: .12em; color: var(--gold-400); }
+.on-bone .smile, .prose .smile { color: var(--gold-600); }
+
+/* ------------------------------------------------------------------
+   APPEARANCES — interview cards on the Speaking page.
+
+   Two card types on purpose. A playable card carries a play button and the
+   embed opens inside it. A link card carries no play button at all, because
+   the two hosts behind it publish no embed we can rely on, and a play button
+   that navigates away is the most annoying kind of lie a page can tell.
+   ------------------------------------------------------------------ */
+.appears { display: grid; gap: clamp(22px, 2.6vw, 34px); grid-template-columns: 1fr; }
+@media (min-width: 760px) { .appears { grid-template-columns: 1fr 1fr; } }
+
+.appear { display: flex; flex-direction: column; min-width: 0; }
+a.appear { text-decoration: none; color: inherit; }
+
+/* The 16:9 stage every card shares, so the grid stays on one rhythm whether a
+   card holds a video thumbnail, an audio player or a plain ground. */
+.appear-stage {
+  position: relative; width: 100%; aspect-ratio: 16 / 9;
+  border-radius: 14px; overflow: hidden;
+  background: var(--navy-950) center / cover no-repeat;
+  border: 0; padding: 0; display: grid; place-items: center;
+  box-shadow: 0 18px 44px -22px rgba(2,6,31,.55), 0 0 0 1px rgba(2,6,31,.08);
+}
+.appear-stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+/* Apple's player is a fixed-height audio widget, not a 16:9 video. Let that
+   card size to the player instead of forcing it into a video's shape. */
+.appear-stage-audio { aspect-ratio: auto; height: 175px; background: transparent; box-shadow: none; }
+
+.appear-facade { cursor: pointer; }
+.appear-facade::after {
+  content: ""; position: absolute; inset: 0;
+  background: rgba(2,6,31,.34); transition: background .35s var(--ease);
+}
+.appear-facade:hover::after, .appear-facade:focus-visible::after { background: rgba(2,6,31,.18); }
+.appear-facade .video-play { position: relative; z-index: 1; width: 62px; height: 62px; }
+.appear-facade:hover .video-play { transform: scale(1.07); }
+
+/* Ground for the cards with no artwork to hotlink. */
+.appear-stage-plain { background: linear-gradient(150deg, var(--navy-800), var(--navy-950)); }
+.appear-wordmark {
+  font-family: var(--f-label); font-weight: 600;
+  font-size: clamp(.95rem, 1.4vw, 1.15rem); letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(247,244,236,.42);
+}
+/* On a facade with no artwork the wordmark would sit directly under the play
+   button. Drop it to the corner so the two read as label and control rather
+   than one smudge. */
+.appear-facade .appear-wordmark {
+  position: absolute; left: 18px; bottom: 14px;
+  font-size: .78rem; letter-spacing: .16em;
+}
+
+.appear-meta { margin-top: 16px; }
+.appear-meta h3 {
+  font-family: var(--f-disp); font-weight: 600; letter-spacing: -.01em;
+  font-size: clamp(1.06rem, 1.4vw, 1.22rem); line-height: 1.25; color: var(--navy-900);
+}
+.appear-where { margin-top: 6px; font-size: .95rem; color: var(--muted); }
+.appear-note { color: var(--gold-600); }
+.appear .go { margin-top: 10px; }
+a.appear:hover .appear-meta h3 { color: var(--navy-700); }
+a.appear:hover .go { gap: .85em; color: var(--gold-600); border-color: var(--gold-500); }
+
+.on-ink .appear-meta h3, .phero .appear-meta h3 { color: var(--bone); }
+.on-ink .appear-where, .phero .appear-where { color: rgba(247,244,236,.72); }
+
+@media (prefers-reduced-motion: reduce) {
+  .appear-facade::after, .appear-facade .video-play { transition: none; }
+  .appear-facade:hover .video-play { transform: none; }
+}
+
+/* ------------------------------------------------------------------
+   SCRIPTURE — a verse set apart from the copy around it.
+
+   The brief was "somehow set it apart with font or whatever". Quote marks
+   would make it read as another testimonial, which is exactly what it is not,
+   so the separation is structural instead: a gold rule down the left, the
+   display face at reading size, and real space above and below. It sits after
+   a call to action, so it deliberately does NOT compete with the button.
+   ------------------------------------------------------------------ */
+.scripture { max-width: 60ch; padding-left: clamp(18px, 2vw, 28px); border-left: 2px solid var(--gold-500); }
+.scripture blockquote {
+  font-family: var(--f-disp); font-weight: 400; font-style: italic;
+  font-size: clamp(1.15rem, 1.7vw, 1.42rem); line-height: 1.45;
+  color: var(--navy-800); letter-spacing: -.01em; margin: 0;
+}
+.scripture cite {
+  display: block; margin-top: 12px; font-style: normal;
+  font-family: var(--f-mono); font-size: .8rem; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--gold-600);
+}
+.on-ink .scripture blockquote, .phero .scripture blockquote { color: var(--bone); }
+.on-ink .scripture cite, .phero .scripture cite { color: var(--gold-400); }
+
+.footer .fh { font-family: var(--f-label); font-weight: 600; font-size: .86rem; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-400); margin-bottom: 18px; }
 
 /* Visually hidden, still read by screen readers and parsed by crawlers.
    Used for headings that would be redundant on screen but keep the document
@@ -1167,3 +1267,34 @@ html.js .reveal-group.draw.in::after { transform: scaleX(1); }
   .q, .q::before { transition: none; }
   .q:hover { transform: none; }
 }
+
+
+/* CTA action buttons: compact, side by side, left-aligned to the paragraph
+   above. On desktop the row hugs its content (max-content) and extends into the
+   CTA's empty space so both fit on one line; it wraps on narrow screens. */
+.cta-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.cta-actions .btn { padding: .74rem 1.2rem; font-size: .9rem; white-space: nowrap; }
+@media (min-width: 720px) { .cta-actions { flex-wrap: nowrap; width: max-content; } }
+
+
+/* Bold the main offerings in the dark hero (phero) lead so the eye catches
+   them at a glance. */
+.phero .lead strong { font-weight: 700; color: inherit; }
+
+
+/* ---- Calendly popup, themed to the site (navy / bone) ------------------
+   Colours of the calendar itself come from pageSettings in useCalendly.js;
+   these rules restyle Calendly's injected overlay + popup shell. */
+.calendly-overlay { background-color: rgba(5, 10, 46, .62) !important; }
+.calendly-popup { border-radius: 18px !important; overflow: hidden !important;
+  box-shadow: 0 30px 90px rgba(2, 6, 31, .5) !important;
+  max-height: min(90vh, 780px) !important; }
+.calendly-popup .calendly-popup-content { border-radius: 18px !important; }
+/* swap Calendly's chunky grey scrollbar for a slim, on-brand one */
+.calendly-popup-content::-webkit-scrollbar { width: 8px; height: 8px; }
+.calendly-popup-content::-webkit-scrollbar-track { background: transparent; }
+.calendly-popup-content::-webkit-scrollbar-thumb {
+  background: rgba(10, 21, 104, .32); border-radius: 8px; }
+.calendly-popup-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(10, 21, 104, .5); }
+.calendly-popup-content { scrollbar-width: thin; scrollbar-color: rgba(10,21,104,.32) transparent; }
