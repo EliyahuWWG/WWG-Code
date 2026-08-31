@@ -952,16 +952,6 @@ html.js .reveal-group.draw.in::after { transform: scaleX(1); }
 
 /* Footer column labels. These were <h4> under an <h2>, which is a heading-level
    jump; they are <h2 class="fh"> now and keep the identical look. */
-/* Keeps a trailing mark from wrapping onto a line of its own, where it reads
-   as a mistake rather than a flourish. */
-.nowrap { white-space: nowrap; }
-
-/* Small drawn smile. Sized from the text it sits in and nudged onto the
-   baseline, so it reads as punctuation rather than a pasted-in sticker. */
-.smile { width: 1.05em; height: 1.05em; display: inline-block; vertical-align: -.16em;
-  margin-left: .12em; color: var(--gold-400); }
-.on-bone .smile, .prose .smile { color: var(--gold-600); }
-
 /* ------------------------------------------------------------------
    APPEARANCES — interview cards on the Speaking page.
 

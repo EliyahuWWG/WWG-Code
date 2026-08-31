@@ -1,7 +1,6 @@
 import Reveal from '../components/Reveal'
 import MaskLines from '../components/MaskLines'
 import Arrow from '../components/Arrow'
-import Smile from '../components/Smile'
 import Seo from '../components/Seo'
 import RoundtableForm from '../components/forms/RoundtableForm'
 import { breadcrumbSchema, roundtableEventSchema } from '../seo/schema'
@@ -28,7 +27,7 @@ export default function Roundtable() {
         <div className="container">
           <div className="eyebrow">Roundtable · free</div>
           <h1 className="h1 mt-3 balance"><MaskLines>A monthly table for leaders who want God in the room.</MaskLines></h1>
-          <p className="lead">We meet for two hours near Chantilly, Virginia, and we spend them together: talking honestly about the work, opening scripture, and praying over what is actually on our desks. There is no charge, and there is always <span className="nowrap">coffee waiting. <Smile /></span></p>
+          <p className="lead">We meet for two hours near Chantilly, Virginia, and we spend them together: talking honestly about the work, opening scripture, and praying over what is actually on our desks. There is no charge, and there is always coffee waiting.</p>
           <div className="row mt-3">
             <a href="#register" className="btn btn-onink btn-lg">Save your seat <Arrow /></a>
             <span className="phero-note">{ROUNDTABLE_TIME}</span>
