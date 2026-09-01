@@ -1,5 +1,8 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Reveal from '../components/Reveal'
+import Modal from '../components/Modal'
+import RoundtableForm from '../components/forms/RoundtableForm'
 import CTA from '../components/CTA'
 import Arrow from '../components/Arrow'
 import MaskLines from '../components/MaskLines'
@@ -9,6 +12,11 @@ import { roundtableWhatHappens, roundtableWhoShouldAttend, roundtableSponsorLabe
   MEETUP, ROUNDTABLE_ADDRESS, ROUNDTABLE_TIME, NEXT_ROUNDTABLE, SPONSOR } from '../data'
 
 export default function Events() {
+  // Registering used to mean leaving the page for /roundtable, which asked
+  // someone who had just decided to come to read a second page first. The form
+  // opens here instead. /roundtable still exists and still works, for anyone
+  // arriving from a link or with JavaScript off.
+  const [registerOpen, setRegisterOpen] = useState(false)
   return (
     <>
       <Seo
@@ -56,7 +64,14 @@ export default function Events() {
               <ul className="ticks mt-2">
                 {roundtableWhoShouldAttend.map(t => <li key={t}>{t}</li>)}
               </ul>
-              <div className="mt-3"><Link to="/roundtable" className="btn btn-solid">Register for the next Roundtable <Arrow /></Link></div>
+              <div className="mt-3">
+                <button type="button" className="btn btn-solid" onClick={() => setRegisterOpen(true)}>
+                  Register for the next Roundtable <Arrow />
+                </button>
+              </div>
+              <p className="mt-2 muted" style={{ fontSize: '.9rem' }}>
+                Or <Link className="tlink" style={{ display: 'inline' }} to="/roundtable">read more about the Roundtable</Link> first.
+              </p>
             </Reveal>
           </div>
         </div>
@@ -92,6 +107,11 @@ export default function Events() {
           </Reveal>
         </div>
       </section>
+
+      <Modal open={registerOpen} onClose={() => setRegisterOpen(false)} title="Save your seat at the next Roundtable">
+        <p className="muted" style={{ marginBottom: 18 }}>{ROUNDTABLE_TIME} · {ROUNDTABLE_ADDRESS}</p>
+        <RoundtableForm />
+      </Modal>
 
       <CTA label="(→) Come to the next one" title="There’s a seat for you at the Roundtable." text="It’s free, it’s in person, and it’s two hours well spent with other leaders inviting God into their daily work." showCoaching={false} />
     </>

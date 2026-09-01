@@ -126,9 +126,41 @@ function doPost(e) {
   }
 }
 
-// A GET is handy for confirming the deployment is live in a browser.
-function doGet() {
-  return json({ ok: true, note: 'WWG form endpoint is live. POST submissions here.' });
+/**
+ * Open this URL in a browser to test the setup without filling in a form.
+ * Paste the SAME address you gave Netlify, key and all, and it tells you which
+ * of the three things is wrong instead of leaving you guessing:
+ *
+ *   https://script.google.com/macros/s/.../exec?key=YOUR-SECRET
+ *
+ * keyAccepted:false  the ?key= does not match SECRET in this file
+ * sheetOk:false      SHEET_ID is wrong, or this account cannot open that sheet
+ */
+function doGet(e) {
+  const key = (e && e.parameter && e.parameter.key) || '';
+  const keyAccepted = !SECRET || key === SECRET;
+
+  var sheetOk = false, tabs = [], sheetName = '', problem = '';
+  try {
+    const ss = SpreadsheetApp.openById(SHEET_ID);
+    sheetName = ss.getName();
+    tabs = ss.getSheets().map(function (sh) { return sh.getName(); });
+    sheetOk = true;
+  } catch (err) {
+    problem = String(err);
+  }
+
+  return json({
+    ok: true,
+    keyAccepted: keyAccepted,
+    sheetOk: sheetOk,
+    sheet: sheetName,
+    tabs: tabs,
+    problem: problem,
+    verdict: !keyAccepted ? 'The key is wrong. Fix the ?key= on the Netlify webhook, or SECRET here.'
+           : !sheetOk     ? 'The key is fine. SHEET_ID is wrong or unreachable.'
+           : 'All good. Submissions will be recorded.',
+  });
 }
 
 /**

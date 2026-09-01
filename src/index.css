@@ -497,10 +497,17 @@ em, .serif-it { }
 .cta p { color: rgba(247,244,236,.8); }
 
 /* ---------- Page hero (full-viewport navy, like the home hero) ---------- */
+/* Interior page hero. Deliberately NOT a full screen: at 100vh the navy filled
+   the viewport exactly and the page looked like it ended there, so nobody
+   scrolled. Sizing it to ~76% leaves a band of the next section showing under
+   the fold, which is the only reliable signal that there is more below. */
 .phero { background: linear-gradient(180deg, var(--navy-950), var(--navy-900)); color: var(--bone);
-  min-height: 100vh; min-height: 100svh;
+  min-height: 76vh; min-height: 76svh;
   display: flex; flex-direction: column; justify-content: center;
-  padding: clamp(120px,16vh,180px) 0 clamp(64px,10vh,120px); position: relative; overflow: hidden; }
+  padding: clamp(104px,13vh,150px) 0 clamp(48px,7vh,88px); position: relative; overflow: hidden; }
+/* Short viewports (laptops at 1366x768, phones in landscape) have no room to
+   spare, so let the hero shrink to its content rather than forcing the band. */
+@media (max-height: 700px) { .phero { min-height: 0; } }
 .phero .h1 { color: var(--bone); max-width: 18ch; }
 .phero .lead { color: rgba(247,244,236,.8); max-width: 58ch; margin-top: 24px; }
 
@@ -1288,3 +1295,51 @@ a.appear:hover .go { gap: .85em; color: var(--gold-600); border-color: var(--gol
 .calendly-popup-content::-webkit-scrollbar-thumb:hover {
   background: rgba(10, 21, 104, .5); }
 .calendly-popup-content { scrollbar-width: thin; scrollbar-color: rgba(10,21,104,.32) transparent; }
+
+/* ------------------------------------------------------------------
+   MODAL — native <dialog>, so the browser owns the top layer, the
+   backdrop and Escape. We only style it.
+   ------------------------------------------------------------------ */
+.modal {
+  border: 0; padding: 0; background: transparent;
+  max-width: min(560px, calc(100vw - 32px)); width: 100%;
+  max-height: calc(100vh - 48px);
+  color: var(--ink);
+  /* The browser centres a <dialog> with margin:auto, but the global reset in
+     this sheet zeroes margins on everything, which drops it into the top-left
+     corner. Put it back explicitly rather than carving an exception into the
+     reset. */
+  margin: auto;
+}
+.modal::backdrop { background: rgba(2, 6, 31, .62); backdrop-filter: blur(3px); }
+
+.modal-panel {
+  position: relative;
+  background: var(--bone); border-radius: 16px;
+  padding: clamp(24px, 4vw, 38px);
+  box-shadow: 0 40px 90px -30px rgba(2,6,31,.6), 0 0 0 1px rgba(2,6,31,.08);
+  max-height: calc(100vh - 48px); overflow-y: auto;
+  /* Room for the close button so a long title never runs under it. */
+  padding-right: clamp(24px, 4vw, 38px);
+}
+.modal-title { margin-right: 40px; }
+
+.modal-x {
+  position: absolute; top: 10px; right: 12px;
+  width: 40px; height: 40px; border: 0; border-radius: 50%;
+  background: transparent; color: var(--muted);
+  font-size: 30px; line-height: 1; cursor: pointer;
+  transition: background .2s var(--ease), color .2s var(--ease);
+}
+.modal-x:hover { background: rgba(2,6,31,.07); color: var(--ink); }
+.modal-x:focus-visible { outline: 2px solid var(--gold-500); outline-offset: 2px; }
+
+/* The form inside a dialog does not need its own top margin. */
+.modal .form { margin-top: 0; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .modal[open] { animation: modal-in .22s var(--ease) both; }
+  .modal[open]::backdrop { animation: modal-fade .22s var(--ease) both; }
+}
+@keyframes modal-in { from { opacity: 0; transform: translateY(10px) scale(.985); } }
+@keyframes modal-fade { from { opacity: 0; } }

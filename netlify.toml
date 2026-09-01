@@ -21,7 +21,7 @@
   # - so a form endpoint set in the Netlify UI would be flagged as a leaked
   # secret and kill the deploy. These keys are public by definition; omit them.
   # Never add a genuinely secret key to this list.
-  SECRETS_SCAN_OMIT_KEYS = "VITE_FORM_ENDPOINT,VITE_SITE_ENV"
+  SECRETS_SCAN_OMIT_KEYS = "VITE_FORM_ENDPOINT,VITE_SHEET_ENDPOINT,VITE_SITE_ENV"
 
 # ---- Content-hashed assets: immutable. --------------------------------
 # Everything under /assets/ carries a Vite content hash, so a changed file is

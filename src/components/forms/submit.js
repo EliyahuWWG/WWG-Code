@@ -1,13 +1,20 @@
 // Host-agnostic form submission.
 //
-// - If VITE_FORM_ENDPOINT is set (Formspree / Web3Forms), POST the FormData there.
+// - If VITE_FORM_ENDPOINT is set (Formspree / Web3Forms), POST the FormData
+//   there instead of to Netlify.
 // - Otherwise POST to "/" for Netlify Forms. For Netlify to accept these, a
 //   static HTML copy of each form (matching `form-name` + field names) lives in
 //   index.html so the build-time crawler registers it. See index.html.
 //
-// TODO(client): decide where submissions are delivered (see spec §14 Q2) and set
-// VITE_FORM_ENDPOINT if not deploying to Netlify.
+// VITE_SHEET_ENDPOINT is separate and additive: the Google Apps Script address,
+// key and all. When set, every submission is ALSO sent straight from the
+// browser to the spreadsheet, which takes Netlify's outgoing webhook out of the
+// chain. Worth doing, because that webhook is the one link here nobody can see
+// working or failing: Netlify reports nothing about it, and Apps Script only
+// logs a call it actually receives. Netlify Forms stays the record of truth
+// either way, so if this second request fails the submission is still safe.
 const ENDPOINT = import.meta.env.VITE_FORM_ENDPOINT || ''
+const SHEET_ENDPOINT = (import.meta.env.VITE_SHEET_ENDPOINT || '').trim()
 
 export async function submitForm(formName, data) {
   const fd = data instanceof FormData ? data : toFormData(data)
@@ -31,6 +38,26 @@ export async function submitForm(formName, data) {
       : (hasFile ? undefined : { 'Content-Type': 'application/x-www-form-urlencoded' }),
   })
   if (!res.ok) throw new Error(`Submit failed (${res.status})`)
+
+  // Fire-and-forget. Deliberately not awaited and deliberately swallowed: the
+  // person has already submitted successfully at this point, and a spreadsheet
+  // that is briefly behind is not a reason to show them an error.
+  if (SHEET_ENDPOINT && !ENDPOINT) sendToSheet(fd)
+}
+
+// `no-cors` because Apps Script publishes no CORS headers and redirects /exec
+// to another host. We cannot read the reply, and do not need to. Keeping the
+// body urlencoded makes this a "simple" request, so there is no preflight to be
+// refused either.
+function sendToSheet(fd) {
+  try {
+    fetch(SHEET_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      keepalive: true,          // survives the page navigating away
+      body: new URLSearchParams(stripEmptyFiles(fd)),
+    }).catch(() => {})
+  } catch { /* never let this affect the visitor */ }
 }
 
 // An untouched <input type="file"> still yields an empty File in the FormData,
