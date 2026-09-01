@@ -11,7 +11,7 @@ export default function Footer() {
             <Link to="/" className="footer-brand" aria-label="Working With God, home">
               <img src="/wwg-logo.jpg" alt="Working With God" width="300" height="300" loading="lazy" decoding="async" />
             </Link>
-            <p className="fdesc">Lead as the CHIEF’S Executive Officer, working with God, not just for Him. Faith-based leadership coaching, a two-day Master’s Class, and free community events. {SERVICE_AREA}.</p>
+            <p className="fdesc">Lead as the CHIEF’S Executive Officer, working with God, not just for Him. Faith-based professional coaching, a two-day Master’s Class, and free community events.</p>
           </div>
           <div>
             <h2 className="fh">Explore</h2>
@@ -19,9 +19,9 @@ export default function Footer() {
             <Link className="fl" to="/events">Events</Link>
             <Link className="fl" to="/the-book">The Book</Link>
             <Link className="fl" to="/speaking">Speaking</Link>
-            <Link className="fl" to="/blog">Writing</Link>
+            {/* Writing hidden until the writing pages are reviewed. */}
+            {/* <Link className="fl" to="/blog">Writing</Link> */}
             <Link className="fl" to="/about">About Eliyahu</Link>
-            <Link className="fl" to="/contact">Contact</Link>
           </div>
           <div>
             <h2 className="fh">Get in touch</h2>
@@ -29,6 +29,7 @@ export default function Footer() {
             <a className="fl" href={`mailto:${EMAIL}`}>{EMAIL}</a>
             <a className="fl" href={MEETUP} target="_blank" rel="noopener">Join on Meetup</a>
             <a className="fl" href={LINKEDIN} target="_blank" rel="noopener">LinkedIn</a>
+            <Link className="fl" to="/contact">Contact</Link>
           </div>
         </div>
         <div className="fbot">
