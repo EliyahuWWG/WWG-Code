@@ -61,7 +61,7 @@ export default function RoundtableForm() {
       </div>
       <div>
         <button className="btn btn-solid btn-lg" disabled={state === 'sending'}>
-          {state === 'sending' ? 'Sending…' : 'SEND TO REGISTER'}
+          {state === 'sending' ? 'Sending…' : 'REGISTER'}
         </button>
       </div>
       {state === 'error' && (

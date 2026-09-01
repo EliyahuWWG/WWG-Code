@@ -118,7 +118,9 @@ body {
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
-::selection { background: var(--gold-400); color: var(--navy-950); }
+/* A tint, not a highlighter. At full --gold-400 any dragged paragraph looked
+   like it had been marked up in the page itself. */
+::selection { background: rgba(214,168,74,.32); color: inherit; }
 
 /* ---------- Focus (keyboard) ---------- */
 :focus-visible { outline: 2px solid var(--gold-600); outline-offset: 3px; border-radius: 2px; }
@@ -1343,3 +1345,38 @@ a.appear:hover .go { gap: .85em; color: var(--gold-600); border-color: var(--gol
 }
 @keyframes modal-in { from { opacity: 0; transform: translateY(10px) scale(.985); } }
 @keyframes modal-fade { from { opacity: 0; } }
+
+/* Phones. A centred card is wrong here: once the on-screen keyboard opens it
+   eats half the viewport, and a vertically-centred panel gets shoved off the
+   top with the submit button unreachable. Dock it to the bottom instead, size
+   it in dvh so the keyboard is accounted for, and let it scroll internally. */
+@media (max-width: 560px) {
+  .modal {
+    max-width: 100%; width: 100%;
+    max-height: 92dvh;
+    margin: auto auto 0;          /* bottom sheet */
+  }
+  .modal-panel {
+    border-radius: 18px 18px 0 0;
+    max-height: 92dvh;
+    padding: 26px 20px calc(26px + env(safe-area-inset-bottom));
+    /* iOS momentum scrolling inside the sheet rather than dragging the page. */
+    overscroll-behavior: contain;
+  }
+  .modal-x { top: 6px; right: 6px; }
+  .modal-title { font-size: 1.28rem; margin-right: 44px; line-height: 1.2; }
+  /* Tighten the vertical rhythm so the submit button lands above the fold on a
+     small phone instead of below a scroll nobody realises is there. */
+  .modal-panel > p { font-size: .9rem; line-height: 1.45; margin-bottom: 14px !important; }
+  .modal .field { margin-bottom: 2px; }
+  .modal .field label { font-size: .85rem; }
+  .modal .field input { padding-top: 6px; padding-bottom: 6px; }
+  /* Two columns of inputs is unusable at this width. */
+  .modal .form .grid, .modal .form .grid.two { grid-template-columns: 1fr; }
+  /* A full-width tap target at the bottom of the sheet. */
+  .modal .form .btn { width: 100%; justify-content: center; }
+  @media (prefers-reduced-motion: no-preference) {
+    .modal[open] { animation: sheet-in .26s var(--ease) both; }
+  }
+}
+@keyframes sheet-in { from { opacity: 0; transform: translateY(24px); } }

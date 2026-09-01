@@ -45,15 +45,7 @@ export default function Events() {
           </div>
 
           <div className="grid two mt-4" style={{ alignItems: 'start' }}>
-            <Reveal className="stack-tight">
-              <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>When</b><br /><span className="muted">{ROUNDTABLE_TIME}</span></div>
-              <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>Where</b><br /><span className="muted">Private room at Starbucks · {ROUNDTABLE_ADDRESS}</span></div>
-              {/* Both of these come from the monthly block at the top of
-                  src/data.js. The sponsor label follows the date's month. */}
-              <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>Next meeting</b><br /><span className="muted">{NEXT_ROUNDTABLE}</span></div>
-              <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>{roundtableSponsorLabel()}</b><br /><span className="muted">{SPONSOR}</span></div>
-            </Reveal>
-            <Reveal delay={0.05}>
+            <Reveal>
               <div className="label">What happens in the room</div>
               <ul className="ticks mt-2">
                 {roundtableWhatHappens.map(t => <li key={t}>{t}</li>)}
@@ -72,6 +64,14 @@ export default function Events() {
               <p className="mt-2 muted" style={{ fontSize: '.9rem' }}>
                 Or <Link className="tlink" style={{ display: 'inline' }} to="/roundtable">read more about the Roundtable</Link> first.
               </p>
+            </Reveal>
+            <Reveal className="stack-tight" delay={0.05}>
+              <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>When</b><br /><span className="muted">{ROUNDTABLE_TIME}</span></div>
+              <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>Where</b><br /><span className="muted">Private room at Starbucks · {ROUNDTABLE_ADDRESS}</span></div>
+              {/* Both of these come from the monthly block at the top of
+                  src/data.js. The sponsor label follows the date's month. */}
+              <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>Next meeting</b><br /><span className="muted">{NEXT_ROUNDTABLE}</span></div>
+              <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>{roundtableSponsorLabel()}</b><br /><span className="muted">{SPONSOR}</span></div>
             </Reveal>
           </div>
         </div>

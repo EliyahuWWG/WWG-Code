@@ -75,8 +75,12 @@ describe('roundtable registration matches the form it replaces', () => {
   it('collects the same four fields', () => {
     for (const f of ['name', 'email', 'phone', 'org']) expect(src).toContain(`name="${f}"`)
   })
-  it('keeps his button wording', () => {
-    expect(src).toContain('SEND TO REGISTER')
+  // Was "SEND TO REGISTER", copied from his original form. He asked for plain
+  // "REGISTER" once the form started appearing in a dialog, where "send"
+  // described the wrong action.
+  it('uses the register wording, not send', () => {
+    expect(src).toContain('REGISTER')
+    expect(src).not.toContain('SEND TO REGISTER')
   })
   it('requires email and organization, but not name or phone', () => {
     expect(src).toMatch(/email:\s*emailRule/)
