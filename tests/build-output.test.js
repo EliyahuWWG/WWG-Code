@@ -140,3 +140,24 @@ describe.skipIf(!has)('build output', () => {
     expect(robots).toContain('Sitemap:')
   })
 })
+
+describe('analytics never ships a placeholder', () => {
+  // The old index.html carried G-XXXXXXXXXX and CLARITY_PROJECT_ID inline, so
+  // every visitor opened a connection to Google and Microsoft to report to
+  // accounts that did not exist. This is the guard against that returning.
+  const pages = ['index.html', 'about/index.html', 'roundtable/index.html']
+
+  for (const page of pages) {
+    it(`${page} has no placeholder analytics ID`, () => {
+      const html = read(page)
+      expect(html).not.toMatch(/G-X{4,}/)
+      expect(html).not.toContain('CLARITY_PROJECT_ID')
+    })
+  }
+
+  it('loads no third-party analytics when no ID is configured', () => {
+    const html = read('index.html')
+    expect(html).not.toContain('googletagmanager.com/gtag/js')
+    expect(html).not.toContain('clarity.ms/tag/')
+  })
+})

@@ -2,3 +2,7 @@ node_modules
 dist
 .DS_Store
 *.local
+
+# Real keys live here, never committed. See .env.example
+.env
+.env.local

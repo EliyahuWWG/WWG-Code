@@ -1,0 +1,721 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Website deployment guide</title>
+<style>
+/* ── EchoPulse ──────────────────────────────────────────────────────────
+   Sampled from echopulse.media, not guessed:
+     #0C0C0B  near-black. Dark sections, headlines, the CTA pills.
+     #E8541A  the orange. The accent phrase, used sparingly.
+     #F2EEE7  warm off-white. Type on dark, and the sunk panels here.
+     #F29730  the lighter orange inside the logo mark.
+     #716E67  warm grey for secondary type.
+   The brand is sans-only and alternates dark against white, so this document
+   does the same: dark cover, white interior, orange once or twice a page.
+   ──────────────────────────────────────────────────────────────────────── */
+:root{
+  --ground:#FFFFFF; --paper:#FFFFFF; --sunk:#F2EEE7;
+  --ink:#0C0C0B; --ink-2:#3A3833; --muted:#716E67;
+  --rule:#E5E2DC; --rule-2:#C9C5BC;
+  --orange:#E8541A; --orange-2:#F29730; --orange-bg:#FDEDE6;
+  --warn:#A85E10; --warn-bg:#FDF3E5;
+  --stop:#C0331A; --stop-bg:#FCEAE5;
+  --dark:#0C0C0B; --on-dark:#F2EEE7;
+}
+@page{ size:A4; margin:15mm 16mm 14mm; }
+@page :first{ margin:0; }
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--ground); color:var(--ink);
+  font-family:"DejaVu Sans",Verdana,"Liberation Sans",sans-serif;
+  font-size:10.6pt; line-height:1.66;
+  -webkit-print-color-adjust:exact; print-color-adjust:exact;
+}
+h1,h2,h3,h4{font-family:"Liberation Sans",Helvetica,Arial,sans-serif; font-weight:700;
+  letter-spacing:-.025em; margin:0; color:var(--ink)}
+p{margin:0}
+strong{font-weight:700}
+code,.mono{font-family:"DejaVu Sans Mono","Liberation Mono",monospace; font-size:.85em}
+code{background:var(--sunk); padding:.08em .3em; border-radius:2px; word-break:break-word}
+
+/* ── Cover ─────────────────────────────────────────────────────────────── */
+.cover{height:297mm; width:210mm; background:var(--dark); color:var(--on-dark); padding:20mm 18mm 18mm; display:flex; flex-direction:column; justify-content:space-between; page-break-after:always; break-after:page}
+.brandmark{display:flex; align-items:center; gap:9px}
+.pulse{width:26px;height:26px;flex:none}
+.cover .brandmark .n{color:var(--on-dark)}
+.cover .pulse rect:first-child{fill:#F2EEE7}
+.brandmark .n{font-family:"Liberation Sans",Helvetica,sans-serif; font-weight:700; font-size:14pt; letter-spacing:-.02em}
+.brandmark .n em{font-style:normal; color:var(--orange)}
+.cover-mid h1{color:var(--on-dark); font-size:33pt; line-height:1.1; letter-spacing:-.02em; max-width:15cm}
+.cover-mid .sub{font-size:12.8pt; color:rgba(242,238,231,.72); margin-top:9mm; max-width:12.5cm; line-height:1.5}
+.cover-rule{height:4px; background:var(--orange); width:30mm; margin:7mm 0}
+.cover-foot{border-top:1px solid rgba(242,238,231,.22); padding-top:5mm; display:flex; justify-content:space-between; font-size:9pt; color:rgba(242,238,231,.6)}
+.cover-foot b{color:var(--on-dark); font-weight:700}
+
+/* ── Structure ─────────────────────────────────────────────────────────── */
+.part{margin-top:14mm; page-break-inside:auto}
+.part:first-of-type{margin-top:0}
+.part-head{border-top:3px solid var(--orange); padding-top:4.4mm; margin-bottom:5mm;
+  page-break-inside:avoid; break-inside:avoid; page-break-after:avoid; break-after:avoid}
+.part-num{font-family:"DejaVu Sans Mono",monospace; font-size:8.4pt; letter-spacing:.18em; text-transform:uppercase; color:var(--orange); font-weight:700}
+.part-head h2{font-size:20.5pt; line-height:1.14; margin-top:2mm; letter-spacing:-.015em}
+.part-head .why{font-size:11.7pt; color:var(--ink-2); margin-top:3mm; max-width:14cm}
+h3{font-size:13.6pt; margin-top:5.2mm; margin-bottom:2.2mm;
+  page-break-after:avoid; break-after:avoid}
+.time{display:inline-block; background:var(--orange-bg); color:var(--orange); font-size:8.5pt;
+  font-weight:700; padding:1.8mm 3.6mm; border-radius:9px; margin-top:3mm; font-size:9.4pt}
+
+/* ── Steps ─────────────────────────────────────────────────────────────── */
+ol.steps{list-style:none; margin:4mm 0 0; padding:0}
+/* Plain numerals, matching how echopulse.media numbers things (01, 02, 03)
+   rather than the filled circles I first used. It is also the fix for a
+   Chromium print bug: a filled marker inside a grid item gets its background
+   painted at the page boundary even when break-inside says avoid, stranding a
+   sliver of orange at the foot of the page. A glyph has no box to strand. */
+ol.steps>li{display:grid; grid-template-columns:8mm 1fr; column-gap:3mm;
+  margin-bottom:4.4mm; page-break-inside:avoid; break-inside:avoid}
+.snum{grid-column:1; grid-row:1; color:var(--orange);
+  font-family:"DejaVu Sans Mono",monospace; font-size:9.4pt; font-weight:700;
+  letter-spacing:.02em; padding-top:.6mm}
+.sbody{grid-column:2; grid-row:1}
+.sbody>*+*{margin-top:1.8mm}
+.said{color:var(--muted); font-size:10.5pt; font-style:italic}
+
+/* ── Blocks ────────────────────────────────────────────────────────────── */
+.box{background:var(--paper); border:1px solid var(--rule); border-radius:3px;
+  padding:3.6mm 4.6mm; margin:3.2mm 0; page-break-inside:avoid; break-inside:avoid}
+.flag{border-left:3px solid; border-radius:2px; padding:3.2mm 4.4mm; margin:3.2mm 0; page-break-inside:avoid; break-inside:avoid}
+.flag b{display:block; font-size:10.6pt; margin-bottom:1.2mm}
+.flag p{font-size:10.7pt; color:var(--ink-2)}
+.f-warn{background:var(--warn-bg); border-color:var(--warn)} .f-warn b{color:var(--warn)}
+.f-stop{background:var(--stop-bg); border-color:var(--stop)} .f-stop b{color:var(--stop)}
+.f-ok{background:var(--sunk); border-color:var(--ink)} .f-ok b{color:var(--ink)}
+.type{background:var(--sunk); border:1px dashed var(--rule-2); border-radius:3px;
+  padding:2.8mm 3.8mm; margin:2.6mm 0; font-family:"DejaVu Sans Mono","Liberation Mono",monospace; font-size:9.2pt;
+  color:var(--ink); word-break:break-all; page-break-inside:avoid; break-inside:avoid}
+.type .lbl{display:block; font-family:"DejaVu Sans",Verdana,sans-serif; font-size:8.6pt; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--muted); margin-bottom:1.5mm; font-weight:700}
+
+table{border-collapse:collapse; width:100%; font-size:10.5pt; margin:3.2mm 0; page-break-inside:avoid; break-inside:avoid}
+th,td{text-align:left; padding:3mm 3.4mm; border-bottom:1px solid var(--rule); vertical-align:top}
+th{background:var(--sunk); font-size:8.8pt; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-2); font-weight:700}
+tr:last-child td{border-bottom:0}
+
+ul.plain{margin:2.5mm 0 0; padding-left:5mm}
+ul.plain li{margin-bottom:1.1mm}
+ul.plain li::marker{color:var(--orange)}
+
+.toc li{display:flex; gap:4mm; padding:2.1mm 0; border-bottom:1px solid var(--rule); font-size:11.4pt}
+.toc .n{font-family:"Liberation Mono",monospace; color:var(--orange); font-weight:700; width:11mm; flex:none}
+.toc .t{flex:1} .toc .m{color:var(--muted); font-size:10.4pt}
+ul.toc{list-style:none; margin:4mm 0 0; padding:0;
+  page-break-inside:avoid; break-inside:avoid}
+</style>
+</head>
+<body>
+
+<!-- ══ COVER ══ -->
+<section class="cover">
+  <div class="brandmark">
+    <svg class="pulse" viewBox="0 0 32 32" aria-hidden="true">
+      <rect x="0" y="0" width="32" height="32" rx="9" fill="#0C0C0B"/>
+      <rect x="7"    y="9"    width="18"   height="3.4" rx="1.7" fill="#F29730"/>
+      <rect x="11.5" y="14.3" width="13.5" height="3.4" rx="1.7" fill="#E8541A"/>
+      <rect x="7"    y="19.6" width="18"   height="3.4" rx="1.7" fill="#E8541A"/>
+    </svg>
+    <span class="n">Echo<em>Pulse</em></span>
+  </div>
+
+  <div class="cover-mid">
+    <div class="cover-rule"></div>
+    <h1>Website<br>deployment <em style="font-style:italic;color:var(--orange)">guide.</em></h1>
+    <p class="sub">Everything you need to do, in order, with nothing assumed.
+      If you can fill in a form online, you can do all of this. Take your time,
+      and do not skip a step just because it looks small.</p>
+  </div>
+
+  <div class="cover-foot">
+    <div>Prepared for <b>Dr. Eliyahu Lotzar</b><br>Working With God &middot; workingwithgod.live</div>
+    <div style="text-align:right">Prepared by <b>EchoPulse</b><br>Version 1</div>
+  </div>
+</section>
+
+<!-- ══ BEFORE YOU START ══ -->
+<section class="part">
+  <div class="part-head">
+    <div class="part-num">Start here</div>
+    <h2>Before you begin</h2>
+    <p class="why">Six things to set up. They build on each other, so please do them in order.
+      Part 1 is the important one; everything after it is measurement.</p>
+  </div>
+
+  <h3>What you need</h3>
+  <ul class="plain">
+    <li>A computer with a web browser. A phone will not work for this.</li>
+    <li>Your Google account, signed in.</li>
+    <li>About <strong>45 minutes</strong> in total. You can stop between parts and come back.</li>
+    <li>A quiet hour. Some steps involve copying long codes, and it is easy to lose one character.</li>
+  </ul>
+
+  <div class="flag f-ok">
+    <b>You cannot break anything</b>
+    <p>Nothing in this guide deletes data or costs money. If a screen does not look like the
+      description, stop and send us a screenshot rather than guessing. That is always the right move.</p>
+  </div>
+
+  <div class="box">
+    <p><strong>A note on the words.</strong> A few names come up repeatedly.
+      <strong>Netlify</strong> is the company that stores your website and shows it to visitors.
+      <strong>GoDaddy</strong> is where your web address <code>workingwithgod.live</code> is registered.
+      <strong>Google Apps Script</strong> is a small program that lives inside your own spreadsheet.
+      You do not need to understand any of them beyond that.</p>
+  </div>
+
+  <h3>What you will have when you finish</h3>
+  <ul class="toc">
+    <li><span class="n">01</span><span class="t">Registrations arrive in your email and a spreadsheet<br>
+      <span class="m">A tab for each month, and a Notes column that is yours</span></span></li>
+    <li><span class="n">02</span><span class="t">The new website is live on the internet<br>
+      <span class="m">On a temporary address first, so we can check it safely</span></span></li>
+    <li><span class="n">03</span><span class="t">workingwithgod.live points at the new site<br>
+      <span class="m">Your email keeps working throughout</span></span></li>
+    <li><span class="n">04</span><span class="t">Google Analytics tells you who visits<br>
+      <span class="m">How many people, from where, which pages</span></span></li>
+    <li><span class="n">05</span><span class="t">Google Search Console shows how people find you<br>
+      <span class="m">What they typed into Google before they landed</span></span></li>
+    <li><span class="n">06</span><span class="t">Microsoft Clarity records how people use the site<br>
+      <span class="m">Where they scroll, where they click, where they give up</span></span></li>
+  </ul>
+
+
+</section>
+
+<!-- ══ PART 1 ══ -->
+<section class="part">
+  <div class="part-head">
+    <div class="part-num">Part 01</div>
+    <h2>Registrations into your inbox and a spreadsheet</h2>
+    <p class="why">Right now, when someone registers for the Roundtable, nothing happens on the new site.
+      This part makes two things happen at once: an email arrives for you, and a row appears in a
+      spreadsheet that belongs to you.</p>
+    <span class="time">About 15 minutes</span>
+  </div>
+
+  <h3>Step by step</h3>
+  <ol class="steps">
+      <li>
+        <span class="snum">01</span>
+        <div class="sbody">
+          <p>Go to <code>sheets.google.com</code> and click the big <strong>+</strong> to make a blank spreadsheet.</p>
+      <p>Name it <strong>WWG Registrations</strong> by clicking "Untitled spreadsheet" at the top left.</p>
+        </div>
+      </li>
+      <li>
+        <span class="snum">02</span>
+        <div class="sbody">
+          <p>Look at the web address at the top of your browser. It is long. You need the middle part of it.</p>
+      <div class="type"><span class="lbl">The address looks like this</span>docs.google.com/spreadsheets/d/<strong>1AbC…longcode…XyZ</strong>/edit</div>
+      <p>Copy the bold part, between <code>/d/</code> and <code>/edit</code>. That is your
+        <strong>Sheet ID</strong>. Paste it somewhere safe for a moment.</p>
+        </div>
+      </li>
+      <li>
+        <span class="snum">03</span>
+        <div class="sbody">
+          <p>In the spreadsheet menu, click <strong>Extensions</strong>, then <strong>Apps Script</strong>.
+        A new tab opens with a code editor.</p>
+      <p class="said">Do not be put off by this. You will paste something in and never look at it again.</p>
+        </div>
+      </li>
+      <li>
+        <span class="snum">04</span>
+        <div class="sbody">
+          <p>Select everything already in that editor and delete it. Then paste in the file we sent you
+        called <code>Code.gs</code>.</p>
+        </div>
+      </li>
+      <li>
+        <span class="snum">05</span>
+        <div class="sbody">
+          <p>Near the top of what you pasted, find three lines and fill them in. Keep the quote marks.</p>
+      <div class="type"><span class="lbl">Change these three</span>
+        SHEET_ID&nbsp;&nbsp;= 'paste your Sheet ID here'<br>
+        NOTIFY_TO = 'eliyahu@workingwithgod.live'<br>
+        SECRET&nbsp;&nbsp;&nbsp;&nbsp;= 'a long random password you invent'
+      </div>
+      <p>For <strong>SECRET</strong>, type a long jumble of letters and numbers. Twenty characters or
+        more. You will need it again in one minute, so keep it on screen.</p>
+        </div>
+      </li>
+      <li>
+        <span class="snum">06</span>
+        <div class="sbody">
+          <p>Click the <strong>Save</strong> icon, then the blue <strong>Deploy</strong> button at the top
+        right, then <strong>New deployment</strong>.</p>
+      <p>Click the gear icon next to "Select type" and choose <strong>Web app</strong>.</p>
+        </div>
+      </li>
+      <li>
+        <span class="snum">07</span>
+        <div class="sbody">
+          <p>Two dropdowns appear. Set them exactly like this:</p>
+      <div class="type"><span class="lbl">These two settings matter</span>
+        Execute as: &nbsp;&nbsp;&nbsp;&nbsp;Me<br>
+        Who has access: Anyone
+      </div>
+      <div class="flag f-stop">
+        <b>"Anyone" — not "Anyone with a Google Account"</b>
+        <p>These sit next to each other and the second one sounds safer. It is the wrong choice, and
+          if you pick it, registrations will silently vanish. Read the option twice before clicking Deploy.</p>
+      </div>
+        </div>
+      </li>
+      <li>
+        <span class="snum">08</span>
+        <div class="sbody">
+          <p>Click <strong>Deploy</strong>. Google asks you to authorise. Click through, choose your account,
+        and you will hit a warning screen that says <em>Google hasn't verified this app</em>.</p>
+      <div class="flag f-warn">
+        <b>This warning is expected</b>
+        <p>It appears for every private script that has not been submitted to Google for review.
+          Yours never will be, because only you use it. Click <strong>Advanced</strong> at the bottom
+          left, then <strong>Go to (your project name)</strong>, then <strong>Allow</strong>.</p>
+      </div>
+        </div>
+      </li>
+      <li>
+        <span class="snum">09</span>
+        <div class="sbody">
+          <p>Google now shows you a <strong>Web app URL</strong> ending in <code>/exec</code>. Copy it.</p>
+      <p>Add your secret to the end of it, with <code>?key=</code> in between and no spaces anywhere:</p>
+      <div class="type"><span class="lbl">The finished address</span>https://script.google.com/…/exec<strong>?key=your-secret-here</strong></div>
+      <p>Send that whole address to us. That is the last thing we need from Part 1.</p>
+      <div class="flag f-stop">
+        <b>Treat this address like a password</b>
+        <p>Anyone who has it can write rows into your spreadsheet. Do not put it in a screenshot,
+          a shared document, or a social post. Email it to us and leave it there.</p>
+      </div>
+        </div>
+      </li>
+    </ol>
+
+  <h3>How you will know it worked</h3>
+  <p>Once we connect it, register on the site yourself using your own email address. Within a minute
+    you should see an email arrive, and a new tab appear in the spreadsheet named for the current month,
+    with your details in it.</p>
+
+  <div class="box">
+    <p><strong>About the spreadsheet.</strong> A fresh tab is created for each month automatically, named
+      like <code>2026-09</code>. Newest month sits on the left. The last column is called
+      <strong>Notes</strong> and nothing ever writes to it, so it is yours: jot down who turned up,
+      who to follow up with, anything you like.</p>
+  </div>
+</section>
+
+<!-- ══ PART 2 ══ -->
+<section class="part">
+  <div class="part-head">
+    <div class="part-num">Part 02</div>
+    <h2>Putting the website live</h2>
+    <p class="why">The new site needs a home on the internet. That is Netlify. We do most of this,
+      but two switches are yours, and the site cannot receive registrations without them.</p>
+    <span class="time">About 5 minutes</span>
+  </div>
+
+  <ol class="steps">
+      <li>
+        <span class="snum">01</span>
+        <div class="sbody">
+          <p>Sign in at <code>app.netlify.com</code>. You will see your site listed. Click it.</p>
+      <p>At the top there is a temporary web address ending in <code>.netlify.app</code>. Click it and
+        have a look around the new site. Nothing here is public yet.</p>
+        </div>
+      </li>
+      <li>
+        <span class="snum">02</span>
+        <div class="sbody">
+          <p>In the left menu click <strong>Site configuration</strong>, then <strong>Forms</strong>.</p>
+      <p>Turn on <strong>Form detection</strong>.</p>
+        </div>
+      </li>
+      <li>
+        <span class="snum">03</span>
+        <div class="sbody">
+          <p>Now go to <strong>Deploys</strong> in the top menu, click <strong>Trigger deploy</strong>,
+        then <strong>Deploy site</strong>. Wait until it says <em>Published</em>, usually under two minutes.</p>
+      <div class="flag f-warn">
+        <b>Do not skip this rebuild</b>
+        <p>Netlify only looks for your form while it is building the site. Turning the switch on does
+          nothing to the version already published. Without this rebuild, the switch is decorative.</p>
+      </div>
+        </div>
+      </li>
+      <li>
+        <span class="snum">04</span>
+        <div class="sbody">
+          <p>Go to <strong>Site configuration</strong>, then <strong>Notifications</strong>, then
+        <strong>Emails and webhooks</strong>.</p>
+      <p>Add a <strong>Form submission notification</strong>, choose the <code>roundtable</code> form,
+        and enter your email address.</p>
+      <p class="said">If this option asks you to upgrade to a paid plan, stop and tell us. There is a
+        free way round it and we have already written it.</p>
+        </div>
+      </li>
+    </ol>
+</section>
+
+<!-- ══ PART 3 ══ -->
+<section class="part">
+  <div class="part-head">
+    <div class="part-num">Part 03</div>
+    <h2>Pointing workingwithgod.live at the new site</h2>
+    <p class="why">Your web address currently points at the old GoDaddy site. This changes where it
+      points. It is the only step in this guide that carries any real risk, so read the warning first.</p>
+    <span class="time">About 10 minutes, then a wait</span>
+  </div>
+
+  <div class="flag f-stop">
+    <b>Your email runs on this same address</b>
+    <p>Because you receive mail at <code>eliyahu@workingwithgod.live</code>, changing the wrong setting
+      here stops your email, quietly, for everyone writing to you. We change only two entries and leave
+      everything else exactly as it is. If GoDaddy ever offers to "change nameservers" or "connect to
+      another host" automatically, say no and call us.</p>
+  </div>
+
+  <ol class="steps">
+      <li>
+        <span class="snum">01</span>
+        <div class="sbody">
+          <p>Sign in at GoDaddy. Find <code>workingwithgod.live</code> in your products, then open
+        <strong>DNS</strong> or <strong>Manage DNS</strong>.</p>
+      <p>You will see a table of rows with columns like Type, Name and Value. This is the address book
+        that tells the internet where to find your things.</p>
+        </div>
+      </li>
+      <li>
+        <span class="snum">02</span>
+        <div class="sbody">
+          <p>Find the row where <strong>Type</strong> is <code>A</code> and <strong>Name</strong> is
+        <code>@</code>. Edit it and replace the value with:</p>
+      <div class="type"><span class="lbl">New value for the A record</span>75.2.60.5</div>
+      <p>If there is more than one <code>A</code> row with name <code>@</code>, delete the extras and
+        keep one.</p>
+          <div class="flag f-warn">
+    <b>If GoDaddy will not let you edit the A record</b>
+    <p>The old website builder may still be attached to the domain and holding it. In your GoDaddy
+      products, open the old Websites + Marketing site and disconnect the domain from it. The DNS rows
+      then become editable.</p>
+  </div>
+        </div>
+      </li>
+      <li>
+        <span class="snum">03</span>
+        <div class="sbody">
+          <p>Find the row where <strong>Type</strong> is <code>CNAME</code> and <strong>Name</strong> is
+        <code>www</code>. Change its value to your Netlify address, the one ending
+        <code>.netlify.app</code>.</p>
+        </div>
+      </li>
+      <li>
+        <span class="snum">04</span>
+        <div class="sbody">
+          <p>Save. <strong>Change nothing else.</strong> In particular, leave every row of type
+        <code>MX</code> and <code>TXT</code> completely alone. Those are your email.</p>
+        </div>
+      </li>
+      <li>
+        <span class="snum">05</span>
+        <div class="sbody">
+          <p>Wait. It can take a few minutes or a few hours for the change to spread across the internet.</p>
+      <p>During that window the site may show a security warning about its certificate. That is normal
+        and fixes itself once the change has spread.</p>
+        </div>
+      </li>
+    </ol>
+
+
+
+  <div class="flag f-ok">
+    <b>Cancel the old subscription last, not first</b>
+    <p>Once the new site loads at workingwithgod.live and you have confirmed your email still arrives,
+      then cancel Websites + Marketing. Cancelling first can take the old site down before the new one
+      is reachable, leaving nothing live in between.</p>
+  </div>
+</section>
+
+<!-- ══ PART 4 ══ -->
+<section class="part">
+  <div class="part-head">
+    <div class="part-num">Part 04</div>
+    <h2>Google Analytics: who visits</h2>
+    <p class="why">This tells you how many people come to the site, which pages they read, and roughly
+      where in the world they are. It is free and it is the standard tool everybody uses.</p>
+    <span class="time">About 8 minutes</span>
+  </div>
+
+  <ol class="steps">
+      <li>
+        <span class="snum">01</span>
+        <div class="sbody">
+          <p>Go to <code>analytics.google.com</code> and sign in. Click <strong>Start measuring</strong>.</p>
+        </div>
+      </li>
+      <li>
+        <span class="snum">02</span>
+        <div class="sbody">
+          <p>Account name: <strong>Working With God</strong>. Accept the defaults on the sharing settings
+        and continue.</p>
+        </div>
+      </li>
+      <li>
+        <span class="snum">03</span>
+        <div class="sbody">
+          <p>Property name: <strong>workingwithgod.live</strong>. Set your time zone and currency, then continue.</p>
+        </div>
+      </li>
+      <li>
+        <span class="snum">04</span>
+        <div class="sbody">
+          <p>Answer the business questions however you like. Nothing here changes how it works. Choose
+        <strong>Generate leads</strong> if you want a sensible default.</p>
+        </div>
+      </li>
+      <li>
+        <span class="snum">05</span>
+        <div class="sbody">
+          <p>When it asks about a platform, choose <strong>Web</strong>. Enter <code>workingwithgod.live</code>
+        as the website URL and give the stream a name.</p>
+        </div>
+      </li>
+      <li>
+        <span class="snum">06</span>
+        <div class="sbody">
+          <p>You are now shown a <strong>Measurement ID</strong>. It starts with <code>G-</code> and looks
+        like this:</p>
+      <div class="type"><span class="lbl">Copy this and send it to us</span>G-ABC1234XYZ</div>
+      <p>That is all we need. Ignore any instructions Google gives you about installing code.</p>
+        </div>
+      </li>
+    </ol>
+</section>
+
+<!-- ══ PART 5 ══ -->
+<section class="part">
+  <div class="part-head">
+    <div class="part-num">Part 05</div>
+    <h2>Google Search Console: how people find you</h2>
+    <p class="why">Analytics tells you who arrived. Search Console tells you what they typed into Google
+      first, and whether Google can read your pages properly. Different tool, different question.</p>
+    <span class="time">About 5 minutes</span>
+  </div>
+
+  <div class="flag f-ok">
+    <b>Do Part 4 first and this becomes much easier</b>
+    <p>If Google Analytics is already set up on the same Google account, Search Console can usually
+      verify you own the site by itself, with no codes to copy at all.</p>
+  </div>
+
+  <ol class="steps">
+      <li>
+        <span class="snum">01</span>
+        <div class="sbody">
+          <p>Go to <code>search.google.com/search-console</code> and sign in with the same Google account
+      you used for Analytics.</p>
+        </div>
+      </li>
+      <li>
+        <span class="snum">02</span>
+        <div class="sbody">
+          <p>You are offered two boxes. Use the one on the right, <strong>URL prefix</strong>, and enter:</p>
+      <div class="type">https://workingwithgod.live</div>
+        </div>
+      </li>
+      <li>
+        <span class="snum">03</span>
+        <div class="sbody">
+          <p>On the verification screen, expand <strong>Other verification methods</strong> and look for
+        <strong>Google Analytics</strong>. Choose it and click Verify. It should succeed immediately.</p>
+      <p class="said">If that option is missing or fails, stop here and tell us. There is another way
+        that needs a change at GoDaddy, and we would rather make that change than have you do it.</p>
+        </div>
+      </li>
+      <li>
+        <span class="snum">04</span>
+        <div class="sbody">
+          <p>Once verified, click <strong>Sitemaps</strong> in the left menu and submit:</p>
+      <div class="type">sitemap.xml</div>
+      <p>This hands Google a list of every page on the site so it does not have to guess.</p>
+        </div>
+      </li>
+    </ol>
+
+  <div class="box">
+    <p><strong>Do not expect data tomorrow.</strong> Search Console takes a few days to gather anything
+      worth reading, and a few weeks to become genuinely useful. This is normal and is not a sign that
+      something is broken.</p>
+  </div>
+</section>
+
+<!-- ══ PART 6 ══ -->
+<section class="part">
+  <div class="part-head">
+    <div class="part-num">Part 06</div>
+    <h2>Microsoft Clarity: how people actually use the site</h2>
+    <p class="why">This is the interesting one. Clarity records anonymous sessions, so you can watch
+      where people scrolled, what they clicked, and the exact point at which they gave up and left.
+      Free, with no limit on traffic.</p>
+    <span class="time">About 5 minutes</span>
+  </div>
+
+  <ol class="steps">
+      <li>
+        <span class="snum">01</span>
+        <div class="sbody">
+          <p>Go to <code>clarity.microsoft.com</code> and sign in. You can use your Google account.</p>
+        </div>
+      </li>
+      <li>
+        <span class="snum">02</span>
+        <div class="sbody">
+          <p>Click <strong>New project</strong>. Name it <strong>Working With God</strong>, enter
+        <code>https://workingwithgod.live</code> as the website, and pick a category.</p>
+        </div>
+      </li>
+      <li>
+        <span class="snum">03</span>
+        <div class="sbody">
+          <p>Clarity offers you several ways to install it. Ignore all of them and click
+        <strong>Settings</strong>, then <strong>Overview</strong>.</p>
+        </div>
+      </li>
+      <li>
+        <span class="snum">04</span>
+        <div class="sbody">
+          <p>Find the <strong>Clarity project ID</strong>. It is a short jumble of letters and numbers:</p>
+      <div class="type"><span class="lbl">Copy this and send it to us</span>abcde12345</div>
+        </div>
+      </li>
+    </ol>
+
+  <div class="box">
+    <p><strong>On privacy.</strong> Clarity masks what people type, so passwords and form contents are
+      not recorded. What you see is movement and clicks, not personal information.</p>
+  </div>
+</section>
+
+<!-- ══ PART 7 ══ -->
+<section class="part">
+  <div class="part-head">
+    <div class="part-num">Part 07</div>
+    <h2>The final check</h2>
+    <p class="why">One test proves the whole chain at once. Do this after we confirm we have wired in
+      the codes you sent.</p>
+    <span class="time">About 3 minutes, then 24 hours of patience</span>
+  </div>
+
+  <ol class="steps">
+      <li>
+        <span class="snum">01</span>
+        <div class="sbody">
+          <p>Go to <code>workingwithgod.live</code> and register for the Roundtable using your own name and
+        email address, exactly as a real visitor would.</p>
+        </div>
+      </li>
+      <li>
+        <span class="snum">02</span>
+        <div class="sbody">
+          <p>Within a minute or two, check all three of these:</p>
+      <table>
+        <thead><tr><th>Where to look</th><th>What should be there</th></tr></thead>
+        <tbody>
+          <tr><td>Your email inbox</td><td>A message with the four details you typed</td></tr>
+          <tr><td>The spreadsheet</td><td>A tab for this month, with your row in it</td></tr>
+          <tr><td>Netlify, under Forms</td><td>The same registration, stored</td></tr>
+        </tbody>
+      </table>
+        </div>
+      </li>
+      <li>
+        <span class="snum">03</span>
+        <div class="sbody">
+          <p>Open that email and press <strong>Reply</strong>. Check that it addresses the person who
+        registered, rather than a no-reply address. This is how you will answer real registrants.</p>
+        </div>
+      </li>
+      <li>
+        <span class="snum">04</span>
+        <div class="sbody">
+          <p>Now wait a day. Then open Google Analytics and Clarity. Both should show at least one visit,
+        yours. If they are still empty after 48 hours, tell us.</p>
+        </div>
+      </li>
+    </ol>
+
+  <div class="flag f-ok">
+    <b>That is everything</b>
+    <p>Once that test passes, the site is live, registrations reach you two ways, and you can see who
+      is visiting and what they do. Nothing above needs maintaining and nothing renews.</p>
+  </div>
+</section>
+
+<!-- ══ TROUBLE + COST ══ -->
+<section class="part">
+  <div class="part-head">
+    <div class="part-num">Reference</div>
+    <h2>If something looks wrong</h2>
+    <p class="why">Almost everything that goes wrong here has one of five causes. Check these before
+      assuming something is broken.</p>
+  </div>
+
+  <table>
+    <thead><tr><th>What you see</th><th>What it usually means</th></tr></thead>
+    <tbody>
+      <tr><td>Registered, but no email and nothing in the sheet</td>
+          <td>Form detection was switched on without rebuilding the site afterwards. Go back to Part 2, step 3.</td></tr>
+      <tr><td>Netlify shows the registration, but the sheet stays empty</td>
+          <td>Usually the secret is missing from the address, or access was set to "Anyone with a Google Account" instead of "Anyone".</td></tr>
+      <tr><td>The website will not load at workingwithgod.live</td>
+          <td>The DNS change has not spread yet. Give it a few hours. If it is still failing the next morning, tell us.</td></tr>
+      <tr><td>A security or certificate warning on the site</td>
+          <td>Normal in the first minutes after the DNS change. It clears itself.</td></tr>
+      <tr><td>Analytics or Clarity showing nothing</td>
+          <td>Either we have not added your codes yet, or fewer than 24 hours have passed. Both are common.</td></tr>
+      <tr><td>Your email stopped arriving</td>
+          <td>Stop and contact us immediately. Do not change anything else at GoDaddy in the meantime.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Kept together so the closing does not orphan onto a near-empty page. -->
+  <div style="page-break-inside:avoid; break-inside:avoid">
+  <h3 style="margin-top:0">What all of this costs</h3>
+  <table>
+    <thead><tr><th>Service</th><th>What it does</th><th>Cost</th></tr></thead>
+    <tbody>
+      <tr><td>Netlify</td><td>Stores and serves the website, collects registrations</td><td>Free</td></tr>
+      <tr><td>Google Sheets and Apps Script</td><td>Keeps the record, sends your email</td><td>Free</td></tr>
+      <tr><td>Google Analytics</td><td>Visitor numbers</td><td>Free</td></tr>
+      <tr><td>Google Search Console</td><td>Search performance</td><td>Free</td></tr>
+      <tr><td>Microsoft Clarity</td><td>Session recordings</td><td>Free</td></tr>
+      <tr><td>GoDaddy</td><td>Your web address</td><td>The domain name only</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box">
+    <p>None of these renew into a paid plan on their own, and none of them hold your card. Your
+      GoDaddy bill should go <em>down</em> once the old website subscription is cancelled, because you
+      will be paying only for the domain and your email.</p>
+  </div>
+
+  
+
+  <div style="margin-top:12mm; padding-top:5mm; border-top:1px solid var(--rule-2); display:flex; justify-content:space-between; font-size:9pt; color:var(--muted)">
+    <div>Questions at any point, send a screenshot rather than guessing.</div>
+    <div><strong style="color:var(--ink)">EchoPulse</strong></div>
+  </div>
+  </div>
+</section>
+
+</body>
+</html>

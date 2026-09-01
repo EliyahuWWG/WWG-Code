@@ -8,16 +8,18 @@
          is required even same-origin: fonts are always fetched in CORS mode,
          and without it the preload is discarded and fetched a second time. -->
     <link rel="preload" as="font" type="font/woff2" href="/fonts/fraunces-opsz-latin.woff2" crossorigin />
-    <link rel="preconnect" href="https://plausible.io" crossorigin />
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+    <link rel="preconnect" href="https://www.clarity.ms" crossorigin />
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#050d6e" />
-    <!-- Plausible: privacy-friendly, cookieless analytics (no consent banner needed).
-         Custom event `book_call_click` fires from src/components/useCalendly.js. -->
-    <script defer data-domain="workingwithgod.live" src="https://plausible.io/js/script.js"></script>
-    <script>window.plausible = window.plausible || function(){ (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+    <!-- Analytics is loaded from src/analytics.js, and ONLY when a real ID is
+         configured in .env (see .env.example). It used to live here with
+         placeholder IDs, which meant every visitor opened connections to
+         Google and Microsoft to report to accounts that did not exist. -->
+
     <style>
       /* First-load curtain - self-contained so it paints before the app CSS/JS. */
       #curtain { display: none; }
