@@ -3,8 +3,8 @@
  *
  * WHAT THIS IS
  * A Google Apps Script Web App that receives a form submission and writes it
- * into a sheet organised one tab per form per month ("Roundtable 2026-09",
- * "Contact 2026-09", "Daily quote 2026-09"), then emails Eliyahu. Runs on a free consumer Google account. Nothing to host, nothing to
+ * into a sheet with one tab per form ("Roundtable", "Contact", "Daily quote"),
+ * each row stamped with its month so it can be filtered, then emails Eliyahu. Runs on a free consumer Google account. Nothing to host, nothing to
  * patch, no server.
  *
  * IT ACCEPTS TWO SHAPES, deliberately:
@@ -47,9 +47,10 @@ const SECRET     = 'PASTE_A_LONG_RANDOM_STRING_HERE';
 // ---------------------------------------------------------------------------
 
 /**
- * One tab per form, per month:  "Roundtable 2026-09", "Contact 2026-09", ...
+ * One tab per form, for good:  "Roundtable", "Contact", "Daily quote".
  * Each form gets only the columns it actually uses, so Eliyahu opens a tab and
- * sees a clean list instead of a grid half full of blanks.
+ * sees a clean list instead of a grid half full of blanks. The month is a
+ * column rather than a tab, so three tabs is all there will ever be.
  *
  * `label` is what appears on the tab and in the email subject.
  * `columns` are the fields written, in order, after Received.
@@ -89,11 +90,12 @@ const FALLBACK = {
 function specFor(formName) {
   var spec = FORMS[formName] || FALLBACK;
   // A tab is only ever built from this, so widths and headers stay in step.
+  // Month leads so the sheet can be sorted or filtered by it in one click.
   return {
     label: spec.label,
     subject: spec.subject,
     columns: spec.columns,
-    headers: ['Received'].concat(spec.headers).concat(['Other', 'Notes']),
+    headers: ['Month', 'Received'].concat(spec.headers).concat(['Other', 'Notes']),
   };
 }
 
@@ -160,25 +162,32 @@ function parseIncoming(e) {
   return { form: form, receivedAt: receivedAt, fields: fields };
 }
 
-/** Appends to this form's tab for this month, creating the tab if needed. */
+/**
+ * Appends to this form's tab. There is exactly one tab per form and it is never
+ * replaced, so the sheet stays at three tabs no matter how many years pass.
+ * The month lives in the first column instead, which is filterable and sortable
+ * and does not multiply.
+ */
 function writeRow(payload) {
   const ss = SpreadsheetApp.openById(SHEET_ID);
   const spec = specFor(payload.form);
-  const month = Utilities.formatDate(payload.receivedAt, ss.getSpreadsheetTimeZone(), 'yyyy-MM');
-  const tabName = spec.label + ' ' + month;
+  const tz = ss.getSpreadsheetTimeZone();
+  const month = Utilities.formatDate(payload.receivedAt, tz, 'yyyy-MM');
 
-  let sheet = ss.getSheetByName(tabName);
+  let sheet = ss.getSheetByName(spec.label);
   if (!sheet) {
-    sheet = ss.insertSheet(tabName, 0);          // newest tab first
+    sheet = ss.insertSheet(spec.label);
     sheet.appendRow(spec.headers);
     const head = sheet.getRange(1, 1, 1, spec.headers.length);
     head.setFontWeight('bold').setBackground('#02061f').setFontColor('#f7f4ec');
     sheet.setFrozenRows(1);
-    sheet.setColumnWidth(1, 150);                          // Received
+    // A filter on row 1 is what makes "show me only October" a two-click job.
+    sheet.getRange(1, 1, 1, spec.headers.length).createFilter();
+    sheet.setColumnWidth(1, 90);                           // Month
+    sheet.setColumnWidth(2, 150);                          // Received
     for (var i = 0; i < spec.columns.length; i++) {
-      // Message and Organization need room; names and emails do not.
       var wide = spec.columns[i] === 'message' || spec.columns[i] === 'org';
-      sheet.setColumnWidth(i + 2, wide ? 360 : 200);
+      sheet.setColumnWidth(i + 3, wide ? 360 : 200);
     }
     sheet.setColumnWidth(spec.headers.length - 1, 220);     // Other
     sheet.setColumnWidth(spec.headers.length, 260);         // Notes
@@ -202,12 +211,12 @@ function writeRow(payload) {
     .join('\n');
 
   sheet.appendRow(
-    [Utilities.formatDate(payload.receivedAt, ss.getSpreadsheetTimeZone(), 'yyyy-MM-dd HH:mm')]
+    [month, Utilities.formatDate(payload.receivedAt, tz, 'yyyy-MM-dd HH:mm')]
       .concat(values)
       .concat([extra, ''])                       // Other, then Notes left empty
   );
 
-  return { tab: tabName, rowNumber: sheet.getLastRow() };
+  return { tab: spec.label, month: month, rowNumber: sheet.getLastRow() };
 }
 
 function notify(payload, row) {
@@ -223,7 +232,7 @@ function notify(payload, row) {
     subject: label + ' — ' + (f.name || f.email || 'no name'),
     body:
       label + '\n\n' + lines +
-      '\n\nRecorded in the ' + row.tab + ' tab, row ' + row.rowNumber + '.\n' +
+      '\n\nRecorded in the ' + row.tab + ' tab, row ' + row.rowNumber + ' (' + row.month + ').\n' +
       SpreadsheetApp.openById(SHEET_ID).getUrl(),
   });
 }
