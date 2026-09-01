@@ -18,7 +18,7 @@ Netlify. Production from `main`; every other branch gets its own reviewable URL.
 
 4. **Forms.** The three forms are pre-registered via the static copies in
    `index.html`. After the first deploy, check Site settings → Forms lists
-   `contact`, `roundtable` and `quote-signup`. If it does not, the build-time
+   `contact`, `roundtable` and `dailyQuote`. If it does not, the build-time
    crawler did not see them and nothing will be delivered.
 5. **Notifications** → send form submissions to his inbox. Do this before
    launch, not after: a form that silently swallows a lead is the worst

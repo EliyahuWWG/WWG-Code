@@ -59,3 +59,11 @@ export const phone = (v) => {
   const digits = String(v).replace(/[^\d]/g, '')
   return digits.length >= 10 ? '' : 'Enter a valid phone number.'
 }
+
+// Phone, but blank is a valid answer. Format is still checked once something is
+// typed, so a half-entered number is still caught.
+export const phoneOptional = (v) => {
+  if (!v || String(v).trim() === '') return ''
+  const digits = String(v).replace(/[^\d]/g, '')
+  return digits.length >= 10 ? '' : 'Enter a valid phone number, or leave it blank.'
+}

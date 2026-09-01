@@ -19,7 +19,7 @@ here should go out under his name without him reading it.
    Warning: he may already have MX records for his inbox. Adding a sending
    domain must not touch those.
 3. **Point the form at it.** The signup currently posts through
-   `submitForm('quote-signup')` in `src/components/forms/submit.js`. Every ESP
+   `submitForm('dailyQuote')` in `src/components/forms/submit.js`. Every ESP
    gives you either an endpoint or an embed; wire it there.
 4. **Decide the actual cadence.** "Daily quote" means ~250 emails a year. That
    is a real content commitment. A weekly send is far more likely to survive

@@ -39,7 +39,7 @@ function reactFields(src) {
 const components = {
   roundtable: 'src/components/forms/RoundtableForm.jsx',
   contact: 'src/components/forms/ContactForm.jsx',
-  'quote-signup': 'src/components/forms/QuoteSignup.jsx',
+  'dailyQuote': 'src/components/forms/QuoteSignup.jsx',
 }
 
 describe('Netlify form registration', () => {
@@ -78,10 +78,31 @@ describe('roundtable registration matches the form it replaces', () => {
   it('keeps his button wording', () => {
     expect(src).toContain('SEND TO REGISTER')
   })
-  it('requires email, phone and organization but not name', () => {
+  it('requires email and organization, but not name or phone', () => {
     expect(src).toMatch(/email:\s*emailRule/)
-    expect(src).toMatch(/phone:\s*phoneRule/)
     expect(src).toMatch(/org:\s*required/)
     expect(src).not.toMatch(/\bname:\s*required/)
+  })
+  // Phone was made optional on purpose. Guard both halves of that: the rule
+  // must be the lenient one, and the field must not be marked required in the
+  // markup, or the label and the validation would disagree.
+  it('treats phone as optional', () => {
+    expect(src).toMatch(/phoneOptional as phoneRule/)
+    expect(src).not.toMatch(/name="phone"[^>]*\srequired/)
+    expect(src).toContain('Mobile Phone (optional)')
+  })
+})
+
+describe('contact form phone is optional too', () => {
+  const src = read('src/components/forms/ContactForm.jsx')
+  it('uses the lenient phone rule and does not mark the field required', () => {
+    expect(src).toMatch(/phoneOptional as phoneRule/)
+    expect(src).not.toMatch(/name="phone"[^>]*\srequired/)
+    expect(src).toContain('Mobile Phone (optional)')
+  })
+  it('still requires name, email and message', () => {
+    expect(src).toMatch(/name:\s*required/)
+    expect(src).toMatch(/email:\s*emailRule/)
+    expect(src).toMatch(/message:\s*required/)
   })
 })

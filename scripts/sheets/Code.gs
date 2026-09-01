@@ -3,8 +3,8 @@
  *
  * WHAT THIS IS
  * A Google Apps Script Web App that receives a form submission and writes it
- * into a sheet organised one tab per month (2026-09, 2026-10, ...), then emails
- * Eliyahu. Runs on a free consumer Google account. Nothing to host, nothing to
+ * into a sheet organised one tab per form per month ("Roundtable 2026-09",
+ * "Contact 2026-09", "Daily quote 2026-09"), then emails Eliyahu. Runs on a free consumer Google account. Nothing to host, nothing to
  * patch, no server.
  *
  * IT ACCEPTS TWO SHAPES, deliberately:
@@ -38,13 +38,75 @@
 const SHEET_ID   = 'PASTE_YOUR_SPREADSHEET_ID_HERE';
 const NOTIFY_TO  = 'eliyahu@workingwithgod.live';   // comma-separate for several
 const NOTIFY     = true;   // set false to write to the sheet only
+// A shared password of your own invention. The Web App has to be open to
+// "Anyone" for Netlify to reach it, so this is what stops a stranger who finds
+// the URL from writing rows and firing emails at you. Append it to the address
+// you give Netlify:  https://script.google.com/.../exec?key=YOUR-SECRET
+// Leave it empty to switch the check off entirely (not recommended).
+const SECRET     = 'PASTE_A_LONG_RANDOM_STRING_HERE';
 // ---------------------------------------------------------------------------
 
-// Column order. Add to the end if a form grows; existing tabs keep their shape.
-const COLUMNS = ['Received', 'Form', 'Name', 'Email', 'Phone', 'Organization', 'Message', 'Notes'];
+/**
+ * One tab per form, per month:  "Roundtable 2026-09", "Contact 2026-09", ...
+ * Each form gets only the columns it actually uses, so Eliyahu opens a tab and
+ * sees a clean list instead of a grid half full of blanks.
+ *
+ * `label` is what appears on the tab and in the email subject.
+ * `columns` are the fields written, in order, after Received.
+ * Anything a form sends that is NOT listed here still gets written, into the
+ * "Other" column as name: value. Nothing a visitor types is ever dropped.
+ */
+const FORMS = {
+  'roundtable': {
+    label: 'Roundtable',
+    subject: 'Roundtable registration',
+    columns: ['name', 'email', 'phone', 'org'],
+    headers: ['Name', 'Email', 'Phone', 'Organization'],
+  },
+  'contact': {
+    label: 'Contact',
+    subject: 'Contact form message',
+    columns: ['name', 'email', 'phone', 'message'],
+    headers: ['Name', 'Email', 'Phone', 'Message'],
+  },
+  'dailyQuote': {
+    label: 'Daily quote',
+    subject: 'Daily quote signup',
+    columns: ['name', 'email'],
+    headers: ['Name', 'Email'],
+  },
+};
+
+// Used for any form name not listed above, so a new form added to the site
+// still records itself instead of failing.
+const FALLBACK = {
+  label: 'Other',
+  subject: 'Form submission',
+  columns: ['name', 'email', 'phone'],
+  headers: ['Name', 'Email', 'Phone'],
+};
+
+function specFor(formName) {
+  var spec = FORMS[formName] || FALLBACK;
+  // A tab is only ever built from this, so widths and headers stay in step.
+  return {
+    label: spec.label,
+    subject: spec.subject,
+    columns: spec.columns,
+    headers: ['Received'].concat(spec.headers).concat(['Other', 'Notes']),
+  };
+}
 
 function doPost(e) {
   try {
+    // Wrong or missing key: record nothing, but still answer 200. An error
+    // status would make Netlify retry, and a chatty rejection would tell a
+    // prober they had found something worth attacking.
+    const key = (e && e.parameter && e.parameter.key) || '';
+    if (SECRET && key !== SECRET) {
+      console.warn('rejected: bad or missing key');
+      return json({ ok: true });
+    }
     const payload = parseIncoming(e);
     const row = writeRow(payload);
     if (NOTIFY) notify(payload, row);
@@ -94,41 +156,63 @@ function parseIncoming(e) {
 
   delete fields['form-name'];
   delete fields['bot-field'];   // honeypot, never worth storing
+  delete fields['key'];         // the shared secret, never write it into the sheet
   return { form: form, receivedAt: receivedAt, fields: fields };
 }
 
-/** Appends to the tab for the submission's month, creating it if needed. */
+/** Appends to this form's tab for this month, creating the tab if needed. */
 function writeRow(payload) {
   const ss = SpreadsheetApp.openById(SHEET_ID);
-  const tabName = Utilities.formatDate(payload.receivedAt, ss.getSpreadsheetTimeZone(), 'yyyy-MM');
-  let sheet = ss.getSheetByName(tabName);
+  const spec = specFor(payload.form);
+  const month = Utilities.formatDate(payload.receivedAt, ss.getSpreadsheetTimeZone(), 'yyyy-MM');
+  const tabName = spec.label + ' ' + month;
 
+  let sheet = ss.getSheetByName(tabName);
   if (!sheet) {
-    sheet = ss.insertSheet(tabName, 0);          // newest month first
-    sheet.appendRow(COLUMNS);
-    const head = sheet.getRange(1, 1, 1, COLUMNS.length);
+    sheet = ss.insertSheet(tabName, 0);          // newest tab first
+    sheet.appendRow(spec.headers);
+    const head = sheet.getRange(1, 1, 1, spec.headers.length);
     head.setFontWeight('bold').setBackground('#02061f').setFontColor('#f7f4ec');
     sheet.setFrozenRows(1);
-    sheet.setColumnWidth(1, 160);   // Received
-    sheet.setColumnWidth(7, 380);   // Message
-    sheet.setColumnWidth(8, 260);   // Notes, his to fill in
+    sheet.setColumnWidth(1, 150);                          // Received
+    for (var i = 0; i < spec.columns.length; i++) {
+      // Message and Organization need room; names and emails do not.
+      var wide = spec.columns[i] === 'message' || spec.columns[i] === 'org';
+      sheet.setColumnWidth(i + 2, wide ? 360 : 200);
+    }
+    sheet.setColumnWidth(spec.headers.length - 1, 220);     // Other
+    sheet.setColumnWidth(spec.headers.length, 260);         // Notes
   }
 
   const f = payload.fields;
-  sheet.appendRow([
-    Utilities.formatDate(payload.receivedAt, ss.getSpreadsheetTimeZone(), 'yyyy-MM-dd HH:mm'),
-    payload.form,
-    f.name || '', f.email || '', f.phone || '', f.org || f.organization || '',
-    f.message || '',
-    '',                                           // Notes, left empty on purpose
-  ]);
+  const known = {};
+  const values = spec.columns.map(function (key) {
+    known[key] = true;
+    // `org` and `organization` are the same thing to a person filling the form.
+    var v = f[key];
+    if ((v === undefined || v === '') && key === 'org') v = f.organization;
+    return v || '';
+  });
+
+  // Anything the form sent that this spec does not name. Keeps a field added to
+  // the site later from vanishing before anyone notices.
+  const extra = Object.keys(f)
+    .filter(function (k) { return !known[k] && k !== 'organization' && String(f[k]).trim() !== ''; })
+    .map(function (k) { return k + ': ' + f[k]; })
+    .join('\n');
+
+  sheet.appendRow(
+    [Utilities.formatDate(payload.receivedAt, ss.getSpreadsheetTimeZone(), 'yyyy-MM-dd HH:mm')]
+      .concat(values)
+      .concat([extra, ''])                       // Other, then Notes left empty
+  );
 
   return { tab: tabName, rowNumber: sheet.getLastRow() };
 }
 
 function notify(payload, row) {
   const f = payload.fields;
-  const label = payload.form === 'roundtable' ? 'Roundtable registration' : 'Form submission';
+  const label = specFor(payload.form).subject;
   const lines = Object.keys(f).map(function (k) { return k + ': ' + f[k]; }).join('\n');
 
   MailApp.sendEmail({

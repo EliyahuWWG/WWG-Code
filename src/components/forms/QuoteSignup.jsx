@@ -16,7 +16,7 @@ export default function QuoteSignup() {
     if (ref.current.querySelector('[name="bot-field"]').value) return
     setState('sending')
     try {
-      await submitForm('quote-signup', new FormData(ref.current))
+      await submitForm('dailyQuote', new FormData(ref.current))
       setState('success')
     } catch { setState('error') }
   }
@@ -37,9 +37,9 @@ export default function QuoteSignup() {
         <li>Written by Eliyahu himself. No fluff, no daily sermon</li>
         <li>Occasional word about upcoming free events</li>
       </ul>
-      <form ref={ref} className="form quote-form" name="quote-signup" method="POST" data-netlify="true"
+      <form ref={ref} className="form quote-form" name="dailyQuote" method="POST" data-netlify="true"
         netlify-honeypot="bot-field" noValidate onSubmit={onSubmit}>
-        <input type="hidden" name="form-name" value="quote-signup" />
+        <input type="hidden" name="form-name" value="dailyQuote" />
         <Honeypot />
         <Field label="Name" name="name" autoComplete="name"
           value={f.values.name} onChange={f.onChange} onBlur={f.onBlur} />

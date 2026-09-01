@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import { EMAIL } from '../../data'
 import { Field, Honeypot } from './Field'
-import { useForm, required, email as emailRule, phone as phoneRule } from './useForm'
+import { useForm, required, email as emailRule, phoneOptional as phoneRule } from './useForm'
 import { submitForm } from './submit'
 
 // Roundtable registration (§5d / §7b).
@@ -52,7 +52,7 @@ export default function RoundtableForm() {
           error={f.errors.email} touched={f.touched.email} />
       </div>
       <div className="form-row two">
-        <Field label="Mobile Phone" name="phone" type="tel" required autoComplete="tel"
+        <Field label="Mobile Phone (optional)" name="phone" type="tel" autoComplete="tel"
           value={f.values.phone} onChange={f.onChange} onBlur={f.onBlur}
           error={f.errors.phone} touched={f.touched.phone} />
         <Field label="Name of Business / Organization" name="org" required autoComplete="organization"

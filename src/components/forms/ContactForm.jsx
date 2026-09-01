@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import { EMAIL } from '../../data'
 import { Field, TextArea, Honeypot } from './Field'
-import { useForm, required, email as emailRule, phone as phoneRule } from './useForm'
+import { useForm, required, email as emailRule, phoneOptional as phoneRule } from './useForm'
 import { submitForm } from './submit'
 
 // Contact form (§5a-form / §7a). Mirrors his live form + an added Message field.
@@ -52,7 +52,7 @@ export default function ContactForm() {
           value={f.values.email} onChange={f.onChange} onBlur={f.onBlur}
           error={f.errors.email} touched={f.touched.email} />
       </div>
-      <Field label="Mobile Phone" name="phone" type="tel" required autoComplete="tel"
+      <Field label="Mobile Phone (optional)" name="phone" type="tel" autoComplete="tel"
         value={f.values.phone} onChange={f.onChange} onBlur={f.onBlur}
         error={f.errors.phone} touched={f.touched.phone} />
       <TextArea label="Message" name="message" required
