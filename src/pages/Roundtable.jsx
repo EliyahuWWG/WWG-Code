@@ -4,7 +4,7 @@ import Arrow from '../components/Arrow'
 import Seo from '../components/Seo'
 import RoundtableForm from '../components/forms/RoundtableForm'
 import { breadcrumbSchema, roundtableEventSchema } from '../seo/schema'
-import { roundtableTopics, ROUNDTABLE_ADDRESS, ROUNDTABLE_TIME, NEXT_ROUNDTABLE } from '../data'
+import { roundtableTopics, ROUNDTABLE_ADDRESS, ROUNDTABLE_TIME } from '../data'
 
 const flow = [
   { t: 'Gather', d: 'Coffee and introductions. A room of leaders who actually run things: owners, CEOs, senior managers.' },
@@ -85,23 +85,21 @@ export default function Roundtable() {
           <div className="sec-head">
             <Reveal><h2 className="h2 maxw-60">Save your seat at the next Roundtable.</h2></Reveal>
           </div>
-          <div className="grid two mt-4" style={{ alignItems: 'start' }}>
-            <Reveal>
-              <div className="stack-tight">
-                <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>When</b><br /><span className="muted">{ROUNDTABLE_TIME}</span></div>
-                <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>Where</b><br /><span className="muted">Private room at Starbucks · {ROUNDTABLE_ADDRESS}</span></div>
-                <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>Cost</b><br /><span className="muted">No fee. Refreshments provided.</span></div>
-                {/* TODO(client): update monthly, the specific next date */}
-                <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>Next meeting</b><br /><span className="muted">3rd Wednesday, monthly{NEXT_ROUNDTABLE !== 'TBD' ? ` · ${NEXT_ROUNDTABLE}` : ''}</span></div>
-                <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>Sponsor</b><br /><span className="muted">MBH Settlement Group (Rich Nguyen, Esq.)</span></div>
-              </div>
-              <p className="mt-3 muted maxw-46">You’ll get an email confirmation with meeting details and a calendar invite, usually within 24 hours.</p>
-            </Reveal>
-
-            <Reveal delay={0.05}>
-              <RoundtableForm />
-            </Reveal>
-          </div>
+          {/* The tall When / Where / Cost / Next meeting / Sponsor list that used
+              to sit beside this form is gone. It made the form share a narrow
+              half-column for information nobody re-reads at the moment they are
+              typing their name in. The venue and time stay, as one line, because
+              the full address appears nowhere else on this page and someone
+              signing up does need to know where they are going. */}
+          <Reveal className="register-single mt-4">
+            <p className="reg-facts">
+              <span>{ROUNDTABLE_TIME}</span>
+              <span>Private room at Starbucks · {ROUNDTABLE_ADDRESS}</span>
+              <span>No fee. Refreshments provided.</span>
+            </p>
+            <RoundtableForm />
+            <p className="mt-3 muted">You’ll get an email confirmation with meeting details and a calendar invite, usually within 24 hours.</p>
+          </Reveal>
         </div>
       </section>
     </>

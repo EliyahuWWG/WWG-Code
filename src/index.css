@@ -1380,3 +1380,19 @@ a.appear:hover .go { gap: .85em; color: var(--gold-600); border-color: var(--gol
   }
 }
 @keyframes sheet-in { from { opacity: 0; transform: translateY(24px); } }
+
+/* ------------------------------------------------------------------
+   Roundtable register block. One centred column: the form is the only
+   thing being asked for here, so nothing competes with it for width.
+   ------------------------------------------------------------------ */
+.register-single { max-width: 620px; }
+/* Stacked, not inline. Inline with middot separators looked fine until the
+   address wrapped, at which point the separators dangled at the start of the
+   continuation lines. Three short lines read cleanly at every width. */
+.reg-facts {
+  display: flex; flex-direction: column; gap: 3px;
+  margin-bottom: 26px; padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted); font-size: .95rem; line-height: 1.5;
+}
+.reg-facts span:first-child { color: var(--ink); font-weight: 600; }
