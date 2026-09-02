@@ -8,9 +8,18 @@ import { submitForm } from './submit'
 export default function RoundtableForm() {
   const ref = useRef(null)
   const [state, setState] = useState('idle')
+  // First and last are separate fields, matching the registration form he sent
+  // on 1 Sep. Two columns beats one "Full name" box when the list is later used
+  // to greet people by first name.
   const f = useForm(
-    { name: '', email: '', phone: '', org: '' },
-    { email: emailRule, phone: phoneRule, org: required('Business / organization') },
+    { firstName: '', lastName: '', email: '', phone: '', org: '' },
+    {
+      firstName: required('First name'),
+      lastName: required('Last name'),
+      email: emailRule,
+      phone: phoneRule,          // optional on purpose; blank is a valid answer
+      org: required('Business / organization'),
+    },
   )
 
   const onSubmit = async (e) => {
@@ -45,20 +54,25 @@ export default function RoundtableForm() {
       <input type="hidden" name="form-name" value="roundtable" />
       <Honeypot />
       <div className="form-row two">
-        <Field label="Name" name="name" autoComplete="name"
-          value={f.values.name} onChange={f.onChange} onBlur={f.onBlur} />
+        <Field label="First Name" name="firstName" required autoComplete="given-name"
+          value={f.values.firstName} onChange={f.onChange} onBlur={f.onBlur}
+          error={f.errors.firstName} touched={f.touched.firstName} />
+        <Field label="Last Name" name="lastName" required autoComplete="family-name"
+          value={f.values.lastName} onChange={f.onChange} onBlur={f.onBlur}
+          error={f.errors.lastName} touched={f.touched.lastName} />
+      </div>
+      <div className="form-row two">
         <Field label="Email" name="email" type="email" required autoComplete="email"
           value={f.values.email} onChange={f.onChange} onBlur={f.onBlur}
           error={f.errors.email} touched={f.touched.email} />
-      </div>
-      <div className="form-row two">
         <Field label="Mobile Phone (optional)" name="phone" type="tel" autoComplete="tel"
           value={f.values.phone} onChange={f.onChange} onBlur={f.onBlur}
           error={f.errors.phone} touched={f.touched.phone} />
-        <Field label="Name of Business / Organization" name="org" required autoComplete="organization"
-          value={f.values.org} onChange={f.onChange} onBlur={f.onBlur}
-          error={f.errors.org} touched={f.touched.org} />
       </div>
+      <Field label="What is the name of your business or business you represent?" name="org" required
+        autoComplete="organization"
+        value={f.values.org} onChange={f.onChange} onBlur={f.onBlur}
+        error={f.errors.org} touched={f.touched.org} />
       <div>
         <button className="btn btn-solid btn-lg" disabled={state === 'sending'}>
           {state === 'sending' ? 'Sending…' : 'REGISTER'}

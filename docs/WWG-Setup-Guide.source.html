@@ -239,21 +239,22 @@ ul.toc{list-style:none; margin:4mm 0 0; padding:0;
       <li>
         <span class="snum">05</span>
         <div class="sbody">
-          <p>Near the top of what you pasted, find these three lines and fill them in. Change only
+          <p>Near the top of what you pasted, find these two lines and fill them in. Change only
             the words inside the quote marks. Leave the word <code>const</code>, the quote marks and
             the semicolon exactly as they are.</p>
-      <div class="type"><span class="lbl">Change these three</span>
+      <div class="type"><span class="lbl">Change these two</span>
         const SHEET_ID&nbsp;&nbsp;= 'paste your Sheet ID here';<br>
-        const NOTIFY_TO = 'eliyahu@workingwithgod.live';<br>
-        const SECRET&nbsp;&nbsp;&nbsp;&nbsp;= 'a long random password you invent';
+        const NOTIFY_TO = 'eliyahu@workingwithgod.live';
       </div>
       <div class="box">
         <p><strong>Edit the lines that are already there.</strong> Do not type these in as new lines
           underneath. Each name must appear once in the file. Two copies of the same one and the
           script refuses to run.</p>
       </div>
-      <p>For <strong>SECRET</strong>, type a long jumble of letters and numbers. Twenty characters or
-        more. You will need it again in one minute, so keep it on screen.</p>
+      <p>A little below them is a third line, <code>const SECRET = '';</code>. <strong>Leave it exactly
+        as it is</strong>, with nothing between the quote marks. It is an optional password we can
+        switch on once registrations are arriving. Setting it now is the easiest way to end up with a
+        setup that looks finished and quietly records nothing.</p>
         </div>
       </li>
       <li>
@@ -295,15 +296,30 @@ ul.toc{list-style:none; margin:4mm 0 0; padding:0;
       <li>
         <span class="snum">09</span>
         <div class="sbody">
-          <p>Google now shows you a <strong>Web app URL</strong> ending in <code>/exec</code>. Copy it.</p>
-      <p>Add your secret to the end of it, with <code>?key=</code> in between and no spaces anywhere:</p>
-      <div class="type"><span class="lbl">The finished address</span>https://script.google.com/…/exec<strong>?key=your-secret-here</strong></div>
-      <p>Send that whole address to us. That is the last thing we need from Part 1.</p>
+          <p>Google now shows you a <strong>Web app URL</strong> ending in <code>/exec</code>.
+        Copy it and send it to us. That is the last thing we need from Part 1.</p>
+      <div class="type"><span class="lbl">It looks like this</span>https://script.google.com/macros/s/AKfycb…/exec</div>
       <div class="flag f-stop">
         <b>Treat this address like a password</b>
         <p>Anyone who has it can write rows into your spreadsheet. Do not put it in a screenshot,
           a shared document, or a social post. Email it to us and leave it there.</p>
       </div>
+        </div>
+      </li>
+      <li>
+        <span class="snum">10</span>
+        <div class="sbody">
+          <p>Test it before you send it. Paste that same <code>/exec</code> address into your browser's
+            address bar and press Enter. You should see a line of text like this:</p>
+      <div class="type"><span class="lbl">What a working setup replies</span>
+        &#123;"ok":true, "keyCheck":"off", "sheetOk":true,<br>
+        &nbsp;"sheet":"WWG Registrations",<br>
+        &nbsp;"verdict":"All good. Submissions will be recorded."&#125;
+      </div>
+      <p>Read the <strong>verdict</strong>. If it says anything other than "All good", it tells you
+        which part is wrong. If instead you get a Google sign-in page, the
+        <strong>Who has access</strong> setting in step 7 is on the wrong option — go back and set it
+        to <strong>Anyone</strong>.</p>
         </div>
       </li>
     </ol>
@@ -367,11 +383,22 @@ ul.toc{list-style:none; margin:4mm 0 0; padding:0;
         <span class="snum">04</span>
         <div class="sbody">
           <p>Go to <strong>Site configuration</strong>, then <strong>Notifications</strong>, then
-        <strong>Emails and webhooks</strong>.</p>
-      <p>Add a <strong>Form submission notification</strong>, choose the <code>roundtable</code> form,
-        and enter your email address.</p>
-      <p class="said">If this option asks you to upgrade to a paid plan, stop and tell us. There is a
-        free way round it and we have already written it.</p>
+        <strong>Emails and webhooks</strong>. Find the box called
+        <strong>Form submission notifications</strong> — the lower one, not Deploy notifications.</p>
+      <p>Click <strong>Add notification</strong>, choose <strong>Email notification</strong>, and set:</p>
+      <div class="type"><span class="lbl">Do this three times</span>
+        Email to notify:&nbsp;&nbsp;eliyahu@workingwithgod.live<br>
+        Form: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;roundtable&nbsp;&nbsp;then contact&nbsp;&nbsp;then dailyQuote
+      </div>
+      <p>One notification per form, three in total, all going to the same address. If a dropdown
+        offers <strong>Any form</strong>, pick that instead and you only need one.</p>
+      <div class="box">
+        <p><strong>Why this is separate from the spreadsheet.</strong> These emails come from Netlify
+          itself and do not depend on the spreadsheet working. If anything ever goes wrong with the
+          Google side, registrations still reach your inbox, and every one is still stored under
+          <strong>Forms</strong> in Netlify where nothing can lose it. Two independent paths, on
+          purpose.</p>
+      </div>
         </div>
       </li>
     </ol>

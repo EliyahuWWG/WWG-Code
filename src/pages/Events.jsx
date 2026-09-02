@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Reveal from '../components/Reveal'
 import Modal from '../components/Modal'
 import RoundtableForm from '../components/forms/RoundtableForm'
+import RoundtableIntro from '../components/RoundtableIntro'
 import CTA from '../components/CTA'
 import Arrow from '../components/Arrow'
 import MaskLines from '../components/MaskLines'
@@ -108,8 +109,8 @@ export default function Events() {
         </div>
       </section>
 
-      <Modal open={registerOpen} onClose={() => setRegisterOpen(false)} title="Save your seat at the next Roundtable">
-        <p className="muted" style={{ marginBottom: 18 }}>{ROUNDTABLE_TIME} · {ROUNDTABLE_ADDRESS}</p>
+      <Modal open={registerOpen} onClose={() => setRegisterOpen(false)} title="Register for the Roundtable">
+        <RoundtableIntro />
         <RoundtableForm />
       </Modal>
 

@@ -72,8 +72,14 @@ describe('Netlify form registration', () => {
 describe('roundtable registration matches the form it replaces', () => {
   // Parity with https://workingwithgod.live/roundtable-reg, checked 29 Aug.
   const src = read('src/components/forms/RoundtableForm.jsx')
-  it('collects the same four fields', () => {
-    for (const f of ['name', 'email', 'phone', 'org']) expect(src).toContain(`name="${f}"`)
+  // He sent his own registration form on 1 Sep with the name split in two.
+  // Five fields now, and `name` must be gone entirely: leaving it behind would
+  // mean the sheet quietly gained a column nothing ever fills.
+  it('collects first name, last name, email, phone and organization', () => {
+    for (const f of ['firstName', 'lastName', 'email', 'phone', 'org']) {
+      expect(src).toContain(`name="${f}"`)
+    }
+    expect(src).not.toContain('name="name"')
   })
   // Was "SEND TO REGISTER", copied from his original form. He asked for plain
   // "REGISTER" once the form started appearing in a dialog, where "send"

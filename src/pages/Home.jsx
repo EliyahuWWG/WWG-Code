@@ -61,12 +61,13 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Credentials, as on the reference hero he asked us to return to. */}
+          {/* Credentials, as on the reference hero he asked us to return to.
+              Order and the "Certified by" wording are his, from 1 Sep. */}
           <div className="hero-meta">
+            <div><div className="k">Author</div><div className="v">Working With God</div></div>
             <div><div className="k">Doctorate</div><div className="v">Ed.D., Executive Leadership</div></div>
             <div><div className="k">Clinical</div><div className="v">MSW, Therapist</div></div>
-            <div><div className="k">Author</div><div className="v">Working With God</div></div>
-            <div><div className="k">Certified</div><div className="v">Adizes · Arbinger · DiSC</div></div>
+            <div><div className="k">Certified by</div><div className="v">Adizes · Arbinger · DiSC</div></div>
           </div>
         </div>
       </section>

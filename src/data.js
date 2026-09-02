@@ -80,6 +80,28 @@ export function roundtableSponsorLabel(next = NEXT_ROUNDTABLE) {
   return known.includes(month) ? `${month}\u2019s Sponsor` : "Sponsor";
 }
 
+// ===========================================================================
+//  ROUNDTABLE POP-UP COPY  —  his words, from the doc he sent 1 Sep.
+//  Shown above the registration form in the pop-up. The month in the heading
+//  is derived from NEXT_ROUNDTABLE so changing that one date is still enough.
+// ===========================================================================
+export function roundtableMonth(next = NEXT_ROUNDTABLE) {
+  const month = String(next).trim().split(/\s+/)[0];
+  const known = ["January","February","March","April","May","June",
+    "July","August","September","October","November","December"];
+  return known.includes(month) ? month.toUpperCase() : "";
+}
+
+export const roundtableIntro = {
+  where: "4412 Chantilly Shopping Center, Chantilly, VA. We\u2019re in Starbucks\u2019 private room in the back.",
+  when: "Third Wednesday of each month, 8:00 \u2013 9:55 AM",
+  overview: [
+    "The Working With God Roundtable is a vibrant, Christ-centered ministry designed to equip local business professionals to integrate their faith with their work. Through monthly gatherings, we offer a space to grow your leadership ability, connect with like-minded individuals, explore practical topics like time management, organizational development, what God wants in your marketing copy, and more\u2014all with expertise, prayer, and a biblical lens.",
+    "Whether you\u2019re a seasoned business owner, organizational professional, or just starting out, join us in Working With God.",
+  ],
+  series: { lead: "We are currently in a series of sessions exploring ", link: "The Ten Modes of Elevated Leadership", href: "/blog/the-ten-modes-explained" },
+};
+
 // What happens in the room, per Eliyahu 27 Aug.
 export const roundtableWhatHappens = [
   "Learning, conversation, increased self-awareness, increased connection with God, and business application",

@@ -38,12 +38,18 @@
 const SHEET_ID   = 'PASTE_YOUR_SPREADSHEET_ID_HERE';
 const NOTIFY_TO  = 'eliyahu@workingwithgod.live';   // comma-separate for several
 const NOTIFY     = true;   // set false to write to the sheet only
-// A shared password of your own invention. The Web App has to be open to
-// "Anyone" for Netlify to reach it, so this is what stops a stranger who finds
-// the URL from writing rows and firing emails at you. Append it to the address
-// you give Netlify:  https://script.google.com/.../exec?key=YOUR-SECRET
-// Leave it empty to switch the check off entirely (not recommended).
-const SECRET     = 'PASTE_A_LONG_RANDOM_STRING_HERE';
+// OPTIONAL, AND LEAVE IT BLANK UNTIL EVERYTHING ELSE WORKS.
+//
+// When set, a request must carry ?key=<this> or it is ignored. That is real
+// protection, because the Web App has to be open to "Anyone" for anything to
+// reach it. It is also the single easiest way to end up with a setup that
+// looks perfect and silently records nothing, which is exactly what a wrong
+// key produces. So: get submissions landing first, then set this, then confirm
+// they still land.
+//
+//   const SECRET = '';                        <- off, everything accepted
+//   const SECRET = 'k7Qp2xR9mWz4';            <- on, ?key=k7Qp2xR9mWz4 required
+const SECRET     = '';
 // ---------------------------------------------------------------------------
 
 /**
@@ -61,8 +67,8 @@ const FORMS = {
   'roundtable': {
     label: 'Roundtable',
     subject: 'Roundtable registration',
-    columns: ['name', 'email', 'phone', 'org'],
-    headers: ['Name', 'Email', 'Phone', 'Organization'],
+    columns: ['firstName', 'lastName', 'email', 'phone', 'org'],
+    headers: ['First Name', 'Last Name', 'Email', 'Phone', 'Organization'],
   },
   'contact': {
     label: 'Contact',
@@ -99,14 +105,23 @@ function specFor(formName) {
   };
 }
 
+/**
+ * True only when SECRET is a real value. A blank string means the check is
+ * deliberately off; the old placeholder means someone pasted the file and never
+ * came back to it, which must not silently reject every submission.
+ */
+function secretIsOn() {
+  return Boolean(SECRET) && SECRET !== 'PASTE_A_LONG_RANDOM_STRING_HERE';
+}
+
 function doPost(e) {
   try {
     // Wrong or missing key: record nothing, but still answer 200. An error
     // status would make Netlify retry, and a chatty rejection would tell a
     // prober they had found something worth attacking.
     const key = (e && e.parameter && e.parameter.key) || '';
-    if (SECRET && key !== SECRET) {
-      console.warn('rejected: bad or missing key');
+    if (secretIsOn() && key !== SECRET) {
+      console.warn('REJECTED: the ?key= on the request does not match SECRET.');
       return json({ ok: true });
     }
     const payload = parseIncoming(e);
@@ -138,7 +153,7 @@ function doPost(e) {
  */
 function doGet(e) {
   const key = (e && e.parameter && e.parameter.key) || '';
-  const keyAccepted = !SECRET || key === SECRET;
+  const keyAccepted = !secretIsOn() || key === SECRET;
 
   var sheetOk = false, tabs = [], sheetName = '', problem = '';
   try {
@@ -152,13 +167,14 @@ function doGet(e) {
 
   return json({
     ok: true,
+    keyCheck: secretIsOn() ? 'on' : 'off (SECRET is blank)',
     keyAccepted: keyAccepted,
     sheetOk: sheetOk,
     sheet: sheetName,
     tabs: tabs,
     problem: problem,
-    verdict: !keyAccepted ? 'The key is wrong. Fix the ?key= on the Netlify webhook, or SECRET here.'
-           : !sheetOk     ? 'The key is fine. SHEET_ID is wrong or unreachable.'
+    verdict: !keyAccepted ? 'The ?key= does not match SECRET. Fix one of them, or blank out SECRET while you test.'
+           : !sheetOk     ? 'The key is fine. SHEET_ID is wrong, or this Google account cannot open that sheet.'
            : 'All good. Submissions will be recorded.',
   });
 }
@@ -251,6 +267,12 @@ function writeRow(payload) {
   return { tab: spec.label, month: month, rowNumber: sheet.getLastRow() };
 }
 
+/** "Ann Ray" from whichever shape the form sent, so subjects stay readable. */
+function personName(f) {
+  const joined = [f.firstName, f.lastName].filter(function (v) { return v; }).join(' ').trim();
+  return joined || f.name || f.email || 'no name';
+}
+
 function notify(payload, row) {
   const f = payload.fields;
   const label = specFor(payload.form).subject;
@@ -261,7 +283,7 @@ function notify(payload, row) {
     // Reply goes to the person who filled the form, not into a void. This is the
     // one thing Netlify's own notification cannot do.
     replyTo: f.email || undefined,
-    subject: label + ' — ' + (f.name || f.email || 'no name'),
+    subject: label + ' — ' + personName(f),
     body:
       label + '\n\n' + lines +
       '\n\nRecorded in the ' + row.tab + ' tab, row ' + row.rowNumber + ' (' + row.month + ').\n' +
