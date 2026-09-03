@@ -99,6 +99,12 @@
      "distracting", and too small to read comfortably. Labels now ride the
      body face; only the reading size and weight distinguish them. */
   --f-label: "Inter", system-ui, sans-serif;
+  /* Quoted scripture. NOT Fraunces: the italic face here is subset to the nine
+     glyphs of "perspective." for the hero, so any other word in Fraunces italic
+     gets a browser-synthesised slant of the fallback — which is what made the
+     scripture look broken. Georgia ships a true italic on every platform we
+     care about, and its fallbacks are all real book faces. */
+  --f-quote: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", "Times New Roman", serif;
   --f-mono: var(--f-label);
 }
 
@@ -1043,9 +1049,12 @@ a.appear:hover .go { gap: .85em; color: var(--gold-600); border-color: var(--gol
    ------------------------------------------------------------------ */
 .scripture { max-width: 60ch; padding-left: clamp(18px, 2vw, 28px); border-left: 2px solid var(--gold-500); }
 .scripture blockquote {
-  font-family: var(--f-disp); font-weight: 400; font-style: italic;
-  font-size: clamp(1.15rem, 1.7vw, 1.42rem); line-height: 1.45;
-  color: var(--navy-800); letter-spacing: -.01em; margin: 0;
+  font-family: var(--f-quote); font-weight: 400; font-style: italic;
+  /* Georgia has a big x-height, so it reads a size larger than Fraunces did at
+     the same value. Slightly smaller, slightly looser, and no negative tracking
+     — tightening a book face's italic is what makes it look cramped. */
+  font-size: clamp(1.08rem, 1.55vw, 1.32rem); line-height: 1.55;
+  color: var(--navy-800); letter-spacing: 0; margin: 0;
 }
 .scripture cite {
   display: block; margin-top: 12px; font-style: normal;
@@ -1448,4 +1457,22 @@ a.appear:hover .go { gap: .85em; color: var(--gold-600); border-color: var(--gol
 .irow-cover:focus-visible { outline: 2px solid var(--gold-500); outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) {
   .irow-cover, .irow-cover:hover { transition: none; transform: none; }
+}
+
+/* ------------------------------------------------------------------
+   Section-closing CTA. The button used to sit flush left directly under
+   the list's bottom rule, which read as a leftover control rather than
+   the end of the section. Centred, with air above and below.
+   ------------------------------------------------------------------ */
+.cta-close {
+  margin-top: clamp(28px, 4vw, 44px);
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  text-align: center;
+}
+.cta-close-note {
+  font-size: .92rem; color: var(--muted); max-width: 46ch;
+}
+@media (max-width: 560px) {
+  /* Full-width tap target on a phone; a centred pill is easy to miss. */
+  .cta-close .btn { width: 100%; justify-content: center; }
 }

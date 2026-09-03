@@ -12,7 +12,19 @@ import Arrow from './Arrow'
  * somewhere that still sells. The Calendly popup still opens in place for
  * everyone else, which stays the fastest path.
  */
-export default function BookCallLink({ className = 'btn btn-solid', children = 'Book a call', arrow = true }) {
+export default function BookCallLink({ className = 'btn btn-solid', children = 'Book a call', arrow = true, url }) {
+  // With a specific `url` the popup opens that one meeting type, and the
+  // no-JS fallback goes straight to Calendly rather than to /book-a-call,
+  // which would offer the whole menu again and lose the choice already made.
+  if (url) {
+    return (
+      <a href={url} onClick={(e) => openCalendly(e, url)}
+        onPointerEnter={warmCalendly} onFocus={warmCalendly}
+        target="_blank" rel="noopener" className={className}>
+        {children}{arrow && <> <Arrow /></>}
+      </a>
+    )
+  }
   return (
     <Link to="/book-a-call" onClick={openCalendly}
       onPointerEnter={warmCalendly} onFocus={warmCalendly} className={className}>

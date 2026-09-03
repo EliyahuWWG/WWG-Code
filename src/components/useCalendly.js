@@ -67,12 +67,12 @@ export const CAL_PAGE_SETTINGS = {
 
 // Opens the Calendly popup if the widget is ready; otherwise starts loading it
 // and lets the <a href> fall through to /book-a-call (inline calendar there).
-export function openCalendly(e) {
+export function openCalendly(e, base) {
   if (typeof window === 'undefined') return
   trackBookCall()
   if (window.Calendly && window.Calendly.initPopupWidget) {
     if (e) e.preventDefault()
-    window.Calendly.initPopupWidget({ url: calendlyUrl(), pageSettings: CAL_PAGE_SETTINGS })
+    window.Calendly.initPopupWidget({ url: calendlyUrl(base), pageSettings: CAL_PAGE_SETTINGS })
   } else {
     warmCalendly()
   }

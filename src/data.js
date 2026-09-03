@@ -6,6 +6,12 @@
 
 // ---------- Real constants ----------
 export const CALENDLY = "https://calendly.com/eliyahu-lotzar-reframedreality";
+// The specific event type behind the Services CTA, per Eliyahu 3 Sep. CALENDLY
+// above is his whole scheduling page; this goes straight to one meeting type.
+// Deliberately without the ?back=1&month=... he sent: those are artifacts of the
+// browser session he copied it from, and month= would pin the calendar to
+// September 2026 for good, so from October it would open on a month in the past.
+export const CALENDLY_ZOOM = "https://calendly.com/eliyahu-lotzar-reframedreality/zoom-with-eliyahu-lotzar";
 export const EMAIL    = "Eliyahu@WorkingWithGod.live";
 export const MEETUP   = "https://www.meetup.com/working-with-god";
 export const AMAZON   = "https://www.amazon.com/Working-God-Modes-Elevated-Leadership/dp/1961202298/";
@@ -248,7 +254,7 @@ export const coachingPoints = [
   { t: "Leadership Growth", d: "The \u201CWhy\u201D of coaching is simple: being a better you. That may mean just needing a thought partner, or maybe it means needing a breakthrough, but loving what you do more and doing it better means leadership growth." },
   { t: "An Expansive Leadership Toolkit", d: "More than 25 leadership frameworks, plus business and organizational experience in multiple sectors, help bring you through your specific challenge or opportunity." },
   { t: "Deep Listening", d: "He doesn\u2019t just give advice. Dr. Lotzar is a soft skills and organizational culture expert with decades of counseling and transformational coaching experience. He hears you and helps you get results." },
-  { t: "Two Types of Coaching", d: "Option One is thought-partnership coaching, for situations where a neutral sounding board and experienced thought partner is sufficient. We meet once a month with an extendable six-month agreement. Option Two is transformational coaching for when you want to move past a plateau or change the relationships around you. We meet every two weeks for the first two months, you have operational \u201Cto-do\u201D homework in between sessions, and then we taper to once a month in a six-month extendible agreement." },
+  { t: "Two Types of Coaching", d: "Option One is thought-partnership coaching, for situations where a neutral sounding board and experienced thought partner is sufficient. We meet once a month with an extendable six-month agreement. Option Two is transformational coaching for when you want to move past a plateau or change the relationships around you. We meet every two weeks for the first two months, you have operational \u201Cto-do\u201D homework in between sessions, and then we taper to once a month in a six-month extendible agreement.", bold: ["Option One", "Option Two"] },
 ];
 
 // Set apart on the Services page, under the coaching button. His pick.

@@ -6,7 +6,8 @@ import MaskLines from '../components/MaskLines'
 import BookCallLink from '../components/BookCallLink'
 import Seo from '../components/Seo'
 import { breadcrumbSchema } from '../seo/schema'
-import { coachingPoints, mastersClassPoints, coachingScripture } from '../data'
+import Emphasize from '../components/Emphasize'
+import { coachingPoints, mastersClassPoints, coachingScripture, CALENDLY_ZOOM } from '../data'
 
 export default function Services() {
   return (
@@ -48,12 +49,18 @@ export default function Services() {
             {coachingPoints.map((p, i) => (
               <div className="irow" key={p.t} style={{ gridTemplateColumns: '88px 1fr' }}>
                 <div className="n">0{i + 1}</div>
-                <div><h3>{p.t}</h3><p className="mt-1">{p.d}</p></div>
+                <div><h3>{p.t}</h3><p className="mt-1"><Emphasize text={p.d} terms={p.bold} /></p></div>
               </div>
             ))}
           </Reveal>
-          <div className="mt-3">
-            <BookCallLink className="btn btn-solid">Schedule a free 30-minute exploratory conversation.</BookCallLink>
+          {/* The list above ends on a rule, and the button sat tight against it
+              with nothing to anchor it. Centred, with room either side, it now
+              reads as the close of the section rather than a stray control. */}
+          <div className="cta-close">
+            <BookCallLink className="btn btn-solid btn-lg" url={CALENDLY_ZOOM}>
+              Schedule a free exploratory conversation
+            </BookCallLink>
+            <p className="cta-close-note">No charge, no obligation. Bring one decision you are sitting on.</p>
           </div>
           {/* His scripture, set apart from the sell above it: display face, a
               gold rule instead of quote marks, and its own breathing room. */}
@@ -77,7 +84,7 @@ export default function Services() {
             {mastersClassPoints.map((p, i) => (
               <div className="irow" key={p.t} style={{ gridTemplateColumns: '88px 1fr' }}>
                 <div className="n">0{i + 1}</div>
-                <div><h3>{p.t}</h3><p className="mt-1">{p.d}</p></div>
+                <div><h3>{p.t}</h3><p className="mt-1"><Emphasize text={p.d} terms={p.bold} /></p></div>
               </div>
             ))}
           </Reveal>
