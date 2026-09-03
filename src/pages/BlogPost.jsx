@@ -91,11 +91,14 @@ export default function BlogPost() {
         <section className="section on-bone">
           <div className="container">
             <div className="sec-head"><h2 className="h2">Keep reading.</h2></div>
-            <div className="ilist mt-4">
+            {/* NOT .irow: that grid reserves a 58px first column for the row
+                number, and these rows have no number, so the title was being
+                squeezed into 58px and running over the description. */}
+            <div className="postlist mt-4">
               {others.map(p => (
-                <article className="irow" key={p.slug}>
-                  <h3><Link to={`/blog/${p.slug}`}>{p.title}</Link></h3>
-                  <div>
+                <article className="postrow" key={p.slug}>
+                  <h3 className="postrow-title"><Link to={`/blog/${p.slug}`}>{p.title}</Link></h3>
+                  <div className="postrow-body">
                     <p>{p.description}</p>
                     <Link className="go" to={`/blog/${p.slug}`}>Read it <Arrow /></Link>
                   </div>

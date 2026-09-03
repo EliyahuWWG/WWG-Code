@@ -69,13 +69,22 @@ export const SERVICE_AREA = "In-person in NOVA / Metro DC, and online worldwide"
 //  after. Edit the two strings below, save, commit, push. Nothing else moves.
 //
 //    NEXT_ROUNDTABLE  the date shown under "Next meeting"
-//    SPONSOR          the name shown under "September's Sponsor"
+//    SPONSOR          who is sponsoring, shown under "September's Sponsor"
 //
 //  The sponsor LABEL derives its month from NEXT_ROUNDTABLE automatically, so
 //  changing the date is enough to relabel it. See roundtableSponsorLabel().
+//
+//  SPONSOR is an object so the name can carry a link. `href` and `creds` are
+//  both optional — leave either out and that part is simply not rendered, so a
+//  sponsor with no website still works without touching the page.
 // ===========================================================================
 export const NEXT_ROUNDTABLE = "September 16th";
-export const SPONSOR = "MBH Settlement Group (Rich Nguyen, Esq.)";
+export const SPONSOR = {
+  name: "Lyle Martin",
+  creds: "BFA, CEPA",
+  role: "Financial Advisor with Thrivent\u2019s Northeast Advisor Group",
+  href: "https://connect.thrivent.com/lyle-martin",
+};
 
 // "September 16th" -> "September's Sponsor". Falls back to a plain "Sponsor"
 // if the date is ever left as TBD or written in a form with no month in it.

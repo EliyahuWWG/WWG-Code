@@ -1476,3 +1476,35 @@ a.appear:hover .go { gap: .85em; color: var(--gold-600); border-color: var(--gol
   /* Full-width tap target on a phone; a centred pill is easy to miss. */
   .cta-close .btn { width: 100%; justify-content: center; }
 }
+
+/* ------------------------------------------------------------------
+   POST LIST — "Keep reading" at the foot of a blog post.
+   Deliberately not .irow: that grid's first column is 58px, sized for a
+   row number these rows do not have, which pushed the title into a
+   one-word-per-line column overlapping the text beside it.
+   ------------------------------------------------------------------ */
+.postlist { border-top: 1px solid var(--line); }
+
+.postrow {
+  display: grid; grid-template-columns: 1fr; gap: 10px;
+  padding: clamp(22px, 2.4vw, 32px) 0;
+  border-bottom: 1px solid var(--line);
+  align-items: start;
+}
+/* Two real columns only once there is room for both to hold a line of text.
+   minmax(0,…) so a long unbroken title cannot blow the column out. */
+@media (min-width: 860px) {
+  .postrow { grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); gap: 12px 48px; }
+}
+
+.postrow-title {
+  font-family: var(--f-disp); font-weight: 600;
+  font-size: clamp(1.22rem, 1.7vw, 1.5rem); line-height: 1.22;
+  letter-spacing: -.015em; color: var(--forest);
+  text-wrap: balance;            /* keeps a two-line title evenly split */
+}
+.postrow-title a { color: inherit; text-decoration: none; }
+.postrow-title a:hover { color: var(--navy-700); }
+
+.postrow-body p { color: var(--muted); font-size: 1.02rem; line-height: 1.6; max-width: 60ch; }
+.postrow-body .go { margin-top: 12px; }

@@ -72,7 +72,16 @@ export default function Events() {
               {/* Both of these come from the monthly block at the top of
                   src/data.js. The sponsor label follows the date's month. */}
               <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>Next meeting</b><br /><span className="muted">{NEXT_ROUNDTABLE}</span></div>
-              <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>{roundtableSponsorLabel()}</b><br /><span className="muted">{SPONSOR}</span></div>
+              <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}>
+                <b>{roundtableSponsorLabel()}</b><br />
+                <span className="muted">
+                  {SPONSOR.href
+                    ? <a className="tlink" style={{ display: 'inline' }} href={SPONSOR.href} target="_blank" rel="noopener">{SPONSOR.name}</a>
+                    : SPONSOR.name}
+                  {SPONSOR.creds && `, ${SPONSOR.creds}`}
+                  {SPONSOR.role && `. ${SPONSOR.role}.`}
+                </span>
+              </div>
             </Reveal>
           </div>
         </div>
