@@ -247,7 +247,7 @@ export const testimonialsArchive = [
 export const coachingPoints = [
   { t: "Leadership Growth", d: "The \u201CWhy\u201D of coaching is simple: being a better you. That may mean just needing a thought partner, or maybe it means needing a breakthrough, but loving what you do more and doing it better means leadership growth." },
   { t: "An Expansive Leadership Toolkit", d: "More than 25 leadership frameworks, plus business and organizational experience in multiple sectors, help bring you through your specific challenge or opportunity." },
-  { t: "Deep Listening", d: "He doesn\u2019t just give advice. Dr. Lotzar is a soft skills and organizational culture expert with decades of counseling and transformational coaching experience. He hears you and helps you increase in wisdom about others and yourself." },
+  { t: "Deep Listening", d: "He doesn\u2019t just give advice. Dr. Lotzar is a soft skills and organizational culture expert with decades of counseling and transformational coaching experience. He hears you and helps you get results." },
   { t: "Two Types of Coaching", d: "Option One is thought-partnership coaching, for situations where a neutral sounding board and experienced thought partner is sufficient. We meet once a month with an extendable six-month agreement. Option Two is transformational coaching for when you want to move past a plateau or change the relationships around you. We meet every two weeks for the first two months, you have operational \u201Cto-do\u201D homework in between sessions, and then we taper to once a month in a six-month extendible agreement." },
 ];
 
