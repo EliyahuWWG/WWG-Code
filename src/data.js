@@ -136,7 +136,12 @@ export const offerings = [
     n: "04", title: "“Master’s Class” Two-Day Immersion", tag: "", body: "We will spend two days deep in the Ten Modes of Elevated Leadership, so you come away with Godly perspective on your most complex operational matters.", // Per Eliyahu 27 Aug: this goes to the Master's Class section on /services,
     // NOT straight to Calendly. Someone reading about a two-day immersion is not
     // ready to book a time slot yet.
-    cta: "Find out more", href: "/services#masters-class", external: false, },
+    cta: "Find out more", href: "/services#masters-class", external: false, }, {
+    // Fifth way in, per Eliyahu 3 Sep. It was a trailing sentence under the list
+    // and read like an afterthought; it is an offering like the rest.
+    n: "05", title: "Read my book", tag: "", body: "Working With God: The Ten Modes of Elevated Leadership. The whole method, in your own time, if you would rather start on your own.",
+    cta: "Read my book", href: "/the-book", external: false,
+    cover: { webp: "/book-cover.webp", jpg: "/book-cover.jpg", alt: "Working With God: The Ten Modes of Elevated Leadership, by Dr. Eliyahu Lotzar" }, },
 ];
 
 // ---------- Roundtable topics (Events), VERBATIM ----------

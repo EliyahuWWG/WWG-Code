@@ -54,7 +54,8 @@ export default function Home() {
                   above this paragraph was a second headline competing with the
                   H1. Matches the reference hero, which carries only the
                   introduction and the CTA in this column. */}
-              <p className="hero-intro">I’m Dr. Eliyahu Lotzar. For thirty years I’ve sat with people in the decisions that actually cost them something. That experience is what led me to bring God into the process, because the best perspective comes from somewhere bigger than us.</p>
+              {/* Replaced the paragraph-length introduction on 3 Sep. His words. */}
+              <p className="hero-intro">Coaching for Christian Professional</p>
               <div className="hero-cta">
                 <BookCallLink className="btn btn-onink btn-lg">Book a discovery call</BookCallLink>
               </div>
@@ -95,8 +96,7 @@ export default function Home() {
               viewport height), which is why they did not line up before. */}
           <div className="video-inner">
             <Reveal className="video-feature-head">
-              <h2 className="h2">Take two minutes.</h2>
-              <p className="mt-2">It is the fastest way to work out whether I am the right person for you.</p>
+              <h2 className="h2">Welcome to Working With God</h2>
             </Reveal>
             <Reveal delay={0.06} className="video-stage mt-3">
               <VideoFacade />
@@ -137,24 +137,38 @@ export default function Home() {
         <div className="container">
           <div className="sec-head">
             <Reveal><h2 className="h2">Bring God into your next decision.</h2>
-              <p className="mt-2 muted">Four ways to begin. Two of them are free.</p></Reveal>
+              <p className="mt-2 muted">Five ways to begin. Two of them are free.</p></Reveal>
           </div>
           <Reveal className="ilist mt-4 draw" stagger={0.08}>
             {offerings.map(o => (
               <div className="irow" key={o.n}>
                 <div className="n">{o.n}</div>
                 <h3>{o.title} {o.tag && <span className="pill">{o.tag}</span>}</h3>
-                <div>
-                  <p>{o.body}</p>
-                  {o.external
-                    ? <a className="go" href={o.href} target="_blank" rel="noopener">{o.cta} <Arrow /></a>
-                    : <Link className="go" to={o.href}>{o.cta} <Arrow /></Link>}
+                <div className={o.cover ? 'irow-withcover' : undefined}>
+                  <div>
+                    <p>{o.body}</p>
+                    {o.external
+                      ? <a className="go" href={o.href} target="_blank" rel="noopener">{o.cta} <Arrow /></a>
+                      : <Link className="go" to={o.href}>{o.cta} <Arrow /></Link>}
+                  </div>
+                  {/* The cover is a second route to the same page, not a
+                      decoration — people click book covers. aria-hidden because
+                      the "Read my book" link beside it already says this to a
+                      screen reader, and two identical links read as a stutter. */}
+                  {o.cover && (
+                    <Link to={o.href} className="irow-cover" tabIndex={-1} aria-hidden="true">
+                      <picture>
+                        <source srcSet={o.cover.webp} type="image/webp" />
+                        <img src={o.cover.jpg} width="620" height="930" loading="lazy" decoding="async" alt={o.cover.alt} />
+                      </picture>
+                    </Link>
+                  )}
                 </div>
               </div>
             ))}
           </Reveal>
           <Reveal className="mt-4">
-            <p className="muted maxw-60">There is also my book, <Link to="/the-book" className="tlink"><em>Working With God: The Ten Modes of Elevated Leadership</em></Link>, if you would rather start on your own. Still deciding? <a className="tlink" style={{ display: 'inline' }} href="#faq">Read the questions people usually ask</a>.</p>
+            <p className="muted maxw-60">Still deciding? <a className="tlink" style={{ display: 'inline' }} href="#faq">Read the questions people usually ask</a>.</p>
           </Reveal>
         </div>
       </section>

@@ -455,20 +455,13 @@ ul.toc{list-style:none; margin:4mm 0 0; padding:0;
   </div>
 
   <div class="flag f-stop">
-    <b>Never change the nameservers</b>
-    <p>There is popular advice online — including video tutorials — that says the way to connect a
-      GoDaddy domain is to replace its <strong>nameservers</strong> with the host's. Do not do that
-      here. It would hand your entire address book to Netlify, and your email records do not come
-      with it.</p>
-    <p>Your mail runs on this same address through Microsoft 365, and it depends on
-      <strong>nine separate records</strong> that live at GoDaddy right now: your MX record, an SPF
-      record, a Microsoft verification record, <code>autodiscover</code>, <code>msoid</code>,
-      <code>email</code>, <code>_domainconnect</code>, and two Teams records. Switching nameservers
-      leaves every one of them behind, and mail to
-      <code>eliyahu@workingwithgod.live</code> stops arriving that day.</p>
-    <p>Worse, it is the slow option, not the fast one: undoing a nameserver change can take up to
-      <strong>48 hours</strong>, and you cannot speed it up. The method below changes three rows,
-      never touches your email, and can be undone in about ten minutes.</p>
+    <b>Your email lives at this same address</b>
+    <p>Mail to <code>eliyahu@workingwithgod.live</code> is delivered by a handful of settings sitting on
+      this same page. We change three rows and leave everything else exactly as it is, so your email
+      keeps working throughout. Nothing below will interrupt it.</p>
+    <p>Two things to say no to. If GoDaddy offers to <strong>change your nameservers</strong>, or to
+      <strong>connect your domain to another service</strong> for you, decline both and tell us. Those
+      hand the whole page over at once, and your email goes with it.</p>
   </div>
 
   <div class="box">
