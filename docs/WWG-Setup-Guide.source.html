@@ -263,20 +263,31 @@ ul.toc{list-style:none; margin:4mm 0 0; padding:0;
           <p>Click the <strong>Save</strong> icon, then the blue <strong>Deploy</strong> button at the top
         right, then <strong>New deployment</strong>.</p>
       <p>Click the gear icon next to "Select type" and choose <strong>Web app</strong>.</p>
+      <div class="box">
+        <p><strong>This is the only time you use "New deployment".</strong> Every later change goes
+          through <strong>Deploy &rsaquo; Manage deployments &rsaquo; the pencil icon &rsaquo; Version:
+          New version</strong>, which keeps the same web address. Choosing "New deployment" a second
+          time creates a <em>different</em> address and quietly leaves the old one running the old
+          code, so your changes appear to have no effect.</p>
+      </div>
         </div>
       </li>
       <li>
         <span class="snum">07</span>
         <div class="sbody">
           <p>Two dropdowns appear. Set them exactly like this:</p>
-      <div class="type"><span class="lbl">These two settings matter</span>
+      <div class="type"><span class="lbl">These two settings matter more than anything else here</span>
         Execute as: &nbsp;&nbsp;&nbsp;&nbsp;Me<br>
         Who has access: Anyone
       </div>
       <div class="flag f-stop">
         <b>"Anyone" — not "Anyone with a Google Account"</b>
-        <p>These sit next to each other and the second one sounds safer. It is the wrong choice, and
-          if you pick it, registrations will silently vanish. Read the option twice before clicking Deploy.</p>
+        <p>These two options sit next to each other and the second one sounds safer. It is the single
+          most common way this whole setup fails.</p>
+        <p>If you pick the wrong one, Google quietly answers every registration with a hidden sign-in
+          page instead of running your script. Nothing appears in the spreadsheet, no error is
+          recorded anywhere, and the website still says "thank you" to the person registering. There
+          is no warning of any kind. Read the option twice before clicking Deploy.</p>
       </div>
         </div>
       </li>
@@ -296,9 +307,16 @@ ul.toc{list-style:none; margin:4mm 0 0; padding:0;
       <li>
         <span class="snum">09</span>
         <div class="sbody">
-          <p>Google now shows you a <strong>Web app URL</strong> ending in <code>/exec</code>.
-        Copy it and send it to us. That is the last thing we need from Part 1.</p>
-      <div class="type"><span class="lbl">It looks like this</span>https://script.google.com/macros/s/AKfycb…/exec</div>
+          <p>Google now shows you a <strong>Web app URL</strong>. Copy it and send it to us. That is
+        the last thing we need from Part 1.</p>
+      <div class="type"><span class="lbl">It must end in /exec</span>https://script.google.com/macros/s/AKfycb…/<strong>exec</strong></div>
+      <div class="flag f-warn">
+        <b>If it ends in <code>/dev</code>, it is the wrong address</b>
+        <p>Apps Script also shows a second address ending <code>/dev</code>. That one only works for
+          people signed in to your Google account — which means it works perfectly when <em>you</em>
+          test it in your browser, and fails for everyone and everything else. It is the reason people
+          spend days on this. Check the last four characters.</p>
+      </div>
       <div class="flag f-stop">
         <b>Treat this address like a password</b>
         <p>Anyone who has it can write rows into your spreadsheet. Do not put it in a screenshot,
@@ -385,19 +403,41 @@ ul.toc{list-style:none; margin:4mm 0 0; padding:0;
           <p>Go to <strong>Site configuration</strong>, then <strong>Notifications</strong>, then
         <strong>Emails and webhooks</strong>. Find the box called
         <strong>Form submission notifications</strong> — the lower one, not Deploy notifications.</p>
-      <p>Click <strong>Add notification</strong>, choose <strong>Email notification</strong>, and set:</p>
-      <div class="type"><span class="lbl">Do this three times</span>
-        Email to notify:&nbsp;&nbsp;eliyahu@workingwithgod.live<br>
-        Form: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;roundtable&nbsp;&nbsp;then contact&nbsp;&nbsp;then dailyQuote
+
+      <p>Click <strong>Add notification</strong> and choose <strong>Email notification</strong>. Fill it
+        in, save, and then <strong>repeat for each of the three forms</strong>:</p>
+
+      <table>
+        <thead><tr><th>Email to notify</th><th>Form</th><th>What it covers</th></tr></thead>
+        <tbody>
+          <tr><td>eliyahu@workingwithgod.live</td><td><code>roundtable</code></td><td>Roundtable registrations</td></tr>
+          <tr><td>eliyahu@workingwithgod.live</td><td><code>contact</code></td><td>Messages from the Contact page</td></tr>
+          <tr><td>eliyahu@workingwithgod.live</td><td><code>dailyQuote</code></td><td>Daily quote sign-ups</td></tr>
+        </tbody>
+      </table>
+
+      <p>Three separate notifications, all going to the same address. If the <strong>Form</strong>
+        dropdown offers <strong>Any form</strong>, choose that instead and one notification covers all
+        three — including any form we add later.</p>
+
+      <div class="flag f-warn">
+        <b>Only <code>roundtable</code> is set up at the moment</b>
+        <p>If someone uses the Contact page or signs up for the daily quote today, the message is
+          safely stored in Netlify but no email reaches you. Adding the other two takes about a
+          minute each and is worth doing now.</p>
       </div>
-      <p>One notification per form, three in total, all going to the same address. If a dropdown
-        offers <strong>Any form</strong>, pick that instead and you only need one.</p>
+
       <div class="box">
-        <p><strong>Why this is separate from the spreadsheet.</strong> These emails come from Netlify
-          itself and do not depend on the spreadsheet working. If anything ever goes wrong with the
-          Google side, registrations still reach your inbox, and every one is still stored under
-          <strong>Forms</strong> in Netlify where nothing can lose it. Two independent paths, on
-          purpose.</p>
+        <p><strong>Why this is separate from the spreadsheet.</strong> These emails are sent by Netlify
+          itself and do not depend on the spreadsheet, the Google script, or anything else working.
+          If the Google side ever breaks, registrations still reach your inbox — and every submission
+          is stored under <strong>Forms</strong> in Netlify regardless, where nothing can lose it.
+          Three independent places, on purpose.</p>
+        <p>You may receive <em>two</em> emails per registration: one from Netlify
+          (<code>formresponses@netlify.com</code>) and one from your own Google script. That is
+          expected. The one from your script is the useful one — pressing Reply on it writes back to
+          the person who registered. Once you are happy everything is working, you can delete the
+          Netlify one if the duplicates annoy you.</p>
       </div>
         </div>
       </li>
@@ -415,11 +455,27 @@ ul.toc{list-style:none; margin:4mm 0 0; padding:0;
   </div>
 
   <div class="flag f-stop">
-    <b>Your email runs on this same address</b>
-    <p>Because you receive mail at <code>eliyahu@workingwithgod.live</code>, changing the wrong setting
-      here stops your email, quietly, for everyone writing to you. We change only two entries and leave
-      everything else exactly as it is. If GoDaddy ever offers to "change nameservers" or "connect to
-      another host" automatically, say no and call us.</p>
+    <b>Never change the nameservers</b>
+    <p>There is popular advice online — including video tutorials — that says the way to connect a
+      GoDaddy domain is to replace its <strong>nameservers</strong> with the host's. Do not do that
+      here. It would hand your entire address book to Netlify, and your email records do not come
+      with it.</p>
+    <p>Your mail runs on this same address through Microsoft 365, and it depends on
+      <strong>nine separate records</strong> that live at GoDaddy right now: your MX record, an SPF
+      record, a Microsoft verification record, <code>autodiscover</code>, <code>msoid</code>,
+      <code>email</code>, <code>_domainconnect</code>, and two Teams records. Switching nameservers
+      leaves every one of them behind, and mail to
+      <code>eliyahu@workingwithgod.live</code> stops arriving that day.</p>
+    <p>Worse, it is the slow option, not the fast one: undoing a nameserver change can take up to
+      <strong>48 hours</strong>, and you cannot speed it up. The method below changes three rows,
+      never touches your email, and can be undone in about ten minutes.</p>
+  </div>
+
+  <div class="box">
+    <p><strong>The two things to have open.</strong> GoDaddy, on the DNS page for
+      <code>workingwithgod.live</code>. And Netlify, on <strong>Domain management</strong>, where you
+      add <code>workingwithgod.live</code> and <code>www.workingwithgod.live</code> to the site first
+      — choosing <strong>"Use a third-party external DNS provider"</strong> when it asks.</p>
   </div>
 
   <ol class="steps">
@@ -435,6 +491,18 @@ ul.toc{list-style:none; margin:4mm 0 0; padding:0;
       <li>
         <span class="snum">02</span>
         <div class="sbody">
+          <p><em>Optional, but it makes the switchover about six times quicker.</em> An hour before you
+        do the rest, edit the <code>A</code> rows and the <code>www</code> row and set each one's
+        <strong>TTL</strong> to <strong>Custom &rsaquo; 600 seconds</strong>. Save, then leave it for an
+        hour and come back.</p>
+      <p>TTL is how long the rest of the internet is allowed to remember the old answer. Lowering it
+        first shrinks the gap where the site is half-switched from about an hour to about ten minutes.
+        Change nothing else while you are in there.</p>
+        </div>
+      </li>
+      <li>
+        <span class="snum">03</span>
+        <div class="sbody">
           <p>Find the row where <strong>Type</strong> is <code>A</code> and <strong>Name</strong> is
         <code>@</code>. Edit it and replace the value with:</p>
       <div class="type"><span class="lbl">New value for the A record</span>75.2.60.5</div>
@@ -449,7 +517,7 @@ ul.toc{list-style:none; margin:4mm 0 0; padding:0;
         </div>
       </li>
       <li>
-        <span class="snum">03</span>
+        <span class="snum">04</span>
         <div class="sbody">
           <p>Find the row where <strong>Type</strong> is <code>CNAME</code> and <strong>Name</strong> is
         <code>www</code>. Change its value to your Netlify address, the one ending
@@ -457,14 +525,25 @@ ul.toc{list-style:none; margin:4mm 0 0; padding:0;
         </div>
       </li>
       <li>
-        <span class="snum">04</span>
+        <span class="snum">05</span>
         <div class="sbody">
-          <p>Save. <strong>Change nothing else.</strong> In particular, leave every row of type
-        <code>MX</code> and <code>TXT</code> completely alone. Those are your email.</p>
+          <p>Save. <strong>Change nothing else.</strong></p>
+      <p>These rows are your email and your Microsoft account. Leave every one of them exactly as it
+        is, and do not delete any row you do not recognise:</p>
+      <div class="type"><span class="lbl">Do not touch</span>
+        MX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(mail delivery)<br>
+        TXT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(both of them — SPF and Microsoft)<br>
+        autodiscover&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Outlook set-up)<br>
+        msoid, email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Microsoft sign-in)<br>
+        _domainconnect&nbsp;&nbsp;&nbsp;&nbsp;(GoDaddy&rsquo;s own automation)<br>
+        _sip… (two rows)&nbsp;(Teams)
+      </div>
+      <p>Also add <strong>no</strong> row of type <code>AAAA</code>. Netlify does not serve the address
+        you are pointing at over that kind of record, and adding one breaks the site.</p>
         </div>
       </li>
       <li>
-        <span class="snum">05</span>
+        <span class="snum">06</span>
         <div class="sbody">
           <p>Wait. It can take a few minutes or a few hours for the change to spread across the internet.</p>
       <p>During that window the site may show a security warning about its certificate. That is normal
@@ -703,24 +782,89 @@ ul.toc{list-style:none; margin:4mm 0 0; padding:0;
   <div class="part-head">
     <div class="part-num">Reference</div>
     <h2>If something looks wrong</h2>
-    <p class="why">Almost everything that goes wrong here has one of five causes. Check these before
-      assuming something is broken.</p>
+    <p class="why">Nothing here is ever lost. Every submission is stored in Netlify under
+      <strong>Forms</strong> whatever else fails, so a problem below is an inconvenience, not a lost
+      registration.</p>
   </div>
+
+  <h3 style="margin-top:0">Nothing is reaching the spreadsheet</h3>
+
+  <p>This has one of five causes, and there is one screen that tells you which. In Apps Script, click
+    the <strong>Executions</strong> icon in the left-hand strip. It lists every time your script has
+    actually run.</p>
+
+  <table>
+    <thead><tr><th>What Executions shows</th><th>What it means</th><th>What to do</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Nothing at all</strong></td>
+          <td>The registration never reached your script. Google turned it away before it ran.</td>
+          <td>Causes 1&ndash;3 below.</td></tr>
+      <tr><td>A row in <strong>red</strong></td>
+          <td>Your script ran and hit an error.</td>
+          <td>Click it, read the message, send us that line.</td></tr>
+      <tr><td>A row in <strong>green</strong></td>
+          <td>It ran and thought it succeeded. The row went somewhere you are not looking.</td>
+          <td>Cause 5 below.</td></tr>
+    </tbody>
+  </table>
+
+  <table>
+    <thead><tr><th>#</th><th>Cause</th><th>How to check it in under a minute</th></tr></thead>
+    <tbody>
+      <tr><td>1</td>
+          <td><strong>Access is set to "Anyone with a Google Account"</strong> instead of "Anyone". By
+              far the most likely. Google answers with a hidden sign-in page and your script never runs.</td>
+          <td>Deploy &rsaquo; Manage deployments. Read the <em>Who has access</em> line. It must say
+              exactly <strong>Anyone</strong>.</td></tr>
+      <tr><td>2</td>
+          <td><strong>The address ends in <code>/dev</code></strong> rather than <code>/exec</code>.
+              This one works when you test it yourself and fails for everything else, which is why it
+              costs people days.</td>
+          <td>Look at the last four characters of the address.</td></tr>
+      <tr><td>3</td>
+          <td><strong>An old deployment is still live.</strong> "New deployment" was used instead of
+              "New version", so there are now two addresses and the one in use runs the old code.</td>
+          <td>Deploy &rsaquo; Manage deployments. There should be exactly <strong>one</strong> active
+              deployment, on the newest version.</td></tr>
+      <tr><td>4</td>
+          <td><strong>The <code>SECRET</code> line was filled in.</strong> If it holds a password and
+              the address does not carry the matching <code>?key=</code>, everything is refused in
+              silence — by design, so a stranger learns nothing.</td>
+          <td>In the script, check the line reads <code>const SECRET = '';</code> with nothing between
+              the quotes.</td></tr>
+      <tr><td>5</td>
+          <td><strong>Wrong spreadsheet.</strong> The <code>SHEET_ID</code> is valid but belongs to a
+              different file — often an old copy.</td>
+          <td>Open the browser test below. It prints the name of the sheet it is writing to.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box">
+    <p><strong>The one-minute test that answers all five.</strong> Paste your <code>/exec</code>
+      address into a browser address bar and press Enter. You will get back a line of text ending in a
+      <strong>verdict</strong>. If it says anything other than "All good", it names the problem.</p>
+    <p>If you get a <strong>Google sign-in page</strong> instead of that text, that is cause 1 — go and
+      change <em>Who has access</em> to <strong>Anyone</strong>.</p>
+  </div>
+
+  <h3>Everything else</h3>
 
   <table>
     <thead><tr><th>What you see</th><th>What it usually means</th></tr></thead>
     <tbody>
-      <tr><td>Registered, but no email and nothing in the sheet</td>
+      <tr><td>Registered, but nothing anywhere at all</td>
           <td>Form detection was switched on without rebuilding the site afterwards. Go back to Part 2, step 3.</td></tr>
-      <tr><td>Netlify shows the registration, but the sheet stays empty</td>
-          <td>Usually the secret is missing from the address, or access was set to "Anyone with a Google Account" instead of "Anyone".</td></tr>
+      <tr><td>Emails for the Roundtable but not the other forms</td>
+          <td>Only one of the three notifications was added. Part 2, step 4.</td></tr>
+      <tr><td>Two emails for every registration</td>
+          <td>Expected. One is Netlify's, one is your script's. Delete the Netlify one if it bothers you.</td></tr>
       <tr><td>The website will not load at workingwithgod.live</td>
-          <td>The DNS change has not spread yet. Give it a few hours. If it is still failing the next morning, tell us.</td></tr>
+          <td>The DNS change has not spread yet. Give it an hour. If it still fails the next morning, tell us.</td></tr>
       <tr><td>A security or certificate warning on the site</td>
-          <td>Normal in the first minutes after the DNS change. It clears itself.</td></tr>
+          <td>Normal in the first minutes after the DNS change. It clears itself, usually within ten minutes.</td></tr>
       <tr><td>Analytics or Clarity showing nothing</td>
           <td>Either we have not added your codes yet, or fewer than 24 hours have passed. Both are common.</td></tr>
-      <tr><td>Your email stopped arriving</td>
+      <tr><td><strong>Your email stopped arriving</strong></td>
           <td>Stop and contact us immediately. Do not change anything else at GoDaddy in the meantime.</td></tr>
     </tbody>
   </table>
