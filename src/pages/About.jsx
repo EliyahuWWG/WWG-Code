@@ -33,7 +33,7 @@ export default function About() {
       <section className="phero">
         <div className="container">
           <div className="eyebrow">About</div>
-          <h1 className="h1 mt-3 balance"><MaskLines>A teacher of the Word, in business.</MaskLines></h1>
+          <h1 className="h1 mt-3 balance"><MaskLines>Perspective Bringer</MaskLines></h1>
           <p className="lead">I am an executive coach, organizational consultant, and process facilitator. And a bit of a teacher as I help leaders fulfill their higher calling to be the CHIEF’s Executive Officer.</p>
         </div>
       </section>
@@ -52,7 +52,7 @@ export default function About() {
             <Reveal delay={0.05}>
               <h2 className="h2 mt-2 maxw-60">It started when I was eight years old.</h2>
               <p className="mt-2 lead">When I was eight years old, in a “revelation” moment, the Ancient of Days gave me an out-of-the-box perspective. It has shown up as a knack for noticing the deep details of how people relate to themselves, each other, and to God. And it set me on a lifelong quest to help us live and lead from the largest perspective.</p>
-              <p className="mt-2 muted maxw-60">That question, <span className="serif-it">how do we live and lead from the largest possible perspective?</span>, took me through clinical social work and student counseling, a stint in corporate America, two small businesses of my own, and a research project that has ended up in the hands of corporations, governments, educational institutions, and militaries in over 130 countries. I am the therapist who reads the room, the owner who has signed the front of a paycheck, and the scholar who studies what actually makes teams and organizations healthy.</p>
+              <p className="mt-2 muted maxw-60">That question, <span className="serif-it">How do we live and lead from the largest possible perspective?</span>, took me through clinical social work and student counseling, a stint in corporate America, two small businesses of my own, and a research project that has ended up in the hands of corporations, governments, educational institutions, and militaries in over 130 countries. I am the therapist who reads the room, the owner who has signed the front of a paycheck, and the scholar who studies what actually makes teams and organizations healthy.</p>
               <p className="mt-2 muted maxw-60">These days it all shows up in one place: helping leaders discern what God is actually asking of them, and then helping them do something about it. I coach owners, CEOs, EDs, solopreneurs, and managers wanting to level-up. I facilitate teams. I help people put the Ten Modes of Elevated Leadership method into practice so that faith and Tuesday afternoon can speak the same language.</p>
               <p className="mt-2 muted maxw-60">A few honest specifics, for the curious: I’m a DiSC D; an Adizes PaEI; my top Gallup strengths are Input, Strategic, Learner, Achiever, and Empathy; and, depending on the season and context, you’ll find either an ENTJ or an ISFP. I also apparently have a sparkling sense of humor, though it doesn’t show up in a website this earnest. I live in the rolling hills of northern Virginia with my wife, Shira, still curious, amazed, and endlessly grateful.</p>
             </Reveal>
