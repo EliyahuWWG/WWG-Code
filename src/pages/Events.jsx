@@ -123,7 +123,7 @@ export default function Events() {
         <RoundtableForm />
       </Modal>
 
-      <CTA label="(→) Come to the next one" title="There’s a seat for you at the Roundtable." text="It’s free, it’s in person, and it’s two hours well spent with other leaders inviting God into their daily work." showCoaching={false} />
+      <CTA label="Come to the next one" title="There’s a seat for you at the Roundtable." text="It’s free, it’s in person, and it’s two hours well spent with other leaders inviting God into their daily work." showCoaching={false} />
     </>
   )
 }

@@ -125,7 +125,7 @@ export default function TheBook() {
       </section>
 
       <CTA
-        label="(→) Read it, then talk"
+        label="Read it, then talk"
         title="God is ready to work with you."
         text="Pick up the book, or bring the decision in front of you to a call and we’ll apply the method to it directly."
       />

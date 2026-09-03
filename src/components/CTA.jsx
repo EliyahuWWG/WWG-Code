@@ -5,7 +5,7 @@ import Arrow from './Arrow'
 import Reveal from './Reveal'
 
 export default function CTA({
-  label = '(→) Start the conversation', title = 'Start the journey.', text = 'Bring the real decision in front of you, strategy, a hire, a budget, the timing of a risk. A focused call to see how the Working With God method applies to it.',
+  label = 'Start the conversation', title = 'Start the journey.', text = 'Bring the real decision in front of you, strategy, a hire, a budget, the timing of a risk. A focused call to see how the Working With God method applies to it.',
   // Both buttons are on by default. Pages that already sell one of the two
   // switch that one off rather than repeating themselves: Speaking drops the
   // Roundtable, Events drops the coaching call.
