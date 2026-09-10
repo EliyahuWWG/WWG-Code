@@ -102,6 +102,8 @@ table{border-collapse:collapse; width:100%; font-size:10.5pt; margin:3.2mm 0; pa
 th,td{text-align:left; padding:3mm 3.4mm; border-bottom:1px solid var(--rule); vertical-align:top}
 th{background:var(--sunk); font-size:8.8pt; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-2); font-weight:700}
 tr:last-child td{border-bottom:0}
+tr{page-break-inside:avoid; break-inside:avoid}
+thead{display:table-header-group}
 
 ul.plain{margin:2.5mm 0 0; padding-left:5mm}
 ul.plain li{margin-bottom:1.1mm}
@@ -215,50 +217,55 @@ ul.toc{list-style:none; margin:4mm 0 0; padding:0;
       <li>
         <span class="snum">02</span>
         <div class="sbody">
-          <p>Look at the web address at the top of your browser. It is long. You need the middle part of it.</p>
-      <div class="type"><span class="lbl">The address looks like this</span>docs.google.com/spreadsheets/d/<strong>1AbC…longcode…XyZ</strong>/edit</div>
-      <p>Copy the bold part, between <code>/d/</code> and <code>/edit</code>. That is your
-        <strong>Sheet ID</strong>. Paste it somewhere safe for a moment.</p>
-        </div>
-      </li>
-      <li>
-        <span class="snum">03</span>
-        <div class="sbody">
           <p>In the spreadsheet menu, click <strong>Extensions</strong>, then <strong>Apps Script</strong>.
         A new tab opens with a code editor.</p>
       <p class="said">Do not be put off by this. You will paste something in and never look at it again.</p>
         </div>
       </li>
       <li>
-        <span class="snum">04</span>
+        <span class="snum">03</span>
         <div class="sbody">
           <p>Select everything already in that editor and delete it. Then paste in the file we sent you
         called <code>Code.gs</code>.</p>
         </div>
       </li>
       <li>
-        <span class="snum">05</span>
+        <span class="snum">04</span>
         <div class="sbody">
-          <p>Near the top of what you pasted, find these two lines and fill them in. Change only
-            the words inside the quote marks. Leave the word <code>const</code>, the quote marks and
-            the semicolon exactly as they are.</p>
-      <div class="type"><span class="lbl">Change these two</span>
-        const SHEET_ID&nbsp;&nbsp;= 'paste your Sheet ID here';<br>
-        const NOTIFY_TO = 'eliyahu@workingwithgod.live';
+          <p>Near the top of what you pasted there is a short block of settings. Check that it reads
+            exactly like this, and change nothing else:</p>
+      <div class="type"><span class="lbl">The settings block</span>
+        const SHEET_ID&nbsp;&nbsp;= '';<br>
+        const NOTIFY_TO = 'eliyahu@workingwithgod.live';<br>
+        const NOTIFY&nbsp;&nbsp;&nbsp;&nbsp;= true;<br>
+        const SECRET&nbsp;&nbsp;&nbsp;&nbsp;= '';
       </div>
+      <p>Only one of these is likely to need your attention: <code>NOTIFY_TO</code> is the address the
+        registration emails go to. If that is already your address, there is nothing at all to change
+        in this step.</p>
       <div class="box">
-        <p><strong>Edit the lines that are already there.</strong> Do not type these in as new lines
-          underneath. Each name must appear once in the file. Two copies of the same one and the
-          script refuses to run.</p>
+        <p><strong>Leave <code>SHEET_ID</code> empty.</strong> Because you opened Apps Script from
+          inside the spreadsheet, the script already knows which sheet it belongs to. There is no long
+          code to find and no chance of mistyping one.</p>
+        <p><strong>Leave <code>SECRET</code> empty too.</strong> It is an optional password we can
+          switch on later, once registrations are arriving. Setting it now is the easiest way to end up
+          with a setup that looks finished and quietly records nothing.</p>
       </div>
-      <p>A little below them is a third line, <code>const SECRET = '';</code>. <strong>Leave it exactly
-        as it is</strong>, with nothing between the quote marks. It is an optional password we can
-        switch on once registrations are arriving. Setting it now is the easiest way to end up with a
-        setup that looks finished and quietly records nothing.</p>
+      <div class="flag f-warn">
+        <b>Two rules about typing here</b>
+        <p><strong>Edit the lines that are already there.</strong> Do not add these as new lines
+          underneath ones you already have. Each name may appear only once in the whole file. Two
+          copies of the same name and the script refuses to run, with an error like
+          <em>&ldquo;Identifier 'SHEET_ID' has already been declared&rdquo;</em>.</p>
+        <p><strong>Change only what is inside the quote marks.</strong> Leave the word
+          <code>const</code>, the quote marks and the semicolon exactly as they are. And type your own
+          real address &mdash; never the description of one. Words like <em>paste your ID here</em>
+          are instructions, not values.</p>
+      </div>
         </div>
       </li>
       <li>
-        <span class="snum">06</span>
+        <span class="snum">05</span>
         <div class="sbody">
           <p>Click the <strong>Save</strong> icon, then the blue <strong>Deploy</strong> button at the top
         right, then <strong>New deployment</strong>.</p>
@@ -273,7 +280,7 @@ ul.toc{list-style:none; margin:4mm 0 0; padding:0;
         </div>
       </li>
       <li>
-        <span class="snum">07</span>
+        <span class="snum">06</span>
         <div class="sbody">
           <p>Two dropdowns appear. Set them exactly like this:</p>
       <div class="type"><span class="lbl">These two settings matter more than anything else here</span>
@@ -292,7 +299,7 @@ ul.toc{list-style:none; margin:4mm 0 0; padding:0;
         </div>
       </li>
       <li>
-        <span class="snum">08</span>
+        <span class="snum">07</span>
         <div class="sbody">
           <p>Click <strong>Deploy</strong>. Google asks you to authorise. Click through, choose your account,
         and you will hit a warning screen that says <em>Google hasn't verified this app</em>.</p>
@@ -305,7 +312,7 @@ ul.toc{list-style:none; margin:4mm 0 0; padding:0;
         </div>
       </li>
       <li>
-        <span class="snum">09</span>
+        <span class="snum">08</span>
         <div class="sbody">
           <p>Google now shows you a <strong>Web app URL</strong>. Copy it and send it to us. That is
         the last thing we need from Part 1.</p>
@@ -325,19 +332,27 @@ ul.toc{list-style:none; margin:4mm 0 0; padding:0;
         </div>
       </li>
       <li>
-        <span class="snum">10</span>
+        <span class="snum">09</span>
         <div class="sbody">
           <p>Test it before you send it. Paste that same <code>/exec</code> address into your browser's
             address bar and press Enter. You should see a line of text like this:</p>
       <div class="type"><span class="lbl">What a working setup replies</span>
-        &#123;"ok":true, "keyCheck":"off", "sheetOk":true,<br>
+        &#123;"ok":true,<br>
+        &nbsp;"keyCheck":"off (SECRET is blank)",<br>
+        &nbsp;"sheetOk":true,<br>
         &nbsp;"sheet":"WWG Registrations",<br>
+        &nbsp;"tabs":["Sheet1"],<br>
         &nbsp;"verdict":"All good. Submissions will be recorded."&#125;
       </div>
-      <p>Read the <strong>verdict</strong>. If it says anything other than "All good", it tells you
-        which part is wrong. If instead you get a Google sign-in page, the
-        <strong>Who has access</strong> setting in step 7 is on the wrong option — go back and set it
-        to <strong>Anyone</strong>.</p>
+      <p>There will be more on the line than this &mdash; you are looking for two things only.
+        <code>"sheetOk":true</code>, and a <strong>verdict</strong> that reads
+        <em>All good</em>. If the verdict says anything else, it names the part that is wrong.</p>
+      <p>If instead of that line you get a <strong>Google sign-in page</strong>, the
+        <strong>Who has access</strong> setting in step 6 is on the wrong option &mdash; go back to
+        <strong>Deploy &rsaquo; Manage deployments &rsaquo; pencil</strong> and set it to
+        <strong>Anyone</strong>.</p>
+      <p>The <code>tabs</code> list is short at this point, and that is correct. The three tabs are
+        created the first time a real registration arrives.</p>
         </div>
       </li>
     </ol>
@@ -373,16 +388,27 @@ ul.toc{list-style:none; margin:4mm 0 0; padding:0;
       <li>
         <span class="snum">01</span>
         <div class="sbody">
-          <p>Sign in at <code>app.netlify.com</code>. You will see your site listed. Click it.</p>
-      <p>At the top there is a temporary web address ending in <code>.netlify.app</code>. Click it and
-        have a look around the new site. Nothing here is public yet.</p>
+          <p>Sign in at <code>app.netlify.com</code>. You will see one entry listed,
+        <strong>workingwithgod</strong>. Click it.</p>
+      <p>Near the top is a temporary web address, <code>workingwithgod.netlify.app</code>. Click it and
+        have a look around the new site. It is fully working; it is just not on your own address yet.</p>
+      <div class="box">
+        <p><strong>One thing that confuses everybody.</strong> Netlify is part-way through renaming
+          things, so the same website is called a <em>site</em> on some screens and a <em>project</em>
+          on others. They mean the same thing, and you only have one of them.</p>
+      </div>
         </div>
       </li>
       <li>
         <span class="snum">02</span>
         <div class="sbody">
-          <p>In the left menu click <strong>Site configuration</strong>, then <strong>Forms</strong>.</p>
-      <p>Turn on <strong>Form detection</strong>.</p>
+          <p>Click the <strong>Forms</strong> tab along the top of the page, then the button that says
+        <strong>Enable form detection</strong>.</p>
+      <div class="type"><span class="lbl">Or go straight there</span>
+        app.netlify.com/projects/workingwithgod/forms
+      </div>
+      <p class="said">If it is already on, there is nothing to do in this step &mdash; but still do the
+        next one.</p>
         </div>
       </li>
       <li>
@@ -400,9 +426,11 @@ ul.toc{list-style:none; margin:4mm 0 0; padding:0;
       <li>
         <span class="snum">04</span>
         <div class="sbody">
-          <p>Go to <strong>Site configuration</strong>, then <strong>Notifications</strong>, then
-        <strong>Emails and webhooks</strong>. Find the box called
-        <strong>Form submission notifications</strong> — the lower one, not Deploy notifications.</p>
+          <p>In the left-hand menu click <strong>Project configuration</strong>, then
+        <strong>Notifications</strong>, then <strong>Emails and webhooks</strong>.</p>
+      <p>That page has two boxes. Scroll to the <em>lower</em> one, called
+        <strong>Form submission notifications</strong>. The upper one, <em>Deploy notifications</em>,
+        is about the website being rebuilt and is not what you want here.</p>
 
       <p>Click <strong>Add notification</strong> and choose <strong>Email notification</strong>. Fill it
         in, save, and then <strong>repeat for each of the three forms</strong>:</p>
@@ -442,6 +470,49 @@ ul.toc{list-style:none; margin:4mm 0 0; padding:0;
         </div>
       </li>
     </ol>
+
+  <h3>Where to read your registrations in Netlify</h3>
+
+  <p>Netlify keeps every submission, and this is where you read them. The emails are copies sent to you
+    for convenience; this page is the record, and it is what to open when you want to see everybody who
+    has registered rather than one person at a time.</p>
+
+  <div class="box">
+    <p><strong>Bookmark this address.</strong> It goes straight there and skips every menu:</p>
+    <div class="type" style="margin-bottom:0"><span class="lbl">The page you want</span>
+      app.netlify.com/projects/workingwithgod/forms
+    </div>
+  </div>
+
+  <p>By hand: sign in at <code>app.netlify.com</code>, click <strong>workingwithgod</strong>, then the
+    <strong>Forms</strong> tab along the top.</p>
+
+  <table>
+    <thead><tr><th>On screen</th><th>What it is</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Active forms</strong>, listing <code>roundtable</code>, <code>contact</code>
+              and <code>dailyQuote</code></td>
+          <td>One line per form, with how many people have used it. A form appears only after its
+              first real submission, so fewer than three at the start is normal.</td></tr>
+      <tr><td>Click one of those names</td>
+          <td>That form&rsquo;s own page: every submission, newest first, with the answers exactly as
+              typed and the date and time.</td></tr>
+      <tr><td><strong>Download as CSV</strong></td>
+          <td>Saves the list as a file you can open in Excel or Google Sheets.</td></tr>
+      <tr><td>A menu above the list reading <strong>Verified</strong></td>
+          <td>Switches between real submissions and suspected spam.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="flag f-warn">
+    <b>Check the spam list before concluding that someone did not register</b>
+    <p>Netlify filters obvious junk on its own, which is why your inbox stays clean. It is good but not
+      perfect, and a real person occasionally lands there. Those submissions
+      <strong>do not send you an email</strong> and <strong>do not reach the spreadsheet</strong>.</p>
+    <p>So if somebody says they registered and you have no record of them, look here first. Switch the
+      menu from <strong>Verified</strong> to <strong>Spam</strong>, and if you find them, select them
+      and choose <strong>Mark as verified</strong>.</p>
+  </div>
 </section>
 
 <!-- ══ PART 3 ══ -->
@@ -452,6 +523,20 @@ ul.toc{list-style:none; margin:4mm 0 0; padding:0;
     <p class="why">Your web address currently points at the old GoDaddy site. This changes where it
       points. It is the only step in this guide that carries any real risk, so read the warning first.</p>
     <span class="time">About 10 minutes, then a wait</span>
+  </div>
+
+  <div class="flag f-ok">
+    <b>Your site does not go down while you do this</b>
+    <p>The new site is already built and already live &mdash; it is sitting at
+      <code>workingwithgod.netlify.app</code> right now, serving pages. The old site is still live too.
+      What follows does not switch anything off. It only changes which of the two your web address
+      points at.</p>
+    <p>The moment a visitor&rsquo;s computer picks up the new answer, it lands on the new site. Before
+      that moment, it lands on the old one. Either way it lands on a working website. There is no
+      window where nothing is there.</p>
+    <p>Three things keep that handover short, and all three are built into the steps below:
+      add the address to Netlify <em>before</em> you touch GoDaddy, lower the TTL an hour ahead
+      (step 2), and cancel the old subscription <em>last</em>, not first.</p>
   </div>
 
   <div class="flag f-stop">
@@ -496,11 +581,20 @@ ul.toc{list-style:none; margin:4mm 0 0; padding:0;
       <li>
         <span class="snum">03</span>
         <div class="sbody">
-          <p>Find the row where <strong>Type</strong> is <code>A</code> and <strong>Name</strong> is
-        <code>@</code>. Edit it and replace the value with:</p>
-      <div class="type"><span class="lbl">New value for the A record</span>75.2.60.5</div>
-      <p>If there is more than one <code>A</code> row with name <code>@</code>, delete the extras and
-        keep one.</p>
+          <p>This step points the plain address, <code>workingwithgod.live</code>, at the new site.</p>
+      <p>You currently have <strong>two</strong> rows of type <code>A</code> named <code>@</code>.
+        Both belong to the old website. <strong>Delete them both</strong>, then add one new row:</p>
+      <div class="type"><span class="lbl">Delete these two</span>
+        A&nbsp;&nbsp;&nbsp;@&nbsp;&nbsp;&nbsp;13.248.243.5<br>
+        A&nbsp;&nbsp;&nbsp;@&nbsp;&nbsp;&nbsp;76.223.105.230
+      </div>
+      <div class="type"><span class="lbl">Add this one</span>
+        Type:&nbsp;&nbsp;&nbsp;A<br>
+        Name:&nbsp;&nbsp;&nbsp;@<br>
+        Value:&nbsp;&nbsp;75.2.60.5<br>
+        TTL:&nbsp;&nbsp;&nbsp;&nbsp;600
+      </div>
+      <p class="said">The <code>@</code> means the address on its own, with no www in front of it.</p>
           <div class="flag f-warn">
     <b>If GoDaddy will not let you edit the A record</b>
     <p>The old website builder may still be attached to the domain and holding it. In your GoDaddy
@@ -512,9 +606,24 @@ ul.toc{list-style:none; margin:4mm 0 0; padding:0;
       <li>
         <span class="snum">04</span>
         <div class="sbody">
-          <p>Find the row where <strong>Type</strong> is <code>CNAME</code> and <strong>Name</strong> is
-        <code>www</code>. Change its value to your Netlify address, the one ending
-        <code>.netlify.app</code>.</p>
+          <p>This step points <code>www.workingwithgod.live</code> at the new site.</p>
+      <p>You already have a row of type <code>CNAME</code> named <code>www</code>. <strong>Edit that
+        row.</strong> Change only its Value:</p>
+      <div class="type"><span class="lbl">Edit the row you already have</span>
+        Type:&nbsp;&nbsp;&nbsp;CNAME&nbsp;&nbsp;&nbsp;(leave as it is)<br>
+        Name:&nbsp;&nbsp;&nbsp;www&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(leave as it is)<br>
+        Value:&nbsp;&nbsp;workingwithgod.netlify.app&nbsp;&nbsp;&larr; change to this<br>
+        TTL:&nbsp;&nbsp;&nbsp;&nbsp;600
+      </div>
+      <div class="flag f-stop">
+        <b>Do not add an A record named www</b>
+        <p>Several tutorials online tell you to add a new row of type <code>A</code> named
+          <code>www</code>. If you try, GoDaddy will refuse with
+          <em>&ldquo;Record name www conflicts with another record&rdquo;</em>.</p>
+        <p>GoDaddy is right to refuse. A name can be a <code>CNAME</code> or an <code>A</code>, never
+          both, and yours is already a <code>CNAME</code>. Nothing needs adding here &mdash; you are
+          editing the row that already exists.</p>
+      </div>
         </div>
       </li>
       <li>
@@ -538,9 +647,16 @@ ul.toc{list-style:none; margin:4mm 0 0; padding:0;
       <li>
         <span class="snum">06</span>
         <div class="sbody">
-          <p>Wait. It can take a few minutes or a few hours for the change to spread across the internet.</p>
-      <p>During that window the site may show a security warning about its certificate. That is normal
-        and fixes itself once the change has spread.</p>
+          <p>Wait. If you lowered the TTL an hour beforehand, most visitors see the new site within
+        about <strong>ten minutes</strong>, and everyone has it within the hour. If you skipped that
+        step, allow up to an hour for most and a few hours for the last stragglers.</p>
+      <p>You do not have to sit and watch. Open <code>workingwithgod.live</code> in a private or
+        incognito window every few minutes; the moment the new site appears there, it has switched.
+        Netlify&rsquo;s <strong>Domain management</strong> page also turns green on its own once it
+        sees the change.</p>
+      <p>For the first few minutes after it switches, the address may show a security warning about its
+        certificate. Netlify issues the certificate automatically as soon as it can see the domain
+        pointing at it, and the warning clears itself. Nothing is broken and there is nothing to do.</p>
         </div>
       </li>
     </ol>
@@ -826,9 +942,13 @@ ul.toc{list-style:none; margin:4mm 0 0; padding:0;
           <td>In the script, check the line reads <code>const SECRET = '';</code> with nothing between
               the quotes.</td></tr>
       <tr><td>5</td>
-          <td><strong>Wrong spreadsheet.</strong> The <code>SHEET_ID</code> is valid but belongs to a
-              different file — often an old copy.</td>
-          <td>Open the browser test below. It prints the name of the sheet it is writing to.</td></tr>
+          <td><strong>The script is not attached to a spreadsheet.</strong> This happens if the
+              project was started at <code>script.google.com</code> instead of being opened from
+              <strong>Extensions &rsaquo; Apps Script</strong> inside the sheet itself. The script then
+              has no sheet to write to.</td>
+          <td>Open the browser test below. It prints the <em>name</em> of the sheet it is writing to.
+              If that is blank, or the verdict mentions the sheet, this is your cause &mdash; redo
+              Part&nbsp;1 from inside the spreadsheet.</td></tr>
     </tbody>
   </table>
 
@@ -849,6 +969,11 @@ ul.toc{list-style:none; margin:4mm 0 0; padding:0;
           <td>Form detection was switched on without rebuilding the site afterwards. Go back to Part 2, step 3.</td></tr>
       <tr><td>Emails for the Roundtable but not the other forms</td>
           <td>Only one of the three notifications was added. Part 2, step 4.</td></tr>
+      <tr><td>The same registration appears three or four times in the sheet</td>
+          <td>An older copy of the script is deployed. The current one recognises a repeat and ignores
+              it. Update it with <strong>Deploy &rsaquo; Manage deployments &rsaquo; pencil &rsaquo;
+              Version: New version</strong> &mdash; not "New deployment". Delete the extra rows by hand
+              once; they will not come back.</td></tr>
       <tr><td>Two emails for every registration</td>
           <td>Expected. One is Netlify's, one is your script's. Delete the Netlify one if it bothers you.</td></tr>
       <tr><td>The website will not load at workingwithgod.live</td>

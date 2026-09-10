@@ -55,7 +55,7 @@ export default function Home() {
                   H1. Matches the reference hero, which carries only the
                   introduction and the CTA in this column. */}
               {/* Replaced the paragraph-length introduction on 3 Sep. His words. */}
-              <p className="hero-intro">Coaching for Christian Professional</p>
+              <p className="hero-intro">Coaching for Christian Professionals</p>
               <div className="hero-cta">
                 <BookCallLink className="btn btn-onink btn-lg">Book a discovery call</BookCallLink>
               </div>

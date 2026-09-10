@@ -400,9 +400,30 @@ em, .serif-it { }
 .hero-side p { color: rgba(247,244,236,.82); font-size: clamp(1rem,1.1vw,1.08rem); line-height: 1.6; }
 .hero-side .serif-it { color: var(--bone); font-weight: 600; }
 
-/* The introduction paragraph and its CTA. Deliberately smaller than the
-   headline column: this is the supporting voice, not a second headline. */
-.hero-intro { margin-top: 0; }
+/* The line above the CTA. It was a paragraph; now it is three words, so it is
+   sized as a statement rather than body copy — but still clearly under the H1,
+   which stays the loudest thing in the hero.
+
+   The width is set so it breaks after "Christian" and sits as two balanced
+   lines above the button, rather than one long line overhanging it. */
+/* Written as `.hero-side p.hero-intro` on purpose: a later `.hero-side p` rule
+   sets the body size for this column, and a bare `.hero-intro` loses to it. */
+.hero-side p.hero-intro {
+  margin-top: 0;
+  font-family: var(--f-disp);
+  font-weight: 500;
+  /* The column this sits in is ~295px wide at every size above mobile, so the
+     ceiling is set by what fits "Coaching for Christian" on one line there —
+     not by the viewport. Above ~1.75rem it breaks into three ragged lines. */
+  font-size: clamp(1.35rem, 1.9vw, 1.75rem);
+  line-height: 1.18;
+  letter-spacing: -.015em;
+  color: var(--bone);
+  /* Wide enough for "Coaching for Christian" to hold together on line one, so
+     it breaks into two lines rather than three ragged ones. */
+  max-width: 23ch;
+  text-wrap: balance;
+}
 .hero-cta { margin-top: 22px; }
 .hero-side .btn { min-width: 0; }
 @media (max-width: 899px){
@@ -1508,3 +1529,44 @@ a.appear:hover .go { gap: .85em; color: var(--gold-600); border-color: var(--gol
 
 .postrow-body p { color: var(--muted); font-size: 1.02rem; line-height: 1.6; max-width: 60ch; }
 .postrow-body .go { margin-top: 12px; }
+
+/* ------------------------------------------------------------------
+   FOOTER — daily quote signup. Lives here rather than on the Contact
+   page so it is on every page, at the cost of no one's scroll.
+   ------------------------------------------------------------------ */
+.footer-signup {
+  margin-top: 44px; padding-top: 32px;
+  border-top: 1px solid var(--line-dk);
+  display: grid; grid-template-columns: 1fr; gap: 18px 48px; align-items: center;
+}
+@media (min-width: 780px) {
+  .footer-signup { grid-template-columns: 1.1fr 1fr; }
+}
+.footer-signup .fh { margin-bottom: 8px; }
+.fs-copy p { color: rgba(243,238,226,.6); font-size: .95rem; line-height: 1.55; max-width: 46ch; }
+
+.fq-form { width: 100%; }
+.fq-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.fq-row input {
+  flex: 1 1 200px; min-width: 0;
+  background: transparent; color: var(--bone);
+  border: 1px solid var(--line-dk); border-radius: 8px;
+  padding: 12px 14px; font: inherit; font-size: .98rem;
+  transition: border-color .2s var(--ease);
+}
+.fq-row input::placeholder { color: rgba(243,238,226,.38); }
+.fq-row input:hover { border-color: rgba(243,238,226,.34); }
+.fq-row input:focus { outline: none; border-color: var(--gold-500); }
+.fq-row input[aria-invalid="true"] { border-color: var(--clay); }
+.fq-btn { flex: 0 0 auto; }
+
+.fq-err { display: block; margin-top: 8px; font-size: .86rem; color: var(--clay); }
+.fq-err a { color: inherit; text-decoration: underline; }
+.fq-done { color: var(--gold-400); font-size: .98rem; line-height: 1.5; }
+
+@media (max-width: 480px) {
+  /* Stacked, both full width — a side-by-side input and button at this size
+     leaves the input too narrow to read the address being typed. */
+  .fq-row input, .fq-btn { flex: 1 1 100%; }
+  .fq-btn { justify-content: center; }
+}

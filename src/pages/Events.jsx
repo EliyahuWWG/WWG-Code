@@ -10,7 +10,8 @@ import MaskLines from '../components/MaskLines'
 import Seo from '../components/Seo'
 import { breadcrumbSchema, roundtableEventSchema } from '../seo/schema'
 import { roundtableWhatHappens, roundtableWhoShouldAttend, roundtableSponsorLabel,
-  MEETUP, ROUNDTABLE_ADDRESS, ROUNDTABLE_TIME, NEXT_ROUNDTABLE, SPONSOR } from '../data'
+  MEETUP, ROUNDTABLE_ADDRESS, ROUNDTABLE_TIME } from '../data'
+import { useSiteContent } from '../lib/siteContent'
 
 export default function Events() {
   // Registering used to mean leaving the page for /roundtable, which asked
@@ -18,6 +19,10 @@ export default function Events() {
   // opens here instead. /roundtable still exists and still works, for anyone
   // arriving from a link or with JavaScript off.
   const [registerOpen, setRegisterOpen] = useState(false)
+  // Live from the spreadsheet, falling back to the values built in at deploy
+  // time. See src/lib/siteContent.js for why.
+  const { sponsor, roundtable } = useSiteContent()
+  const nextRoundtable = roundtable.next
   return (
     <>
       <Seo
@@ -69,17 +74,20 @@ export default function Events() {
             <Reveal className="stack-tight" delay={0.05}>
               <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>When</b><br /><span className="muted">{ROUNDTABLE_TIME}</span></div>
               <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>Where</b><br /><span className="muted">Private room at Starbucks · {ROUNDTABLE_ADDRESS}</span></div>
-              {/* Both of these come from the monthly block at the top of
-                  src/data.js. The sponsor label follows the date's month. */}
-              <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>Next meeting</b><br /><span className="muted">{NEXT_ROUNDTABLE}</span></div>
+              {/* Both of these come from the "Site content" tab of the
+                  registrations spreadsheet, so Eliyahu can change the sponsor
+                  himself without a rebuild. The values in src/data.js are the
+                  fallback if the sheet cannot be reached. The sponsor label
+                  follows the date's month. */}
+              <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>Next meeting</b><br /><span className="muted">{nextRoundtable}</span></div>
               <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}>
-                <b>{roundtableSponsorLabel()}</b><br />
+                <b>{roundtableSponsorLabel(nextRoundtable)}</b><br />
                 <span className="muted">
-                  {SPONSOR.href
-                    ? <a className="tlink" style={{ display: 'inline' }} href={SPONSOR.href} target="_blank" rel="noopener">{SPONSOR.name}</a>
-                    : SPONSOR.name}
-                  {SPONSOR.creds && `, ${SPONSOR.creds}`}
-                  {SPONSOR.role && `. ${SPONSOR.role}.`}
+                  {sponsor.href
+                    ? <a className="tlink" style={{ display: 'inline' }} href={sponsor.href} target="_blank" rel="noopener">{sponsor.name}</a>
+                    : sponsor.name}
+                  {sponsor.creds && `, ${sponsor.creds}`}
+                  {sponsor.role && `. ${sponsor.role}.`}
                 </span>
               </div>
             </Reveal>

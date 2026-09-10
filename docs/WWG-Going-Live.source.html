@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Website deployment guide</title>
+<style>
+/* ── EchoPulse ──────────────────────────────────────────────────────────
+   Sampled from echopulse.media, not guessed:
+     #0C0C0B  near-black. Dark sections, headlines, the CTA pills.
+     #E8541A  the orange. The accent phrase, used sparingly.
+     #F2EEE7  warm off-white. Type on dark, and the sunk panels here.
+     #F29730  the lighter orange inside the logo mark.
+     #716E67  warm grey for secondary type.
+   The brand is sans-only and alternates dark against white, so this document
+   does the same: dark cover, white interior, orange once or twice a page.
+   ──────────────────────────────────────────────────────────────────────── */
+:root{
+  --ground:#FFFFFF; --paper:#FFFFFF; --sunk:#F2EEE7;
+  --ink:#0C0C0B; --ink-2:#3A3833; --muted:#716E67;
+  --rule:#E5E2DC; --rule-2:#C9C5BC;
+  --orange:#E8541A; --orange-2:#F29730; --orange-bg:#FDEDE6;
+  --warn:#A85E10; --warn-bg:#FDF3E5;
+  --stop:#C0331A; --stop-bg:#FCEAE5;
+  --dark:#0C0C0B; --on-dark:#F2EEE7;
+}
+@page{ size:A4; margin:15mm 16mm 14mm; }
+@page :first{ margin:0; }
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--ground); color:var(--ink);
+  font-family:"DejaVu Sans",Verdana,"Liberation Sans",sans-serif;
+  font-size:10.6pt; line-height:1.66;
+  -webkit-print-color-adjust:exact; print-color-adjust:exact;
+}
+h1,h2,h3,h4{font-family:"Liberation Sans",Helvetica,Arial,sans-serif; font-weight:700;
+  letter-spacing:-.025em; margin:0; color:var(--ink)}
+p{margin:0}
+strong{font-weight:700}
+code,.mono{font-family:"DejaVu Sans Mono","Liberation Mono",monospace; font-size:.85em}
+code{background:var(--sunk); padding:.08em .3em; border-radius:2px; word-break:break-word}
+
+/* ── Cover ─────────────────────────────────────────────────────────────── */
+.cover{height:297mm; width:210mm; background:var(--dark); color:var(--on-dark); padding:20mm 18mm 18mm; display:flex; flex-direction:column; justify-content:space-between; page-break-after:always; break-after:page}
+.brandmark{display:flex; align-items:center; gap:9px}
+.pulse{width:26px;height:26px;flex:none}
+.cover .brandmark .n{color:var(--on-dark)}
+.cover .pulse rect:first-child{fill:#F2EEE7}
+.brandmark .n{font-family:"Liberation Sans",Helvetica,sans-serif; font-weight:700; font-size:14pt; letter-spacing:-.02em}
+.brandmark .n em{font-style:normal; color:var(--orange)}
+.cover-mid h1{color:var(--on-dark); font-size:33pt; line-height:1.1; letter-spacing:-.02em; max-width:15cm}
+.cover-mid .sub{font-size:12.8pt; color:rgba(242,238,231,.72); margin-top:9mm; max-width:12.5cm; line-height:1.5}
+.cover-rule{height:4px; background:var(--orange); width:30mm; margin:7mm 0}
+.cover-foot{border-top:1px solid rgba(242,238,231,.22); padding-top:5mm; display:flex; justify-content:space-between; font-size:9pt; color:rgba(242,238,231,.6)}
+.cover-foot b{color:var(--on-dark); font-weight:700}
+
+/* ── Structure ─────────────────────────────────────────────────────────── */
+.part{margin-top:14mm; page-break-inside:auto}
+.part:first-of-type{margin-top:0}
+.part-head{border-top:3px solid var(--orange); padding-top:4.4mm; margin-bottom:5mm;
+  page-break-inside:avoid; break-inside:avoid; page-break-after:avoid; break-after:avoid}
+.part-num{font-family:"DejaVu Sans Mono",monospace; font-size:8.4pt; letter-spacing:.18em; text-transform:uppercase; color:var(--orange); font-weight:700}
+.part-head h2{font-size:20.5pt; line-height:1.14; margin-top:2mm; letter-spacing:-.015em}
+.part-head .why{font-size:11.7pt; color:var(--ink-2); margin-top:3mm; max-width:14cm}
+h3{font-size:13.6pt; margin-top:5.2mm; margin-bottom:2.2mm;
+  page-break-after:avoid; break-after:avoid}
+.time{display:inline-block; background:var(--orange-bg); color:var(--orange); font-size:8.5pt;
+  font-weight:700; padding:1.8mm 3.6mm; border-radius:9px; margin-top:3mm; font-size:9.4pt}
+
+/* ── Steps ─────────────────────────────────────────────────────────────── */
+ol.steps{list-style:none; margin:4mm 0 0; padding:0}
+/* Plain numerals, matching how echopulse.media numbers things (01, 02, 03)
+   rather than the filled circles I first used. It is also the fix for a
+   Chromium print bug: a filled marker inside a grid item gets its background
+   painted at the page boundary even when break-inside says avoid, stranding a
+   sliver of orange at the foot of the page. A glyph has no box to strand. */
+ol.steps>li{display:grid; grid-template-columns:8mm 1fr; column-gap:3mm;
+  margin-bottom:4.4mm; page-break-inside:avoid; break-inside:avoid}
+.snum{grid-column:1; grid-row:1; color:var(--orange);
+  font-family:"DejaVu Sans Mono",monospace; font-size:9.4pt; font-weight:700;
+  letter-spacing:.02em; padding-top:.6mm}
+.sbody{grid-column:2; grid-row:1}
+.sbody>*+*{margin-top:1.8mm}
+.said{color:var(--muted); font-size:10.5pt; font-style:italic}
+
+/* ── Blocks ────────────────────────────────────────────────────────────── */
+.box{background:var(--paper); border:1px solid var(--rule); border-radius:3px;
+  padding:3.6mm 4.6mm; margin:3.2mm 0; page-break-inside:avoid; break-inside:avoid}
+.flag{border-left:3px solid; border-radius:2px; padding:3.2mm 4.4mm; margin:3.2mm 0; page-break-inside:avoid; break-inside:avoid}
+.flag b{display:block; font-size:10.6pt; margin-bottom:1.2mm}
+.flag p{font-size:10.7pt; color:var(--ink-2)}
+.f-warn{background:var(--warn-bg); border-color:var(--warn)} .f-warn b{color:var(--warn)}
+.f-stop{background:var(--stop-bg); border-color:var(--stop)} .f-stop b{color:var(--stop)}
+.f-ok{background:var(--sunk); border-color:var(--ink)} .f-ok b{color:var(--ink)}
+.type{background:var(--sunk); border:1px dashed var(--rule-2); border-radius:3px;
+  padding:2.8mm 3.8mm; margin:2.6mm 0; font-family:"DejaVu Sans Mono","Liberation Mono",monospace; font-size:9.2pt;
+  color:var(--ink); word-break:break-all; page-break-inside:avoid; break-inside:avoid}
+.type .lbl{display:block; font-family:"DejaVu Sans",Verdana,sans-serif; font-size:8.6pt; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--muted); margin-bottom:1.5mm; font-weight:700}
+
+table{border-collapse:collapse; width:100%; font-size:10.5pt; margin:3.2mm 0; page-break-inside:avoid; break-inside:avoid}
+th,td{text-align:left; padding:3mm 3.4mm; border-bottom:1px solid var(--rule); vertical-align:top}
+th{background:var(--sunk); font-size:8.8pt; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-2); font-weight:700}
+tr:last-child td{border-bottom:0}
+tr{page-break-inside:avoid; break-inside:avoid}
+thead{display:table-header-group}
+
+ul.plain{margin:2.5mm 0 0; padding-left:5mm}
+ul.plain li{margin-bottom:1.1mm}
+ul.plain li::marker{color:var(--orange)}
+
+.toc li{display:flex; gap:4mm; padding:2.1mm 0; border-bottom:1px solid var(--rule); font-size:11.4pt}
+.toc .n{font-family:"Liberation Mono",monospace; color:var(--orange); font-weight:700; width:11mm; flex:none}
+.toc .t{flex:1} .toc .m{color:var(--muted); font-size:10.4pt}
+ul.toc{list-style:none; margin:4mm 0 0; padding:0;
+  page-break-inside:avoid; break-inside:avoid}
+</style>
+</head><body>
+
+<!-- ══ COVER ══ -->
+<section class="cover">
+  <div class="brandmark">
+    <svg class="pulse" viewBox="0 0 32 32" aria-hidden="true">
+      <rect x="0" y="0" width="32" height="32" rx="9" fill="#0C0C0B"/>
+      <rect x="7"    y="9"    width="18"   height="3.4" rx="1.7" fill="#F29730"/>
+      <rect x="11.5" y="14.3" width="13.5" height="3.4" rx="1.7" fill="#E8541A"/>
+      <rect x="7"    y="19.6" width="18"   height="3.4" rx="1.7" fill="#E8541A"/>
+    </svg>
+    <span class="n">Echo<em>Pulse</em></span>
+  </div>
+
+  <div class="cover-mid">
+    <div class="cover-rule"></div>
+    <h1>Going <em style="font-style:italic;color:var(--orange)">live.</em></h1>
+    <p class="sub">Moving <b>workingwithgod.live</b> from your old GoDaddy website to the new one.
+      Three parts, under half an hour of actual clicking, written so that no earlier experience is
+      needed. Your website stays reachable the whole way through, and your email is never touched.</p>
+  </div>
+
+  <div class="cover-foot">
+    <div>Prepared for <b>Dr. Eliyahu Lotzar</b><br>Working With God &middot; workingwithgod.live</div>
+    <div style="text-align:right">Prepared by <b>EchoPulse</b><br>Deployment &middot; Version 1</div>
+  </div>
+</section>
+
+<!-- ══ BEFORE YOU START ══ -->
+<section class="part">
+  <div class="part-head">
+    <div class="part-num">Start here</div>
+    <h2>Before you begin</h2>
+    <p class="why">What is about to happen, in one paragraph, so that nothing below is a surprise.</p>
+  </div>
+
+  <div class="box">
+    <p><strong>Where things stand today.</strong> Your web address,
+      <code>workingwithgod.live</code>, is registered at <strong>GoDaddy</strong>. Right now it points
+      at the old <strong>GoDaddy website builder</strong> &mdash; GoDaddy calls this product
+      <strong>Websites + Marketing</strong> on your bill and <strong>Airo</strong> on some newer
+      screens, and you pay a subscription for it either way. Your email,
+      <code>eliyahu@workingwithgod.live</code>, runs on Microsoft and is completely separate from the
+      website, even though both are managed on the same GoDaddy page.</p>
+    <p><strong>Where we are going.</strong> The new site is built and already live on
+      <strong>Netlify</strong> at a temporary address. We point <code>workingwithgod.live</code> at
+      Netlify instead of at the GoDaddy builder, confirm the new site is answering, and only then
+      cancel that old subscription.</p>
+  </div>
+
+  <h3>A few words this guide uses</h3>
+  <div class="box">
+    <p>Six words come up again and again below. Read this once and the rest of the guide needs no
+      further translation.</p>
+    <table style="margin-bottom:0">
+      <thead><tr><th>Word</th><th>What it actually means</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Domain</strong></td>
+            <td>Your web address, <code>workingwithgod.live</code>. You already own it, and nothing
+                in this guide changes that.</td></tr>
+        <tr><td><strong>DNS</strong></td>
+            <td>The internet&rsquo;s phone book. It is what turns the address
+                <code>workingwithgod.live</code>, which a person types, into the location of the
+                actual computer serving your website, which is all a browser understands.</td></tr>
+        <tr><td><strong>DNS record</strong></td>
+            <td>One entry in that phone book: &ldquo;for this name, go to this place.&rdquo; Part 2
+                changes three of these and leaves the rest exactly as they are.</td></tr>
+        <tr><td><strong>A record / CNAME record</strong></td>
+            <td>The two kinds of entry involved here. An <code>A</code> record points a name straight
+                at a number, like <code>75.2.60.5</code>. A <code>CNAME</code> record points a name at
+                another name instead. Both do the same job of saying where to go.</td></tr>
+        <tr><td><strong>TTL</strong></td>
+            <td>&ldquo;Time To Live.&rdquo; How long the rest of the internet is allowed to remember an
+                old answer before it checks again. Turning this down first is what makes the switch
+                fast rather than slow.</td></tr>
+        <tr><td><strong>Nameservers</strong></td>
+            <td>A bigger, separate setting that controls your <em>entire</em> phone book at once, not
+                one entry in it. This guide never touches these &mdash; see the warning below.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>What you need</h3>
+  <ul class="plain">
+    <li>A computer with a web browser. A phone will not work for this.</li>
+    <li>Your <strong>GoDaddy</strong> sign-in, and your <strong>Netlify</strong> sign-in.</li>
+    <li>About <strong>20 minutes</strong> of clicking, plus a one-hour wait in the middle of Part 2
+      that you can spend doing something else.</li>
+  </ul>
+
+  <div class="flag f-ok">
+    <b>Your website never goes dark, and your email is never at risk</b>
+    <p>Nothing here switches a website off. Both sites &mdash; old and new &mdash; stay running while
+      the address moves between them, so every visitor lands on a working site at every moment.
+      Part 2 explains this properly.</p>
+    <p>Your email is delivered by a separate set of rows on the GoDaddy page. We change three rows and
+      leave the rest alone. Mail keeps flowing throughout.</p>
+  </div>
+
+  <div class="flag f-warn">
+    <b>You cannot break anything, but do not guess</b>
+    <p>Both GoDaddy and Netlify rename their own buttons every few months &mdash; sometimes a menu is
+      called one thing on one screen and a slightly different thing on another, even inside the same
+      company&rsquo;s website. Where that happens, this guide says so. Anywhere else, if a screen truly
+      does not resemble the description here, stop and send us a screenshot rather than guessing.
+      Guessing on the DNS page in Part 2 is the one place in this whole project where a wrong click
+      has a real cost &mdash; everywhere else, the worst case is simply redoing a step.</p>
+  </div>
+
+  <h3>The three parts</h3>
+  <ul class="toc">
+    <li><span class="n">01</span><span class="t">Quick check: is the new site ready?<br>
+      <span class="m">A two-minute look at the new site before we switch your address to it</span></span></li>
+    <li><span class="n">02</span><span class="t">Point workingwithgod.live at the new site<br>
+      <span class="m">Three rows change at GoDaddy. Your email keeps working throughout</span></span></li>
+    <li><span class="n">03</span><span class="t">Retire the old GoDaddy website<br>
+      <span class="m">Last, not first &mdash; and keep the domain and the email</span></span></li>
+  </ul>
+
+  <div class="box">
+    <p><strong>A note on scope.</strong> Your forms, your notification emails and your Google
+      spreadsheet are already set up and already working &mdash; that was covered, in full, in the
+      other guide we sent you (<em>Website Setup Guide</em>). This guide does not repeat any of it.
+      It covers exactly one thing: moving <code>workingwithgod.live</code> from the old site to the
+      new one.</p>
+  </div>
+</section>
+
+<!-- ══ PART 1 : READINESS CHECK ══ -->
+<section class="part">
+  <div class="part-head">
+    <div class="part-num">Part 01</div>
+    <h2>Quick check: is the new site ready?</h2>
+    <p class="why">Your forms, your notification emails and your Google spreadsheet already work
+      &mdash; full detail on all of that is in the other guide we sent you. This part is a two-minute
+      look at the new site, on its temporary address, before Part 2 switches your real address over
+      to it.</p>
+    <span class="time">About 2 minutes</span>
+  </div>
+
+  <ol class="steps">
+      <li>
+        <span class="snum">01</span>
+        <div class="sbody">
+          <p>Sign in at <code>app.netlify.com</code>. You will see one entry listed,
+        <strong>workingwithgod</strong>. Click it.</p>
+      <p>Near the top is a temporary web address, <code>workingwithgod.netlify.app</code>. Click it
+        and have a look around. It is a fully working copy of the new site &mdash; it is simply not
+        on your own address yet. That is what Part 2 fixes.</p>
+      <div class="box">
+        <p><strong>One thing that can look odd.</strong> Netlify is part-way through renaming
+          things, so the same website is called a <em>site</em> on some screens and a
+          <em>project</em> on others. They mean the same thing, and you only have one of them.</p>
+      </div>
+        </div>
+      </li>
+      <li>
+        <span class="snum">02</span>
+        <div class="sbody">
+          <p>If you would like to see the whole chain working end to end, fill in one form on that
+        temporary address yourself &mdash; the Roundtable one is a good choice &mdash; using your
+        own name and email address.</p>
+      <p>Within a minute or two you should see the notification email arrive, and a new row appear
+        on the <strong>Roundtable</strong> tab of your spreadsheet, exactly as described in the other
+        guide. If both of those happen, everything is ready and this part is done.</p>
+      <p class="said">This step is optional. If you already know the forms are working &mdash; you
+        have tested them recently, or real registrations are already arriving &mdash; skip straight
+        to Part 2.</p>
+        </div>
+      </li>
+    </ol>
+
+  <div class="flag f-ok">
+    <b>Nothing to set up here</b>
+    <p>This part is a check, not a setup step. Forms, notification emails and your spreadsheet work
+      exactly the same whether a visitor reaches the site through
+      <code>workingwithgod.netlify.app</code>, as they do today, or through
+      <code>workingwithgod.live</code>, as they will after Part 2. Pointing your address at the new
+      site does not change any of that.</p>
+  </div>
+</section>
+<!-- ══ PART 2 : DNS ══ -->
+<section class="part">
+  <div class="part-head">
+    <div class="part-num">Part 02</div>
+    <h2>Pointing workingwithgod.live at the new site</h2>
+    <p class="why">Your web address currently points at the old GoDaddy site. This changes where it
+      points. It is the only step in this guide that carries any real risk, so read the warning first.</p>
+    <span class="time">About 10 minutes, then a wait</span>
+  </div>
+
+  <div class="flag f-ok">
+    <b>Your site does not go down while you do this</b>
+    <p>The new site is already built and already live &mdash; it is sitting at
+      <code>workingwithgod.netlify.app</code> right now, serving pages. The old site is still live too.
+      What follows does not switch anything off. It only changes which of the two your web address
+      points at.</p>
+    <p>The moment a visitor&rsquo;s computer picks up the new answer, it lands on the new site. Before
+      that moment, it lands on the old one. Either way it lands on a working website. There is no
+      window where nothing is there.</p>
+    <p>Three things keep that handover short, and all three are built into the steps below:
+      add the address to Netlify <em>before</em> you touch GoDaddy, lower the TTL an hour ahead
+      (step 2), and cancel the old subscription <em>last</em>, not first.</p>
+  </div>
+
+  <div class="flag f-stop">
+    <b>Your email lives at this same address</b>
+    <p>Mail to <code>eliyahu@workingwithgod.live</code> is delivered by a handful of settings sitting on
+      this same page. We change three rows and leave everything else exactly as it is, so your email
+      keeps working throughout. Nothing below will interrupt it.</p>
+    <p>Two things to say no to. If GoDaddy offers to <strong>change your nameservers</strong>, or to
+      <strong>connect your domain to another service</strong> for you, decline both and tell us. Those
+      hand the whole page over at once, and your email goes with it.</p>
+  </div>
+
+  <div class="box">
+    <p><strong>The two things to have open.</strong> GoDaddy, on the DNS page for
+      <code>workingwithgod.live</code>. And Netlify, on <strong>Domain management</strong>, where you
+      add <code>workingwithgod.live</code> and <code>www.workingwithgod.live</code> to the project
+      first, using whichever button offers to <strong>add a domain you already own</strong>.</p>
+    <p>Somewhere in that process Netlify asks how the address&rsquo;s DNS will be managed. Choose the
+      option that means &ldquo;I will manage this myself, elsewhere&rdquo; &mdash; worded along the
+      lines of <em>external DNS provider</em> or <em>third-party DNS</em>. The exact wording shifts
+      from time to time; any option that is <strong>not</strong> &ldquo;set up Netlify DNS&rdquo; is
+      the right one, because your domain stays at GoDaddy throughout.</p>
+  </div>
+
+  <ol class="steps">
+      <li>
+        <span class="snum">01</span>
+        <div class="sbody">
+          <p>Sign in at GoDaddy. Find <code>workingwithgod.live</code> in your products, then open
+        <strong>DNS</strong> or <strong>Manage DNS</strong>.</p>
+      <p>You will see a table of rows with columns like Type, Name and Value. This is the address book
+        that tells the internet where to find your things.</p>
+        </div>
+      </li>
+      <li>
+        <span class="snum">02</span>
+        <div class="sbody">
+          <p><em>Optional, but it makes the switchover about six times quicker.</em> An hour before you
+        do the rest, edit the <code>A</code> rows and the <code>www</code> row and set each one's
+        <strong>TTL</strong> to <strong>Custom &rsaquo; 600 seconds</strong>. Save, then leave it for an
+        hour and come back.</p>
+      <p>TTL is how long the rest of the internet is allowed to remember the old answer. Lowering it
+        first shrinks the gap where the site is half-switched from about an hour to about ten minutes.
+        Change nothing else while you are in there.</p>
+        </div>
+      </li>
+      <li>
+        <span class="snum">03</span>
+        <div class="sbody">
+          <p>This step points the plain address, <code>workingwithgod.live</code>, at the new site.</p>
+      <p>You currently have <strong>two</strong> rows of type <code>A</code> named <code>@</code>.
+        Both belong to the old website. <strong>Delete them both</strong>, then add one new row:</p>
+      <div class="type"><span class="lbl">Delete these two</span>
+        A&nbsp;&nbsp;&nbsp;@&nbsp;&nbsp;&nbsp;13.248.243.5<br>
+        A&nbsp;&nbsp;&nbsp;@&nbsp;&nbsp;&nbsp;76.223.105.230
+      </div>
+      <div class="type"><span class="lbl">Add this one</span>
+        Type:&nbsp;&nbsp;&nbsp;A<br>
+        Name:&nbsp;&nbsp;&nbsp;@<br>
+        Value:&nbsp;&nbsp;75.2.60.5<br>
+        TTL:&nbsp;&nbsp;&nbsp;&nbsp;600
+      </div>
+      <p class="said">The <code>@</code> means the address on its own, with no www in front of it.</p>
+          <div class="flag f-warn">
+    <b>If GoDaddy will not let you edit the A record</b>
+    <p>The old website builder may still be attached to the domain and holding it. In your GoDaddy
+      products, open the old website builder (<strong>Websites + Marketing</strong>, sometimes shown
+      as <strong>Airo</strong>) and disconnect the domain from it. The DNS rows then become editable.</p>
+  </div>
+        </div>
+      </li>
+      <li>
+        <span class="snum">04</span>
+        <div class="sbody">
+          <p>This step points <code>www.workingwithgod.live</code> at the new site.</p>
+      <p>You already have a row of type <code>CNAME</code> named <code>www</code>. <strong>Edit that
+        row.</strong> Change only its Value:</p>
+      <div class="type"><span class="lbl">Edit the row you already have</span>
+        Type:&nbsp;&nbsp;&nbsp;CNAME&nbsp;&nbsp;&nbsp;(leave as it is)<br>
+        Name:&nbsp;&nbsp;&nbsp;www&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(leave as it is)<br>
+        Value:&nbsp;&nbsp;workingwithgod.netlify.app&nbsp;&nbsp;&larr; change to this<br>
+        TTL:&nbsp;&nbsp;&nbsp;&nbsp;600
+      </div>
+      <div class="flag f-stop">
+        <b>Do not add an A record named www</b>
+        <p>Several tutorials online tell you to add a new row of type <code>A</code> named
+          <code>www</code>. If you try, GoDaddy will refuse with
+          <em>&ldquo;Record name www conflicts with another record&rdquo;</em>.</p>
+        <p>GoDaddy is right to refuse. A name can be a <code>CNAME</code> or an <code>A</code>, never
+          both, and yours is already a <code>CNAME</code>. Nothing needs adding here &mdash; you are
+          editing the row that already exists.</p>
+      </div>
+        </div>
+      </li>
+      <li>
+        <span class="snum">05</span>
+        <div class="sbody">
+          <p>Save. <strong>Change nothing else.</strong></p>
+      <p>These rows are your email and your Microsoft account. Leave every one of them exactly as it
+        is, and do not delete any row you do not recognise:</p>
+      <div class="type"><span class="lbl">Do not touch</span>
+        MX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(mail delivery)<br>
+        TXT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(both of them — SPF and Microsoft)<br>
+        autodiscover&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Outlook set-up)<br>
+        msoid, email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Microsoft sign-in)<br>
+        _domainconnect&nbsp;&nbsp;&nbsp;&nbsp;(GoDaddy&rsquo;s own automation)<br>
+        _sip… (two rows)&nbsp;(Teams)
+      </div>
+      <p>Also add <strong>no</strong> row of type <code>AAAA</code>. Netlify does not serve the address
+        you are pointing at over that kind of record, and adding one breaks the site.</p>
+        </div>
+      </li>
+      <li>
+        <span class="snum">06</span>
+        <div class="sbody">
+          <p>Wait. If you lowered the TTL an hour beforehand, most visitors see the new site within
+        about <strong>ten minutes</strong>, and everyone has it within the hour. If you skipped that
+        step, allow up to an hour for most and a few hours for the last stragglers.</p>
+      <p>You do not have to sit and watch. Open <code>workingwithgod.live</code> in a private or
+        incognito window every few minutes; the moment the new site appears there, it has switched.
+        Netlify&rsquo;s <strong>Domain management</strong> page also turns green on its own once it
+        sees the change.</p>
+      <p>For the first few minutes after it switches, the address may show a security warning about its
+        certificate. Netlify issues the certificate automatically as soon as it can see the domain
+        pointing at it, and the warning clears itself. Nothing is broken and there is nothing to do.</p>
+        </div>
+      </li>
+    </ol>
+
+  <div class="type">
+    <span class="lbl">What changed, at a glance</span>
+    A &nbsp;&nbsp; @ &nbsp;&nbsp; 13.248.243.5 &nbsp;&nbsp; &larr; deleted (old site)<br>
+    A &nbsp;&nbsp; @ &nbsp;&nbsp; 76.223.105.230 &nbsp;&nbsp; &larr; deleted (old site)<br>
+    A &nbsp;&nbsp; @ &nbsp;&nbsp; 75.2.60.5 &nbsp;&nbsp; &larr; added (new site)<br>
+    CNAME &nbsp;&nbsp; www &nbsp;&nbsp; workingwithgod.netlify.app &nbsp;&nbsp; &larr; edited, same row you already had
+  </div>
+  <p class="said">Everything else on the page &mdash; MX, TXT, autodiscover, msoid, email,
+    _domainconnect, the two _sip rows &mdash; is untouched.</p>
+
+  <div class="flag f-ok">
+    <b>Leave the old website alone for now</b>
+    <p>It costs nothing to let it keep running for another few days, and while it is running you have
+      something to fall back on. Part 3 is the point at which you cancel it, and only after four
+      checks have passed.</p>
+  </div>
+</section>
+
+<!-- ══ PART 3 : RETIRE AIRO ══ -->
+<section class="part">
+  <div class="part-head">
+    <div class="part-num">Part 03</div>
+    <h2>Retiring the old GoDaddy website</h2>
+    <p class="why">Only once the new site is answering at your own address. Doing this first is the
+      one way to actually take your website offline, so the order here matters more than the steps do.</p>
+    <span class="time">About 5 minutes</span>
+  </div>
+
+  <div class="flag f-stop">
+    <b>Do not cancel anything until all four of these are true</b>
+    <p>Work down the list. If any one of them is not true yet, wait &mdash; there is no deadline here,
+      and the old subscription costing you one more month is far cheaper than a website that is down.</p>
+  </div>
+
+  <ol class="steps">
+    <li>
+      <span class="snum">01</span>
+      <div class="sbody">
+        <p>Open a <strong>private</strong> or <strong>incognito</strong> browser window and go to
+          <code>workingwithgod.live</code>. The <em>new</em> site loads.</p>
+        <p class="said">A private window matters. A normal one may still be showing you a saved copy of
+          the old site, which tells you nothing.</p>
+      </div>
+    </li>
+    <li>
+      <span class="snum">02</span>
+      <div class="sbody">
+        <p>In the same window, go to <code>www.workingwithgod.live</code>. The new site loads there too,
+          with no security warning.</p>
+      </div>
+    </li>
+    <li>
+      <span class="snum">03</span>
+      <div class="sbody">
+        <p>Send yourself an email from any other address to
+          <code>eliyahu@workingwithgod.live</code>, and confirm it arrives. Then send one
+          <em>from</em> that address to yourself, and confirm that arrives too.</p>
+        <p>Both directions. Receiving works through one set of rows and sending through another, so
+          testing only one direction proves only half of it.</p>
+      </div>
+    </li>
+    <li>
+      <span class="snum">04</span>
+      <div class="sbody">
+        <p>Register on the new site using your own details, and confirm the email reaches you.</p>
+      </div>
+    </li>
+    <li>
+      <span class="snum">05</span>
+      <div class="sbody">
+        <p>Now, and only now, find the old website builder. Sign in at
+          <code>account.godaddy.com/products</code> (or click <strong>My Products</strong> from the
+          menu at the top of any GoDaddy page), and look for
+          <strong>Websites + Marketing</strong> &mdash; on some accounts this is labelled
+          <strong>Airo</strong> instead. Either name means the same subscription.</p>
+        <div class="flag f-stop">
+          <b>Cancel the website. Do not cancel the domain or the email.</b>
+          <p>All three sit on the same products page, and it is easy to tick the wrong one.</p>
+          <div class="type"><span class="lbl">On the GoDaddy products page</span>
+            Websites + Marketing (or Airo)&nbsp;&nbsp;&larr; cancel this one<br>
+            Domain: workingwithgod.live&nbsp;&nbsp;&larr; <strong>KEEP</strong><br>
+            Microsoft 365 / Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&larr; <strong>KEEP</strong>
+          </div>
+          <p>Cancelling the domain would hand your web address back to the world. Cancelling the email
+            would stop your mail. Neither is recoverable in a hurry. You are only touching the
+            website-builder line.</p>
+        </div>
+        </div>
+    </li>
+    <li>
+      <span class="snum">06</span>
+      <div class="sbody">
+        <p>Cancelling is a few small screens rather than one click, and there is a final email you
+          must open before it actually finishes. None of the individual steps are difficult, but
+          missing the last one is the single easiest way to think you are done when you are not:</p>
+        <div class="type"><span class="lbl">The screens, in order</span>
+          1. Next to Websites + Marketing (or Airo), choose <strong>Turn off Auto-Renew</strong><br>
+          &nbsp;&nbsp;&nbsp;(if you see a plain <strong>Delete</strong> button instead, auto-renew was<br>
+          &nbsp;&nbsp;&nbsp;already off &mdash; select that and skip to step 4 below)<br>
+          2. Pick any reason from the list GoDaddy offers, then <strong>Continue to Cancel</strong><br>
+          3. Tick the box that says you understand, then select <strong>Send email</strong><br>
+          4. Open the email GoDaddy sends you and select <strong>Yes, I Want to Delete!</strong><br>
+          5. Back on the GoDaddy page, a final <strong>Delete product</strong> button confirms it
+        </div>
+        <p class="said">That confirmation email is not spam and not optional &mdash; GoDaddy sends it
+          on purpose, as a safety net so a subscription cannot be cancelled by mistake with one
+          accidental click. If it has not arrived within a few minutes, check your spam folder before
+          trying again.</p>
+      </div>
+    </li>
+    <li>
+      <span class="snum">07</span>
+      <div class="sbody">
+        <p>Along the way GoDaddy may ask why you are leaving, or offer a discount to stay. Answer
+          however you like and decline &mdash; it does not affect anything below.</p>
+        <p>If a screen warns that <em>&ldquo;your website will no longer be available&rdquo;</em>,
+          that is correct and expected. It means the <em>old</em> site. Your new site is somewhere
+          else entirely and is unaffected &mdash; that is exactly what you confirmed in steps 1 and 2
+          above.</p>
+      </div>
+    </li>
+  </ol>
+
+  <div class="flag f-ok">
+    <b>That is the whole move</b>
+    <p>Your address now points at the new site, your email is untouched, and your GoDaddy bill is
+      smaller by the price of a website builder you no longer need.</p>
+  </div>
+</section>
+
+<!-- ══ REFERENCE ══ -->
+<section class="part">
+  <div class="part-head">
+    <div class="part-num">Reference</div>
+    <h2>If something looks wrong</h2>
+    <p class="why">Everything on this list is either normal, or has a one-line fix. None of it means
+      the site is lost.</p>
+  </div>
+
+  <h3 style="margin-top:0">During the switchover</h3>
+  <table>
+    <thead><tr><th>What you see</th><th>What it means and what to do</th></tr></thead>
+    <tbody>
+      <tr><td>The old site still loads at workingwithgod.live</td>
+          <td>Normal for the first minutes. Your computer is still remembering the old answer. Try a
+              private window. If it is still the old site an hour later, check the rows you edited
+              at GoDaddy against Part 2, steps 3 and 4.</td></tr>
+      <tr><td>A security or certificate warning</td>
+          <td>Normal in the first minutes after the change. Netlify issues the certificate
+              automatically once it can see the address pointing at it, and the warning clears
+              itself. Nothing to do.</td></tr>
+      <tr><td>The plain address works but <code>www.</code> does not, or the other way round</td>
+          <td>Only one of the two rows was changed. Go back to Part 2 and check both step 3 (the
+              <code>A</code> row) and step 4 (the <code>www</code> row).</td></tr>
+      <tr><td>GoDaddy says <em>&ldquo;Record name www conflicts with another record&rdquo;</em></td>
+          <td>You are trying to <em>add</em> a row where you should be <em>editing</em> one. Part 2,
+              step 4 explains it. Cancel out of the add screen and edit the existing
+              <code>www</code> row instead.</td></tr>
+      <tr><td>GoDaddy will not let you edit the <code>A</code> row at all</td>
+          <td>The old GoDaddy website is still holding the domain. Open it in your products
+              (<strong>Websites + Marketing</strong> or <strong>Airo</strong>) and disconnect the
+              domain from it, then come back.</td></tr>
+      <tr><td>Netlify still shows the domain as <em>not configured</em> or with a warning</td>
+          <td>It checks on a timer. Give it fifteen minutes, then use the <strong>Retry DNS
+              verification</strong> link on the Domain management page.</td></tr>
+      <tr><td>A form on the new site says nothing happened, or you never got the notification email</td>
+          <td>This is not a deployment problem &mdash; forms and email are covered separately in the
+              other guide we sent you (<em>Website Setup Guide</em>), which has its own troubleshooting
+              section.</td></tr>
+      <tr><td><strong>Your email stopped arriving</strong></td>
+          <td><strong>Stop, and contact us immediately.</strong> Do not change anything else at
+              GoDaddy in the meantime. This is recoverable, and it is recoverable fastest if nothing
+              else has been touched since.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Retiring the old website (Part 3)</h3>
+  <table>
+    <thead><tr><th>What you see</th><th>What it means and what to do</th></tr></thead>
+    <tbody>
+      <tr><td>There is no plain <strong>Delete</strong> or <strong>Cancel</strong> button, only
+              <strong>Turn off Auto-Renew</strong></td>
+          <td>Normal, and the more common case. Select it, then work through the reason, the tick
+              box, and the confirmation email GoDaddy sends &mdash; Part 3, step 6.</td></tr>
+      <tr><td>You turned off auto-renew (or clicked Cancel), but the product is still listed as
+              active a few minutes later</td>
+          <td>Check your email, including spam, for GoDaddy&rsquo;s confirmation message and select
+              <strong>Yes, I Want to Delete!</strong> inside it. The cancellation does not finish
+              until that link is clicked.</td></tr>
+      <tr><td>You are not sure whether you are looking at &ldquo;Websites + Marketing&rdquo; or
+              &ldquo;Airo&rdquo;</td>
+          <td>Both names refer to the same product on the same products page. Whichever word your
+              account shows, it is the one to cancel &mdash; never the domain or the email lines
+              beside it.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box">
+    <p><strong>The one question worth asking first.</strong> Before assuming anything is broken,
+      open the site in a <strong>private window</strong>. A great many &ldquo;it is still showing the
+      old site&rdquo; reports are a browser showing a saved copy, and nothing more.</p>
+  </div>
+
+  <div style="page-break-inside:avoid; break-inside:avoid">
+  <h3>What this costs from here</h3>
+  <table>
+    <thead><tr><th>Service</th><th>What it does</th><th>Cost</th></tr></thead>
+    <tbody>
+      <tr><td>Netlify</td><td>Stores and serves the new website, collects form submissions</td><td>Free</td></tr>
+      <tr><td>GoDaddy &mdash; domain</td><td>Your web address, <code>workingwithgod.live</code></td><td>The domain renewal only</td></tr>
+      <tr><td>GoDaddy &mdash; Microsoft 365</td><td>Your email</td><td>Unchanged</td></tr>
+      <tr><td>GoDaddy &mdash; old website builder</td><td>Websites + Marketing / Airo, whichever
+              your account shows</td><td><strong>Cancelled</strong></td></tr>
+    </tbody>
+  </table>
+
+  <div class="box">
+    <p>Netlify does not renew into a paid plan on its own and does not hold your card. Your GoDaddy
+      bill should go <em>down</em> after Part 3, because you will be paying for the domain name and
+      your email, and no longer for a website builder.</p>
+  </div>
+
+  <div style="margin-top:12mm; padding-top:5mm; border-top:1px solid var(--rule-2); display:flex; justify-content:space-between; font-size:9pt; color:var(--muted)">
+    <div>Questions at any point, send a screenshot rather than guessing.</div>
+    <div><strong style="color:var(--ink)">EchoPulse</strong></div>
+  </div>
+  </div>
+</section>
+
+</body>
+</html>

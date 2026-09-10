@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { CALENDLY, EMAIL, LINKEDIN, MEETUP, SERVICE_AREA } from '../data'
 import { openCalendly, warmCalendly } from './useCalendly'
+import QuoteSignup from './forms/QuoteSignup'
 
 export default function Footer() {
   return (
@@ -32,6 +33,17 @@ export default function Footer() {
             <Link className="fl" to="/contact">Contact</Link>
           </div>
         </div>
+        {/* Moved out of the Contact page on 3 Sep. A whole section there asked a
+            lot for an email list; in the footer it is on every page and costs
+            nobody a scroll. */}
+        <div className="footer-signup">
+          <div className="fs-copy">
+            <h2 className="fh">Inspirational Words</h2>
+            <p>One short, practical thought each workday morning, written by Eliyahu. Unsubscribe anytime.</p>
+          </div>
+          <QuoteSignup compact />
+        </div>
+
         <div className="fbot">
           <span>© {new Date().getFullYear()} Working With God · Dr. Eliyahu Lotzar</span>
           <span>{SERVICE_AREA}</span>

@@ -8,10 +8,11 @@
     "build": "vite-react-ssg build",
     "preview": "vite preview",
     "postbuild": "node scripts/postbuild.mjs",
-    "test": "vitest run",
+    "test": "vitest run && node scripts/sheets/Code.test.cjs",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "verify": "npm run build && vitest run"
+    "test:sheets": "node scripts/sheets/Code.test.cjs",
+    "verify": "npm run build && vitest run && node scripts/sheets/Code.test.cjs"
   },
   "dependencies": {
     "@fontsource-variable/fraunces": "^5.2.9",

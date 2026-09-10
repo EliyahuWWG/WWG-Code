@@ -58,10 +58,6 @@ export default function ContactForm() {
       <TextArea label="Message" name="message" required
         value={f.values.message} onChange={f.onChange} onBlur={f.onBlur}
         error={f.errors.message} touched={f.touched.message} />
-      <div className="field">
-        <label htmlFor="f-file">Attach files <span className="muted" style={{ textTransform: 'none', letterSpacing: 0 }}>(optional)</span></label>
-        <input id="f-file" name="attachment" type="file" />
-      </div>
       <label className="field-check">
         <input type="checkbox" name="email-list" />
         <span>Sign up for the email list for event announcements and/or inspirational messages.</span>

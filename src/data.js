@@ -63,20 +63,22 @@ export const ROUNDTABLE_ADDRESS = "4412 Chantilly Shopping Center, Chantilly, VA
 export const ROUNDTABLE_TIME    = "3rd Wednesdays, 8:00–9:55 a.m.";
 export const SERVICE_AREA = "In-person in NOVA / Metro DC, and online worldwide";
 // ===========================================================================
-//  MONTHLY ROUNDTABLE UPDATE  <-- the only two lines that change each month
+//  MONTHLY ROUNDTABLE UPDATE
 // ===========================================================================
-//  Eliyahu updates these on the 3rd Wednesday, after the session or the day
-//  after. Edit the two strings below, save, commit, push. Nothing else moves.
+//  THESE ARE NOW THE FALLBACK, NOT THE SOURCE.
 //
-//    NEXT_ROUNDTABLE  the date shown under "Next meeting"
-//    SPONSOR          who is sponsoring, shown under "September's Sponsor"
+//  Eliyahu changes the sponsor and the next meeting date himself, in the
+//  "Site content" tab of the registrations spreadsheet. The page reads that
+//  tab live and shows the result within five minutes — no commit, no rebuild,
+//  and no Netlify deploy credits spent on a name change.
 //
-//  The sponsor LABEL derives its month from NEXT_ROUNDTABLE automatically, so
-//  changing the date is enough to relabel it. See roundtableSponsorLabel().
+//  The two values below are what the site falls back to if the spreadsheet
+//  cannot be reached, which is why they are worth keeping roughly current: a
+//  stale sponsor is fine for a few minutes, a blank one is not. See
+//  src/lib/siteContent.js.
 //
-//  SPONSOR is an object so the name can carry a link. `href` and `creds` are
-//  both optional — leave either out and that part is simply not rendered, so a
-//  sponsor with no website still works without touching the page.
+//  The sponsor LABEL derives its month from the date, so changing the date is
+//  enough to relabel it. See roundtableSponsorLabel().
 // ===========================================================================
 export const NEXT_ROUNDTABLE = "September 16th";
 export const SPONSOR = {

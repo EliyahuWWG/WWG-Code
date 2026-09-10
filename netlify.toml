@@ -20,8 +20,14 @@
   # is inlined into the client bundle BY DESIGN - that is what the prefix means
   # - so a form endpoint set in the Netlify UI would be flagged as a leaked
   # secret and kill the deploy. These keys are public by definition; omit them.
-  # Never add a genuinely secret key to this list.
-  SECRETS_SCAN_OMIT_KEYS = "VITE_FORM_ENDPOINT,VITE_SHEET_ENDPOINT,VITE_SITE_ENV"
+  #
+  # This list used to be a real hazard rather than a convenience:
+  # VITE_SHEET_ENDPOINT carried "?key=<shared secret>" on the end, so the one
+  # automated check that would have caught that secret reaching the browser was
+  # switched off for the exact variable carrying it. The shared secret is gone;
+  # the endpoint is now just a URL, and genuinely public — it is the address a
+  # visitor's own browser posts to. Never add a real secret to this list.
+  SECRETS_SCAN_OMIT_KEYS = "VITE_FORM_ENDPOINT,VITE_SHEET_ENDPOINT,VITE_SITE_ENV,VITE_KEEP_NETLIFY_FORMS"
 
 # ---- Content-hashed assets: immutable. --------------------------------
 # Everything under /assets/ carries a Vite content hash, so a changed file is

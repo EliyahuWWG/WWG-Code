@@ -64,7 +64,7 @@ export default function About() {
       <section className="section on-bone">
         <div className="container">
           <div className="sec-head">
-            <Reveal><h2 className="h2 maxw-60">A therapist, a business owner, and an academic, in one practice.</h2>
+            <Reveal><h2 className="h2 maxw-60">A therapist-coach, a business owner, and an academic, all in one.</h2>
               <p className="mt-2 muted maxw-60">His doctoral research on organizational culture has been sought after in many countries. Years as a clinical therapist and small-business owner keep the coaching grounded in the real world, not the seminar room.</p></Reveal>
           </div>
           <Reveal className="stack-tight mt-4">
