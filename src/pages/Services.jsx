@@ -60,7 +60,6 @@ export default function Services() {
             <BookCallLink className="btn btn-solid btn-lg" url={CALENDLY_ZOOM}>
               Schedule a free exploratory conversation
             </BookCallLink>
-            <p className="cta-close-note">No charge, no obligation. Bring one decision you are sitting on.</p>
           </div>
           {/* His scripture, set apart from the sell above it: display face, a
               gold rule instead of quote marks, and its own breathing room. */}

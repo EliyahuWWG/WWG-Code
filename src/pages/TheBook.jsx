@@ -24,7 +24,7 @@ export default function TheBook() {
             <div>
               <div className="eyebrow">The book</div>
               <h1 className="h1 mt-3 balance"><MaskLines>God is ready to work with you.</MaskLines></h1>
-              <p className="lead">Working With God is more than just a book, it’s a practical way to partner with God right in the middle of your toughest work challenges.</p>
+              <p className="lead"><cite className="work-title">Working With God: The Ten Modes of Elevated Leadership</cite> is a groundbreaking method of partnering with God right in the middle of your toughest work challenges.</p>
               <div className="row mt-3">
                 <a href={AMAZON} target="_blank" rel="noopener" className="btn btn-onink">PURCHASE in Print, Kindle, or Audible <Arrow /></a>
               </div>
@@ -56,7 +56,7 @@ export default function TheBook() {
               <h2 className="h2 mt-2 maxw-60">Introducing “Modal Leadership.”</h2>
             </Reveal>
             <Reveal delay={0.05}>
-              <p className="lead">A framework for dialoguing with God about business challenges. You identify the operational <span className="serif-it">mode</span> you’re in, then build the agility to shift to the mode each situation actually needs.</p>
+              <p className="lead">A framework for dialoguing with God about business challenges. You identify the operational <span className="serif-it">mode</span> you’re in, then build the agility to emphasize the mode each situation actually needs.</p>
               <p className="mt-2 muted maxw-60">It’s not about being holier at the office. It’s about strategy, hiring, budgets, and timing, the real decisions leaders make every week.</p>
             </Reveal>
           </div>
@@ -71,11 +71,11 @@ export default function TheBook() {
           </div>
           <div className="grid two mt-4">
             <Reveal style={{ borderTop: '1px solid var(--line)', paddingTop: 28 }}>
-              <div className="label">The first six</div>
+              <div className="label" style={{ color: 'var(--gold-600)' }}>The first six modes</div>
               <p className="mt-2 lead" style={{ maxWidth: '38ch' }}>Address the “knowns” of daily operations, the decisions and patterns you already recognize.</p>
             </Reveal>
             <Reveal delay={0.05} style={{ borderTop: '1px solid var(--gold-500)', paddingTop: 28 }}>
-              <div className="label" style={{ color: 'var(--gold-600)' }}>The last four</div>
+              <div className="label" style={{ color: 'var(--gold-600)' }}>The last four modes</div>
               <p className="mt-2 lead" style={{ maxWidth: '38ch' }}>Engage the “unknown” as leaders step into God’s larger business.</p>
             </Reveal>
           </div>
@@ -120,6 +120,13 @@ export default function TheBook() {
                 <div className="attr"><b>{e.who}</b><span>{e.role}</span></div>
               </div>
             ))}
+          </Reveal>
+          {/* Repeat of the hero's purchase button. Someone who reads all the
+              way through the endorsements is the most likely person on the page
+              to buy, and sending them back up to the hero to do it loses them.
+              btn-solid rather than btn-onink because this section is light. */}
+          <Reveal className="cta-close">
+            <a href={AMAZON} target="_blank" rel="noopener" className="btn btn-solid btn-lg">PURCHASE in Print, Kindle, or Audible <Arrow /></a>
           </Reveal>
         </div>
       </section>

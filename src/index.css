@@ -153,6 +153,12 @@ h1,h2,h3,h4 { font-family: var(--f-disp); font-weight: 500; line-height: 1.06; l
    copy). Same rule as .serif-it: he asked for bold, not italic, anywhere in
    running text. */
 p em, li em, .irow em, .lead em, blockquote em { font-style: normal; font-weight: 600; }
+/* The title of a work is the one place italic is still correct — it is a
+   citation convention, not emphasis. It needs its own class because the rule
+   above deliberately turns every <em> in running text into bold, so a title
+   marked up as <em> would come out bold and look like shouting. Weight is
+   inherited so the title sits at the same weight as the sentence around it. */
+.work-title { font-style: italic; font-weight: inherit; }
 /* Display-type emphasis (hero H1 only). Fraunces italic INSIDE Fraunces is
    consistent - this is the accent word he liked on the reference hero. */
 .hi-it { font-family: var(--f-disp); font-style: italic; font-weight: 400; }

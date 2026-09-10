@@ -239,15 +239,15 @@ export const endorsements = [
   {
     q: "It spans awe and logic and love and practicality, with a useful framework and amazing stories from very successful business leaders.", who: "Lee Self", role: "Partner, Northern Virginia Renaissance Executive Forums", }, {
     q: "An excellent read for faith-based leaders, with many nuggets for leadership effectiveness.", who: "Mark Whitacre", role: "VP Culture & Care, Coca-Cola Consolidated", feature: true, }, {
-    q: "One of the most insightful leadership books, a clear roadmap for aligning purpose with divine guidance.", who: "Carl Grant III", role: "CEO, Rainmakers Group", }, {
-    q: "A terrific book. The chapters on “Go” and “No” are worth the price alone.", who: "Rev. Larry Buxton", role: "author, 30 Days With King David", },
+    q: "Dr. Lotzar shows how to align purpose, decision-making, and organizational success with divine guidance in a way that feels practical, not preachy.", who: "Carl Grant III", role: "CEO, Rainmakers Group", }, {
+    q: "This is a terrific book! Lotzar has a broad but solidly orthodox understanding of God and an equally broad and solid understanding of organizational culture. The chapters on “Go” and “No” are worth the price alone.", who: "Rev. Larry Buxton", role: "author, 30 Days With King David", },
 ];
 
 // ---------- Testimonials (Home proof strip + About) ----------
 // Tier 1 = WWG-specific (roundtable / method). Tier 2 = coaching & facilitation
 // credibility about Eliyahu himself. Feature = the roundtable quote.
 export const testimonials = [
-  { q: "I found the Working With God roundtable event so valuable, truly enlightening; it was a foundational conversation.", who: "Sylvia Palmer", role: "Chief Impact Officer, Amplify", feature: true }, { q: "You were an extremely strong thought partner and facilitator, went way beyond the call of duty, and provided much-needed structure, expertise, and tools. He is a true “organizational therapist.”", who: "Michael Barry, CAE", role: "VP, Org. Development & Partnerships, Public Health Foundation" }, { q: "I can’t recommend Eliyahu enough as a coach. He identifies the key attributes you bring as a leader, then offers usable tactics to strengthen your skills and become a better leader.", who: "TJ Schulz", role: "President, Airport Consultants Council" }, { q: "The sessions have been incredibly useful. The books and coaching are becoming part of my vernacular, not just at work but even personally with my family.", who: "Sue Marchese", role: "Managing Director, AIHA" },
+  { q: "I found Working With God so valuable, truly enlightening; it was a foundational conversation.", who: "Sylvia Palmer", role: "Chief Impact Officer, Amplify", feature: true }, { q: "You were an extremely strong thought partner and facilitator, went way beyond the call of duty, and provided much-needed structure, expertise, and tools. He is a true “organizational therapist.”", who: "Michael Barry, CAE", role: "VP, Org. Development & Partnerships, Public Health Foundation" }, { q: "I can’t recommend Eliyahu enough as a coach. He identifies the key attributes you bring as a leader, then offers usable tactics to strengthen your skills and become a better leader.", who: "TJ Schulz", role: "President, Airport Consultants Council" }, { q: "The sessions have been incredibly useful. The books and coaching are becoming part of my vernacular, not just at work but even personally with my family.", who: "Sue Marchese", role: "Managing Director, AIHA" },
 ];
 
 // Kept for the record but not shown, org-consulting testimonials that don't
@@ -295,5 +295,5 @@ export const faqs = [
     q: "Is this about being more religious at work?", a: "No. This is about operational decisions: strategy, hiring, budgets, timing, risk. It’s also about personal life decisions. I’m here to help you increase your leadership agility, professionally and personally moving where God leads as He does so.", }, {
     q: "What happens at the Roundtable?", a: "We spend two hours together on leadership practices. This includes learning new concepts, doing personal exercises, and sharing in group discussions. It also includes prayer and good coffee and probably too many enjoyable carbs. Sessions include looking at, for example, leadership agility, Kingdom economics, HR and legal realities, communications, sales, etc. There is no fee.", }, {
     q: "What are the Ten Modes of Elevated Leadership?", a: "They are the framework at the center of my book. The first six modes address the “knowns” of daily operations, and the last four engage the “unknown” as leaders step into God’s larger business.", }, {
-    q: "How do I start?", a: "Book a call with me, register for the next free Roundtable, or join the monthly webinar. Any of the three is a low-pressure first step, and none of them commits you to anything.", },
+    q: "How do I start?", a: "Book an exploratory call with me, register for the next free Roundtable, or join the monthly webinar. Any of the three is a low-pressure first step, and none of them commits you to anything.", },
 ];

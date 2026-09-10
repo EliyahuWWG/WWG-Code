@@ -11,7 +11,7 @@ export default function FAQ() {
     <section className="section" id="faq" style={{ scrollMarginTop: 96 }}>
       <div className="container">
         <div className="sec-head">
-          <Reveal><h2 className="h2 maxw-60">The things people ask before they book.</h2></Reveal>
+          <Reveal><h2 className="h2 maxw-60">The things people ask.</h2></Reveal>
         </div>
         <Reveal className="faq mt-4">
           {faqs.map((f, i) => {
