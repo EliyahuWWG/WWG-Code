@@ -55,7 +55,12 @@ export default function Home() {
                   H1. Matches the reference hero, which carries only the
                   introduction and the CTA in this column. */}
               {/* Replaced the paragraph-length introduction on 3 Sep. His words. */}
-              <p className="hero-intro">Coaching for Christian Professionals</p>
+              {/* The non-breaking space binds "Christian Professionals" together,
+                  so the only place the line can break is after "for". Done here
+                  rather than with a <br> so it stays responsive — the pair holds
+                  at every width instead of forcing a break that reads wrong on
+                  a narrow phone. */}
+              <p className="hero-intro">Coaching for Christian&nbsp;Professionals</p>
               <div className="hero-cta">
                 <BookCallLink className="btn btn-onink btn-lg">Book a discovery call</BookCallLink>
               </div>

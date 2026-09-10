@@ -419,15 +419,16 @@ em, .serif-it { }
   font-family: var(--f-disp);
   font-weight: 500;
   /* The column this sits in is ~295px wide at every size above mobile, so the
-     ceiling is set by what fits "Coaching for Christian" on one line there —
-     not by the viewport. Above ~1.75rem it breaks into three ragged lines. */
+     ceiling is set by what fits on one line there, not by the viewport. */
   font-size: clamp(1.35rem, 1.9vw, 1.75rem);
   line-height: 1.18;
   letter-spacing: -.015em;
   color: var(--bone);
-  /* Wide enough for "Coaching for Christian" to hold together on line one, so
-     it breaks into two lines rather than three ragged ones. */
-  max-width: 23ch;
+  /* The break is now controlled in the markup: a non-breaking space binds
+     "Christian Professionals" so it cannot split, which forces the break after
+     "for". This width just has to be wide enough to hold that second line
+     (23 characters) without wrapping it again. */
+  max-width: 24ch;
   text-wrap: balance;
 }
 .hero-cta { margin-top: 22px; }
