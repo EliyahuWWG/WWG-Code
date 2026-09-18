@@ -438,9 +438,14 @@ em, .serif-it { }
   .hero-intro { margin-top: 18px; }
   .hero-cta { margin-top: 22px; }
 }
-.hero-meta { display: flex; flex-wrap: wrap; gap: 8px 0; margin-top: clamp(52px,7vw,86px); }
-.hero-meta div { flex: 1 1 50%; padding: 16px 0; }
-@media (min-width: 720px){ .hero-meta div { flex: 1 1 25%; border-left: 1px solid var(--line-dk); padding-left: 20px; } .hero-meta div:first-child { border-left: 0; padding-left: 0; } }
+/* No hairline rules between the four items any more: they sat immediately
+   in front of the serif values and read as an indent, so the white line
+   and the gold label above it never looked flush. Columns are held apart
+   by the gap instead, and every label and value starts at the same x.
+   His note of 18 Sep. The big divider between sections is untouched. */
+.hero-meta { display: flex; flex-wrap: wrap; gap: 18px 28px; margin-top: clamp(52px,7vw,86px); }
+.hero-meta div { flex: 1 1 calc(50% - 14px); min-width: 0; padding: 16px 0 0; text-align: left; }
+@media (min-width: 720px){ .hero-meta div { flex: 1 1 calc(25% - 21px); } }
 .hero-meta .k { font-family: var(--f-label); font-size: .84rem; font-weight: 600; letter-spacing: .04em; color: var(--gold-400); line-height: 1.2; }
 .hero-meta .v { font-family: var(--f-disp); font-size: 1.12rem; margin-top: 8px; line-height: 1.25; color: var(--bone); }
 
@@ -924,6 +929,8 @@ html.js .reveal-group.draw.in::after { transform: scaleX(1); }
 .field-check input { width: 18px; height: 18px; margin-top: 3px; accent-color: var(--navy-900); flex: none; }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .form-note { font-size: .86rem; color: var(--muted); }
+/* The sponsor / opt-out note under the Roundtable register button. */
+.form-privacy { font-size: .78rem; line-height: 1.55; margin-top: 4px; max-width: 60ch; }
 
 /* daily-quote card: perks list + clean stacked form */
 .quote-card { border: 1px solid var(--line); background: var(--paper); border-radius: 6px; padding: clamp(24px,3vw,34px); }
@@ -1443,6 +1450,8 @@ a.appear:hover .go { gap: .85em; color: var(--gold-600); border-color: var(--gol
   text-transform: uppercase; font-size: .78rem; color: var(--gold-600);
   margin-bottom: 14px;
 }
+/* The month, and only the month, carries the weight in that line. */
+.rt-month strong { font-weight: 800; }
 .rt-details {
   display: grid; grid-template-columns: auto 1fr; gap: 4px 14px;
   margin: 0 0 18px; padding-bottom: 16px;

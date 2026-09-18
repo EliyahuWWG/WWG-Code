@@ -47,7 +47,7 @@ export default function About() {
                 <source srcSet="/eliyahu.webp" type="image/webp" />
                 <img src="/eliyahu.jpg" alt="Dr. Eliyahu Lotzar" width="920" height="1227" loading="lazy" decoding="async" />
               </picture>
-              <div className="cap"><b>Dr. Eliyahu Lotzar, Ed.D., MSW</b><span>Executive coach · facilitator · author</span></div>
+              <div className="cap"><b>Dr. Eliyahu Lotzar</b></div>
             </Reveal>
             <Reveal delay={0.05}>
               <h2 className="h2 mt-2 maxw-60">It started when I was eight years old.</h2>

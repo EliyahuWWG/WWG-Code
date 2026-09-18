@@ -1,22 +1,32 @@
 import { Link } from 'react-router-dom'
-import { roundtableIntro, roundtableMonth, NEXT_ROUNDTABLE } from '../data'
+import { roundtableIntro, roundtableMonth } from '../data'
+import { useSiteContent } from '../lib/siteContent'
 
 /**
  * The copy Eliyahu sent on 1 Sep, shown above the registration form in the
- * pop-up. Kept as its own component so the wording lives in one place and the
- * month heading follows NEXT_ROUNDTABLE rather than being typed in twice.
+ * pop-up. Kept as its own component so the wording lives in one place.
+ *
+ * The meeting date comes from the "Site content" tab of the registrations
+ * spreadsheet where one is reachable, and from NEXT_ROUNDTABLE in src/data.js
+ * otherwise. Both the month in the heading and the When line follow it, so
+ * next month is a cell edit rather than a commit and a deploy.
  */
 export default function RoundtableIntro() {
-  const month = roundtableMonth()
-  const { when, where, overview, series } = roundtableIntro
+  const { roundtable } = useSiteContent()
+  const next = roundtable.next
+  const month = roundtableMonth(next)
+  const { where, time, overview, series } = roundtableIntro
   return (
     <div className="rt-intro">
-      {month && <p className="rt-month">WWG Roundtable for {month}</p>}
+      {/* The month is the one word he wants to jump out of this line. */}
+      {month && <p className="rt-month">WWG Roundtable for <strong>{month}</strong></p>}
 
+      {/* No "Next Meeting" row: When now carries the actual date, so a second
+          line repeating it was telling them twice what they are registering
+          for. Removed per his note of 18 Sep. */}
       <dl className="rt-details">
-        <dt>When</dt><dd>{when}</dd>
+        <dt>When</dt><dd>{next}, {time}</dd>
         <dt>Where</dt><dd>{where}</dd>
-        <dt>Next Meeting</dt><dd>{NEXT_ROUNDTABLE}</dd>
       </dl>
 
       {overview.map(p => <p className="rt-p" key={p.slice(0, 24)}>{p}</p>)}

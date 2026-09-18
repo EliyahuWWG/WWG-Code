@@ -93,13 +93,20 @@ describe('roundtable registration matches the form it replaces', () => {
     expect(src).toMatch(/org:\s*required/)
     expect(src).not.toMatch(/\bname:\s*required/)
   })
-  // Phone was made optional on purpose. Guard both halves of that: the rule
-  // must be the lenient one, and the field must not be marked required in the
-  // markup, or the label and the validation would disagree.
-  it('treats phone as optional', () => {
-    expect(src).toMatch(/phoneOptional as phoneRule/)
-    expect(src).not.toMatch(/name="phone"[^>]*\srequired/)
-    expect(src).toContain('Mobile Phone (optional)')
+  // Phone became mandatory on 18 Sep, at his request. Guard both halves of
+  // that: the rule must be the strict one, and the field must be marked
+  // required in the markup, or the label and the validation would disagree.
+  it('treats phone as mandatory', () => {
+    expect(src).toMatch(/\bphone as phoneRule/)
+    expect(src).not.toMatch(/phoneOptional/)
+    expect(src).toMatch(/name="phone"[^>]*\srequired/)
+    expect(src).toContain('Mobile Phone"')
+    expect(src).not.toContain('Mobile Phone (optional)')
+  })
+  // What happens to the details they just typed, in his words. If this ever
+  // disappears the form is collecting numbers it has not said it will share.
+  it('tells them the sponsor gets their details, with an opt-out', () => {
+    expect(src).toContain('roundtableIntro.privacy')
   })
 })
 

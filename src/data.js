@@ -80,7 +80,7 @@ export const SERVICE_AREA = "In-person in NOVA / Metro DC, and online worldwide"
 //  The sponsor LABEL derives its month from the date, so changing the date is
 //  enough to relabel it. See roundtableSponsorLabel().
 // ===========================================================================
-export const NEXT_ROUNDTABLE = "September 16th";
+export const NEXT_ROUNDTABLE = "October 21st";
 export const SPONSOR = {
   name: "Lyle Martin",
   creds: "BFA, CEPA",
@@ -111,12 +111,17 @@ export function roundtableMonth(next = NEXT_ROUNDTABLE) {
 
 export const roundtableIntro = {
   where: "4412 Chantilly Shopping Center, Chantilly, VA. We\u2019re in Starbucks\u2019 private room in the back.",
-  when: "Third Wednesday of each month, 8:00 \u2013 9:55 AM",
+  // The date itself is NEXT_ROUNDTABLE (and, live, the "Site content"
+  // tab of the registrations sheet). Only the clock time is fixed here,
+  // so a new month is one cell edit rather than a deploy.
+  time: "8:00 \u2013 9:55 a.m.",
   overview: [
     "The Working With God Roundtable is a vibrant, Christ-centered ministry designed to equip local business professionals to integrate their faith with their work. Through monthly gatherings, we offer a space to grow your leadership ability, connect with like-minded individuals, explore practical topics like time management, organizational development, what God wants in your marketing copy, and more\u2014all with expertise, prayer, and a biblical lens.",
     "Whether you\u2019re a seasoned business owner, organizational professional, or just starting out, join us in Working With God.",
   ],
   series: { lead: "We are currently in a series of sessions exploring ", link: "The Ten Modes of Elevated Leadership", href: "/blog/the-ten-modes-explained" },
+  // Shown in small type under the REGISTER button. His words, 18 Sep.
+  privacy: "We will not sell your personal information, but we do provide it to this month\u2019s Roundtable sponsor with stipulation that if they reach out to you they have a way for you to unsubscribe / opt out. Sponsors are typically themselves Roundtable attendees.",
 };
 
 // What happens in the room, per Eliyahu 27 Aug.

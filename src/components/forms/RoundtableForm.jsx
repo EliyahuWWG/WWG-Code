@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
-import { EMAIL } from '../../data'
+import { EMAIL, roundtableIntro } from '../../data'
 import { Field, Honeypot } from './Field'
-import { useForm, required, email as emailRule, phoneOptional as phoneRule } from './useForm'
+import { useForm, required, email as emailRule, phone as phoneRule } from './useForm'
 import { submitForm } from './submit'
 
 // Roundtable registration (§5d / §7b).
@@ -17,7 +17,7 @@ export default function RoundtableForm() {
       firstName: required('First name'),
       lastName: required('Last name'),
       email: emailRule,
-      phone: phoneRule,          // optional on purpose; blank is a valid answer
+      phone: phoneRule,          // mandatory since 18 Sep, at his request
       org: required('Business / organization'),
     },
   )
@@ -65,7 +65,7 @@ export default function RoundtableForm() {
         <Field label="Email" name="email" type="email" required autoComplete="email"
           value={f.values.email} onChange={f.onChange} onBlur={f.onBlur}
           error={f.errors.email} touched={f.touched.email} />
-        <Field label="Mobile Phone (optional)" name="phone" type="tel" autoComplete="tel"
+        <Field label="Mobile Phone" name="phone" type="tel" required autoComplete="tel"
           value={f.values.phone} onChange={f.onChange} onBlur={f.onBlur}
           error={f.errors.phone} touched={f.touched.phone} />
       </div>
@@ -78,6 +78,10 @@ export default function RoundtableForm() {
           {state === 'sending' ? 'Sending…' : 'REGISTER'}
         </button>
       </div>
+      {/* What happens to the details they just typed. Small type, under the
+          button, so it is the last thing read before they register. His
+          wording, 18 Sep. */}
+      <p className="form-note form-privacy">{roundtableIntro.privacy}</p>
       {state === 'error' && (
         <p className="form-err">Something went wrong. Email Eliyahu directly at <a className="tlink" style={{ display: 'inline' }} href={`mailto:${EMAIL}`}>{EMAIL}</a>.</p>
       )}
