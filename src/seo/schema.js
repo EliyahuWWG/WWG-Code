@@ -1,4 +1,4 @@
-import { LINKEDIN, AMAZON, ASIN, EMAIL, RR_SITE, ROUNDTABLE_ADDRESS, endorsements } from '../data'
+import { LINKEDIN, AMAZON, ASIN, EMAIL, RR_SITE, ROUNDTABLE_ADDRESS, NEXT_ROUNDTABLE_ISO, endorsements } from '../data'
 
 export const SITE_URL = 'https://workingwithgod.live'
 export const SITE_NAME = 'Working With God'
@@ -35,9 +35,21 @@ export function bookSchema() {
 }
 
 // The Roundtable, recurring, free, in-person. Emitted on Events + Roundtable.
+//
+// startDate and endDate are required on an Event: without them the markup is
+// invalid and Google drops the listing entirely, which is what was happening
+// here - eventSchedule alone describes the pattern but never says when the
+// next one is. Written without a timezone on purpose: for an event at a
+// physical address that is read as local time at the venue, which is what we
+// want, and it cannot drift when the clocks change in Virginia.
 export function roundtableEventSchema() {
   return {
-    '@context': 'https://schema.org', '@type': 'Event', name: 'The Working With God Roundtable', description:
+    '@context': 'https://schema.org', '@type': 'Event', name: 'The Working With God Roundtable',
+    startDate: `${NEXT_ROUNDTABLE_ISO}T08:00`, endDate: `${NEXT_ROUNDTABLE_ISO}T09:55`,
+    eventStatus: 'https://schema.org/EventScheduled',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock', url: `${SITE_URL}/roundtable` },
+    description:
       'A free, in-person monthly meetup for Christian business leaders, two hours combining leadership practice, scripture, and prayer. Refreshments provided.', eventSchedule: {
       '@type': 'Schedule', byDay: 'https://schema.org/Wednesday', byMonthWeek: 3, startTime: '08:00', endTime: '09:55', repeatFrequency: 'P1M', }, eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode', location: {
       '@type': 'Place', name: 'Private room, Starbucks, Chantilly Shopping Center', address: ROUNDTABLE_ADDRESS, }, organizer: { '@id': ORG_ID }, performer: { '@id': PERSON_ID }, isAccessibleForFree: true, }

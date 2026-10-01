@@ -107,3 +107,25 @@ reasonably so, since his email lives on the same GoDaddy page as his website.
 When writing anything for him: name the exact screen, say edit vs add vs
 delete explicitly, and tell him how to know it worked. Never write "you can't
 break anything" — tell him how to put it back instead.
+
+## The sponsor and the meeting date are not in the code
+
+They live in a content editor at https://workingwithgod.sanity.studio. Eliyahu
+edits them there and presses Publish, and the live site shows the new values
+within about a minute. No commit, no rebuild, no Netlify credits.
+
+The values in `src/data.js` (`SPONSOR_LINE`, `NEXT_ROUNDTABLE`,
+`ROUNDTABLE_MEETING_TIME`) are only the fallback, shown if the editor is slow
+or unreachable. Editing them changes what a first-time visitor sees for a
+moment and nothing else, so it is almost never the right fix.
+
+The editor also holds the Roundtable wording: where it meets, the paragraphs
+in the registration pop-up, both ticked lists on the Events page, and the
+note under the Register button.
+
+If Eliyahu asks for a new sponsor, a new date, or a reword of any of that:
+he does it himself in the editor. If he asks for something else to become editable that way, that is a
+schema change and a code change, and it does need a deploy.
+
+Never put a Sanity token in this repository. The dataset is public and is read
+without one.

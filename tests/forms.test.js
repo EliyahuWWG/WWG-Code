@@ -106,7 +106,8 @@ describe('roundtable registration matches the form it replaces', () => {
   // What happens to the details they just typed, in his words. If this ever
   // disappears the form is collecting numbers it has not said it will share.
   it('tells them the sponsor gets their details, with an opt-out', () => {
-    expect(src).toContain('roundtableIntro.privacy')
+    expect(src).toContain('roundtable.note')
+    expect(src).toContain('form-privacy')
   })
 })
 

@@ -6,16 +6,18 @@ import { useSiteContent } from '../lib/siteContent'
  * The copy Eliyahu sent on 1 Sep, shown above the registration form in the
  * pop-up. Kept as its own component so the wording lives in one place.
  *
- * The meeting date comes from the "Site content" tab of the registrations
- * spreadsheet where one is reachable, and from NEXT_ROUNDTABLE in src/data.js
- * otherwise. Both the month in the heading and the When line follow it, so
- * next month is a cell edit rather than a commit and a deploy.
+ * The meeting date and time come from the editor at
+ * workingwithgod.sanity.studio where it is reachable, and from src/data.js
+ * otherwise. The month in the heading and the When line both follow the date,
+ * so a new month is one edit and a Publish rather than a commit and a deploy.
  */
 export default function RoundtableIntro() {
   const { roundtable } = useSiteContent()
   const next = roundtable.next
+  const time = roundtable.time
   const month = roundtableMonth(next)
-  const { where, time, overview, series } = roundtableIntro
+  const { where, overview } = roundtable
+  const { series } = roundtableIntro
   return (
     <div className="rt-intro">
       {/* The month is the one word he wants to jump out of this line. */}

@@ -1,11 +1,14 @@
 import { useRef, useState } from 'react'
-import { EMAIL, roundtableIntro } from '../../data'
+import { EMAIL } from '../../data'
+import { useSiteContent } from '../../lib/siteContent'
 import { Field, Honeypot } from './Field'
 import { useForm, required, email as emailRule, phone as phoneRule } from './useForm'
 import { submitForm } from './submit'
 
 // Roundtable registration (§5d / §7b).
 export default function RoundtableForm() {
+  // The note under the button is his wording and he can change it himself.
+  const { roundtable } = useSiteContent()
   const ref = useRef(null)
   const [state, setState] = useState('idle')
   // First and last are separate fields, matching the registration form he sent
@@ -81,7 +84,7 @@ export default function RoundtableForm() {
       {/* What happens to the details they just typed. Small type, under the
           button, so it is the last thing read before they register. His
           wording, 18 Sep. */}
-      <p className="form-note form-privacy">{roundtableIntro.privacy}</p>
+      <p className="form-note form-privacy">{roundtable.note}</p>
       {state === 'error' && (
         <p className="form-err">Something went wrong. Email Eliyahu directly at <a className="tlink" style={{ display: 'inline' }} href={`mailto:${EMAIL}`}>{EMAIL}</a>.</p>
       )}

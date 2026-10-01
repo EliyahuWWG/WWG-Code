@@ -1,95 +1,177 @@
-// Live site content, edited in the spreadsheet rather than in the code.
+// Live site content, edited by Eliyahu rather than by us.
 //
 // WHY THIS EXISTS
-//   Changing the monthly sponsor used to mean editing src/data.js, committing,
-//   and letting Netlify rebuild. Netlify's free plan allows 300 credits a month
-//   and charges 15 of them per production deploy — twenty deploys and every
-//   site on the account is paused. Spending one of those twenty on a name
-//   change is a bad trade. Eliyahu now edits a cell in the "Site content" tab
-//   of the same spreadsheet the form submissions land in, and the page picks it
-//   up within five minutes. No commit, no rebuild, no credits.
+//   The sponsor and the meeting date change most weeks. Changing them in the
+//   code means a commit and a Netlify rebuild, and the plan allows 300 credits
+//   a month while charging 15 per production deploy. Twenty deploys and every
+//   site on the account is paused. Spending one of those on a name is a bad
+//   trade, and it also means he waits for us.
+//
+// HOW IT WORKS
+//   He edits at https://workingwithgod.sanity.studio and presses Publish. This
+//   reads the published document straight from Sanity's CDN - a plain GET, no
+//   token, no server of ours in the middle - and the page shows the new values
+//   within about a minute. Nothing is rebuilt.
 //
 // HOW IT FAILS
-//   Safely, and invisibly. The values built into the site at deploy time are
-//   the fallback, so if the script is slow, unreachable, or returns nonsense,
-//   the page shows the last deployed sponsor instead of an empty space. The
-//   fetch never blocks rendering: the prerendered HTML already contains the
-//   fallback, and the live value replaces it a moment later if it differs.
+//   Safely, and invisibly, in every direction. The values compiled into the
+//   site are the fallback, so a slow response, an empty field, a document
+//   someone deleted, or Sanity being down all leave the last deployed values
+//   on the page. The fetch never blocks rendering: the prerendered HTML
+//   already contains the fallback, and a live value replaces it a moment later
+//   only if it differs.
 import { useEffect, useState } from 'react'
-import { SPONSOR, NEXT_ROUNDTABLE } from '../data'
+import {
+  SPONSOR_LINE, NEXT_ROUNDTABLE_ISO, NEXT_ROUNDTABLE, ROUNDTABLE_MEETING_TIME, SANITY,
+  roundtableIntro, roundtableWhatHappens, roundtableWhoShouldAttend,
+} from '../data'
+import { parseISODate, formatMeetingDate, ensureFutureISO, todayISO } from './meetingDate'
 
-const ENDPOINT = (import.meta.env.VITE_SHEET_ENDPOINT || '').trim()
-const CACHE_KEY = 'wwg:content:v1'
+const QUERY = '*[_id=="siteSettings"][0]{sponsorLine,nextRoundtable,roundtableTime,' +
+  'roundtableWhere,roundtableOverview,whatHappens,whoShouldAttend,registrationNote}'
+const ENDPOINT = SANITY.projectId
+  ? `https://${SANITY.projectId}.apicdn.sanity.io/v${SANITY.apiVersion}` +
+    `/data/query/${SANITY.dataset}?query=${encodeURIComponent(QUERY)}`
+  : ''
+
+const CACHE_KEY = 'wwg:content:v3'
 const CACHE_MS = 5 * 60 * 1000
-const TIMEOUT_MS = 4000
+const TIMEOUT_MS = 5000
 
-// What the page shows if nothing better arrives. Same shape as the live data.
+// What the page shows if nothing better arrives.
 const BAKED_IN = {
-  sponsor: {
-    name: SPONSOR.name || '',
-    creds: SPONSOR.creds || '',
-    role: SPONSOR.role || '',
-    href: SPONSOR.href || '',
+  sponsorLine: SPONSOR_LINE,
+  roundtable: {
+    nextISO: NEXT_ROUNDTABLE_ISO || '',
+    next: NEXT_ROUNDTABLE || '',
+    time: ROUNDTABLE_MEETING_TIME || '',
+    where: roundtableIntro.where || '',
+    overview: roundtableIntro.overview || [],
+    whatHappens: roundtableWhatHappens || [],
+    whoShouldAttend: roundtableWhoShouldAttend || [],
+    note: roundtableIntro.privacy || '',
   },
-  roundtable: { next: NEXT_ROUNDTABLE || '' },
 }
 
 /**
- * Returns the current sponsor and roundtable date, live where possible and
- * baked-in otherwise. Safe during prerendering: the first render is always the
- * baked-in values, so the generated HTML is complete and correct on its own.
+ * Returns the current sponsor line and roundtable details, live where possible
+ * and baked-in otherwise. Safe during prerendering: the first render is always
+ * the baked-in values, so the generated HTML is complete on its own.
  */
 export function useSiteContent() {
   const [content, setContent] = useState(BAKED_IN)
 
   useEffect(() => {
-    if (!ENDPOINT) return
     let cancelled = false
 
+    // Apply the staleness guard to the deployed values straight away, so a
+    // date that has already passed is corrected even if the editor is
+    // unreachable. Deliberately not done during the first render: the
+    // prerendered HTML has to be the same every time it is built, and "today"
+    // is not.
+    setContent(merge(null))
+
+    if (!ENDPOINT) return
+
     const cached = readCache()
-    if (cached) { setContent(merge(cached)); return }
+    if (cached) { setContent(merge(cached)); return undefined }
 
-    const controller = new AbortController()
-    const timer = setTimeout(() => controller.abort(), TIMEOUT_MS)
+    loadContent().then(live => {
+      if (cancelled || !live) return
+      writeCache(live)
+      setContent(merge(live))
+    })
 
-    fetch(`${ENDPOINT}?what=content`, { signal: controller.signal, redirect: 'follow' })
-      .then(res => (res.ok ? res.json() : null))
-      .then(body => {
-        if (cancelled || !body || !body.ok || !body.content) return
-        writeCache(body.content)
-        setContent(merge(body.content))
-      })
-      .catch(() => { /* keep the baked-in values; never surface this */ })
-      .finally(() => clearTimeout(timer))
-
-    return () => { cancelled = true; clearTimeout(timer); controller.abort() }
+    return () => { cancelled = true }
   }, [])
 
   return content
 }
 
-// A blank cell means "use what the site already had", not "show nothing" — so
-// a half-filled row can never wipe the sponsor off the page.
-function merge(live) {
-  const out = { sponsor: { ...BAKED_IN.sponsor }, roundtable: { ...BAKED_IN.roundtable } }
-  if (live.sponsor) {
-    for (const k of Object.keys(out.sponsor)) {
-      const v = String(live.sponsor[k] ?? '').trim()
-      if (v) out.sponsor[k] = v
-    }
-    // A sponsor named in the sheet with no link should lose the old link
-    // rather than inherit the previous sponsor's.
-    if (String(live.sponsor.name ?? '').trim() &&
-        String(live.sponsor.name).trim() !== BAKED_IN.sponsor.name) {
-      for (const k of ['creds', 'role', 'href']) {
-        out.sponsor[k] = String(live.sponsor[k] ?? '').trim()
-      }
-    }
+// --- the request ------------------------------------------------------------
+
+// Two components on the Events page ask for this content, and they mount
+// together. One shared promise means one request rather than two, and means
+// they can never briefly disagree with each other. Cleared on failure so a
+// later visit can try again; a success stays, backed by sessionStorage.
+let inFlight = null
+
+function loadContent() {
+  if (inFlight) return inFlight
+  const controller = new AbortController()
+  const timer = setTimeout(() => controller.abort(), TIMEOUT_MS)
+  inFlight = fetch(ENDPOINT, { signal: controller.signal })
+    .then(res => (res.ok ? res.json() : null))
+    .then(body => (body && body.result) || null)
+    .catch(() => { inFlight = null; return null })
+    .finally(() => clearTimeout(timer))
+  return inFlight
+}
+
+// --- shaping ---------------------------------------------------------------
+
+// An empty field means "I have not filled this in", never "show nothing", so
+// a half-finished edit can never wipe the sponsor off the page.
+export function merge(live, today = todayISO()) {
+  const out = {
+    sponsorLine: BAKED_IN.sponsorLine,
+    roundtable: { ...BAKED_IN.roundtable },
   }
-  const next = String(live.roundtable?.next ?? '').trim()
-  if (next) out.roundtable.next = next
+
+  if (live && typeof live === 'object') {
+    if (hasText(live.sponsorLine)) out.sponsorLine = live.sponsorLine
+
+    if (parseISODate(live.nextRoundtable)) {
+      out.roundtable.nextISO = String(live.nextRoundtable).trim()
+    }
+
+    text(live.roundtableTime, v => { out.roundtable.time = v })
+    text(live.roundtableWhere, v => { out.roundtable.where = v })
+    text(live.registrationNote, v => { out.roundtable.note = v })
+
+    list(live.roundtableOverview, v => { out.roundtable.overview = v })
+    list(live.whatHappens, v => { out.roundtable.whatHappens = v })
+    list(live.whoShouldAttend, v => { out.roundtable.whoShouldAttend = v })
+  }
+
+  // Last, and after everything else, because the sponsor heading takes its
+  // month from this date and the two have to agree.
+  const effective = ensureFutureISO(out.roundtable.nextISO, today)
+  out.roundtable.nextISO = effective
+  out.roundtable.next = formatMeetingDate(effective) || BAKED_IN.roundtable.next
+
   return out
 }
+
+// A field that has been emptied, or filled with nothing but spaces, means
+// "I have not written this yet" rather than "show nothing here", so it is
+// left to the version that was deployed.
+function text(value, apply) {
+  const v = String(value == null ? '' : value).trim()
+  if (v) apply(v)
+}
+
+// Same for a list, with the blank rows dropped: adding a row in the editor
+// creates an empty one, so a list being edited would otherwise render a run of
+// empty bullets on the live page between one keystroke and the next.
+function list(value, apply) {
+  if (!Array.isArray(value)) return
+  const rows = value
+    .map(v => String(v == null ? '' : v).trim())
+    .filter(Boolean)
+  if (rows.length) apply(rows)
+}
+
+// Rich text can be present and still be empty - an editor that has been
+// clicked into and back out of leaves a block with one blank span, which would
+// otherwise replace the real sponsor with nothing at all.
+export function hasText(blocks) {
+  return Array.isArray(blocks) && blocks.some(b =>
+    b && Array.isArray(b.children) &&
+    b.children.some(c => c && String(c.text == null ? '' : c.text).trim() !== ''))
+}
+
+// --- cache -----------------------------------------------------------------
 
 function readCache() {
   try {
@@ -104,5 +186,5 @@ function readCache() {
 function writeCache(content) {
   try {
     sessionStorage.setItem(CACHE_KEY, JSON.stringify({ at: Date.now(), content }))
-  } catch { /* private browsing, quota, or no storage at all — not important */ }
+  } catch { /* private browsing, quota, or no storage at all - not important */ }
 }

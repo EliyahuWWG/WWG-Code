@@ -346,10 +346,19 @@ em, .serif-it { }
     linear-gradient(180deg, rgba(2,6,31,.46) 0%, rgba(2,6,31,.08) 35%, rgba(4,10,82,.66) 100%);
 }
 @media (max-width: 719px) {
-  /* Small screens: the copy occupies nearly the whole frame, so the backdrop
-     goes quieter and the scrim goes flat instead of directional. */
-  .hero-backdrop { --bd-o: .14; }
-  .hero-backdrop::after { background: linear-gradient(180deg, rgba(2,6,31,.74), rgba(4,10,82,.82)); }
+  /* Small screens: the scrim goes flat instead of directional, because the
+     copy occupies nearly the whole frame rather than the left of it.
+
+     It used to go quieter as well - .14 opacity under a wash that was .74 to
+     .82 opaque, which left roughly three per cent of the footage showing. On a
+     phone that is not a subtle backdrop, it is a plain blue rectangle, which
+     is exactly what he reported on 23 Sep. The clip is now stronger here than
+     on a desktop, not weaker, and the wash is lighter to let it through. Bone
+     text still clears AA against it by a wide margin: the scrim never drops
+     below .58, so the darkest thing the footage can lift the navy to is still
+     far darker than the text. */
+  .hero-backdrop { --bd-o: .30; }
+  .hero-backdrop::after { background: linear-gradient(180deg, rgba(2,6,31,.58), rgba(4,10,82,.72)); }
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-backdrop-video { display: none; }

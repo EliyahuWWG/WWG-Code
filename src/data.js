@@ -4,6 +4,8 @@
 // from Dr. Lotzar's live materials. Nothing invented. See WWG_REBUILD_SPEC §2.
 // =====================================================================
 
+import { formatMeetingDate } from './lib/meetingDate'
+
 // ---------- Real constants ----------
 export const CALENDLY = "https://calendly.com/eliyahu-lotzar-reframedreality";
 // The specific event type behind the Services CTA, per Eliyahu 3 Sep. CALENDLY
@@ -80,12 +82,57 @@ export const SERVICE_AREA = "In-person in NOVA / Metro DC, and online worldwide"
 //  The sponsor LABEL derives its month from the date, so changing the date is
 //  enough to relabel it. See roundtableSponsorLabel().
 // ===========================================================================
-export const NEXT_ROUNDTABLE = "October 21st";
-export const SPONSOR = {
-  name: "Lyle Martin",
-  creds: "BFA, CEPA",
-  role: "Financial Advisor with Thrivent\u2019s Northeast Advisor Group",
-  href: "https://connect.thrivent.com/lyle-martin",
+// The date itself, and the only place it is typed. "October 21st", the
+// "October’s Sponsor" heading and the startDate in the Event markup Google
+// reads are all derived from this one line, so they cannot contradict each
+// other. This is the fallback; the live value comes from the editor.
+export const NEXT_ROUNDTABLE_ISO = "2026-10-21";
+export const NEXT_ROUNDTABLE = formatMeetingDate(NEXT_ROUNDTABLE_ISO);
+// The sponsor line exactly as it was last deployed, and the fallback for it.
+// The live version comes from the editor described below and replaces this a
+// moment after the page loads. It is stored in the same shape the editor
+// produces, so the site has one renderer rather than two.
+export const SPONSOR_LINE = [
+  {
+    _type: 'block', _key: 'b1', style: 'normal',
+    markDefs: [
+      { _key: 'l1', _type: 'link', href: 'https://www.miningforgems.com/' },
+      { _key: 'l2', _type: 'link', href: 'https://www.timetofly.org/' },
+    ],
+    children: [
+      { _type: 'span', _key: 's1', text: 'Michele R. Jones, ', marks: [] },
+      { _type: 'span', _key: 's2', text: 'Mining For Gems', marks: ['l1'] },
+      { _type: 'span', _key: 's3', text: ' Speaker, Author, and Coach, and President of ', marks: [] },
+      { _type: 'span', _key: 's4', text: 'Time To Fly Foundation', marks: ['l2'] },
+      { _type: 'span', _key: 's5', text: ' for domestic abuse recovery.', marks: [] },
+    ],
+  },
+];
+
+export const ROUNDTABLE_MEETING_TIME = "8:00 \u2013 9:55 a.m.";
+
+// ---------------------------------------------------------------------------
+// WHERE THE SPONSOR AND THE DATE COME FROM WHILE THE SITE IS RUNNING.
+//
+// Eliyahu edits them at https://workingwithgod.sanity.studio, presses Publish,
+// and the page shows the new values within about a minute. Nothing is rebuilt
+// and no Netlify credits are spent, which matters because the plan allows 300
+// a month and charges 15 per production deploy - twenty deploys and every site
+// on the account is paused. The sponsor changes most weeks.
+//
+// The dataset is public and read without any token, which is why none appears
+// anywhere in this repository. Public is correct here: the sponsor's name and
+// the meeting date are already printed on a page anyone can open.
+//
+// The values above are the fallback and are compiled into the prerendered
+// HTML, so the page is complete and correct before any request is made, and
+// stays correct if the editor is slow, unreachable, or left half filled in.
+// ---------------------------------------------------------------------------
+export const SANITY = {
+  projectId: 'gc54b5y6',
+  dataset: 'production',
+  apiVersion: '2024-01-01',
+  studio: 'https://workingwithgod.sanity.studio/',
 };
 
 // "September 16th" -> "September's Sponsor". Falls back to a plain "Sponsor"
@@ -114,7 +161,7 @@ export const roundtableIntro = {
   // The date itself is NEXT_ROUNDTABLE (and, live, the "Site content"
   // tab of the registrations sheet). Only the clock time is fixed here,
   // so a new month is one cell edit rather than a deploy.
-  time: "8:00 \u2013 9:55 a.m.",
+  time: ROUNDTABLE_MEETING_TIME,
   overview: [
     "The Working With God Roundtable is a vibrant, Christ-centered ministry designed to equip local business professionals to integrate their faith with their work. Through monthly gatherings, we offer a space to grow your leadership ability, connect with like-minded individuals, explore practical topics like time management, organizational development, what God wants in your marketing copy, and more\u2014all with expertise, prayer, and a biblical lens.",
     "Whether you\u2019re a seasoned business owner, organizational professional, or just starting out, join us in Working With God.",

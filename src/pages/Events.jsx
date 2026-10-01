@@ -9,9 +9,9 @@ import Arrow from '../components/Arrow'
 import MaskLines from '../components/MaskLines'
 import Seo from '../components/Seo'
 import { breadcrumbSchema, roundtableEventSchema } from '../seo/schema'
-import { roundtableWhatHappens, roundtableWhoShouldAttend, roundtableSponsorLabel,
-  MEETUP, ROUNDTABLE_ADDRESS, ROUNDTABLE_TIME } from '../data'
+import { roundtableSponsorLabel, MEETUP, ROUNDTABLE_TIME } from '../data'
 import { useSiteContent } from '../lib/siteContent'
+import { portableText } from '../lib/portableText'
 
 export default function Events() {
   // Registering used to mean leaving the page for /roundtable, which asked
@@ -21,7 +21,7 @@ export default function Events() {
   const [registerOpen, setRegisterOpen] = useState(false)
   // Live from the spreadsheet, falling back to the values built in at deploy
   // time. See src/lib/siteContent.js for why.
-  const { sponsor, roundtable } = useSiteContent()
+  const { sponsorLine, roundtable } = useSiteContent()
   const nextRoundtable = roundtable.next
   return (
     <>
@@ -54,13 +54,13 @@ export default function Events() {
             <Reveal>
               <div className="label">What happens in the room</div>
               <ul className="ticks mt-2">
-                {roundtableWhatHappens.map(t => <li key={t}>{t}</li>)}
+                {roundtable.whatHappens.map(t => <li key={t}>{t}</li>)}
               </ul>
               {/* Was a row of topic tags. He replaced it with who the room is
                   for, which is sentences, not labels, so it is a list now. */}
               <div className="label mt-3">Who should attend</div>
               <ul className="ticks mt-2">
-                {roundtableWhoShouldAttend.map(t => <li key={t}>{t}</li>)}
+                {roundtable.whoShouldAttend.map(t => <li key={t}>{t}</li>)}
               </ul>
               <div className="mt-3">
                 <button type="button" className="btn btn-solid" onClick={() => setRegisterOpen(true)}>
@@ -73,22 +73,16 @@ export default function Events() {
             </Reveal>
             <Reveal className="stack-tight" delay={0.05}>
               <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>When</b><br /><span className="muted">{ROUNDTABLE_TIME}</span></div>
-              <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>Where</b><br /><span className="muted">Private room at Starbucks · {ROUNDTABLE_ADDRESS}</span></div>
-              {/* Both of these come from the "Site content" tab of the
-                  registrations spreadsheet, so Eliyahu can change the sponsor
-                  himself without a rebuild. The values in src/data.js are the
-                  fallback if the sheet cannot be reached. The sponsor label
-                  follows the date's month. */}
+              <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>Where</b><br /><span className="muted">{roundtable.where}</span></div>
+              {/* Everything in this column, and both lists above it, come from
+                  the editor at workingwithgod.sanity.studio, so Eliyahu can
+                  reword any of it himself without a rebuild. The values in
+                  src/data.js are the fallback if the editor cannot be reached.
+                  The sponsor label follows the date's month. */}
               <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}><b>Next meeting</b><br /><span className="muted">{nextRoundtable}</span></div>
               <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14 }}>
                 <b>{roundtableSponsorLabel(nextRoundtable)}</b><br />
-                <span className="muted">
-                  {sponsor.href
-                    ? <a className="tlink" style={{ display: 'inline' }} href={sponsor.href} target="_blank" rel="noopener">{sponsor.name}</a>
-                    : sponsor.name}
-                  {sponsor.creds && `, ${sponsor.creds}`}
-                  {sponsor.role && `. ${sponsor.role}.`}
-                </span>
+                <span className="muted">{portableText(sponsorLine)}</span>
               </div>
             </Reveal>
           </div>
